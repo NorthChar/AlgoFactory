@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "phase": 0,
+  "llm_mode": "mock",
+  "seed": 42,
+  "task_types": ["binary_classification", "regression"],
+  "candidate_limit": 2,
+  "max_repairs_per_candidate": 2,
+  "execution": {"backend": "docker", "timeout_seconds": 120, "cpus": 2, "memory_mib": 4096, "network": false, "fail_closed": true},
+  "note": "设计默认值；当前骨架未实现或加载执行这些配置"
+}
