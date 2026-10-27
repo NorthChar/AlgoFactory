@@ -24,3 +24,19 @@ D 扩展：合成回归任务运行非空验证，使用 MAE/RMSE；新增一个
 四维检查：功能检查实际 fit/predict、输出长度及有限值；接口检查导出函数和任务方法；指标检查二分类 F1/ROC-AUC/Precision/Recall 与冻结门槛；稳定性检查固定种子重复、超时、异常数据、缺失列和资源超限。空候选、非法 LLM JSON、API 超时、Docker 缺失、回写失败均须输出显式失败状态。
 
 最终无真实 API 或隔离执行证据时，对应 Gate 保持 blocked，不发布“全部通过”。
+
+## Phase 1 阶段退出记录
+
+本节是阶段检查，不改变 G1–G5 的完整项目验收范围。
+
+| 检查项 | 状态 | 证据 |
+| --- | --- | --- |
+| 六类契约、九类知识实体及关系校验 | verified | tests/test_contracts.py、tests/test_knowledge.py |
+| 业务文档 → 结构化知识 → SQLite | verified | examples/phase1/knowledge.json、knowledge.sqlite、provider-audit.json |
+| 带来源检索、重开持久化、幂等与失败回滚 | verified | examples/phase1/retrieval.json、测试报告 |
+| NetworkX/GraphML 导出及无损重载 | verified | examples/phase1/knowledge.graphml、测试报告 |
+| Mock/API 共同契约及本地模拟 HTTP 服务测试 | verified | tests/test_providers.py、examples/phase1/tests.xml |
+| Python 3.11 ARM64 依赖锁与独立安装 | verified | uv.lock、requirements 文件、examples/phase1/installation.json |
+| 真实外部 API 抽取 | blocked | 未配置端点、模型、密钥与价格；不作为已通过证据 |
+
+统一命令、提交号、Asia/Shanghai 时间、环境、代码和产物散列见 examples/phase1/verification.json。Phase 1 之外的算法闭环、隔离执行和最终 Gate 仍待后续验收。

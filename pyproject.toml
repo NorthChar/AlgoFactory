@@ -4,13 +4,29 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "algofactory"
-version = "0.0.1"
+version = "0.1.0"
 description = "Knowledge and validation driven algorithm factory prototype"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = ["pydantic>=2.12,<3", "networkx>=3.4,<4"]
+
+[dependency-groups]
+dev = ["pytest>=8,<10", "ruff>=0.11,<1"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "UP", "B"]
 
 [project.scripts]
 algofactory = "algofactory.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+"algofactory.llm" = ["fixtures/*.json"]

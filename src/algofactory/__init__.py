@@ -1,2 +1,3 @@
-"""AlgoFactory project scaffold; algorithm workflows are not implemented yet."""
-__version__ = "0.0.1"
+"""AlgoFactory knowledge foundation; algorithm workflows begin in Phase 2."""
+
+__version__ = "0.1.0"

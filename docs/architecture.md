@@ -48,4 +48,12 @@ TaskSpec 包含 task_id、task_type、target、feature_schema、data_fingerprint
 
 ## 决策记录
 
-采用 SQLite + NetworkX 而非独立图数据库以减少本地运维；采用同进程三角色而非分布式消息系统以便调试；不引入 Beam/MCTS，先用有界候选策略。上述为待实施架构，当前没有核心运行实现。
+采用 SQLite + NetworkX 而非独立图数据库以减少本地运维；采用同进程三角色而非分布式消息系统以便调试；不引入 Beam/MCTS，先用有界候选策略。Phase 1 已实现 schemas、llm、knowledge 与知识 CLI；编排器、三角色决策、算法生成、执行、验证和回写留待后续阶段。
+
+## Phase 1 落地说明
+
+实现细节与操作见 [Phase 1 指南](phase1.md)。SQLite 是事实源，NetworkX MultiDiGraph 为可重建视图；JSON/GraphML 保留完整类型化 payload 和归档原文。schema_version 和 SQLite user_version 均为 1。
+
+来源采用内容散列 ID，实体和关系使用来源命名空间。source_span 是原文 Unicode 字符的左闭右开区间及精确引用。写入前检查引用、关系端点、ID 冲突、历史验证与实现/划分关联、经验状态和版本环；一个批次在同一事务中提交，重复内容幂等返回。文档抽取只允许 Task/Capability/Algorithm/Dependency，禁止把文档中的模型自述当成真实运行历史。
+
+Provider 为同一结构化调用接口，Mock 按文件散列重放显式 fixture，API 使用 HTTPS chat-completions 兼容接口。两模式经过相同的响应和图谱校验；有限重试、调用数和保守费用预留独立于模型响应。真实服务调用尚待配置和验收，本地 HTTP 测试不能替代它。
