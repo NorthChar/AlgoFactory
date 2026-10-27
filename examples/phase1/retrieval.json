@@ -1,0 +1,286 @@
+[
+  {
+    "record": {
+      "applicability": {
+        "data_kind": "tabular",
+        "requirements": [
+          "数值和类别缺失填补",
+          "类别编码",
+          "控制编码后特征规模"
+        ],
+        "schema_version": 1,
+        "task_types": [
+          "binary_classification"
+        ]
+      },
+      "family": "梯度提升分类",
+      "id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a:algorithm:hist_gradient_boosting",
+      "name": "HistGradientBoosting",
+      "schema_version": 1,
+      "source_id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a",
+      "source_span": {
+        "end": 713,
+        "quote": "HistGradientBoosting 属于梯度提升分类模型，可以实现客户流失预测能力，适用于上述客户流失二分类任务。本项目先使用数值和类别缺失填补、类别编码的统一预处理，并控制编码后特征规模。",
+        "schema_version": 1,
+        "start": 615
+      },
+      "type": "Algorithm"
+    },
+    "relations": [
+      {
+        "record": {
+          "head_id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a:algorithm:hist_gradient_boosting",
+          "id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a:relation:applicable:hist_gradient_boosting",
+          "schema_version": 1,
+          "source_id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a",
+          "source_span": {
+            "end": 713,
+            "quote": "HistGradientBoosting 属于梯度提升分类模型，可以实现客户流失预测能力，适用于上述客户流失二分类任务。本项目先使用数值和类别缺失填补、类别编码的统一预处理，并控制编码后特征规模。",
+            "schema_version": 1,
+            "start": 615
+          },
+          "tail_id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a:task:churn",
+          "type": "APPLICABLE_TO"
+        },
+        "source": {
+          "id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a",
+          "sha256": "ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a",
+          "span": {
+            "end": 713,
+            "quote": "HistGradientBoosting 属于梯度提升分类模型，可以实现客户流失预测能力，适用于上述客户流失二分类任务。本项目先使用数值和类别缺失填补、类别编码的统一预处理，并控制编码后特征规模。",
+            "schema_version": 1,
+            "start": 615
+          },
+          "title": "customer_churn.txt"
+        }
+      },
+      {
+        "record": {
+          "head_id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a:algorithm:hist_gradient_boosting",
+          "id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a:relation:implements:hist_gradient_boosting",
+          "schema_version": 1,
+          "source_id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a",
+          "source_span": {
+            "end": 713,
+            "quote": "HistGradientBoosting 属于梯度提升分类模型，可以实现客户流失预测能力，适用于上述客户流失二分类任务。本项目先使用数值和类别缺失填补、类别编码的统一预处理，并控制编码后特征规模。",
+            "schema_version": 1,
+            "start": 615
+          },
+          "tail_id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a:capability:churn",
+          "type": "IMPLEMENTS"
+        },
+        "source": {
+          "id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a",
+          "sha256": "ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a",
+          "span": {
+            "end": 713,
+            "quote": "HistGradientBoosting 属于梯度提升分类模型，可以实现客户流失预测能力，适用于上述客户流失二分类任务。本项目先使用数值和类别缺失填补、类别编码的统一预处理，并控制编码后特征规模。",
+            "schema_version": 1,
+            "start": 615
+          },
+          "title": "customer_churn.txt"
+        }
+      }
+    ],
+    "source": {
+      "id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a",
+      "sha256": "ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a",
+      "span": {
+        "end": 713,
+        "quote": "HistGradientBoosting 属于梯度提升分类模型，可以实现客户流失预测能力，适用于上述客户流失二分类任务。本项目先使用数值和类别缺失填补、类别编码的统一预处理，并控制编码后特征规模。",
+        "schema_version": 1,
+        "start": 615
+      },
+      "title": "customer_churn.txt"
+    }
+  },
+  {
+    "record": {
+      "applicability": {
+        "data_kind": "tabular",
+        "requirements": [
+          "数值和类别缺失填补",
+          "类别编码",
+          "数值缩放"
+        ],
+        "schema_version": 1,
+        "task_types": [
+          "binary_classification"
+        ]
+      },
+      "family": "线性分类",
+      "id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a:algorithm:logistic_regression",
+      "name": "Logistic Regression",
+      "schema_version": 1,
+      "source_id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a",
+      "source_span": {
+        "end": 521,
+        "quote": "Logistic Regression 属于线性分类模型，可以实现客户流失预测能力，适用于上述客户流失二分类任务。使用前需要填补数值和类别缺失、编码类别特征，并缩放数值特征。",
+        "schema_version": 1,
+        "start": 434
+      },
+      "type": "Algorithm"
+    },
+    "relations": [
+      {
+        "record": {
+          "head_id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a:algorithm:logistic_regression",
+          "id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a:relation:applicable:logistic_regression",
+          "schema_version": 1,
+          "source_id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a",
+          "source_span": {
+            "end": 521,
+            "quote": "Logistic Regression 属于线性分类模型，可以实现客户流失预测能力，适用于上述客户流失二分类任务。使用前需要填补数值和类别缺失、编码类别特征，并缩放数值特征。",
+            "schema_version": 1,
+            "start": 434
+          },
+          "tail_id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a:task:churn",
+          "type": "APPLICABLE_TO"
+        },
+        "source": {
+          "id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a",
+          "sha256": "ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a",
+          "span": {
+            "end": 521,
+            "quote": "Logistic Regression 属于线性分类模型，可以实现客户流失预测能力，适用于上述客户流失二分类任务。使用前需要填补数值和类别缺失、编码类别特征，并缩放数值特征。",
+            "schema_version": 1,
+            "start": 434
+          },
+          "title": "customer_churn.txt"
+        }
+      },
+      {
+        "record": {
+          "head_id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a:algorithm:logistic_regression",
+          "id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a:relation:implements:logistic_regression",
+          "schema_version": 1,
+          "source_id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a",
+          "source_span": {
+            "end": 521,
+            "quote": "Logistic Regression 属于线性分类模型，可以实现客户流失预测能力，适用于上述客户流失二分类任务。使用前需要填补数值和类别缺失、编码类别特征，并缩放数值特征。",
+            "schema_version": 1,
+            "start": 434
+          },
+          "tail_id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a:capability:churn",
+          "type": "IMPLEMENTS"
+        },
+        "source": {
+          "id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a",
+          "sha256": "ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a",
+          "span": {
+            "end": 521,
+            "quote": "Logistic Regression 属于线性分类模型，可以实现客户流失预测能力，适用于上述客户流失二分类任务。使用前需要填补数值和类别缺失、编码类别特征，并缩放数值特征。",
+            "schema_version": 1,
+            "start": 434
+          },
+          "title": "customer_churn.txt"
+        }
+      }
+    ],
+    "source": {
+      "id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a",
+      "sha256": "ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a",
+      "span": {
+        "end": 521,
+        "quote": "Logistic Regression 属于线性分类模型，可以实现客户流失预测能力，适用于上述客户流失二分类任务。使用前需要填补数值和类别缺失、编码类别特征，并缩放数值特征。",
+        "schema_version": 1,
+        "start": 434
+      },
+      "title": "customer_churn.txt"
+    }
+  },
+  {
+    "record": {
+      "applicability": {
+        "data_kind": "tabular",
+        "requirements": [
+          "数值和类别缺失填补",
+          "类别编码"
+        ],
+        "schema_version": 1,
+        "task_types": [
+          "binary_classification"
+        ]
+      },
+      "family": "树集成分类",
+      "id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a:algorithm:random_forest",
+      "name": "Random Forest",
+      "schema_version": 1,
+      "source_id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a",
+      "source_span": {
+        "end": 613,
+        "quote": "Random Forest 属于树集成分类模型，可以实现客户流失预测能力，适用于上述客户流失二分类任务。为统一输入接口，使用前填补数值和类别缺失并编码类别特征，通常不要求数值缩放。",
+        "schema_version": 1,
+        "start": 523
+      },
+      "type": "Algorithm"
+    },
+    "relations": [
+      {
+        "record": {
+          "head_id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a:algorithm:random_forest",
+          "id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a:relation:applicable:random_forest",
+          "schema_version": 1,
+          "source_id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a",
+          "source_span": {
+            "end": 613,
+            "quote": "Random Forest 属于树集成分类模型，可以实现客户流失预测能力，适用于上述客户流失二分类任务。为统一输入接口，使用前填补数值和类别缺失并编码类别特征，通常不要求数值缩放。",
+            "schema_version": 1,
+            "start": 523
+          },
+          "tail_id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a:task:churn",
+          "type": "APPLICABLE_TO"
+        },
+        "source": {
+          "id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a",
+          "sha256": "ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a",
+          "span": {
+            "end": 613,
+            "quote": "Random Forest 属于树集成分类模型，可以实现客户流失预测能力，适用于上述客户流失二分类任务。为统一输入接口，使用前填补数值和类别缺失并编码类别特征，通常不要求数值缩放。",
+            "schema_version": 1,
+            "start": 523
+          },
+          "title": "customer_churn.txt"
+        }
+      },
+      {
+        "record": {
+          "head_id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a:algorithm:random_forest",
+          "id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a:relation:implements:random_forest",
+          "schema_version": 1,
+          "source_id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a",
+          "source_span": {
+            "end": 613,
+            "quote": "Random Forest 属于树集成分类模型，可以实现客户流失预测能力，适用于上述客户流失二分类任务。为统一输入接口，使用前填补数值和类别缺失并编码类别特征，通常不要求数值缩放。",
+            "schema_version": 1,
+            "start": 523
+          },
+          "tail_id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a:capability:churn",
+          "type": "IMPLEMENTS"
+        },
+        "source": {
+          "id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a",
+          "sha256": "ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a",
+          "span": {
+            "end": 613,
+            "quote": "Random Forest 属于树集成分类模型，可以实现客户流失预测能力，适用于上述客户流失二分类任务。为统一输入接口，使用前填补数值和类别缺失并编码类别特征，通常不要求数值缩放。",
+            "schema_version": 1,
+            "start": 523
+          },
+          "title": "customer_churn.txt"
+        }
+      }
+    ],
+    "source": {
+      "id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a",
+      "sha256": "ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a",
+      "span": {
+        "end": 613,
+        "quote": "Random Forest 属于树集成分类模型，可以实现客户流失预测能力，适用于上述客户流失二分类任务。为统一输入接口，使用前填补数值和类别缺失并编码类别特征，通常不要求数值缩放。",
+        "schema_version": 1,
+        "start": 523
+      },
+      "title": "customer_churn.txt"
+    }
+  }
+]

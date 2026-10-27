@@ -1,0 +1,134 @@
+{
+  "algorithm_workflow": "not_implemented_phase2",
+  "artifacts_sha256": {
+    "check-1.log": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "check-2.log": "a0a0f191878d553ae2b88299d5ead34d7a6367937ff1bd9e304fb73059c83f8a",
+    "check-3.log": "8844eb12cfdc8f90bdd4590ba89f0547e988228d8b5fb9b3841b5ad99ca96473",
+    "check-4.log": "3f20c0084d361faf351b947364d72d1c14b24d9464ca177c2fed3b2202397422",
+    "installation.json": "6ea6029ac06aefa12c55c1b4525387f2a6259380ebf53fb2b194d187c82c46cc",
+    "knowledge.graphml": "fc405a6ac46b1861d5ff253b5778c29ad6c8b0ba37593d129cf553f7c112ed99",
+    "knowledge.json": "1ac8c468e74226cd697419d3834301d9d5108afe6abc099acbc3f4e1d60c9256",
+    "knowledge.sqlite": "ae5397777f25103e8687a205178c0e84c176f643542edae7b62e93292c5d9262",
+    "provider-audit.json": "abd0893e6c22fc30890725e7d50d21b34820a26aeab98f7f265172a02114247b",
+    "retrieval.json": "2dcdba87f2e7b8f7575bed5dff4628c683fa62bace3156788e2e8b181ec7c49e",
+    "tests.xml": "164e89a3475df45aa67513cb4914606a7ea628e283e2b5716101edc912662ec1"
+  },
+  "checks": [
+    {
+      "command": [
+        "python",
+        "-m",
+        "ruff",
+        "check",
+        "src",
+        "tests",
+        "scripts"
+      ],
+      "exit_code": 0,
+      "log": "check-1.log"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "ruff",
+        "format",
+        "--check",
+        "src",
+        "tests",
+        "scripts"
+      ],
+      "exit_code": 0,
+      "log": "check-2.log"
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check_scaffold.py"
+      ],
+      "exit_code": 0,
+      "log": "check-3.log"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--junitxml=/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase1/tests.xml"
+      ],
+      "exit_code": 0,
+      "log": "check-4.log"
+    }
+  ],
+  "environment": {
+    "architecture": "arm64",
+    "packages": {
+      "networkx": "3.6.1",
+      "pydantic": "2.14.1",
+      "pytest": "9.1.1",
+      "ruff": "0.17.3"
+    },
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "python": "3.11.16"
+  },
+  "git": {
+    "base_commit": "65c0e9c120bdb0c216f3e664f3da66657b5d2e7b",
+    "commit_resolution": "All tested implementation file hashes were matched against this commit after the test run; no code changed.",
+    "commit_resolved_after_run": true,
+    "implementation_commit": "bae207ac71987dfcea60af02f400656add3dab28",
+    "implementation_dirty": false,
+    "implementation_dirty_at_run": true
+  },
+  "global_gates": "not_passed",
+  "implementation_files_sha256": {
+    "data/customer_churn.txt": "ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a",
+    "pyproject.toml": "8a86c4cdac154407a4ae95472f6fe7e73550229535af33b6449e842f92064ef5",
+    "requirements-dev.txt": "d2c8dfb954e761fac168f1e2b08180802cbdd875f65ee1cd17bb60594a2e910a",
+    "requirements.txt": "e822c99c6177a37dfd31aaa0dacfe8f2dcdaabb48d8dd9a873d1858ff562856b",
+    "scripts/check_scaffold.py": "b801ee57298db0ff9af5eb9a63b6cb22e428d868aa77e2205d28cb1f10325dea",
+    "scripts/verify_phase1.py": "a829c886c756370208c9f5fc7959927f56c1618832fbbd20c01d50666bdb02cb",
+    "src/algofactory/__init__.py": "b573c73e67b12af6dc12e1a30b92db08376285e9fc195de3a4f9a6b3527f6a8c",
+    "src/algofactory/cli.py": "d76c1a17f07880603e9e736279890a5c63df73ece6054e6e9c0f621c731c79cb",
+    "src/algofactory/knowledge/__init__.py": "92e9684ca09bba34b6a81ec13028cbef12ac41ce97942e593e4552f342c52d2b",
+    "src/algofactory/knowledge/extraction.py": "58b0b2a4d25046fb2d092f380d7408bb1200ed474746f690e773cdba8bf97a06",
+    "src/algofactory/knowledge/graph.py": "704767859f6c8ec8b0f58278c46ee55211a420d1a6e7d6078fa0dc080cb0f64a",
+    "src/algofactory/knowledge/store.py": "c34e29a79fe4b594f58c7bc0d22be5e011989ec94f241c49e8f2d1028433e1a7",
+    "src/algofactory/llm/__init__.py": "9b3e652ebc649b6428d49affded5ec85f963bb59e3b8bc22062509a21d6b39df",
+    "src/algofactory/llm/fixtures/churn.json": "93e7a73293937804d7ec9c4af3d1ffba06830237ac08e37b83c7d5f96e767ca4",
+    "src/algofactory/llm/providers.py": "cd6039bd55724492f02860609df73855759961717052e5a16712f515c5bbb955",
+    "src/algofactory/schemas/__init__.py": "688a8305891467112213b6d90cdc01e2abe5e2c5357b89d534a4ddfb94222039",
+    "src/algofactory/schemas/contracts.py": "166949a1b8cf2607d8530d5b8b0100ea0ab74753e5d126de25caf676abefd1ef",
+    "src/algofactory/schemas/knowledge.py": "82b214392d32d828a88b395d65bc7dc4b34f070adbac1c677929a5c571bd85b6",
+    "tests/conftest.py": "6f0e953ef82399e02bb7d432126c9b1ffd6749666f23c07728368118e3768d2f",
+    "tests/test_cli.py": "ba6636ef8293d1af56ba7a73b31f986ce28febfaed4598f8e642a540064a248d",
+    "tests/test_contracts.py": "e2f54ac38efe63c58179b56d9b87ad577f8d36b8d41077ea2db04cf06f153ad9",
+    "tests/test_knowledge.py": "eb38bcbb41eb43b8ea016c0de468b6dab05480f156c422bceed1f05cfcc71a85",
+    "tests/test_providers.py": "bae0e619248b81c4b8c236fe9569e56bf8b71c2514f16ed2c41e88694f6bed98",
+    "uv.lock": "e4d4af2064f06f595dd24f91ac9c1cde16676dd2a573f619bfab27998deb2b42"
+  },
+  "installation_evidence": "installation.json",
+  "knowledge": {
+    "entities": 6,
+    "graphml_roundtrip": true,
+    "idempotent_import": true,
+    "persistent_reopen": true,
+    "relations": 7,
+    "retrieved_algorithms": 3,
+    "sources": 1
+  },
+  "live_api": {
+    "reason": "No real endpoint/model/credentials/prices configured; local HTTP contract tests only.",
+    "status": "blocked"
+  },
+  "phase": 1,
+  "scope": "knowledge_foundation_and_provider_contracts",
+  "status": "verified",
+  "tests": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 78
+  },
+  "timestamp": "2026-10-27T20:18:46.545776+08:00"
+}

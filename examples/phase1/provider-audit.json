@@ -1,0 +1,49 @@
+{
+  "first_import": {
+    "audit": [
+      {
+        "attempt": 1,
+        "mode": "mock",
+        "operation": "extract_knowledge",
+        "reserved_cost_usd": 0.0,
+        "schema_version": 1,
+        "status": "ok"
+      }
+    ],
+    "inserted": {
+      "entities": 0,
+      "relations": 0,
+      "sources": 0
+    },
+    "provider_mode": "mock",
+    "source_id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a"
+  },
+  "note": "Fixed Mock fixtures; not a live LLM call.",
+  "repeat_import": {
+    "audit": [
+      {
+        "attempt": 1,
+        "mode": "mock",
+        "operation": "extract_knowledge",
+        "reserved_cost_usd": 0.0,
+        "schema_version": 1,
+        "status": "ok"
+      },
+      {
+        "attempt": 1,
+        "mode": "mock",
+        "operation": "extract_knowledge",
+        "reserved_cost_usd": 0.0,
+        "schema_version": 1,
+        "status": "ok"
+      }
+    ],
+    "inserted": {
+      "entities": 0,
+      "relations": 0,
+      "sources": 0
+    },
+    "provider_mode": "mock",
+    "source_id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a"
+  }
+}
