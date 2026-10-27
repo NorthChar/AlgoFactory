@@ -1,0 +1,78 @@
+{
+  "artifacts_sha256": {
+    "candidate.json": "435ba33778179b399cf8f70c6b994d5fcf518bb4d7543091cb66a96dc8b4a032",
+    "candidate.py": "f1c1a88660e76a616382bdc4882cfb0fe1503650ab250a0cde68dcd4b9052afe",
+    "data-manifest.json": "96ddaae1d1e4e74f249bade0c67880ce45189b86bfbfd9c2b415a60c7d3153dd",
+    "decisions.json": "8c5a4505e0d684d0f8175e6c28caccb78ec985a662eb85d4b3a1fee1beea0b87",
+    "plan.json": "8426d8a2c89b4b8639804c1af4cb55bf2d335981ec6f9cc5a88630c5eddfa7e1",
+    "protocol.json": "c03428a7044fcd7b8df044531a3496f4ddd515a4890337f4782b847fa6bce601",
+    "provider-audit.json": "150aea3fa70cdafabf4e6a1bc4950b83dde7ab6ae751485a7557701c39b98028",
+    "retrieval.json": "3ecc39ff7e2f9c58ed3421e0e2553e1910f5287005f18479e46b800e5caa5d37",
+    "task.json": "a48c8a34f5f6b4d52d908fb4cdc82ed52c9151dca2d25cc71e12494a614d5052",
+    "trace.json": "843d7d632ae71bd56c37046cf3ea34475d03dad296a784b56d846fa79a44fbb3"
+  },
+  "code_hash": "f1c1a88660e76a616382bdc4882cfb0fe1503650ab250a0cde68dcd4b9052afe",
+  "data_fingerprint": "3c6161603386e4e7921699b51a06caff3ef1bcf9fa4a14806ef006b0f721caff",
+  "error_category": "unapproved_import",
+  "execution_evidence": [],
+  "knowledge_ids": {
+    "dataset_id": "source:476aa449f14ed973df47ba29f031f0f624b73333e621fb0f2b1650301b1a6c93:dataset",
+    "implementation_id": "source:476aa449f14ed973df47ba29f031f0f624b73333e621fb0f2b1650301b1a6c93:implementation",
+    "task_id": "source:476aa449f14ed973df47ba29f031f0f624b73333e621fb0f2b1650301b1a6c93:task",
+    "validation_run_id": "source:476aa449f14ed973df47ba29f031f0f624b73333e621fb0f2b1650301b1a6c93:validation"
+  },
+  "persisted": true,
+  "provider_mode": "mock",
+  "split_id": "split:bcadf9303a79e6ed36975d7f6e0044e5c0d93386438b1430a7cdf1709f78b48b",
+  "status": "failed",
+  "test_attempted": false,
+  "thresholds": {
+    "f1": 0.59,
+    "precision": 0.64,
+    "recall": 0.55,
+    "roc_auc": 0.75
+  },
+  "validation": {
+    "code_hash": "f1c1a88660e76a616382bdc4882cfb0fe1503650ab250a0cde68dcd4b9052afe",
+    "config_hash": "116ca26a5d71fa284c553e2b72a781ee6df859e6d6389878c587bdf1adb1fd77",
+    "error_category": "unapproved_import",
+    "final_test_evaluated": false,
+    "functional": {
+      "details": "尚未执行",
+      "schema_version": 1,
+      "status": "not_run"
+    },
+    "implementation_id": "source:476aa449f14ed973df47ba29f031f0f624b73333e621fb0f2b1650301b1a6c93:implementation",
+    "interface": {
+      "details": "尚未执行",
+      "schema_version": 1,
+      "status": "not_run"
+    },
+    "metrics": {
+      "details": "尚未执行",
+      "schema_version": 1,
+      "status": "not_run"
+    },
+    "report_paths": [
+      "/Users/northchar/Documents/Codex/AlgoFactory/examples/phase2/unsafe-code/report.json",
+      "/Users/northchar/Documents/Codex/AlgoFactory/examples/phase2/unsafe-code/report.md"
+    ],
+    "resources": {
+      "elapsed_seconds": 0.0,
+      "peak_memory_mib": 0.0,
+      "schema_version": 1
+    },
+    "run_id": "source:476aa449f14ed973df47ba29f031f0f624b73333e621fb0f2b1650301b1a6c93:validation",
+    "schema_version": 1,
+    "split_id": "split:bcadf9303a79e6ed36975d7f6e0044e5c0d93386438b1430a7cdf1709f78b48b",
+    "stability": {
+      "details": "尚未执行",
+      "schema_version": 1,
+      "status": "not_run"
+    },
+    "status": "failed",
+    "test_metrics": {},
+    "validation_metrics": {}
+  },
+  "workflow_id": "workflow:5eba69ead485467188fe4f19d34f9e53"
+}

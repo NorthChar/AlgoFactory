@@ -1,0 +1,151 @@
+warning: The cache directory `runtime/uv-cache` is inside the build source directory `.` and may be included in distributions
+Building wheel...
+running egg_info
+writing src/algofactory.egg-info/PKG-INFO
+writing dependency_links to src/algofactory.egg-info/dependency_links.txt
+writing entry points to src/algofactory.egg-info/entry_points.txt
+writing requirements to src/algofactory.egg-info/requires.txt
+writing top-level names to src/algofactory.egg-info/top_level.txt
+reading manifest file 'src/algofactory.egg-info/SOURCES.txt'
+writing manifest file 'src/algofactory.egg-info/SOURCES.txt'
+running bdist_wheel
+running build
+running build_py
+copying src/algofactory/datasets.py -> build/lib/algofactory
+copying src/algofactory/experience.py -> build/lib/algofactory
+copying src/algofactory/__init__.py -> build/lib/algofactory
+copying src/algofactory/cli.py -> build/lib/algofactory
+copying src/algofactory/workflow_models.py -> build/lib/algofactory
+copying src/algofactory/orchestrator.py -> build/lib/algofactory
+copying src/algofactory/reporting.py -> build/lib/algofactory
+copying src/algofactory/llm/workflow_mock.py -> build/lib/algofactory/llm
+copying src/algofactory/knowledge/store.py -> build/lib/algofactory/knowledge
+creating build/lib/algofactory/execution
+copying src/algofactory/execution/worker.py -> build/lib/algofactory/execution
+copying src/algofactory/execution/__init__.py -> build/lib/algofactory/execution
+copying src/algofactory/execution/docker.py -> build/lib/algofactory/execution
+creating build/lib/algofactory/validation
+copying src/algofactory/validation/protocol.py -> build/lib/algofactory/validation
+copying src/algofactory/validation/scoring.py -> build/lib/algofactory/validation
+copying src/algofactory/validation/__init__.py -> build/lib/algofactory/validation
+creating build/lib/algofactory/generation
+copying src/algofactory/generation/__init__.py -> build/lib/algofactory/generation
+copying src/algofactory/generation/safety.py -> build/lib/algofactory/generation
+running egg_info
+writing src/algofactory.egg-info/PKG-INFO
+writing dependency_links to src/algofactory.egg-info/dependency_links.txt
+writing entry points to src/algofactory.egg-info/entry_points.txt
+writing requirements to src/algofactory.egg-info/requires.txt
+writing top-level names to src/algofactory.egg-info/top_level.txt
+reading manifest file 'src/algofactory.egg-info/SOURCES.txt'
+writing manifest file 'src/algofactory.egg-info/SOURCES.txt'
+creating build/lib/algofactory/generation/templates
+copying src/algofactory/generation/templates/logistic.txt -> build/lib/algofactory/generation/templates
+installing to build/bdist.macosx-11.0-arm64/wheel
+running install
+running install_lib
+creating build/bdist.macosx-11.0-arm64/wheel
+creating build/bdist.macosx-11.0-arm64/wheel/algofactory
+creating build/bdist.macosx-11.0-arm64/wheel/algofactory/llm
+copying build/lib/algofactory/llm/__init__.py -> build/bdist.macosx-11.0-arm64/wheel/./algofactory/llm
+copying build/lib/algofactory/llm/workflow_mock.py -> build/bdist.macosx-11.0-arm64/wheel/./algofactory/llm
+copying build/lib/algofactory/llm/providers.py -> build/bdist.macosx-11.0-arm64/wheel/./algofactory/llm
+creating build/bdist.macosx-11.0-arm64/wheel/algofactory/llm/fixtures
+copying build/lib/algofactory/llm/fixtures/churn.json -> build/bdist.macosx-11.0-arm64/wheel/./algofactory/llm/fixtures
+copying build/lib/algofactory/datasets.py -> build/bdist.macosx-11.0-arm64/wheel/./algofactory
+copying build/lib/algofactory/experience.py -> build/bdist.macosx-11.0-arm64/wheel/./algofactory
+copying build/lib/algofactory/__init__.py -> build/bdist.macosx-11.0-arm64/wheel/./algofactory
+creating build/bdist.macosx-11.0-arm64/wheel/algofactory/schemas
+copying build/lib/algofactory/schemas/__init__.py -> build/bdist.macosx-11.0-arm64/wheel/./algofactory/schemas
+copying build/lib/algofactory/schemas/contracts.py -> build/bdist.macosx-11.0-arm64/wheel/./algofactory/schemas
+copying build/lib/algofactory/schemas/knowledge.py -> build/bdist.macosx-11.0-arm64/wheel/./algofactory/schemas
+copying build/lib/algofactory/cli.py -> build/bdist.macosx-11.0-arm64/wheel/./algofactory
+creating build/bdist.macosx-11.0-arm64/wheel/algofactory/knowledge
+copying build/lib/algofactory/knowledge/store.py -> build/bdist.macosx-11.0-arm64/wheel/./algofactory/knowledge
+copying build/lib/algofactory/knowledge/graph.py -> build/bdist.macosx-11.0-arm64/wheel/./algofactory/knowledge
+copying build/lib/algofactory/knowledge/__init__.py -> build/bdist.macosx-11.0-arm64/wheel/./algofactory/knowledge
+copying build/lib/algofactory/knowledge/extraction.py -> build/bdist.macosx-11.0-arm64/wheel/./algofactory/knowledge
+copying build/lib/algofactory/workflow_models.py -> build/bdist.macosx-11.0-arm64/wheel/./algofactory
+copying build/lib/algofactory/orchestrator.py -> build/bdist.macosx-11.0-arm64/wheel/./algofactory
+creating build/bdist.macosx-11.0-arm64/wheel/algofactory/execution
+copying build/lib/algofactory/execution/worker.py -> build/bdist.macosx-11.0-arm64/wheel/./algofactory/execution
+copying build/lib/algofactory/execution/__init__.py -> build/bdist.macosx-11.0-arm64/wheel/./algofactory/execution
+copying build/lib/algofactory/execution/docker.py -> build/bdist.macosx-11.0-arm64/wheel/./algofactory/execution
+creating build/bdist.macosx-11.0-arm64/wheel/algofactory/validation
+copying build/lib/algofactory/validation/protocol.py -> build/bdist.macosx-11.0-arm64/wheel/./algofactory/validation
+copying build/lib/algofactory/validation/scoring.py -> build/bdist.macosx-11.0-arm64/wheel/./algofactory/validation
+copying build/lib/algofactory/validation/__init__.py -> build/bdist.macosx-11.0-arm64/wheel/./algofactory/validation
+creating build/bdist.macosx-11.0-arm64/wheel/algofactory/generation
+copying build/lib/algofactory/generation/__init__.py -> build/bdist.macosx-11.0-arm64/wheel/./algofactory/generation
+creating build/bdist.macosx-11.0-arm64/wheel/algofactory/generation/templates
+copying build/lib/algofactory/generation/templates/logistic.txt -> build/bdist.macosx-11.0-arm64/wheel/./algofactory/generation/templates
+copying build/lib/algofactory/generation/safety.py -> build/bdist.macosx-11.0-arm64/wheel/./algofactory/generation
+copying build/lib/algofactory/reporting.py -> build/bdist.macosx-11.0-arm64/wheel/./algofactory
+running install_egg_info
+Copying src/algofactory.egg-info to build/bdist.macosx-11.0-arm64/wheel/./algofactory-0.2.0-py3.11.egg-info
+running install_scripts
+creating build/bdist.macosx-11.0-arm64/wheel/algofactory-0.2.0.dist-info/WHEEL
+creating '/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase2-dist/.tmp-f36f8ybq/algofactory-0.2.0-py3-none-any.whl' and adding 'build/bdist.macosx-11.0-arm64/wheel' to it
+adding 'algofactory/__init__.py'
+adding 'algofactory/cli.py'
+adding 'algofactory/datasets.py'
+adding 'algofactory/experience.py'
+adding 'algofactory/orchestrator.py'
+adding 'algofactory/reporting.py'
+adding 'algofactory/workflow_models.py'
+adding 'algofactory/execution/__init__.py'
+adding 'algofactory/execution/docker.py'
+adding 'algofactory/execution/worker.py'
+adding 'algofactory/generation/__init__.py'
+adding 'algofactory/generation/safety.py'
+adding 'algofactory/generation/templates/logistic.txt'
+adding 'algofactory/knowledge/__init__.py'
+adding 'algofactory/knowledge/extraction.py'
+adding 'algofactory/knowledge/graph.py'
+adding 'algofactory/knowledge/store.py'
+adding 'algofactory/llm/__init__.py'
+adding 'algofactory/llm/providers.py'
+adding 'algofactory/llm/workflow_mock.py'
+adding 'algofactory/llm/fixtures/churn.json'
+adding 'algofactory/schemas/__init__.py'
+adding 'algofactory/schemas/contracts.py'
+adding 'algofactory/schemas/knowledge.py'
+adding 'algofactory/validation/__init__.py'
+adding 'algofactory/validation/protocol.py'
+adding 'algofactory/validation/scoring.py'
+adding 'algofactory-0.2.0.dist-info/METADATA'
+adding 'algofactory-0.2.0.dist-info/WHEEL'
+adding 'algofactory-0.2.0.dist-info/entry_points.txt'
+adding 'algofactory-0.2.0.dist-info/top_level.txt'
+adding 'algofactory-0.2.0.dist-info/RECORD'
+removing build/bdist.macosx-11.0-arm64/wheel
+Successfully built runtime/phase2-dist/algofactory-0.2.0-py3-none-any.whl
+Using CPython 3.11.16 interpreter at: .venv/bin/python
+Creating virtual environment at: runtime/phase2-install-env
+Activate with: source runtime/phase2-install-env/bin/activate
+Using Python 3.11.16 environment at: runtime/phase2-install-env
+Resolved 18 packages in 1.98s
+Installed 18 packages in 146ms
+ + annotated-types==0.8.0
+ + cloudpickle==3.1.2
+ + joblib==1.6.0
+ + narwhals==2.28.0
+ + networkx==3.6.1
+ + numpy==2.4.6
+ + pandas==2.3.3
+ + pydantic==2.14.1
+ + pydantic-core==2.50.1
+ + python-dateutil==3.0.0
+ + pytz==2026.5
+ + scikit-learn==1.9.1
+ + scipy==1.17.1
+ + six==1.17.0
+ + threadpoolctl==3.7.0
+ + typing-extensions==4.16.0
+ + typing-inspection==0.4.4
+ + tzdata==2026.5
+Using Python 3.11.16 environment at: runtime/phase2-install-env
+Resolved 1 package in 1ms
+Prepared 1 package in 5ms
+Installed 1 package in 2ms
+ + algofactory==0.2.0 (from file:///Users/northchar/Documents/Codex/AlgoFactory/runtime/phase2-dist/algofactory-0.2.0-py3-none-any.whl)

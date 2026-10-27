@@ -1,0 +1,23 @@
+{
+  "base_image_digest": "python@sha256:ae952e0a57138a4317b9b61caaa19a8217c2f356803f8d7e63aad08769950937",
+  "container_environment": {
+    "machine": "aarch64",
+    "packages": {
+      "networkx": "3.6.1",
+      "numpy": "2.4.6",
+      "pandas": "2.3.3",
+      "pydantic": "2.14.1",
+      "scikit-learn": "1.9.1"
+    },
+    "python": "3.11.18"
+  },
+  "environment": {
+    "architecture": "aarch64",
+    "os_type": "linux",
+    "server_version": "29.9.2"
+  },
+  "image_id": "sha256:3e38f1f7159f74f13db8bfe895fb036601d8e016549b2cf3f657d0e152e2021a",
+  "requirements_sha256": "0c0414e2cd14c995a02218fcebe3973a19eaa7c5a4879e7994926a4e13697f8d",
+  "schema_version": 1,
+  "worker_sha256": "15cf643fd6f9cee694409cb030ca346d07af396b8c8123a3ffca6d801960161f"
+}

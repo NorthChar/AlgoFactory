@@ -39,4 +39,23 @@ D 扩展：合成回归任务运行非空验证，使用 MAE/RMSE；新增一个
 | Python 3.11 ARM64 依赖锁与独立安装 | verified | uv.lock、requirements 文件、examples/phase1/installation.json |
 | 真实外部 API 抽取 | blocked | 未配置端点、模型、密钥与价格；不作为已通过证据 |
 
-统一命令、提交号、Asia/Shanghai 时间、环境、代码和产物散列见 examples/phase1/verification.json。Phase 1 之外的算法闭环、隔离执行和最终 Gate 仍待后续验收。
+统一命令、提交号、Asia/Shanghai 时间、环境、代码和产物散列见 examples/phase1/verification.json。Phase 1 证据保持原样；算法闭环与隔离执行见下方 Phase 2 记录，完整项目 Gate 仍待后续验收。
+
+
+## Phase 2 Mock 阶段退出记录
+
+2026-10-27 在 macOS ARM64 / Python 3.11.16 主机及 Docker Linux ARM64 / Python 3.11.18 容器完成验收。101 项测试通过，0 失败、0 错误、0 跳过。代码版本、命令、精确时间及散列见 [verification.json](../examples/phase2/verification.json)。
+
+| 检查项 | 状态 | 证据 |
+| --- | --- | --- |
+| 固定需求→检索→规划→生成→真实 Docker→独立评分→回写 | verified | examples/phase2/normal/ |
+| 相同数据/候选/协议重复运行，指标一致 | verified | examples/phase2/repeat/ |
+| 接口缺失、危险代码、非法响应明确失败且不进入测试 | verified | missing-interface/、unsafe-code/、invalid-response/ |
+| 冻结阈值、数据指纹、标签隔离、一次测试阶段 | verified | dataset/protocol.json、normal/selection.json、test-access.json、容器证据 |
+| 事务回写、重开查询及 GraphML 无损重载 | verified | knowledge.sqlite、knowledge.json、knowledge.graphml、tests.xml |
+| 同机全新环境 wheel 安装及容器锁定依赖安装 | verified | installation.json、docker-image.json |
+| Mock/API 共用编排器，模拟 API 传输全流程 | verified | tests/test_phase2.py；不属于真实服务证据 |
+| 外部 LLM API 真实闭环 | blocked | 按当前约定使用 Mock，未配置或调用真实服务 |
+| 自动修复、多候选比较及经验复用 | planned | Phase 3–4 |
+
+超时、OOM、容器清理失败使用模拟 Docker 响应测试错误处理，未声称实际资源压测。G2 仍需真实 API、修复与比较；G3 的多候选同协议比较留待 Phase 3。所有阶段证据均不代表 G1–G5 整体通过。

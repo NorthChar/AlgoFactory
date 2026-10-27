@@ -1,0 +1,25 @@
+{
+  "artifacts_sha256": {
+    "data-manifest.json": "96ddaae1d1e4e74f249bade0c67880ce45189b86bfbfd9c2b415a60c7d3153dd",
+    "decisions.json": "5239b2c6f117dc93c0e75a0ecc0974ea7670be2bb39ae062e21f54512e696dee",
+    "protocol.json": "c03428a7044fcd7b8df044531a3496f4ddd515a4890337f4782b847fa6bce601",
+    "provider-audit.json": "ccb4241c2b56cbb7fbf30bc45da40a99eaf2a650e16d5367b01da6ef4220f06b",
+    "trace.json": "4b7feaa48dba6e0139f0802c93fb28e49d6ae7a5197c5c59bf4a03522e518ac7"
+  },
+  "code_hash": null,
+  "data_fingerprint": "3c6161603386e4e7921699b51a06caff3ef1bcf9fa4a14806ef006b0f721caff",
+  "error_category": "invalid_structured_response",
+  "execution_evidence": [],
+  "persisted": true,
+  "provider_mode": "mock",
+  "split_id": "split:bcadf9303a79e6ed36975d7f6e0044e5c0d93386438b1430a7cdf1709f78b48b",
+  "status": "failed",
+  "test_attempted": false,
+  "thresholds": {
+    "f1": 0.59,
+    "precision": 0.64,
+    "recall": 0.55,
+    "roc_auc": 0.75
+  },
+  "workflow_id": "workflow:282f2e27f812432d8edb0528483b91fa"
+}

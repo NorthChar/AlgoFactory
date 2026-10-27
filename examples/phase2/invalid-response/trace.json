@@ -1,0 +1,35 @@
+[
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "收到显式任务，开始单候选流程",
+    "sequence": 0,
+    "source_ids": [],
+    "state": "received",
+    "timestamp": "2026-10-27T21:13:00.176169+08:00",
+    "workflow_id": "workflow:282f2e27f812432d8edb0528483b91fa"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": "116ca26a5d71fa284c553e2b72a781ee6df859e6d6389878c587bdf1adb1fd77",
+    "reason": "结果已通过事务写入知识库；失败记录保留失败状态",
+    "sequence": 1,
+    "source_ids": [],
+    "state": "persisted",
+    "timestamp": "2026-10-27T21:13:00.182778+08:00",
+    "workflow_id": "workflow:282f2e27f812432d8edb0528483b91fa"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": "116ca26a5d71fa284c553e2b72a781ee6df859e6d6389878c587bdf1adb1fd77",
+    "reason": "invalid_structured_response",
+    "sequence": 2,
+    "source_ids": [],
+    "state": "failed",
+    "timestamp": "2026-10-27T21:13:00.183230+08:00",
+    "workflow_id": "workflow:282f2e27f812432d8edb0528483b91fa"
+  }
+]

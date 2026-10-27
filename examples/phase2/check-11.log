@@ -1,0 +1,10 @@
+{
+  "status": "failed",
+  "error_category": "invalid_structured_response",
+  "workflow_id": "workflow:282f2e27f812432d8edb0528483b91fa",
+  "persisted": true,
+  "report_json": "/Users/northchar/Documents/Codex/AlgoFactory/examples/phase2/invalid-response/report.json",
+  "report_markdown": "/Users/northchar/Documents/Codex/AlgoFactory/examples/phase2/invalid-response/report.md",
+  "validation_metrics": {},
+  "test_metrics": {}
+}

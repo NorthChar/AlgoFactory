@@ -64,3 +64,6 @@ uv sync --frozen --python 3.11
 目标目录必须为空。verification.json 汇总命令、测试数量、时间、提交号、代码散列、环境和产物散列。标准留档目录为 examples/phase2；迁移项目路径后，旧报告中的绝对运行路径仅为历史证据，复现应使用新目录。
 
 当前 APIProvider 已有 `demo --mode api` 入口，并与 Mock 共用编排器。真实调用需要按 phase1.md 配置端点、模型、密钥、价格和预算，再独立验收；不自动回退到 Mock。Phase 3 下一步为缺少 predict_proba 等失败后的有界修复、版本追踪及至少两个候选的同协议比较。G1–G5 的完整范围仍未通过。
+
+
+阶段验收已通过：101 项测试、零跳过；独立测试 F1 0.666667、ROC-AUC 0.816260、Precision 0.760870、Recall 0.593220，均达到冻结门槛。参见 [正常报告](../examples/phase2/normal/report.md)、[故障报告](../examples/phase2/missing-interface/report.md) 和 [完整证据](../examples/phase2/verification.json)。
