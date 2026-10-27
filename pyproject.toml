@@ -4,16 +4,17 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "algofactory"
-version = "0.1.0"
+version = "0.2.0"
 description = "Knowledge and validation driven algorithm factory prototype"
 requires-python = ">=3.11"
-dependencies = ["pydantic>=2.12,<3", "networkx>=3.4,<4"]
+dependencies = ["pydantic>=2.12,<3", "networkx>=3.4,<4", "scikit-learn>=1.5,<2", "pandas>=2.2,<3", "numpy>=2,<3"]
 
 [dependency-groups]
 dev = ["pytest>=8,<10", "ruff>=0.11,<1"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = ["docker: real Docker sandbox integration tests (enable with ALGOFACTORY_DOCKER_TESTS=1)"]
 
 [tool.ruff]
 target-version = "py311"
@@ -30,3 +31,4 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 "algofactory.llm" = ["fixtures/*.json"]
+"algofactory.generation" = ["templates/*.txt"]

@@ -1,3 +1,3 @@
-"""AlgoFactory knowledge foundation; algorithm workflows begin in Phase 2."""
+"""AlgoFactory knowledge foundation and isolated single-candidate workflows."""
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"

@@ -1,6 +1,6 @@
 # AlgoFactory
 
-面向客户流失预测的 AI Agent 算法能力工厂原型。目标是能力抽取、代码复刻、独立验证、修复与经验回写。当前已实现 Phase 1 知识层、数据契约和 Mock/API Provider。算法生成与执行闭环从 Phase 2 开始，Streamlit 尚未实现。
+面向客户流失预测的 AI Agent 算法能力工厂原型。目标是能力抽取、代码复刻、独立验证、修复与经验回写。当前已实现 Phase 2 单候选闭环：需求解析、知识检索、代码生成、Docker 隔离执行、独立评分及结果回写。Mock 使用固定响应，训练与评分真实执行。真实 API、自动修复、多候选比较和 Streamlit 仍待后续阶段。
 
 ## 文档入口
 
@@ -10,6 +10,8 @@
 - [架构、图谱及数据契约](docs/architecture.md)
 - [验收 Gate 与演示协议](docs/acceptance-gates.md)
 - [Phase 1 使用与验收说明](docs/phase1.md) 与 [实际验证证据](examples/phase1/verification.json)
+
+- [Phase 2 Mock 闭环指南](docs/phase2.md) 与 [运行报告](examples/phase2/normal/report.md)
 
 ## 安装与运行
 
@@ -36,6 +38,26 @@ python3.11 -m venv .venv
 
 requirements.txt 是运行依赖，requirements-dev.txt 另含测试与检查工具；两者从 uv.lock 导出，带版本和文件散列。构建工具由 pyproject.toml 声明。
 
+## Mock 算法闭环
+
+先安装并启动 Docker Desktop，然后在项目根目录运行：
+
+```sh
+.venv/bin/python scripts/prepare_sandbox.py
+.venv/bin/python -m algofactory.cli demo --mode mock
+```
+
+首次构建镜像需要联网，生成算法运行时禁网。默认生成 1,500 行客户流失合成数据，以 60/20/20 分层划分；训练 Logistic Regression，输出四维验证报告和知识库记录。每次运行生成新的目录，并打印报告路径。不需要 LLM API Key。
+
+```sh
+# 明确注入缺少概率预测接口的故障，预期退出码为 1
+.venv/bin/python -m algofactory.cli demo --mode mock --fault missing_predict_proba
+# 全量验收，目标目录必须为空；包含真实 Docker 测试和正常/失败示例
+.venv/bin/python scripts/verify_phase2.py --output-dir runtime/phase2-verification
+```
+
+Mock 只接受内置固定需求“根据客户特征预测客户是否流失，输出流失类别和概率。”；不表示模型已能理解任意自然语言。数据与阈值校准规则见 [Phase 2 指南](docs/phase2.md)。
+
 ## Phase 1 架构与示例
 
 ```text
@@ -56,24 +78,26 @@ Mock 使用人工编写、按原文散列匹配的固定 fixture。未知文档�
 
 ```sh
 .venv/bin/python -m pytest -q
+# 已准备 Docker 镜像时，显式启用真实容器测试
+ALGOFACTORY_DOCKER_TESTS=1 .venv/bin/python -m pytest -q
 .venv/bin/python -m ruff check src tests scripts
 .venv/bin/python -m algofactory.cli schemas --output-dir runtime/schemas
 ```
 
-验收脚本生成知识 JSON、SQLite、GraphML、检索结果、调用轨迹、测试日志和 verification.json。报告记录命令、环境、代码提交/散列及产物散列。当前证据只覆盖 Phase 1；算法指标、隔离运行、多候选比较和经验复用尚未验收。
+验收脚本生成知识 JSON、SQLite、GraphML、检索结果、调用轨迹、测试日志和 verification.json。报告记录命令、环境、代码提交/散列及产物散列。Phase 1 证据保留在 examples/phase1；Phase 2 的完整验收脚本包含 Docker 实跑、独立指标、失败拦截和回写。未启用 Docker 的普通测试会跳过容器用例，不能作为闭环验收。
 
 ## 最终交付进度
 
 1. 背景和目标：见本页及实施计划。
-2. 架构和模块：知识基础层已实现，编排器和三角色决策待 Phase 2–4。
-3. 图谱 Schema 和示例：已有类型化 Schema、持久知识与可重载导出。
-4. Agent 工作流：已有数据接口，算法工作流待 Phase 2。
-5. 环境与运行：Phase 1 安装、测试、CLI 和 API 配置已提供。
-6. 示例数据和任务：已有模拟业务文档；合成 CSV 与 Demo A–D 待后续阶段。
-7. 生成代码示例：待 Phase 2 实际运行产生。
-8. 验证结果与报告：已有知识层和 Provider 契约报告，尚无算法成绩。
-9. 挑战和解决方案：已处理来源失配、关系非法、重复导入、事务失败和 Provider 异常；后续处理执行隔离与测试泄漏。
-10. 扩展方向：按计划逐步加入闭环、修复、经验复用、任务配置和插件。
+2. 架构和模块：契约、知识、编排、生成、隔离执行、验证及回写已实现。
+3. 图谱 Schema 和示例：类型化 Schema、持久知识与可重载导出。
+4. Agent 工作流：单候选流程及角色调用轨迹；Review 当前由确定性程序判断。
+5. 环境与运行：Python 3.11、锁定依赖、Docker、CLI 和 API 配置指南。
+6. 示例数据和任务：业务文档及确定性合成 CSV；正常与故障案例。
+7. 生成代码示例：见 examples/phase2/normal/candidate.py。
+8. 验证结果与报告：四维结果、验证/测试指标及失败报告见 examples/phase2。
+9. 挑战和解决方案：来源追踪、事务失败、隔离运行、测试标签隔离及冻结门槛。
+10. 扩展方向：Phase 3 加入有界修复与候选比较，之后实现经验复用、界面与插件。
 
 ## 工作区与版本管理
 

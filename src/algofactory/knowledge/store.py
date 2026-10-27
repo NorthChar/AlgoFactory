@@ -27,7 +27,7 @@ class KnowledgeStore:
         self.connection.row_factory = sqlite3.Row
         self.connection.execute("PRAGMA foreign_keys = ON")
         version = self.connection.execute("PRAGMA user_version").fetchone()[0]
-        if version not in {0, 1}:
+        if version not in {0, 1, 2}:
             self.connection.close()
             raise ValueError("Unsupported database schema version")
         self.connection.executescript("""
@@ -68,7 +68,11 @@ class KnowledgeStore:
             BEGIN
                 SELECT RAISE(ABORT, 'relations are immutable');
             END;
-            PRAGMA user_version = 1;
+            CREATE TABLE IF NOT EXISTS workflow_runs (
+                workflow_id TEXT PRIMARY KEY, status TEXT NOT NULL,
+                payload TEXT NOT NULL
+            );
+            PRAGMA user_version = 2;
         """)
         with self.connection:
             self.connection.executemany(
@@ -98,7 +102,9 @@ class KnowledgeStore:
             },
         }
 
-    def put_batch(self, batch: KnowledgeBatch) -> dict[str, int]:
+    def put_batch(
+        self, batch: KnowledgeBatch, *, workflow_record: dict | None = None
+    ) -> dict[str, int]:
         # Revalidate serialized input in case a caller mutated a nested list after creation.
         incoming = KnowledgeBatch.model_validate_json(batch.model_dump_json()).model_dump(
             mode="json"
@@ -141,7 +147,33 @@ class KnowledgeStore:
                         canonical(obj),
                     ),
                 )
+            if workflow_record is not None:
+                self._insert_workflow(workflow_record)
         return {table: len(items) for table, items in additions.items()}
+
+    def _insert_workflow(self, record: dict):
+        payload = canonical(record)
+        existing = self.connection.execute(
+            "SELECT payload FROM workflow_runs WHERE workflow_id = ?", (record["workflow_id"],)
+        ).fetchone()
+        if existing is not None and existing[0] != payload:
+            raise KnowledgeConflict("Workflow record is immutable")
+        self.connection.execute(
+            "INSERT OR IGNORE INTO workflow_runs VALUES (?, ?, ?)",
+            (record["workflow_id"], record["status"], payload),
+        )
+
+    def record_workflow(self, record: dict):
+        with self.connection:
+            self._insert_workflow(record)
+
+    def get_workflow(self, workflow_id: str) -> dict:
+        row = self.connection.execute(
+            "SELECT payload FROM workflow_runs WHERE workflow_id = ?", (workflow_id,)
+        ).fetchone()
+        if row is None:
+            raise KeyError(workflow_id)
+        return json.loads(row[0])
 
     def evidence(self, identifier: str) -> dict:
         row = self.connection.execute(

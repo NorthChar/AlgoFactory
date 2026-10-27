@@ -22,6 +22,9 @@ result = subprocess.run(
     text=True,
     check=True,
 )
-if json.loads(result.stdout)["core_workflow"] != "not_implemented":
+if json.loads(result.stdout)["core_workflow"] not in {
+    "not_implemented",
+    "implemented_docker_required",
+}:
     raise SystemExit("Unexpected scaffold status")
 print("PASS: source hashes, documents and scaffold CLI; no algorithm acceptance performed")

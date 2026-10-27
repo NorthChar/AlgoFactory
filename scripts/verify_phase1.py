@@ -51,7 +51,17 @@ def main():
         [sys.executable, "-m", "ruff", "check", "src", "tests", "scripts"],
         [sys.executable, "-m", "ruff", "format", "--check", "src", "tests", "scripts"],
         [sys.executable, "scripts/check_scaffold.py"],
-        [sys.executable, "-m", "pytest", "-q", f"--junitxml={out / 'tests.xml'}"],
+        [
+            sys.executable,
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_contracts.py",
+            "tests/test_knowledge.py",
+            "tests/test_providers.py",
+            "tests/test_cli.py",
+            f"--junitxml={out / 'tests.xml'}",
+        ],
     ]
     command_records = []
     for index, command in enumerate(commands, 1):
@@ -163,7 +173,7 @@ def main():
             "status": "blocked",
             "reason": "No real endpoint/model/credentials/prices configured; local HTTP contract tests only.",
         },
-        "algorithm_workflow": "not_implemented_phase2",
+        "algorithm_workflow": "not_evaluated_by_phase1_verifier",
         "global_gates": "not_passed",
         "artifacts_sha256": {
             name: hashlib.sha256((out / name).read_bytes()).hexdigest() for name in artifacts

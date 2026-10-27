@@ -1,4 +1,4 @@
-"""Phase 1 knowledge commands. Failures return JSON and a nonzero exit status."""
+"""Knowledge and isolated algorithm workflows with machine-readable outcomes."""
 
 import argparse
 import json
@@ -12,6 +12,25 @@ def parser():
     root = argparse.ArgumentParser(description="AlgoFactory 知识抽取与检索")
     commands = root.add_subparsers(dest="command", required=True)
     commands.add_parser("status", help="显示已实现阶段")
+    commands.add_parser("sandbox-status", help="检查 Docker 是否可用")
+    data = commands.add_parser("prepare-data", help="生成固定种子的合成客户数据")
+    data.add_argument("--output-dir", type=Path, default=Path("runtime/phase2-data"))
+    data.add_argument("--rows", type=int, default=1500)
+    data.add_argument("--seed", type=int, default=42)
+    calibration = commands.add_parser("calibrate", help="只用训练/验证集校准并冻结指标门槛")
+    calibration.add_argument("--dataset-dir", type=Path, default=Path("runtime/phase2-data"))
+    demo = commands.add_parser("demo", help="单候选生成、Docker 执行、独立评分与回写")
+    demo.add_argument("--mode", choices=["mock", "api"], default="mock")
+    demo.add_argument("--request", default="根据客户特征预测客户是否流失，输出流失类别和概率。")
+    demo.add_argument("--output-dir", type=Path)
+    demo.add_argument("--dataset-dir", type=Path, default=Path("runtime/phase2-data"))
+    demo.add_argument("--db", type=Path, default=Path("runtime/phase2.sqlite"))
+    demo.add_argument("--image-approval", type=Path, default=Path("runtime/docker-image.json"))
+    demo.add_argument("--knowledge-document", type=Path, default=Path("data/customer_churn.txt"))
+    demo.add_argument("--fault", choices=["missing_predict_proba", "unsafe_code", "invalid_json"])
+    workflow = commands.add_parser("workflow-show", help="查询持久化的流程结果")
+    workflow.add_argument("workflow_id")
+    workflow.add_argument("--db", type=Path, default=Path("runtime/phase2.sqlite"))
     ingest = commands.add_parser("ingest", help="从 UTF-8 业务文档抽取知识并入库")
     ingest.add_argument("document", type=Path)
     ingest.add_argument(
@@ -52,9 +71,9 @@ def parser():
 def run(args):
     if args.command == "status":
         return {
-            "phase": 1,
-            "status": "knowledge_layer",
-            "core_workflow": "not_implemented",
+            "phase": 2,
+            "status": "single_candidate_workflow",
+            "core_workflow": "implemented_docker_required",
             "live_api": "requires_configuration_and_verification",
         }
     from importlib.resources import files
@@ -65,6 +84,53 @@ def run(args):
     from algofactory.llm.providers import APIConfig, APIProvider, MockProvider, ProviderError
     from algofactory.schemas import contracts
     from algofactory.schemas.knowledge import Extraction, KnowledgeBatch, SourceDocument
+
+    if args.command in {"prepare-data", "calibrate", "demo", "sandbox-status"}:
+        from algofactory.datasets import generate_dataset
+        from algofactory.execution.docker import docker_ready, locate_docker
+        from algofactory.llm.workflow_mock import MockWorkflowProvider
+        from algofactory.orchestrator import run_workflow
+        from algofactory.validation.protocol import calibrate
+
+        if args.command == "sandbox-status":
+            return docker_ready(locate_docker())
+        if args.command == "prepare-data":
+            return generate_dataset(args.output_dir, args.rows, args.seed)
+        if args.command == "calibrate":
+            return calibrate(args.dataset_dir, args.dataset_dir / "protocol.json")
+        if args.fault and args.mode != "mock":
+            raise ValueError("Explicit fault fixtures are only available in Mock mode")
+        if not args.dataset_dir.exists():
+            generate_dataset(args.dataset_dir)
+        if args.output_dir is None:
+            import uuid
+
+            args.output_dir = Path("runtime/runs") / uuid.uuid4().hex
+        provider = (
+            MockWorkflowProvider(args.fault)
+            if args.mode == "mock"
+            else APIProvider(APIConfig.from_env())
+        )
+        report = run_workflow(
+            directory=args.output_dir.resolve(),
+            dataset_dir=args.dataset_dir.resolve(),
+            db_path=args.db.resolve(),
+            approval_path=args.image_approval.resolve(),
+            requirements_path=Path("requirements.txt").resolve(),
+            knowledge_document=args.knowledge_document.resolve(),
+            request=args.request,
+            provider=provider,
+        )
+        return {
+            "status": report["status"],
+            "error_category": report["error_category"],
+            "workflow_id": report["workflow_id"],
+            "persisted": report["persisted"],
+            "report_json": str(args.output_dir / "report.json"),
+            "report_markdown": str(args.output_dir / "report.md"),
+            "validation_metrics": report.get("validation", {}).get("validation_metrics", {}),
+            "test_metrics": report.get("validation", {}).get("test_metrics", {}),
+        }
 
     if args.command == "schemas":
         args.output_dir.mkdir(parents=True, exist_ok=True)
@@ -111,9 +177,11 @@ def run(args):
                     "provider_mode": provider.mode,
                     "audit": [r.model_dump() for r in provider.audit],
                 }
-    if args.command in {"search", "show", "export"} and not args.db.is_file():
+    if args.command in {"search", "show", "export", "workflow-show"} and not args.db.is_file():
         raise ValueError("Knowledge database does not exist; ingest a document first")
     with KnowledgeStore(args.db) as store:
+        if args.command == "workflow-show":
+            return store.get_workflow(args.workflow_id)
         if args.command == "search":
             return {
                 "results": store.search(args.text, args.task_type, args.entity_type, args.limit)
@@ -148,7 +216,7 @@ def main():
     except (ValueError, OSError, KeyError, sqlite3.Error, RuntimeError) as exc:
         # Do not echo raw validation/HTTP errors, which may contain request text or secrets.
         result = {"status": "failed", "error": getattr(exc, "category", type(exc).__name__)}
-    failed = result.get("status") == "failed"
+    failed = result.get("status") in {"failed", "stopped"}
     print(
         json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False),
         file=sys.stderr if failed else sys.stdout,

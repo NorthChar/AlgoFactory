@@ -48,12 +48,22 @@ TaskSpec 包含 task_id、task_type、target、feature_schema、data_fingerprint
 
 ## 决策记录
 
-采用 SQLite + NetworkX 而非独立图数据库以减少本地运维；采用同进程三角色而非分布式消息系统以便调试；不引入 Beam/MCTS，先用有界候选策略。Phase 1 已实现 schemas、llm、knowledge 与知识 CLI；编排器、三角色决策、算法生成、执行、验证和回写留待后续阶段。
+采用 SQLite + NetworkX 而非独立图数据库以减少本地运维；采用同进程三角色而非分布式消息系统以便调试；不引入 Beam/MCTS，先用有界候选策略。Phase 2 已实现 orchestrator、datasets、generation、execution、validation、experience.py 与 reporting。Knowledge/Builder 使用 Provider 结构化调用，Review 为确定性 ACCEPT/STOP；独立 LLM Review、修复和经验提炼留待后续阶段。
 
 ## Phase 1 落地说明
 
-实现细节与操作见 [Phase 1 指南](phase1.md)。SQLite 是事实源，NetworkX MultiDiGraph 为可重建视图；JSON/GraphML 保留完整类型化 payload 和归档原文。schema_version 和 SQLite user_version 均为 1。
+实现细节与操作见 [Phase 1 指南](phase1.md)。SQLite 是事实源，NetworkX MultiDiGraph 为可重建视图；JSON/GraphML 保留完整类型化 payload 和归档原文。知识 payload 的 schema_version 保持 1；Phase 2 将 SQLite user_version 升为 2，新增 workflow_runs 表，打开旧库时迁移并保留已有知识。
 
 来源采用内容散列 ID，实体和关系使用来源命名空间。source_span 是原文 Unicode 字符的左闭右开区间及精确引用。写入前检查引用、关系端点、ID 冲突、历史验证与实现/划分关联、经验状态和版本环；一个批次在同一事务中提交，重复内容幂等返回。文档抽取只允许 Task/Capability/Algorithm/Dependency，禁止把文档中的模型自述当成真实运行历史。
 
 Provider 为同一结构化调用接口，Mock 按文件散列重放显式 fixture，API 使用 HTTPS chat-completions 兼容接口。两模式经过相同的响应和图谱校验；有限重试、调用数和保守费用预留独立于模型响应。真实服务调用尚待配置和验收，本地 HTTP 测试不能替代它。
+
+## Phase 2 执行与评分边界
+
+MockWorkflowProvider 和 APIProvider 共用 run_workflow；仅 Provider 的响应来源不同。前者固定需求、知识 fixture 和算法模板，未知需求明确失败。API 适配器用模拟传输测试整条编排，但不代表外部服务实测。
+
+验证规则先由仓库自有基线在训练/验证集校准并保存散列。候选源文件通过受限 AST 检查，只有 Docker 内的 worker 会导入它。主机不加载生成模块，仅校验输出并用未挂载的标签独立评分。每个容器只看到代码、训练集、当前评估特征、配置四个输入文件；不可接触评估标签或整个工作目录。
+
+验证阶段执行两次相同种子训练及异常输入检查；通过后锁定代码/数据/规则，写入一次性测试预约，再进行最终测试。一次测试指每个独立 workflow 的一次测试阶段；重复性实验有不同 workflow_id，禁止据其测试成绩调参。Docker 不可用、镜像过期、超时、资源超限、接口异常和回写失败均不能 ACCEPT。
+
+实现、数据、验证运行及失败实体和 workflow_runs 记录在同一事务写入。执行证据作为来源文本，使用内容散列命名空间；实际分数保留 ValidationResult。Phase 2 不创建 Experience，不将失败诊断自动标为已验证经验。
