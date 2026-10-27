@@ -157,7 +157,11 @@ def main():
                 ROOT / "data/customer_churn.txt",
             }
         )
-        summary["code_sha256"] = {str(p.relative_to(ROOT)): sha256_file(p) for p in code_files}
+        summary["code_sha256"] = {
+            str(p.relative_to(ROOT)): sha256_file(p)
+            for p in code_files
+            if not any(part.endswith(".egg-info") for part in p.parts)
+        }
         summary["git_commit"] = subprocess.check_output(
             ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True
         ).strip()

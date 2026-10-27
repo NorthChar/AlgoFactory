@@ -327,11 +327,6 @@
     "scripts/prepare_sandbox.py": "f67e326b7789593678f9c97c643a49aabf9584e5af13c660fe071c9d3af8f36b",
     "scripts/verify_phase1.py": "353ba36af9f8e4016bbee96ae61cb12a3384d4e1605022193fecfd8136fea38e",
     "scripts/verify_phase2.py": "e6c5cb7b37d2e608f2055c0cb33b9c5985df37a91d174224f090dcdface0c06c",
-    "src/algofactory.egg-info/SOURCES.txt": "725c9c85299ff5321ea3cfe48e31c33fa7bb67d82e3064aae14aacb71b841954",
-    "src/algofactory.egg-info/dependency_links.txt": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
-    "src/algofactory.egg-info/entry_points.txt": "66e597a48926aa55c21b70c8894822a17775888ab48e6cec5ad35cea4e7a6ba6",
-    "src/algofactory.egg-info/requires.txt": "75f7184f03c7bdda215bdd0c71d756b3ae2917e8411c4a726953384112ef5dac",
-    "src/algofactory.egg-info/top_level.txt": "bf23b9100c8e1c1eb15a9de35490fd5c1d4fcbb952e1dccb8b7b84406080c694",
     "src/algofactory/__init__.py": "f2626bbbe239f050e821d25581b0c69fb81ccb4d7d6f9ec5356007ea62a07983",
     "src/algofactory/cli.py": "ace7c46c6970a783fd2ec3d7e957cd6daf29676f185997886df8460c8ffbc1a0",
     "src/algofactory/datasets.py": "3ead8e8bd4b9b6acdae769b58b78e75f73f3dc5f8be1359385860a6e1ca4a172",
@@ -406,6 +401,16 @@
   },
   "live_api": "not_run",
   "phase": 2,
+  "provenance_correction": {
+    "excluded_generated_metadata": [
+      "src/algofactory.egg-info/SOURCES.txt",
+      "src/algofactory.egg-info/dependency_links.txt",
+      "src/algofactory.egg-info/entry_points.txt",
+      "src/algofactory.egg-info/requires.txt",
+      "src/algofactory.egg-info/top_level.txt"
+    ],
+    "reason": "Setuptools egg-info is ignored build output, not source. Source hashes verified against original recorded Git commit; runtime code and test results unchanged. Verifier now excludes generated egg-info."
+  },
   "scope": "Mock LLM with real isolated execution; single candidate, no repair",
   "status": "passed",
   "supplemental_installation": "installation.json",
