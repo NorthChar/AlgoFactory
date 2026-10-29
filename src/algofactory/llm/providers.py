@@ -38,11 +38,13 @@ class ProviderError(RuntimeError):
         *,
         http_status: int | None = None,
         service_error_code: str | None = None,
+        diagnostics: list[dict] | None = None,
     ):
         self.category = category
         self.retryable = retryable
         self.http_status = http_status
         self.service_error_code = service_error_code
+        self.diagnostics = diagnostics or []
         super().__init__(f"Provider failed: {category}")
 
 

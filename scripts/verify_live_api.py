@@ -28,6 +28,9 @@ def main():
     parser.add_argument("--env-file", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--dataset-dir", type=Path, default=ROOT / "runtime/banking77-data")
+    parser.add_argument(
+        "--skip-smoke", action="store_true", help="已确认连接时省略额外的连通性调用"
+    )
     args = parser.parse_args()
     out = args.output_dir.resolve()
     out.mkdir(parents=True, exist_ok=False)
@@ -35,7 +38,7 @@ def main():
         "status": "failed",
         "error_category": None,
         "started_at": datetime.now(ZoneInfo("Asia/Shanghai")).isoformat(),
-        "request_limit": 5,
+        "request_limit": 4 if args.skip_smoke else 5,
         "automatic_retries": 0,
         "candidate_limit": 1,
         "code_sha256": {
@@ -54,6 +57,7 @@ def main():
     provider = None
     try:
         config = APIConfig.from_env(args.env_file)
+        summary["request_limit"] = min(config.max_calls, 4) + (not args.skip_smoke)
         # Validate local prerequisites before spending any tokens.
         manifest = verify_dataset(args.dataset_dir)
         if manifest.get("task_profile") != "banking77":
@@ -63,23 +67,29 @@ def main():
         provider = APIProvider(
             config.model_copy(
                 update={
-                    "max_calls": min(config.max_calls, 4) + 1,
+                    "max_calls": summary["request_limit"],
                     "max_retries": 0,
-                    "max_output_tokens": min(config.max_output_tokens, 256),
+                    "max_output_tokens": min(
+                        config.max_output_tokens, 8192 if args.skip_smoke else 256
+                    ),
                 }
             )
         )
-        provider.complete(
-            ProviderRequest(
-                role="builder",
-                operation="connection_check",
-                instruction="Return JSON with status equal to ok.",
-                source={},
-            ),
-            SmokeReply,
-        )
-        summary["smoke_status"] = "passed"
-        write_json(out / "smoke-audit.json", [a.model_dump(mode="json") for a in provider.audit])
+        summary["smoke_status"] = "skipped" if args.skip_smoke else "not_run"
+        if not args.skip_smoke:
+            provider.complete(
+                ProviderRequest(
+                    role="builder",
+                    operation="connection_check",
+                    instruction="Return JSON with status equal to ok.",
+                    source={},
+                ),
+                SmokeReply,
+            )
+            summary["smoke_status"] = "passed"
+            write_json(
+                out / "smoke-audit.json", [a.model_dump(mode="json") for a in provider.audit]
+            )
         provider.config = provider.config.model_copy(
             update={
                 "max_output_tokens": min(config.max_output_tokens, 8192),

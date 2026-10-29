@@ -2,7 +2,7 @@
 
 AI Agent 算法能力工厂原型，目标是能力抽取、代码复刻、独立验证、修复与经验回写。2026-10-29 确定主案例为“基于 BANKING77 的客服意图分类算法生成与验证”，已有客户流失案例保留为轻量兼容性测试，详见 [ADR-001](docs/decisions/0001-banking77-main-case.md)。
 
-Phase 2.5 已实现 BANKING77 文本多分类与客户流失共享的单候选流程，G2.5 已通过：124 项测试零失败、零跳过，BANKING77 最终测试 Macro-F1 0.8787、Accuracy 87.82%，客户流失指标与历史基线一致。训练、Docker 执行、主机独立评分和回写均使用同一核心；Phase 3 修复和候选比较也已通过 Mock 阶段验收：141 项测试、零失败、零跳过。Azure GPT-4o 已接通，首次真实流程在知识校验处停止，完整 API 闭环、经验复用和 Streamlit 仍待验收。
+Phase 2.5 已实现 BANKING77 文本多分类与客户流失共享的单候选流程，G2.5 已通过：124 项测试零失败、零跳过，BANKING77 最终测试 Macro-F1 0.8787、Accuracy 87.82%，客户流失指标与历史基线一致。训练、Docker 执行、主机独立评分和回写均使用同一核心；Phase 3 修复和候选比较也已通过 Mock 阶段验收：141 项测试、零失败、零跳过。Azure GPT-4o 已接通，知识层修复后真实抽取、校验、入库和检索通过，当前停在算法规划约束检查；完整 API 闭环、经验复用和 Streamlit 仍待验收。
 
 ## 文档入口
 
@@ -100,7 +100,7 @@ UTF-8 业务文档 → Mock/API Provider → Pydantic 契约与原文引用校�
 
 示例关系包括 `Task REQUIRES Capability`、`Algorithm IMPLEMENTS Capability` 和 `Algorithm APPLICABLE_TO Task`。文档引用采用原始字符区间，每条知识保存 source_id、source_span 和 schema_version。完整定义见 [架构](docs/architecture.md)，实际结果见 [知识 JSON](examples/phase1/knowledge.json) 和 [GraphML](examples/phase1/knowledge.graphml)。
 
-Mock 使用人工编写、按原文散列匹配的固定 fixture。未知文档会明确失败；API 使用相同抽取及校验流程，可处理新文档。API 端点、模型、密钥与价格需显式配置，详见 [Phase 1 指南](docs/phase1.md)。Azure GPT-4o Responses 已完成真实连接与需求解析验证；首个业务流程在知识图谱一致性校验处停止，真实闭环仍未通过。配置、用量及失败证据见 [真实 API 接入记录](docs/api-integration.md)。
+Mock 使用人工编写、按原文散列匹配的固定 fixture。未知文档会明确失败；API 使用相同抽取及校验流程，可处理新文档。API 端点、模型、密钥与价格需显式配置，详见 [Phase 1 指南](docs/phase1.md)。Azure GPT-4o Responses 已完成真实连接与知识层单次复测；当前业务流程在算法规划约束检查处停止，真实闭环仍未通过。配置、用量及失败证据见 [真实 API 接入记录](docs/api-integration.md)。
 
 ## 测试与产物
 

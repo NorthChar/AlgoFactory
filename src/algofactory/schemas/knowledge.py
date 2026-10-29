@@ -4,6 +4,7 @@ import hashlib
 from typing import Annotated, Literal
 
 from pydantic import Field, TypeAdapter, model_validator
+from pydantic_core import PydanticCustomError
 
 from .contracts import (
     Contract,
@@ -182,6 +183,25 @@ class Extraction(Contract):
     relations: list[Relation]
 
 
+DocumentEntity = Annotated[
+    TaskEntity | CapabilityEntity | AlgorithmEntity | DependencyEntity,
+    Field(discriminator="type"),
+]
+
+
+class DocumentRelation(Relation):
+    """Only relationships that document extraction can substantiate."""
+
+    type: Literal["REQUIRES", "IMPLEMENTS", "APPLICABLE_TO"]
+
+
+class DocumentExtraction(Extraction):
+    """Narrow provider schema; historical objects belong to trusted run writeback."""
+
+    entities: Annotated[list[DocumentEntity], Field(min_length=1)]
+    relations: list[DocumentRelation]
+
+
 class KnowledgeBatch(Contract):
     sources: Annotated[list[SourceDocument], Field(min_length=1)]
     entities: Annotated[list[Entity], Field(min_length=1)]
@@ -194,30 +214,57 @@ class KnowledgeBatch(Contract):
         objects = [*self.entities, *self.relations]
         ids = [obj.id for obj in objects]
         if len(sources) != len(self.sources) or len(ids) != len(set(ids)):
-            raise ValueError("Source, entity and relation IDs must be unique")
-        for obj in objects:
+            raise PydanticCustomError(
+                "knowledge_duplicate_id", "Source, entity and relation IDs must be unique"
+            )
+        for index, obj in enumerate(objects):
+            location = {
+                "object_kind": "entity" if index < len(self.entities) else "relation",
+                "object_index": index if index < len(self.entities) else index - len(self.entities),
+            }
             source = sources.get(obj.source_id)
             if source is None:
-                raise ValueError("Unknown source reference")
+                raise PydanticCustomError(
+                    "knowledge_unknown_source", "Unknown source reference", location
+                )
             if not obj.id.startswith(f"{source.id}:"):
-                raise ValueError("Knowledge IDs must be namespaced by source ID")
+                raise PydanticCustomError(
+                    "knowledge_id_namespace",
+                    "Knowledge IDs must be namespaced by source ID",
+                    location,
+                )
             span = obj.source_span
             if source.content[span.start : span.end] != span.quote or span.end > len(
                 source.content
             ):
-                raise ValueError("Source span does not match the archived text")
+                raise PydanticCustomError(
+                    "knowledge_source_span_mismatch",
+                    "Source span does not match the archived text",
+                    location,
+                )
         edge_set = set()
-        for edge in self.relations:
+        for index, edge in enumerate(self.relations):
+            location = {"object_kind": "relation", "object_index": index}
             head, tail = entities.get(edge.head_id), entities.get(edge.tail_id)
             if head is None or tail is None:
-                raise ValueError("Relation references an unknown entity")
+                raise PydanticCustomError(
+                    "knowledge_unknown_endpoint", "Relation references an unknown entity", location
+                )
             if (head.type, tail.type) not in RELATION_ENDPOINTS[edge.type]:
-                raise ValueError("Relation type is incompatible with endpoint types")
+                raise PydanticCustomError(
+                    "knowledge_endpoint_type",
+                    "Relation type is incompatible with endpoint types",
+                    location,
+                )
             if edge.head_id == edge.tail_id:
-                raise ValueError("Self-relations are not allowed")
+                raise PydanticCustomError(
+                    "knowledge_self_relation", "Self-relations are not allowed", location
+                )
             triple = (edge.head_id, edge.type, edge.tail_id)
             if triple in edge_set:
-                raise ValueError("Duplicate relation")
+                raise PydanticCustomError(
+                    "knowledge_duplicate_relation", "Duplicate relation", location
+                )
             if edge.type == "DERIVED_FROM":
                 parent = (
                     head.parent_id

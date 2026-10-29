@@ -1,0 +1,63 @@
+[
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "收到显式任务，开始单候选流程",
+    "sequence": 0,
+    "source_ids": [],
+    "state": "received",
+    "timestamp": "2026-10-29T17:20:30.040442+08:00",
+    "workflow_id": "workflow:41b9cb11a9814d30a3c1e73b6735f598"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+    "reason": "需求契约已校验，并绑定数据指纹与冻结规则",
+    "sequence": 1,
+    "source_ids": [],
+    "state": "parsed",
+    "timestamp": "2026-10-29T17:20:35.758882+08:00",
+    "workflow_id": "workflow:41b9cb11a9814d30a3c1e73b6735f598"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+    "reason": "检索到有原文依据的能力与候选算法",
+    "sequence": 2,
+    "source_ids": [
+      "source:3dde8ad7a184814bbf10b4c8afcc4c9bdc739d84d4bcb00a2cb6e4dd1a0ca840"
+    ],
+    "state": "retrieved",
+    "timestamp": "2026-10-29T17:20:50.704022+08:00",
+    "workflow_id": "workflow:41b9cb11a9814d30a3c1e73b6735f598"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+    "reason": "结果已通过事务写入知识库；失败记录保留失败状态",
+    "sequence": 3,
+    "source_ids": [
+      "source:3dde8ad7a184814bbf10b4c8afcc4c9bdc739d84d4bcb00a2cb6e4dd1a0ca840"
+    ],
+    "state": "persisted",
+    "timestamp": "2026-10-29T17:20:54.438780+08:00",
+    "workflow_id": "workflow:41b9cb11a9814d30a3c1e73b6735f598"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+    "reason": "unsupported_phase2_plan",
+    "sequence": 4,
+    "source_ids": [
+      "source:3dde8ad7a184814bbf10b4c8afcc4c9bdc739d84d4bcb00a2cb6e4dd1a0ca840"
+    ],
+    "state": "failed",
+    "timestamp": "2026-10-29T17:20:54.439598+08:00",
+    "workflow_id": "workflow:41b9cb11a9814d30a3c1e73b6735f598"
+  }
+]

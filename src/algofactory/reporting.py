@@ -90,4 +90,16 @@ def save_report(directory: Path, report: dict):
             "修复输入、父版本、修改代码和重新验证结果见 candidates/；统一决策见 decisions.json，排名见 ranking.json（若比较完成）。",
             "",
         ]
+    if report.get("error_details"):
+        lines += [
+            "",
+            "## 知识校验诊断",
+            "",
+            "以下位置按从 0 开始的实体/关系列表索引记录；不包含引用正文。",
+            "",
+        ]
+        for detail in report["error_details"]:
+            lines.append(
+                f"- {detail['rule']}：{detail.get('object_kind', 'graph')} {detail.get('object_index', '')}"
+            )
     (directory / "report.md").write_text("\n".join(lines), encoding="utf-8")

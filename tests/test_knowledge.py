@@ -308,3 +308,86 @@ def test_cyclic_implementation_lineage_rejected():
         )
     with pytest.raises(ValidationError, match="acyclic"):
         KnowledgeBatch.model_validate(data)
+
+
+@pytest.mark.parametrize(
+    "mutation,rule,kind",
+    [
+        ("span", "knowledge_source_span_mismatch", "entity"),
+        ("namespace", "knowledge_id_namespace", "entity"),
+        ("dangling", "knowledge_unknown_endpoint", "relation"),
+        ("edge_type", "knowledge_endpoint_type", "relation"),
+        ("duplicate", "knowledge_duplicate_id", None),
+    ],
+)
+def test_extraction_diagnostics_are_specific_and_redacted(source, fixtures, mutation, rule, kind):
+    response = fixtures[source.sha256]["response"]
+    if mutation == "span":
+        response["entities"][0]["source_span"]["quote"] = "private text must not enter diagnostics"
+    elif mutation == "namespace":
+        response["entities"][0]["id"] = "private-id"
+    elif mutation == "dangling":
+        response["relations"][0]["tail_id"] = "private-id"
+    elif mutation == "edge_type":
+        response["relations"][0]["type"] = "IMPLEMENTS"
+    elif mutation == "duplicate":
+        response["entities"].append(copy.deepcopy(response["entities"][0]))
+    with pytest.raises(ProviderError) as error:
+        extract_document(source, MockProvider(fixtures))
+    assert error.value.category == "invalid_knowledge_graph"
+    details = error.value.diagnostics
+    assert details[0]["rule"] == rule
+    if kind:
+        assert details[0]["object_kind"] == kind and details[0]["object_index"] == 0
+    assert "private" not in json.dumps(details)
+    assert "quote" not in json.dumps(details)
+
+
+def test_document_schema_does_not_advertise_historical_entities_or_edges():
+    from algofactory.schemas.knowledge import DocumentExtraction
+
+    schema = DocumentExtraction.model_json_schema()
+    definitions = schema["$defs"]
+    assert definitions["DocumentRelation"]["properties"]["type"]["enum"] == [
+        "REQUIRES",
+        "IMPLEMENTS",
+        "APPLICABLE_TO",
+    ]
+    assert "DependencyEntity" in definitions
+    assert (
+        not {
+            "ImplementationEntity",
+            "ExperienceEntity",
+            "ValidationRunEntity",
+            "FailureCaseEntity",
+            "DatasetEntity",
+        }
+        & definitions.keys()
+    )
+
+
+def test_algorithm_dependency_is_rejected_not_silently_removed(source, fixtures):
+    response = fixtures[source.sha256]["response"]
+    response["relations"][0]["type"] = "DEPENDS_ON"
+    with pytest.raises(ProviderError, match="invalid_structured_response"):
+        extract_document(source, MockProvider(fixtures, max_retries=0))
+
+
+def test_recorded_live_algorithm_dependency_failure_replays_offline():
+    from pathlib import Path
+
+    from algofactory.knowledge.extraction import validate_extraction
+    from algofactory.schemas.knowledge import DocumentExtraction, Extraction
+
+    root = Path(__file__).resolve().parents[1] / "examples/api-knowledge-fix/diagnosis"
+    source = SourceDocument.model_validate_json((root / "source.json").read_bytes())
+    raw = (root / "extraction.json").read_bytes()
+    legacy = Extraction.model_validate_json(raw)
+    with pytest.raises(ProviderError) as error:
+        validate_extraction(source, legacy)
+    assert error.value.diagnostics == [
+        {"rule": "knowledge_endpoint_type", "object_kind": "relation", "object_index": 3}
+    ]
+    # The revised output boundary refuses the same edge even before graph validation.
+    with pytest.raises(ValidationError):
+        DocumentExtraction.model_validate_json(raw)

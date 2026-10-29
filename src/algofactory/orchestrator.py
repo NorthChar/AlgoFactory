@@ -356,6 +356,8 @@ def run_workflow(
             dimensions["metrics"]["details"] = "验证集及一次性独立测试均达到冻结门槛"
     except (WorkflowFailure, ProviderError, ValueError, OSError, KeyError, sqlite3.Error) as exc:
         report["error_category"] = getattr(exc, "category", type(exc).__name__)
+        if isinstance(exc, ProviderError) and exc.diagnostics:
+            report["error_details"] = exc.diagnostics
         report["status"] = "failed"
         if report["error_category"] in {
             "execution_timeout",
@@ -400,6 +402,7 @@ def run_workflow(
                         "workflow_id": workflow_id,
                         "status": report["status"],
                         "error_category": report["error_category"],
+                        "error_details": report.get("error_details", []),
                         "report_paths": [str(directory / "report.json")],
                     }
                 )

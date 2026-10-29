@@ -96,3 +96,7 @@ E 兼容与跨场景（Phase 2.5 起）：在改造后的同一实现提交上�
 ## 2026-10-29 Azure API 接入增量记录
 
 Azure GPT-4o Responses 已通过真实连通性与需求解析；首个 BANKING77 业务流程在知识图谱一致性校验处停止，失败记录已回写，尚未生成代码或访问测试集。累计六次请求，其中三次 HTTP 拒绝未返回用量，三次成功响应共输入 7,339、输出 3,004 token。完整真实 API 闭环仍未通过，不改变上面历史阶段结论或 G2 状态。见 [接入说明](api-integration.md) 与 [独立证据](../examples/api-integration/verification.json)。
+
+### 同日知识层修复复测
+
+重新请求并离线重放定位到 `Algorithm DEPENDS_ON Dependency` 不符合运行图谱端点规则。输出契约收窄后，真实 BANKING77 文档抽取、图谱校验、入库和检索通过；随后出现 `unsupported_phase2_plan`，未生成代码、未训练、未访问测试集。该记录只验证知识层修复，不提升完整 G2。见 [本次独立证据](../examples/api-knowledge-fix/verification.json) 和 [详细说明](api-integration.md)。

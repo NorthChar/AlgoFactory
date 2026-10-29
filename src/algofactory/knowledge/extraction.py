@@ -5,7 +5,12 @@ import re
 from pydantic import ValidationError
 
 from algofactory.llm.providers import Provider, ProviderError, ProviderRequest
-from algofactory.schemas.knowledge import Extraction, KnowledgeBatch, SourceDocument
+from algofactory.schemas.knowledge import (
+    DocumentExtraction,
+    Extraction,
+    KnowledgeBatch,
+    SourceDocument,
+)
 
 from .store import KnowledgeStore
 
@@ -19,26 +24,27 @@ ID 使用完整 source.id 加冒号及稳定的局部名称。source_id 使用�
 只输出原文支持的关系；关系端点必须引用本次抽取的实体，禁止悬空引用。
 允许关系：Task REQUIRES Capability；Algorithm IMPLEMENTS Capability；
 Algorithm APPLICABLE_TO Task。依赖作为独立实体保留，后续实际实现再建立 DEPENDS_ON。
+文档抽取阶段禁止输出 DEPENDS_ON；不得把 Algorithm 当成 Implementation，也不得用其他关系类型替代依赖关系。
 缺少依据时省略知识，禁止编造指标阈值或把建议标为已验证。
 """
 
 
-def extract_document(source: SourceDocument, provider: Provider) -> KnowledgeBatch:
+def extraction_request(source: SourceDocument) -> ProviderRequest:
     source_payload = source.model_dump(mode="json")
     source_payload["segments"] = [
         {"start": match.start(), "end": match.end(), "quote": match.group()}
         for match in re.finditer(r"[^\n]+", source.content)
         if match.group().strip()
     ]
-    response = provider.complete(
-        ProviderRequest(
-            role="knowledge",
-            operation="extract_knowledge",
-            instruction=EXTRACTION_INSTRUCTION,
-            source=source_payload,
-        ),
-        Extraction,
+    return ProviderRequest(
+        role="knowledge",
+        operation="extract_knowledge",
+        instruction=EXTRACTION_INSTRUCTION,
+        source=source_payload,
     )
+
+
+def validate_extraction(source: SourceDocument, response: Extraction) -> KnowledgeBatch:
     if response.source_id != source.id:
         raise ProviderError("extraction_source_mismatch")
     if any(
@@ -52,8 +58,29 @@ def extract_document(source: SourceDocument, provider: Provider) -> KnowledgeBat
         return KnowledgeBatch(
             sources=[source], entities=response.entities, relations=response.relations
         )
-    except ValidationError:
-        raise ProviderError("invalid_knowledge_graph") from None
+    except ValidationError as exc:
+        diagnostics = []
+        for error in exc.errors(include_input=False, include_url=False):
+            rule = error["type"]
+            if not rule.startswith("knowledge_"):
+                rule = "knowledge_constraint_violation"
+            context = error.get("ctx", {})
+            diagnostics.append(
+                {
+                    "rule": rule,
+                    **{
+                        key: context[key]
+                        for key in ("object_kind", "object_index")
+                        if key in context
+                    },
+                }
+            )
+        raise ProviderError("invalid_knowledge_graph", diagnostics=diagnostics) from None
+
+
+def extract_document(source: SourceDocument, provider: Provider) -> KnowledgeBatch:
+    response = provider.complete(extraction_request(source), DocumentExtraction)
+    return validate_extraction(source, response)
 
 
 def ingest_document(source: SourceDocument, provider: Provider, store: KnowledgeStore) -> dict:

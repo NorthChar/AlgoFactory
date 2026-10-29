@@ -186,7 +186,8 @@ def test_source_mismatch_and_historical_claim_rejected(source, fixtures):
             "verification_status": "proposed",
         },
     )
-    with pytest.raises(ProviderError, match="unsupported_document_entity"):
+    # The document-only schema now rejects historical claims before graph assembly.
+    with pytest.raises(ProviderError, match="invalid_structured_response"):
         extract_document(source, MockProvider(fixtures))
 
 
