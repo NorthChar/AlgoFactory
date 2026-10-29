@@ -1,0 +1,28 @@
+{
+  "action": "STOP",
+  "category": "unapproved_import",
+  "dimensions": {
+    "functional": {
+      "details": "尚未执行",
+      "schema_version": 1,
+      "status": "not_run"
+    },
+    "interface": {
+      "details": "尚未执行",
+      "schema_version": 1,
+      "status": "not_run"
+    },
+    "metrics": {
+      "details": "尚未执行",
+      "schema_version": 1,
+      "status": "not_run"
+    },
+    "stability": {
+      "details": "尚未执行",
+      "schema_version": 1,
+      "status": "not_run"
+    }
+  },
+  "reason": "安全、数据完整性、服务/预算或无进展错误不能通过继续生成绕过",
+  "validation_metrics": {}
+}

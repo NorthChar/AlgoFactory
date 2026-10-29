@@ -1,0 +1,16 @@
+{
+  "status": "accepted",
+  "error_category": null,
+  "workflow_id": "search:71f5a44087fc4a60a15793ef661ffc41",
+  "persisted": true,
+  "report_json": "/Users/northchar/Documents/Codex/AlgoFactory/examples/phase3/repair/report.json",
+  "report_markdown": "/Users/northchar/Documents/Codex/AlgoFactory/examples/phase3/repair/report.md",
+  "validation_metrics": {
+    "accuracy": 0.8734367183591796,
+    "macro_f1": 0.8729749094121176
+  },
+  "test_metrics": {
+    "macro_f1": 0.8786952175736858,
+    "accuracy": 0.8782467532467533
+  }
+}

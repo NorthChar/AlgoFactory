@@ -1,0 +1,62 @@
+[
+  {
+    "action": "GENERATE",
+    "budget_remaining": 6,
+    "decision_id": "search:71f5a44087fc4a60a15793ef661ffc41:decision:0",
+    "evidence_ids": [
+      "search:71f5a44087fc4a60a15793ef661ffc41"
+    ],
+    "reason": "基于适用知识生成候选：text_logistic",
+    "role": "review",
+    "run_id": "search:71f5a44087fc4a60a15793ef661ffc41",
+    "schema_version": 1
+  },
+  {
+    "action": "REPAIR",
+    "budget_remaining": 5,
+    "decision_id": "search:71f5a44087fc4a60a15793ef661ffc41:decision:1",
+    "evidence_ids": [
+      "source:a9c2ee70edb615e8f319aa515e06e312fcfdbdb88e91ec3116e9dd465acb0bf2:implementation"
+    ],
+    "reason": "根据实际接口、执行或稳定性错误修复当前候选",
+    "role": "review",
+    "run_id": "search:71f5a44087fc4a60a15793ef661ffc41",
+    "schema_version": 1
+  },
+  {
+    "action": "SWITCH",
+    "budget_remaining": 4,
+    "decision_id": "search:71f5a44087fc4a60a15793ef661ffc41:decision:2",
+    "evidence_ids": [
+      "workflow:6e42573393e44cabab7c837f5e6ca731"
+    ],
+    "reason": "转到下一候选；比较使用同一冻结协议",
+    "role": "review",
+    "run_id": "search:71f5a44087fc4a60a15793ef661ffc41",
+    "schema_version": 1
+  },
+  {
+    "action": "GENERATE",
+    "budget_remaining": 4,
+    "decision_id": "search:71f5a44087fc4a60a15793ef661ffc41:decision:3",
+    "evidence_ids": [
+      "search:71f5a44087fc4a60a15793ef661ffc41"
+    ],
+    "reason": "基于适用知识生成候选：text_nb",
+    "role": "review",
+    "run_id": "search:71f5a44087fc4a60a15793ef661ffc41",
+    "schema_version": 1
+  },
+  {
+    "action": "ACCEPT",
+    "budget_remaining": 3,
+    "decision_id": "search:71f5a44087fc4a60a15793ef661ffc41:decision:4",
+    "evidence_ids": [
+      "source:00604d417a29859a124b8cd8d76681c344e51ff0576246b72b0d31d2a0f09d3e:implementation"
+    ],
+    "reason": "选定版本最终测试通过且结果已回写",
+    "role": "review",
+    "run_id": "search:71f5a44087fc4a60a15793ef661ffc41",
+    "schema_version": 1
+  }
+]

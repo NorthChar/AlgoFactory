@@ -1,0 +1,18 @@
+[
+  {
+    "algorithm": "text_logistic",
+    "attempt": 0,
+    "code_hash": "4353f3a8de4a47c0631539b81f2389cac46bc9d175e17fb79095591e345643b2",
+    "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+    "error_category": "unapproved_import",
+    "implementation_id": "source:95fdea44556043a669ba1dc5dd86baffb183b4524f5b8e33543cc2a10fc26293:implementation",
+    "parent_id": null,
+    "report": "/Users/northchar/Documents/Codex/AlgoFactory/examples/phase3/unsafe-code/candidates/text_logistic/attempt-0/report.json",
+    "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+    "status": "failed",
+    "test_attempted": false,
+    "validation_metrics": {},
+    "validation_run_id": "source:95fdea44556043a669ba1dc5dd86baffb183b4524f5b8e33543cc2a10fc26293:validation",
+    "workflow_id": "workflow:0f5940374b0e4299978e856da80ae856"
+  }
+]

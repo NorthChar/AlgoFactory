@@ -1,0 +1,16 @@
+{
+  "candidate_stops": [
+    {
+      "algorithm": "text_logistic",
+      "attempt": 1,
+      "reason": "unrepairable_no_change"
+    },
+    {
+      "algorithm": "text_nb",
+      "attempt": 1,
+      "reason": "unrepairable_no_change"
+    }
+  ],
+  "candidates": [],
+  "rule": "macro_f1_desc_accuracy_desc_algorithm_order"
+}

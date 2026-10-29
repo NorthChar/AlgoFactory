@@ -1,0 +1,14 @@
+[
+  {
+    "action": "STOP",
+    "budget_remaining": 0,
+    "decision_id": "workflow:6e2662ffc25549e28376ceb078e1de7e:review",
+    "evidence_ids": [
+      "workflow:6e2662ffc25549e28376ceb078e1de7e"
+    ],
+    "reason": "确定性独立验证结果：call_budget_exhausted",
+    "role": "review",
+    "run_id": "workflow:6e2662ffc25549e28376ceb078e1de7e",
+    "schema_version": 1
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "action": "GENERATE",
+    "budget_remaining": 6,
+    "decision_id": "search:9db0a9eb20d545d29b3ee709cbfbde3e:decision:0",
+    "evidence_ids": [
+      "search:9db0a9eb20d545d29b3ee709cbfbde3e"
+    ],
+    "reason": "基于适用知识生成候选：text_logistic",
+    "role": "review",
+    "run_id": "search:9db0a9eb20d545d29b3ee709cbfbde3e",
+    "schema_version": 1
+  },
+  {
+    "action": "SWITCH",
+    "budget_remaining": 5,
+    "decision_id": "search:9db0a9eb20d545d29b3ee709cbfbde3e:decision:1",
+    "evidence_ids": [
+      "workflow:bb1bdf4ccc244def9ec98c17b1fe7dc6"
+    ],
+    "reason": "转到下一候选；比较使用同一冻结协议",
+    "role": "review",
+    "run_id": "search:9db0a9eb20d545d29b3ee709cbfbde3e",
+    "schema_version": 1
+  },
+  {
+    "action": "GENERATE",
+    "budget_remaining": 5,
+    "decision_id": "search:9db0a9eb20d545d29b3ee709cbfbde3e:decision:2",
+    "evidence_ids": [
+      "search:9db0a9eb20d545d29b3ee709cbfbde3e"
+    ],
+    "reason": "基于适用知识生成候选：text_nb",
+    "role": "review",
+    "run_id": "search:9db0a9eb20d545d29b3ee709cbfbde3e",
+    "schema_version": 1
+  },
+  {
+    "action": "ACCEPT",
+    "budget_remaining": 4,
+    "decision_id": "search:9db0a9eb20d545d29b3ee709cbfbde3e:decision:3",
+    "evidence_ids": [
+      "source:9c0e7ba390d1040b8ef7b58ca5e035bdcab6adbc3b3722d4469638d5545ec6cf:implementation"
+    ],
+    "reason": "选定版本最终测试通过且结果已回写",
+    "role": "review",
+    "run_id": "search:9db0a9eb20d545d29b3ee709cbfbde3e",
+    "schema_version": 1
+  }
+]

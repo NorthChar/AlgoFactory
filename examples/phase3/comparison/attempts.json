@@ -1,0 +1,40 @@
+[
+  {
+    "algorithm": "text_logistic",
+    "attempt": 0,
+    "code_hash": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+    "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+    "error_category": null,
+    "implementation_id": "source:bad035dc30f5dfab57772132142d4a86f1de7dd45decfb800d9d4c7bc910ad35:implementation",
+    "parent_id": null,
+    "report": "/Users/northchar/Documents/Codex/AlgoFactory/examples/phase3/comparison/candidates/text_logistic/attempt-0/report.json",
+    "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+    "status": "validated",
+    "test_attempted": false,
+    "validation_metrics": {
+      "accuracy": 0.8734367183591796,
+      "macro_f1": 0.8729749094121176
+    },
+    "validation_run_id": "source:bad035dc30f5dfab57772132142d4a86f1de7dd45decfb800d9d4c7bc910ad35:validation",
+    "workflow_id": "workflow:0f56b298ab65445485c7f7acf525a322"
+  },
+  {
+    "algorithm": "text_nb",
+    "attempt": 0,
+    "code_hash": "f2019deef87f93b84159808e3d83a2b7e1a1a1c8161c81adc94377d4e4e75178",
+    "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+    "error_category": null,
+    "implementation_id": "source:9cd3f23cd91f399ce32e799eece269cf16c5176cd825edd01aa8e508730e2448:implementation",
+    "parent_id": null,
+    "report": "/Users/northchar/Documents/Codex/AlgoFactory/examples/phase3/comparison/candidates/text_nb/attempt-0/report.json",
+    "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+    "status": "validated",
+    "test_attempted": false,
+    "validation_metrics": {
+      "accuracy": 0.8359179589794897,
+      "macro_f1": 0.8269238046747743
+    },
+    "validation_run_id": "source:9cd3f23cd91f399ce32e799eece269cf16c5176cd825edd01aa8e508730e2448:validation",
+    "workflow_id": "workflow:f9c2f68404b44815b8c5cc4f7895a486"
+  }
+]

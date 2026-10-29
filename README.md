@@ -2,7 +2,7 @@
 
 AI Agent 算法能力工厂原型，目标是能力抽取、代码复刻、独立验证、修复与经验回写。2026-10-29 确定主案例为“基于 BANKING77 的客服意图分类算法生成与验证”，已有客户流失案例保留为轻量兼容性测试，详见 [ADR-001](docs/decisions/0001-banking77-main-case.md)。
 
-Phase 2.5 已实现 BANKING77 文本多分类与客户流失共享的单候选流程，G2.5 已通过：124 项测试零失败、零跳过，BANKING77 最终测试 Macro-F1 0.8787、Accuracy 87.82%，客户流失指标与历史基线一致。训练、Docker 执行、主机独立评分和回写均使用同一核心；Phase 3 修复和候选比较已实现，阶段验收待归档。真实 API、经验复用和 Streamlit 仍待验收。
+Phase 2.5 已实现 BANKING77 文本多分类与客户流失共享的单候选流程，G2.5 已通过：124 项测试零失败、零跳过，BANKING77 最终测试 Macro-F1 0.8787、Accuracy 87.82%，客户流失指标与历史基线一致。训练、Docker 执行、主机独立评分和回写均使用同一核心；Phase 3 修复和候选比较也已通过 Mock 阶段验收：141 项测试、零失败、零跳过。真实 API、经验复用和 Streamlit 仍待验收。
 
 ## 文档入口
 
@@ -14,7 +14,7 @@ Phase 2.5 已实现 BANKING77 文本多分类与客户流失共享的单候选�
 - [验收 Gate 与演示协议](docs/acceptance-gates.md)
 - [Phase 1 使用与验收说明](docs/phase1.md) 与 [实际验证证据](examples/phase1/verification.json)
 
-- [Phase 3 多候选与修复指南](docs/phase3.md)
+- [Phase 3 多候选与修复指南](docs/phase3.md) 与 [阶段证据](examples/phase3/verification.json)
 - [Phase 2.5 主案例与兼容性指南](docs/phase25.md) 与 [验收证据](examples/phase25/verification.json)
 - [Phase 2 Mock 闭环指南](docs/phase2.md) 与 [运行报告](examples/phase2/normal/report.md)
 
@@ -125,7 +125,7 @@ ALGOFACTORY_DOCKER_TESTS=1 .venv/bin/python -m pytest -q
 7. 生成代码示例：见 examples/phase2/normal/candidate.py。
 8. 验证结果与报告：四维结果、验证/测试指标及失败报告见 examples/phase2。
 9. 挑战和解决方案：来源追踪、事务失败、隔离运行、测试标签隔离及冻结门槛。
-10. 扩展方向：Phase 2.5 已通过；Phase 3 比较与修复已实现、待阶段验收；后续进行经验复用、界面与插件。
+10. 扩展方向：Phase 2.5 已通过；Phase 3 比较与修复已通过；下一步为 Phase 4 经验复用及效果对照，再进行界面与插件。
 
 ## 工作区与版本管理
 

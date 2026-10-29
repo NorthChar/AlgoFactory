@@ -1,0 +1,26 @@
+[
+  {
+    "action": "GENERATE",
+    "budget_remaining": 6,
+    "decision_id": "search:cc4e8605930446b7a6f3706248f03ebe:decision:0",
+    "evidence_ids": [
+      "search:cc4e8605930446b7a6f3706248f03ebe"
+    ],
+    "reason": "基于适用知识生成候选：text_logistic",
+    "role": "review",
+    "run_id": "search:cc4e8605930446b7a6f3706248f03ebe",
+    "schema_version": 1
+  },
+  {
+    "action": "STOP",
+    "budget_remaining": 5,
+    "decision_id": "search:cc4e8605930446b7a6f3706248f03ebe:decision:1",
+    "evidence_ids": [
+      "search:cc4e8605930446b7a6f3706248f03ebe"
+    ],
+    "reason": "unapproved_import",
+    "role": "review",
+    "run_id": "search:cc4e8605930446b7a6f3706248f03ebe",
+    "schema_version": 1
+  }
+]

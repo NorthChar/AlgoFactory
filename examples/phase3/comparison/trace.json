@@ -1,0 +1,68 @@
+[
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "启动有界候选比较，所有候选与修复仅使用验证集",
+    "sequence": 0,
+    "source_ids": [],
+    "state": "received",
+    "timestamp": "2026-10-29T16:29:50.995237+08:00",
+    "workflow_id": "search:e45766435d1b4c0392e81f1d328d2c97"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "基于适用知识生成候选：text_logistic",
+    "sequence": 1,
+    "source_ids": [],
+    "state": "generate",
+    "timestamp": "2026-10-29T16:29:51.237922+08:00",
+    "workflow_id": "search:e45766435d1b4c0392e81f1d328d2c97"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "转到下一候选；比较使用同一冻结协议",
+    "sequence": 2,
+    "source_ids": [],
+    "state": "switch",
+    "timestamp": "2026-10-29T16:29:58.859734+08:00",
+    "workflow_id": "search:e45766435d1b4c0392e81f1d328d2c97"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "基于适用知识生成候选：text_nb",
+    "sequence": 3,
+    "source_ids": [],
+    "state": "generate",
+    "timestamp": "2026-10-29T16:29:58.978631+08:00",
+    "workflow_id": "search:e45766435d1b4c0392e81f1d328d2c97"
+  },
+  {
+    "candidate_id": "source:bad035dc30f5dfab57772132142d4a86f1de7dd45decfb800d9d4c7bc910ad35:implementation",
+    "code_hash": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+    "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+    "reason": "按验证集 Macro-F1、Accuracy、预设候选顺序选定版本；测试失败不换候选",
+    "sequence": 4,
+    "source_ids": [],
+    "state": "selected",
+    "timestamp": "2026-10-29T16:30:00.421671+08:00",
+    "workflow_id": "search:e45766435d1b4c0392e81f1d328d2c97"
+  },
+  {
+    "candidate_id": "source:bad035dc30f5dfab57772132142d4a86f1de7dd45decfb800d9d4c7bc910ad35:implementation",
+    "code_hash": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+    "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+    "reason": "选定版本最终测试通过且结果已回写",
+    "sequence": 5,
+    "source_ids": [],
+    "state": "accept",
+    "timestamp": "2026-10-29T16:30:04.890511+08:00",
+    "workflow_id": "search:e45766435d1b4c0392e81f1d328d2c97"
+  }
+]

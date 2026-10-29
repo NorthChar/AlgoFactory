@@ -1,0 +1,10 @@
+{
+  "status": "stopped",
+  "error_category": "attempt_budget_exhausted",
+  "workflow_id": "search:8a95b6a040bd49a5addbb09d947746ac",
+  "persisted": true,
+  "report_json": "/Users/northchar/Documents/Codex/AlgoFactory/examples/phase3/attempt-budget/report.json",
+  "report_markdown": "/Users/northchar/Documents/Codex/AlgoFactory/examples/phase3/attempt-budget/report.md",
+  "validation_metrics": {},
+  "test_metrics": {}
+}

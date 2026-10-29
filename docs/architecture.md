@@ -88,7 +88,7 @@ MockWorkflowProvider 和 APIProvider 共用 run_workflow；仅 Provider 的响�
 
 客户流失兼容检查使用固定候选与独立协议，不参与 BANKING77 的候选排名。跨场景通过证据必须来自新版本的共用核心，旧 examples/phase2 仅作为历史参考。
 
-## Phase 3 有界比较与修复（implemented）
+## Phase 3 有界比较与修复（verified，Mock 范围）
 
 search.run_search 基于统一 run_workflow 执行每个候选版本，以 validation_only 阻止子流程访问最终测试；最终测试由两模式共用的 final_test.evaluate_final 执行。SearchPolicy 固定候选、每候选最多两次修复、最多六次尝试与确定性排序。RepairContext 携带父实现、代码散列和验证集诊断。每次修复保留新目录及 DERIVED_FROM；最终验证引用已选实现。详情见 [Phase 3 指南](phase3.md)。
 

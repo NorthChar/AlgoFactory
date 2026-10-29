@@ -1,0 +1,57 @@
+[
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "启动有界候选比较，所有候选与修复仅使用验证集",
+    "sequence": 0,
+    "source_ids": [],
+    "state": "received",
+    "timestamp": "2026-10-29T16:30:56.513604+08:00",
+    "workflow_id": "search:93e66bb5f8d54c47a0a2ef61a1727316"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "基于适用知识生成候选：text_logistic",
+    "sequence": 1,
+    "source_ids": [],
+    "state": "generate",
+    "timestamp": "2026-10-29T16:30:56.754184+08:00",
+    "workflow_id": "search:93e66bb5f8d54c47a0a2ef61a1727316"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "转到下一候选；比较使用同一冻结协议",
+    "sequence": 2,
+    "source_ids": [],
+    "state": "switch",
+    "timestamp": "2026-10-29T16:31:04.486948+08:00",
+    "workflow_id": "search:93e66bb5f8d54c47a0a2ef61a1727316"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "基于适用知识生成候选：text_nb",
+    "sequence": 3,
+    "source_ids": [],
+    "state": "generate",
+    "timestamp": "2026-10-29T16:31:04.609804+08:00",
+    "workflow_id": "search:93e66bb5f8d54c47a0a2ef61a1727316"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "call_budget_exhausted",
+    "sequence": 4,
+    "source_ids": [],
+    "state": "stop",
+    "timestamp": "2026-10-29T16:31:04.736622+08:00",
+    "workflow_id": "search:93e66bb5f8d54c47a0a2ef61a1727316"
+  }
+]

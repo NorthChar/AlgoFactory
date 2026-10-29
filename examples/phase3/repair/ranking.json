@@ -1,0 +1,44 @@
+{
+  "candidate_stops": [],
+  "candidates": [
+    {
+      "algorithm": "text_logistic",
+      "attempt": 1,
+      "code_hash": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+      "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+      "error_category": null,
+      "implementation_id": "source:00604d417a29859a124b8cd8d76681c344e51ff0576246b72b0d31d2a0f09d3e:implementation",
+      "parent_id": "source:a9c2ee70edb615e8f319aa515e06e312fcfdbdb88e91ec3116e9dd465acb0bf2:implementation",
+      "report": "/Users/northchar/Documents/Codex/AlgoFactory/examples/phase3/repair/candidates/text_logistic/attempt-1/report.json",
+      "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+      "status": "validated",
+      "test_attempted": false,
+      "validation_metrics": {
+        "accuracy": 0.8734367183591796,
+        "macro_f1": 0.8729749094121176
+      },
+      "validation_run_id": "source:00604d417a29859a124b8cd8d76681c344e51ff0576246b72b0d31d2a0f09d3e:validation",
+      "workflow_id": "workflow:6e42573393e44cabab7c837f5e6ca731"
+    },
+    {
+      "algorithm": "text_nb",
+      "attempt": 0,
+      "code_hash": "f2019deef87f93b84159808e3d83a2b7e1a1a1c8161c81adc94377d4e4e75178",
+      "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+      "error_category": null,
+      "implementation_id": "source:65f34c8d5a6d21959fca812fc8053a23c31796b99b1f5876fd00caf7914811fe:implementation",
+      "parent_id": null,
+      "report": "/Users/northchar/Documents/Codex/AlgoFactory/examples/phase3/repair/candidates/text_nb/attempt-0/report.json",
+      "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+      "status": "validated",
+      "test_attempted": false,
+      "validation_metrics": {
+        "accuracy": 0.8359179589794897,
+        "macro_f1": 0.8269238046747743
+      },
+      "validation_run_id": "source:65f34c8d5a6d21959fca812fc8053a23c31796b99b1f5876fd00caf7914811fe:validation",
+      "workflow_id": "workflow:b766dce36ca34f1596d200449e25a345"
+    }
+  ],
+  "rule": "macro_f1_desc_accuracy_desc_algorithm_order"
+}

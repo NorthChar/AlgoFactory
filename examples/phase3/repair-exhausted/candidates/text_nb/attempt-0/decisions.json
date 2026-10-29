@@ -1,0 +1,27 @@
+[
+  {
+    "action": "GENERATE",
+    "budget_remaining": 0,
+    "decision_id": "workflow:efa3595a44314d0798737b2ecff08585:generate",
+    "evidence_ids": [
+      "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:text_nb",
+      "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:capability:intent"
+    ],
+    "reason": "根据检索证据生成单个候选",
+    "role": "builder",
+    "run_id": "workflow:efa3595a44314d0798737b2ecff08585",
+    "schema_version": 1
+  },
+  {
+    "action": "STOP",
+    "budget_remaining": 0,
+    "decision_id": "workflow:efa3595a44314d0798737b2ecff08585:review",
+    "evidence_ids": [
+      "source:4ab1e97e8328cb898326702fefc58ff65da741e43be03c5f00727e3290f27440:validation"
+    ],
+    "reason": "确定性独立验证结果：interface_missing_predict_proba",
+    "role": "review",
+    "run_id": "workflow:efa3595a44314d0798737b2ecff08585",
+    "schema_version": 1
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "candidate_stops": [
+    {
+      "algorithm": "text_logistic",
+      "attempt": 2,
+      "reason": "repair_budget_exhausted"
+    },
+    {
+      "algorithm": "text_nb",
+      "attempt": 2,
+      "reason": "repair_budget_exhausted"
+    }
+  ],
+  "candidates": [],
+  "rule": "macro_f1_desc_accuracy_desc_algorithm_order"
+}

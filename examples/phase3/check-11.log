@@ -1,0 +1,10 @@
+{
+  "status": "stopped",
+  "error_category": "call_budget_exhausted",
+  "workflow_id": "search:93e66bb5f8d54c47a0a2ef61a1727316",
+  "persisted": true,
+  "report_json": "/Users/northchar/Documents/Codex/AlgoFactory/examples/phase3/call-budget/report.json",
+  "report_markdown": "/Users/northchar/Documents/Codex/AlgoFactory/examples/phase3/call-budget/report.md",
+  "validation_metrics": {},
+  "test_metrics": {}
+}

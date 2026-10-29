@@ -1,6 +1,29 @@
 # Phase 3：BANKING77 候选比较与有界修复
 
-承接 [ADR-001](decisions/0001-banking77-main-case.md) 和 [Phase 2.5](phase25.md)。当前实现完成，阶段验收待归档；真实外部 API、经验复用与界面仍待后续阶段。
+承接 [ADR-001](decisions/0001-banking77-main-case.md) 和 [Phase 2.5](phase25.md)。本阶段已于 2026-10-29 完成 Mock 范围验收（141 项测试、零失败、零跳过）；真实外部 API、经验复用与界面仍待后续阶段。
+
+## 已验证结果
+
+实现提交 `bdd91bedb19ea00402aca97a9cfddac2b561563f`；源码干净。统一命令、时间、环境、镜像及产物散列见 [verification.json](../examples/phase3/verification.json)。本阶段沿用固定数据处理规则与 Macro-F1 0.82 门槛，没有根据测试成绩修改参数或阈值。
+
+| 候选 | 验证集 Macro-F1 | 验证集 Accuracy | 比较结果 |
+| --- | --- | --- | --- |
+| TF-IDF + Logistic Regression | 0.872975 | 0.873437 | 排名第一，选中后最终测试 Macro-F1 0.878695、Accuracy 0.878247 |
+| TF-IDF + MultinomialNB | 0.826924 | 0.835918 | 验证通过，排名第二，不使用最终测试集 |
+
+正常比较与重复运行的排名、代码和指标一致；获选模型仍是原 Logistic Regression。客户流失所有指标与历史固定候选一致。
+
+| 示例 | 实测结果 | 证据 |
+| --- | --- | --- |
+| 正常比较/重复 | 两候选均验证通过，只测试获胜版本 | [比较报告](../examples/phase3/comparison/report.md)、[重复报告](../examples/phase3/comparison-repeat/report.md) |
+| 注入接口故障 | Logistic Regression 初版缺少 predict_proba；修复一次后验证通过并入选 | [修复报告](../examples/phase3/repair/report.md)、[版本轨迹](../examples/phase3/repair/attempts.json) |
+| 持续故障 | 两候选各两次修复，合计六个版本；无合格候选，停止且不测试 | [耗尽报告](../examples/phase3/repair-exhausted/report.md) |
+| 无修复进展 | 原样代码被拒绝，停止当前候选；最终无合格候选 | [无进展报告](../examples/phase3/unrepairable/report.md) |
+| 总尝试/调用预算 | 上限分别为一次尝试、四次调用；比较未完成即停止 | [尝试预算](../examples/phase3/attempt-budget/report.md)、[调用预算](../examples/phase3/call-budget/report.md) |
+| 安全停止 | 危险导入被静态检查拒绝，不进入 Docker 或最终测试 | [安全报告](../examples/phase3/unsafe-code/report.md) |
+| 客户流失兼容 | 同一提交、共用核心、固定候选仍通过 | [兼容报告](../examples/phase3/churn-compatibility/report.md) |
+
+所有子流程与最终流程可从重开的数据库查询，父子版本和 GraphML 无损往返已核验。修复故障为明确 fixture，未调用真实外部 LLM。下一步是 Phase 4 的经验提炼、适用条件检索及启用/关闭经验的对照验证。
 
 ## 实现及边界
 

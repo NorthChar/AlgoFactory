@@ -1,0 +1,123 @@
+[
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "启动有界候选比较，所有候选与修复仅使用验证集",
+    "sequence": 0,
+    "source_ids": [],
+    "state": "received",
+    "timestamp": "2026-10-29T16:30:36.521402+08:00",
+    "workflow_id": "search:4a919b5ebd6d426f981e952a31dd5c04"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "基于适用知识生成候选：text_logistic",
+    "sequence": 1,
+    "source_ids": [],
+    "state": "generate",
+    "timestamp": "2026-10-29T16:30:36.760215+08:00",
+    "workflow_id": "search:4a919b5ebd6d426f981e952a31dd5c04"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "根据实际接口、执行或稳定性错误修复当前候选",
+    "sequence": 2,
+    "source_ids": [],
+    "state": "repair",
+    "timestamp": "2026-10-29T16:30:37.851310+08:00",
+    "workflow_id": "search:4a919b5ebd6d426f981e952a31dd5c04"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "根据实际接口、执行或稳定性错误修复当前候选",
+    "sequence": 3,
+    "source_ids": [],
+    "state": "repair",
+    "timestamp": "2026-10-29T16:30:38.937138+08:00",
+    "workflow_id": "search:4a919b5ebd6d426f981e952a31dd5c04"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "当前候选已用完修复次数",
+    "sequence": 4,
+    "source_ids": [],
+    "state": "stop",
+    "timestamp": "2026-10-29T16:30:39.902868+08:00",
+    "workflow_id": "search:4a919b5ebd6d426f981e952a31dd5c04"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "转到下一候选；比较使用同一冻结协议",
+    "sequence": 5,
+    "source_ids": [],
+    "state": "switch",
+    "timestamp": "2026-10-29T16:30:39.903404+08:00",
+    "workflow_id": "search:4a919b5ebd6d426f981e952a31dd5c04"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "基于适用知识生成候选：text_nb",
+    "sequence": 6,
+    "source_ids": [],
+    "state": "generate",
+    "timestamp": "2026-10-29T16:30:40.029710+08:00",
+    "workflow_id": "search:4a919b5ebd6d426f981e952a31dd5c04"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "根据实际接口、执行或稳定性错误修复当前候选",
+    "sequence": 7,
+    "source_ids": [],
+    "state": "repair",
+    "timestamp": "2026-10-29T16:30:41.116908+08:00",
+    "workflow_id": "search:4a919b5ebd6d426f981e952a31dd5c04"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "根据实际接口、执行或稳定性错误修复当前候选",
+    "sequence": 8,
+    "source_ids": [],
+    "state": "repair",
+    "timestamp": "2026-10-29T16:30:42.207270+08:00",
+    "workflow_id": "search:4a919b5ebd6d426f981e952a31dd5c04"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "当前候选已用完修复次数",
+    "sequence": 9,
+    "source_ids": [],
+    "state": "stop",
+    "timestamp": "2026-10-29T16:30:43.186500+08:00",
+    "workflow_id": "search:4a919b5ebd6d426f981e952a31dd5c04"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "no_valid_candidate",
+    "sequence": 10,
+    "source_ids": [],
+    "state": "stop",
+    "timestamp": "2026-10-29T16:30:43.188486+08:00",
+    "workflow_id": "search:4a919b5ebd6d426f981e952a31dd5c04"
+  }
+]
