@@ -14,6 +14,7 @@ def save_report(directory: Path, report: dict):
         f"- 流程：{report['workflow_id']}",
         f"- 状态：{report['status']}",
         f"- 任务：{report.get('task_profile', '尚未识别')}",
+        f"- 评估范围：{report.get('evaluation_scope', 'validation_and_final_test')}",
         f"- LLM 模式：{report['provider_mode']}",
         f"- 代码散列：{report.get('code_hash') or '尚未生成'}",
         f"- 知识库回写：{'已保存' if report.get('persisted') else '未完成'}",
@@ -66,4 +67,27 @@ def save_report(directory: Path, report: dict):
         "完整输入散列、状态轨迹、Provider 调用和容器证据见同目录 JSON 文件。",
         "",
     ]
+    if report.get("evaluation_scope") == "validation_only":
+        lines += ["本报告仅用于验证集候选比较；validated 不表示最终测试通过。", ""]
+    if "attempts" in report:
+        lines += [
+            "## 候选与版本",
+            "",
+            "| 候选 | 版本 | 状态 | Macro-F1（验证） | 错误 |",
+            "| --- | --- | --- | --- | --- |",
+        ]
+        for attempt in report["attempts"]:
+            value = attempt["validation_metrics"].get("macro_f1")
+            score = f"{value:.6f}" if value is not None else "未完成"
+            lines.append(
+                f"| {attempt['algorithm']} | {attempt['attempt']} | {attempt['status']} | {score} | {attempt['error_category'] or '无'} |"
+            )
+        lines += [
+            "",
+            "排名只使用验证集 Macro-F1，其次 Accuracy，再按冻结候选顺序打破平局。只有通过四维检查的版本可入选。",
+            "选定候选：" + report.get("selected_algorithm", "无"),
+            "故障 fixture：" + (report.get("fault_fixture") or "无"),
+            "修复输入、父版本、修改代码和重新验证结果见 candidates/；统一决策见 decisions.json，排名见 ranking.json（若比较完成）。",
+            "",
+        ]
     (directory / "report.md").write_text("\n".join(lines), encoding="utf-8")

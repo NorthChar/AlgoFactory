@@ -115,7 +115,15 @@ def main():
         generate_dataset(out / "churn-data")
         for name in ("banking77", "churn"):
             calibrate(out / (name + "-data"), out / (name + "-data/protocol.json"))
-        command(["-m", "pytest", "-q", f"--junitxml={out / 'tests.xml'}"])
+        command(
+            [
+                "-m",
+                "pytest",
+                "-q",
+                "--ignore=tests/test_phase3.py",
+                f"--junitxml={out / 'tests.xml'}",
+            ]
+        )
         suite = ET.parse(out / "tests.xml").getroot().find("testsuite")
         summary["tests"] = {
             key: int(suite.attrib[key]) for key in ("tests", "failures", "errors", "skipped")

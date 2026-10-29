@@ -2,7 +2,7 @@
 
 本项目面向 Mac M5 Pro 48GB 的本地演示，主案例为“基于 BANKING77 的客服意图分类算法生成与验证”，以此证明能力抽取、代码复刻、独立验证与知识沉淀的完整闭环。已有合成客户流失案例保留为轻量兼容性测试。该调整于 2026-10-29 经用户确认，来源、理由和范围见 [ADR-001](decisions/0001-banking77-main-case.md)。
 
-当前已实现 Phase 1 知识基础、Phase 2 客户流失闭环及 Phase 2.5 BANKING77 文本多分类/共享框架改造；Phase 2.5 的 G2.5 已通过（124 项测试、零跳过），见 [指南](phase25.md) 与 [证据](../examples/phase25/verification.json)。真实 API 服务调用尚待配置与验证。docs/source 保持原始资料，当前计划通过 ADR 与原始要求、阶段证据关联。
+当前已实现 Phase 1 知识基础、Phase 2 客户流失闭环及 Phase 2.5 BANKING77 文本多分类/共享框架改造；Phase 2.5 的 G2.5 已通过（124 项测试、零跳过），见 [指南](phase25.md) 与 [证据](../examples/phase25/verification.json)。Phase 3 的比较、有界修复和版本关系已实现，待阶段验收，见 [指南](phase3.md)。真实 API 服务调用尚待配置与验证。docs/source 保持原始资料，当前计划通过 ADR 与原始要求、阶段证据关联。
 
 ## 问题定义与目标
 
@@ -47,4 +47,4 @@ Phase 1 已基于 Python 3.11.16 / arm64 生成 uv.lock 及带散列的 requirem
 
 ## 评分证据与后续动作
 
-技术能力 40% 由真实闭环、图谱检索、修复与统一验证证明；代码质量 30% 由契约、错误处理、日志、兼容测试及复现证明；创新性 15% 由三角色决策、经验复用对照及框架跨场景证据支持；完整性 15% 由矩阵、文档、UI 和交付样例证明。Phase 1 验收及限制见 [phase1.md](phase1.md) 与 [验证报告](../examples/phase1/verification.json)。历史 Phase 2 实现及验收边界见 [phase2.md](phase2.md)。Phase 2.5 已通过 G2.5，下一步进入 Phase 3，证据见 [指南](phase25.md)；Mock 闭环不代表真实 API 已验收。
+技术能力 40% 由真实闭环、图谱检索、修复与统一验证证明；代码质量 30% 由契约、错误处理、日志、兼容测试及复现证明；创新性 15% 由三角色决策、经验复用对照及框架跨场景证据支持；完整性 15% 由矩阵、文档、UI 和交付样例证明。Phase 1 验收及限制见 [phase1.md](phase1.md) 与 [验证报告](../examples/phase1/verification.json)。历史 Phase 2 实现及验收边界见 [phase2.md](phase2.md)。Phase 2.5 已通过 G2.5，Phase 3 已实现、待阶段验收，见 [指南](phase3.md)；Mock 闭环不代表真实 API 已验收。

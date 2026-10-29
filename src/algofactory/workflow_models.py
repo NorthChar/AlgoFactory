@@ -4,7 +4,7 @@ from typing import Annotated, Literal
 
 from pydantic import Field
 
-from algofactory.schemas.contracts import Contract, Identifier, Text
+from algofactory.schemas.contracts import Contract, Digest, Identifier, Text
 
 
 class TaskIntent(Contract):
@@ -45,3 +45,11 @@ class WorkflowFailure(RuntimeError):
     def __init__(self, category: str):
         self.category = category
         super().__init__(category)
+
+
+class RepairContext(Contract):
+    parent_id: Identifier
+    attempt: int = Field(ge=1, le=2)
+    previous_code: Annotated[str, Field(min_length=1, max_length=32768)]
+    previous_code_hash: Digest
+    diagnosis: dict

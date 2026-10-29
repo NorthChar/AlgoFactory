@@ -37,7 +37,28 @@ def parser():
     demo.add_argument("--db", type=Path, default=Path("runtime/phase2.sqlite"))
     demo.add_argument("--image-approval", type=Path, default=Path("runtime/docker-image.json"))
     demo.add_argument("--knowledge-document", type=Path)
-    demo.add_argument("--fault", choices=["missing_predict_proba", "unsafe_code", "invalid_json"])
+    demo.add_argument(
+        "--fault",
+        choices=[
+            "missing_predict_proba",
+            "unsafe_code",
+            "invalid_json",
+            "repairable_interface",
+            "persistent_interface",
+            "unrepairable",
+        ],
+    )
+    demo.add_argument(
+        "--compare", action="store_true", help="Phase 3：BANKING77 两候选比较与有界修复"
+    )
+    demo.add_argument("--max-repairs", type=int, choices=[0, 1, 2], default=2)
+    demo.add_argument("--attempt-budget", type=int, choices=range(1, 7), default=6)
+    demo.add_argument(
+        "--llm-call-budget",
+        type=int,
+        choices=range(1, 101),
+        help="整个流程共享调用上限；Mock 比较默认 32，单候选默认 8",
+    )
     workflow = commands.add_parser("workflow-show", help="查询持久化的流程结果")
     workflow.add_argument("workflow_id")
     workflow.add_argument("--db", type=Path, default=Path("runtime/phase2.sqlite"))
@@ -83,7 +104,7 @@ def parser():
 def run(args):
     if args.command == "status":
         return {
-            "phase": "2.5",
+            "phase": 3,
             "tasks": ["banking77", "churn"],
             "status": "single_candidate_workflow",
             "core_workflow": "implemented_docker_required",
@@ -122,7 +143,19 @@ def run(args):
         args.dataset_dir = args.dataset_dir or Path(
             "runtime/banking77-data" if args.task == "banking77" else "runtime/phase2-data"
         )
-        args.knowledge_document = args.knowledge_document or Path("data") / profile.document
+        if args.compare and args.task != "banking77":
+            raise ValueError(
+                "Phase 3 comparison supports BANKING77; churn remains a fixed compatibility candidate"
+            )
+        if not args.compare and args.fault in {
+            "repairable_interface",
+            "persistent_interface",
+            "unrepairable",
+        }:
+            raise ValueError("This fault fixture requires --compare")
+        args.knowledge_document = args.knowledge_document or Path("data") / (
+            "banking77-phase3.txt" if args.compare else profile.document
+        )
         args.request = args.request or profile.request
         if args.fault and args.mode != "mock":
             raise ValueError("Explicit fault fixtures are only available in Mock mode")
@@ -137,11 +170,25 @@ def run(args):
 
             args.output_dir = Path("runtime/runs") / uuid.uuid4().hex
         provider = (
-            MockWorkflowProvider(args.fault)
+            MockWorkflowProvider(
+                args.fault, max_calls=args.llm_call_budget or (32 if args.compare else 8)
+            )
             if args.mode == "mock"
             else APIProvider(APIConfig.from_env())
         )
-        report = run_workflow(
+        if args.llm_call_budget is not None:
+            provider.max_calls = args.llm_call_budget
+        workflow = run_workflow
+        extra = {}
+        if args.compare:
+            from algofactory.planning import SearchPolicy
+            from algofactory.search import run_search
+
+            workflow = run_search
+            extra["policy"] = SearchPolicy(
+                max_repairs=args.max_repairs, attempt_budget=args.attempt_budget
+            )
+        report = workflow(
             directory=args.output_dir.resolve(),
             dataset_dir=args.dataset_dir.resolve(),
             db_path=args.db.resolve(),
@@ -150,6 +197,7 @@ def run(args):
             knowledge_document=args.knowledge_document.resolve(),
             request=args.request,
             provider=provider,
+            **extra,
         )
         return {
             "status": report["status"],

@@ -1,4 +1,4 @@
-"""Single-candidate Phase 2 workflow shared by Mock/API, with host-owned acceptance."""
+"""Shared candidate workflow for single-run and bounded search, with host-owned acceptance."""
 
 import json
 import sqlite3
@@ -29,9 +29,10 @@ from algofactory.schemas.contracts import (
 )
 from algofactory.schemas.knowledge import SourceDocument
 from algofactory.tasks import compatible_evidence, profile_for
+from algofactory.validation.final_test import evaluate_final
 from algofactory.validation.protocol import calibrate
 from algofactory.validation.scoring import score_predictions
-from algofactory.workflow_models import GeneratedCode, TaskIntent, WorkflowFailure
+from algofactory.workflow_models import GeneratedCode, RepairContext, TaskIntent, WorkflowFailure
 
 
 class Trace:
@@ -69,7 +70,13 @@ def run_workflow(
     knowledge_document: Path,
     request: str,
     provider: Provider,
+    validation_only: bool = False,
+    algorithm: str | None = None,
+    repair: RepairContext | None = None,
+    repair_limit: int = 0,
 ) -> dict:
+    if not 0 <= repair_limit <= 2 or (repair and repair.attempt > repair_limit):
+        raise WorkflowFailure("repair_budget_exceeded")
     if directory.exists() and any(directory.iterdir()):
         raise WorkflowFailure("run_directory_must_be_new")
     directory.mkdir(parents=True, exist_ok=True)
@@ -84,6 +91,7 @@ def run_workflow(
         "error_category": None,
         "test_attempted": False,
         "execution_evidence": [],
+        "evaluation_scope": "validation_only" if validation_only else "validation_and_final_test",
     }
     dimensions = {
         key: {"status": "not_run", "details": "尚未执行"}
@@ -97,6 +105,22 @@ def run_workflow(
     try:
         manifest = verify_dataset(dataset_dir)
         profile = profile_for(manifest)
+        algorithm_name = profile.algorithm
+        if algorithm is not None:
+            from algofactory.planning import ALGORITHMS
+
+            if profile.name != "banking77" or algorithm not in ALGORITHMS:
+                raise WorkflowFailure("unsupported_candidate_algorithm")
+            algorithm_name = ALGORITHMS[algorithm][0]
+        if repair:
+            import hashlib
+
+            if (
+                hashlib.sha256(repair.previous_code.encode()).hexdigest()
+                != repair.previous_code_hash
+            ):
+                raise WorkflowFailure("repair_parent_code_mismatch")
+            write_json(directory / "repair-input.json", repair.model_dump(mode="json"))
         report["task_profile"] = profile.name
         report["class_names"] = manifest.get("class_names", ["not_churn", "churn"])
         protocol = calibrate(dataset_dir, dataset_dir / "protocol.json")
@@ -144,7 +168,7 @@ def run_workflow(
                 MetricRule(name=name, direction="maximize", threshold=value)
                 for name, value in protocol["thresholds"].items()
             ],
-            constraints=TaskConstraints(candidate_limit=1, max_repairs_per_candidate=0),
+            constraints=TaskConstraints(candidate_limit=1, max_repairs_per_candidate=repair_limit),
         )
         write_json(directory / "task.json", task.model_dump(mode="json"))
         trace.add("parsed", "需求契约已校验，并绑定数据指纹与冻结规则")
@@ -153,7 +177,9 @@ def run_workflow(
         )
         with KnowledgeStore(db_path) as store:
             ingest_document(source, provider, store)
-            evidence = store.search(task_type=task.task_type)
+            evidence = store.search(
+                task_type=task.task_type, source_id=source.id, data_kind=profile.data_kind
+            )
         evidence = [entry for entry in evidence if compatible_evidence(entry, profile, source.id)]
         if not evidence:
             raise WorkflowFailure("empty_knowledge_retrieval")
@@ -167,7 +193,7 @@ def run_workflow(
                 instruction="根据检索证据返回 AlgorithmPlan JSON，使用给定 algorithm，引用适用的真实 evidence_ids。预处理仅在训练集拟合。",
                 source={
                     "task_profile": profile.name,
-                    "algorithm": profile.algorithm,
+                    "algorithm": algorithm_name,
                     "plan_id": workflow_id + ":plan",
                     "task_id": task.task_id,
                     "evidence": [entry["record"] for entry in evidence],
@@ -185,7 +211,7 @@ def run_workflow(
             raise WorkflowFailure("plan_evidence_mismatch")
         if (
             records[plan.algorithm_id].get("type") != "Algorithm"
-            or records[plan.algorithm_id].get("name") != profile.algorithm
+            or records[plan.algorithm_id].get("name") != algorithm_name
             or plan.dependencies != ["scikit-learn"]
         ):
             raise WorkflowFailure("unsupported_phase2_plan")
@@ -194,11 +220,13 @@ def run_workflow(
         generated = provider.complete(
             ProviderRequest(
                 role="builder",
-                operation="generate_code",
-                instruction="返回 GeneratedCode JSON，code 为 Python 源码。仅允许 sklearn 的 ColumnTransformer、SimpleImputer、LogisticRegression、Pipeline、OneHotEncoder、StandardScaler、TfidfVectorizer 的 from 导入和一个 build_pipeline(config) 函数。函数内只用赋值、列表/元组、config 下标和这些构造器调用；禁止属性访问、任意 I/O、额外函数或顶层执行。config 提供 numeric_features、categorical_features、text_features、seed。文本用 ColumnTransformer 的字符串列选择器接入 TF-IDF；禁止在 Pipeline 外拟合。预处理在 Pipeline 内，返回支持 fit/predict/predict_proba 的估计器。",
+                operation="repair_code" if repair else "generate_code",
+                instruction="返回 GeneratedCode JSON，code 为 Python 源码。仅允许 sklearn 的 ColumnTransformer、SimpleImputer、LogisticRegression、Pipeline、OneHotEncoder、StandardScaler、TfidfVectorizer、MultinomialNB 的 from 导入和一个 build_pipeline(config) 函数。函数内只用赋值、列表/元组、config 下标和这些构造器调用；禁止属性访问、任意 I/O、额外函数或顶层执行。config 提供 numeric_features、categorical_features、text_features、seed。文本用 ColumnTransformer 的字符串列选择器接入 TF-IDF；禁止在 Pipeline 外拟合。预处理在 Pipeline 内，返回支持 fit/predict/predict_proba 的估计器。",
                 source={
                     "plan": plan.model_dump(mode="json"),
                     "task_profile": profile.name,
+                    "algorithm_key": algorithm,
+                    "repair": repair.model_dump(mode="json") if repair else None,
                     **profile.intent(),
                 },
             ),
@@ -213,9 +241,11 @@ def run_workflow(
             implementation_id=workflow_id + ":candidate",
             plan_id=plan.plan_id,
             code_hash=report["code_hash"],
-            attempt=0,
+            attempt=repair.attempt if repair else 0,
+            parent_id=repair.parent_id if repair else None,
         )
-        write_json(directory / "candidate.json", candidate.model_dump(mode="json"))
+        report["candidate"] = candidate.model_dump(mode="json")
+        write_json(directory / "candidate.json", report["candidate"])
         trace.context.update(
             candidate_id=candidate.implementation_id, code_hash=candidate.code_hash
         )
@@ -224,13 +254,15 @@ def run_workflow(
                 decision_id=workflow_id + ":generate",
                 run_id=workflow_id,
                 role="builder",
-                action="GENERATE",
+                action=repair.diagnosis["action"] if repair else "GENERATE",
                 reason="根据检索证据生成单个候选",
                 evidence_ids=plan.evidence_ids,
                 budget_remaining=0,
             ).model_dump(mode="json")
         )
         trace.add("generated", "已生成独立 Python 文件并记录代码散列")
+        if repair and candidate.code_hash == repair.previous_code_hash:
+            raise WorkflowFailure("repair_unchanged_code")
         check_code(generated.code)
         trace.add("checked", "代码符合受限工厂语法；接下来使用 Docker 隔离执行")
         executor = DockerExecutor(approval_path, requirements_path)
@@ -288,50 +320,40 @@ def run_workflow(
         }
         if any(d["status"] != "passed" for d in dimensions.values()):
             raise WorkflowFailure("validation_checks_failed")
-        trace.add("validated", "四维验证通过；锁定候选后开放一次最终测试")
-        selection = {
-            "code_hash": candidate.code_hash,
-            "config_hash": protocol["config_hash"],
-            "split_id": manifest["split_id"],
-            "validation_metrics": validation_metrics,
-            "reason": "All validation checks passed before any test evaluation",
-        }
-        write_json(directory / "selection.json", selection)
-        # Exclusive reservation is persisted before exposing test features to execution.
-        with (directory / "test-access.json").open("x", encoding="utf-8") as handle:
-            json.dump(selection, handle)
-        report["test_attempted"] = True
-        if sha256_file(code_path) != selection["code_hash"]:
-            raise WorkflowFailure("selected_code_changed")
-        if verify_dataset(dataset_dir) != manifest:
-            raise WorkflowFailure("selected_dataset_changed")
-        report["execution_evidence"].append(str(directory / "test-execution/execution.json"))
-        final = executor.execute(
-            code_path,
-            dataset_dir / "train.csv",
-            dataset_dir / "test_features.csv",
-            config | {"stage": "test"},
-            directory / "test-execution",
-            task.constraints.execution,
+        trace.add(
+            "validated",
+            "四维验证通过；仅用于候选比较"
+            if validation_only
+            else "四维验证通过；锁定候选后开放一次最终测试",
         )
-        elapsed += final.elapsed_seconds
-        peak_memory = max(peak_memory, final.peak_memory_mib)
-        if final.training_rows != len(manifest["split_indices"]["train"]):
-            raise WorkflowFailure(final.error_category or "final_training_row_count_mismatch")
-        final_scores = score_predictions(
-            final, pd.read_csv(dataset_dir / "test_labels.csv"), protocol, require_stability=False
-        )
-        test_metrics = final_scores["metrics"]
-        if "class_details" in final_scores:
-            write_json(directory / "test-class-details.json", final_scores["class_details"])
-        if not final_scores["metrics_passed"]:
-            dimensions["metrics"] = {
-                "status": "failed",
-                "details": "最终测试未达到冻结门槛，停止且不调参",
-            }
-            raise WorkflowFailure("final_test_threshold_failed")
-        report["status"] = "accepted"
-        dimensions["metrics"]["details"] = "验证集及一次性独立测试均达到冻结门槛"
+        if validation_only:
+            report["status"] = "validated"
+        else:
+            final, final_scores = evaluate_final(
+                directory,
+                dataset_dir,
+                manifest,
+                task,
+                candidate,
+                protocol,
+                executor,
+                config,
+                report,
+                validation_metrics,
+            )
+            elapsed += final.elapsed_seconds
+            peak_memory = max(peak_memory, final.peak_memory_mib)
+            test_metrics = final_scores["metrics"]
+            if "class_details" in final_scores:
+                write_json(directory / "test-class-details.json", final_scores["class_details"])
+            if not final_scores["metrics_passed"]:
+                dimensions["metrics"] = {
+                    "status": "failed",
+                    "details": "最终测试未达到冻结门槛，停止且不调参",
+                }
+                raise WorkflowFailure("final_test_threshold_failed")
+            report["status"] = "accepted"
+            dimensions["metrics"]["details"] = "验证集及一次性独立测试均达到冻结门槛"
     except (WorkflowFailure, ProviderError, ValueError, OSError, KeyError, sqlite3.Error) as exc:
         report["error_category"] = getattr(exc, "category", type(exc).__name__)
         report["status"] = "failed"
@@ -357,7 +379,7 @@ def run_workflow(
             config_hash=protocol["config_hash"],
             split_id=manifest["split_id"],
             status="passed"
-            if report["status"] == "accepted"
+            if report["status"] in {"accepted", "validated"}
             else ("stopped" if report["status"] == "stopped" else "failed"),
             **dimensions,
             validation_metrics=validation_metrics,
@@ -392,7 +414,7 @@ def run_workflow(
             decision_id=workflow_id + ":review",
             run_id=workflow_id,
             role="review",
-            action="ACCEPT" if report["status"] == "accepted" else "STOP",
+            action="ACCEPT" if report["status"] in {"accepted", "validated"} else "STOP",
             reason="确定性独立验证结果：" + (report["error_category"] or "全部通过且已回写"),
             evidence_ids=[report["validation"]["run_id"]]
             if "validation" in report
@@ -404,7 +426,15 @@ def run_workflow(
     write_json(
         directory / "provider-audit.json", [item.model_dump(mode="json") for item in provider.audit]
     )
-    trace.add(report["status"], report["error_category"] or "算法通过独立评分并完成知识回写")
+    trace.add(
+        report["status"],
+        report["error_category"]
+        or (
+            "验证集通过，等待统一比较，尚未使用测试集"
+            if validation_only
+            else "算法通过独立评分并完成知识回写"
+        ),
+    )
     report["artifacts_sha256"] = {
         str(p.relative_to(directory)): sha256_file(p)
         for p in sorted(directory.rglob("*"))

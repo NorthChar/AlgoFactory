@@ -10,9 +10,17 @@ from algofactory.tasks import PROFILES
 class MockWorkflowProvider(Provider):
     mode = "mock"
 
-    def __init__(self, fault: str | None = None):
-        super().__init__(max_calls=8, max_retries=1)
-        if fault not in {None, "missing_predict_proba", "unsafe_code", "invalid_json"}:
+    def __init__(self, fault: str | None = None, *, max_calls: int = 8):
+        super().__init__(max_calls=max_calls, max_retries=1)
+        if fault not in {
+            None,
+            "missing_predict_proba",
+            "unsafe_code",
+            "invalid_json",
+            "repairable_interface",
+            "persistent_interface",
+            "unrepairable",
+        }:
             raise ValueError("Unknown explicit fault fixture")
         self.fault = fault
 
@@ -26,6 +34,11 @@ class MockWorkflowProvider(Provider):
             )
             fixtures.update(
                 json.loads(files("algofactory.llm").joinpath("fixtures/banking77.json").read_text())
+            )
+            fixtures.update(
+                json.loads(
+                    files("algofactory.llm").joinpath("fixtures/banking77-phase3.json").read_text()
+                )
             )
             if data["sha256"] not in fixtures:
                 raise ProviderError("mock_fixture_missing")
@@ -63,18 +76,47 @@ class MockWorkflowProvider(Provider):
                 "dependencies": ["scikit-learn"],
                 "evidence_ids": [algorithm["id"], capability["id"]],
             }
-        elif request.operation == "generate_code":
+        elif request.operation in {"generate_code", "repair_code"}:
             profile = PROFILES[data.get("task_profile", "churn")]
-            code = (
-                files("algofactory.generation")
-                .joinpath("templates/" + profile.template)
-                .read_text()
+            from algofactory.planning import ALGORITHMS
+
+            template = (
+                ALGORITHMS[data["algorithm_key"]][1]
+                if data.get("algorithm_key")
+                else profile.template
             )
-            if self.fault == "missing_predict_proba":
+            code = files("algofactory.generation").joinpath("templates/" + template).read_text()
+            repair = data.get("repair")
+            if (
+                repair
+                and repair["diagnosis"]["action"] == "OPTIMIZE"
+                and data.get("algorithm_key") == "text_nb"
+            ):
+                alpha = {1: "0.05", 2: "0.01"}[repair["attempt"]]
+                code = code.replace("alpha=0.1", "alpha=" + alpha)
+            broken = self.fault in {
+                "missing_predict_proba",
+                "persistent_interface",
+                "unrepairable",
+            } or (
+                self.fault == "repairable_interface"
+                and not repair
+                and data.get("algorithm_key") == "text_logistic"
+            )
+            if broken:
                 code = code.replace(
                     "from sklearn.linear_model import LogisticRegression",
                     "from sklearn.svm import LinearSVC",
                 ).replace("LogisticRegression(", "LinearSVC(")
+                code = code.replace(
+                    "from sklearn.naive_bayes import MultinomialNB",
+                    "from sklearn.svm import LinearSVC",
+                ).replace(
+                    "MultinomialNB(alpha=0.1)",
+                    'LinearSVC(max_iter=500, random_state=config["seed"])',
+                )
+                if self.fault == "persistent_interface" and repair:
+                    code = code.replace("max_iter=500", "max_iter=" + str(500 + repair["attempt"]))
             if self.fault == "unsafe_code":
                 code = "import os\n" + code
             response = {

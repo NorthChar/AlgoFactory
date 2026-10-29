@@ -204,6 +204,9 @@ class KnowledgeStore:
         task_type: str | None = None,
         entity_type: str | None = None,
         limit: int = 20,
+        *,
+        source_id: str | None = None,
+        data_kind: str | None = None,
     ) -> list[dict]:
         if not 1 <= limit <= 100:
             raise ValueError("Search limit must be between 1 and 100")
@@ -224,6 +227,14 @@ class KnowledgeStore:
         terms = text.casefold().split()
         for row in rows:
             entity = json.loads(row[0])
+            if source_id is not None and entity["source_id"] != source_id:
+                continue
+            if (
+                data_kind is not None
+                and entity.get("conditions", entity.get("applicability", {})).get("data_kind")
+                != data_kind
+            ):
+                continue
             if task_type:
                 types = entity.get("conditions", entity.get("applicability", {})).get(
                     "task_types", []

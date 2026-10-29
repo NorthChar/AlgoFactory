@@ -87,3 +87,9 @@ MockWorkflowProvider 和 APIProvider 共用 run_workflow；仅 Provider 的响�
 模型可读取的配置不得包含主机评估标签路径；容器仅获取训练标签和当前评估特征。构建镜像、只读挂载、禁网、预算与清理机制继续共用，修改 worker/依赖后必须重新构建并验收。新增文本适配不降低既有执行边界。
 
 客户流失兼容检查使用固定候选与独立协议，不参与 BANKING77 的候选排名。跨场景通过证据必须来自新版本的共用核心，旧 examples/phase2 仅作为历史参考。
+
+## Phase 3 有界比较与修复（implemented）
+
+search.run_search 基于统一 run_workflow 执行每个候选版本，以 validation_only 阻止子流程访问最终测试；最终测试由两模式共用的 final_test.evaluate_final 执行。SearchPolicy 固定候选、每候选最多两次修复、最多六次尝试与确定性排序。RepairContext 携带父实现、代码散列和验证集诊断。每次修复保留新目录及 DERIVED_FROM；最终验证引用已选实现。详情见 [Phase 3 指南](phase3.md)。
+
+检索在数量限制前按来源及数据类型过滤，避免累积历史 Task 实体挤出当前算法证据。数据库 schema 仍为 v2，新增流程状态 validated 仅表示候选验证集通过；已归档旧数据库及报告保持不变。

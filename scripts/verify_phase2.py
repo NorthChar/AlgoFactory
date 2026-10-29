@@ -74,6 +74,7 @@ def main():
                 "pytest",
                 "-q",
                 "--ignore=tests/test_phase25.py",
+                "--ignore=tests/test_phase3.py",
                 f"--junitxml={out / 'tests.xml'}",
             ]
         )

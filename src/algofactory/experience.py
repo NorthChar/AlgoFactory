@@ -25,6 +25,9 @@ def persist_execution(store: KnowledgeStore, report: dict, manifest: dict, task,
         "plan": plan.model_dump(mode="json"),
         "validation": report["validation"],
         "execution_evidence": report.get("execution_evidence", []),
+        "candidate": report.get("candidate"),
+        "evaluation_scope": report.get("evaluation_scope", "validation_and_final_test"),
+        "search_summary": report.get("search_summary"),
     }
     source = SourceDocument.from_text(report["workflow_id"] + ".json", canonical(evidence))
     span = SourceSpan(start=0, end=len(source.content), quote=source.content)
@@ -35,9 +38,15 @@ def persist_execution(store: KnowledgeStore, report: dict, manifest: dict, task,
     implementation = ImplementationEntity(
         **provenance("implementation"),
         name="Generated candidate",
-        version=1,
+        version=report.get("candidate", {}).get("attempt", 0) + 1,
+        parent_id=report.get("candidate", {}).get("parent_id"),
         code_hash=report["code_hash"],
     )
+    reuse = report.get("selected_implementation_id")
+    if reuse:
+        implementation = ImplementationEntity.model_validate(store.evidence(reuse)["record"])
+        if implementation.code_hash != report["code_hash"]:
+            raise ValueError("Selected implementation hash mismatch")
     dataset = DatasetEntity(
         **provenance("dataset"),
         name="BANKING77"
@@ -61,14 +70,17 @@ def persist_execution(store: KnowledgeStore, report: dict, manifest: dict, task,
         constraints=task.constraints,
     )
     existing = KnowledgeBatch.model_validate(store.snapshot())
-    new_entities = [implementation, dataset, run, task_entity]
+    new_entities = [dataset, run, task_entity] + ([] if reuse else [implementation])
     links = [
         ("EVALUATES", run.id, implementation.id),
         ("USES_DATASET", run.id, dataset.id),
-        ("USES", implementation.id, plan.algorithm_id),
     ]
+    if not reuse:
+        links.append(("USES", implementation.id, plan.algorithm_id))
+        if implementation.parent_id:
+            links.append(("DERIVED_FROM", implementation.id, implementation.parent_id))
     for entity in existing.entities:
-        if entity.type == "Dependency" and entity.package == "scikit-learn":
+        if not reuse and entity.type == "Dependency" and entity.package == "scikit-learn":
             links.append(("DEPENDS_ON", implementation.id, entity.id))
         if entity.type == "Capability" and entity.id in plan.evidence_ids:
             links.append(("REQUIRES", task_entity.id, entity.id))
@@ -97,6 +109,8 @@ def persist_execution(store: KnowledgeStore, report: dict, manifest: dict, task,
         "knowledge_ids": identifiers,
         "validation": result.model_dump(mode="json"),
         "report_paths": result.report_paths,
+        "search_summary": report.get("search_summary"),
+        "evaluation_scope": report.get("evaluation_scope", "validation_and_final_test"),
     }
     store.put_batch(
         KnowledgeBatch(

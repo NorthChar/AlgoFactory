@@ -8,6 +8,8 @@ Phase 2 已通过 101 项测试（含真实 Docker，零跳过）及正常/重�
 
 2026-10-29 的范围变更见 [ADR-001](decisions/0001-banking77-main-case.md)：BANKING77 为主案例，客户流失为轻量兼容性测试。Phase 2.5 已通过 G2.5，BK01–BK06、T02、X08 更新为 verified（固定 Mock 单候选范围），统一证据见 [verification.json](../examples/phase25/verification.json)。124 项测试零失败、零跳过；两任务共用同一实现提交。BK05 当前不消费 Experience，未来经验复用仍由 BK08 验收。BK07/BK08 与 Phase 5 轻量回归计划继续保留，完整 G1–G5 尚未通过。
 
+Phase 3 的 BK07/A02/A03/X06 已实现，阶段验收待归档。
+
 | ID | 类别 | 要求 | 责任模块 | 交付或证据 | Phase | 验收方法 | Gate | 状态 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | B01 | 基础 | 完整的项目代码库 | 全模块 | Git 仓库 | 6 | 冷启动完整运行 | G1/G5 | planned |
@@ -35,8 +37,8 @@ Phase 2 已通过 101 项测试（含真实 Docker，零跳过）及正常/重�
 | F06 | 流程 | 错误修复或优化 | agents/generation | 状态轨迹与对应产物 | 1–4 | Demo B | G2/G3 | planned |
 | F07 | 流程 | 结果知识沉淀 | experience/knowledge | 状态轨迹与对应产物；examples/phase2/verification.json（Mock 范围） | 1–4 | 重启后可查询 | G2/G3 | verified |
 | A01 | 进阶 | CLI + Streamlit | cli/app | 双入口 | 2/5 | 主路径运行 | G1/G2/G3 | implemented |
-| A02 | 进阶 | 多轮代码修复 | agents/generation | 有界修复日志 | 3 | 错误修复与超预算终止 | G1/G2/G3 | planned |
-| A03 | 进阶 | 多个候选自动比较 | planning/validation | 候选排名表 | 3 | 至少两候选同划分同预算 | G1/G2/G3 | planned |
+| A02 | 进阶 | 多轮代码修复 | agents/generation | 有界修复日志；docs/phase3.md（待阶段验收） | 3 | 错误修复与超预算终止 | G1/G2/G3 | implemented |
+| A03 | 进阶 | 多个候选自动比较 | planning/validation | 候选排名表；docs/phase3.md（待阶段验收） | 3 | 至少两候选同划分同预算 | G1/G2/G3 | implemented |
 | A04 | 进阶 | 知识图谱可视化 | knowledge/app | 图谱视图与 GraphML | 5 | 显示实体及验证关联 | G1/G2/G3 | planned |
 | A05 | 进阶 | 自动验证报告 | reporting | JSON/Markdown；examples/phase2/verification.json（Mock 范围） | 2/5 | 字段完整、失败也报告 | G1/G2/G3 | verified |
 | A06 | 进阶 | 验证结果回写 | knowledge/experience | SQLite 运行记录；examples/phase2/verification.json（Mock 范围） | 2 | 事务与幂等重试 | G1/G2/G3 | verified |
@@ -47,7 +49,7 @@ Phase 2 已通过 101 项测试（含真实 Docker，零跳过）及正常/重�
 | X03 | 加分 | 真实仓库抽取 | knowledge | 额外复杂性暂缓 | — | 额外复杂性暂缓 | — | out_of_scope |
 | X04 | 加分 | 安全检查与沙箱 | execution | 非 root、禁网、限资源、超时、缺 Docker 拒绝；examples/phase2/verification.json（Mock 范围） | 2–5 | 真实容器正常/接口故障；超时/OOM/清理失败模拟测试 | G4 | verified |
 | X05 | 加分 | 失败分析与复用经验 | experience | Demo C 与检索开关对照 | 3–5 | Demo C 与检索开关对照 | G4 | planned |
-| X06 | 加分 | 能力版本管理 | experience | 父版本、散列、修改原因、报告关联 | 3–5 | 父版本、散列、修改原因、报告关联 | G4 | planned |
+| X06 | 加分 | 能力版本管理 | experience | 父版本、散列、修改原因、报告关联；docs/phase3.md（待阶段验收） | 3–5 | 父版本、散列、修改原因、报告关联 | G4 | implemented |
 | X07 | 加分 | 设计依据自然语言解释 | reporting | 解释引用真实知识与运行 ID | 3–5 | 解释引用真实知识与运行 ID | G4 | planned |
 | X08 | 加分 | 跨场景迁移 | orchestrator/validation | ADR-001、BK04/BK06：同一核心运行表格与文本任务；docs/phase25.md；examples/phase25/verification.json（G2.5 Mock 范围） | 2.5–5 | 同一提交及共用编排、隔离、评分/回写；两任务真实证据；不承诺经验跨业务提升 | G3/G4 | verified |
 | X09 | 加分 | 自动接口文档或部署配置 | reporting | 当前非交付重点 | — | 当前非交付重点 | — | out_of_scope |
@@ -79,5 +81,5 @@ Phase 2 已通过 101 项测试（含真实 Docker，零跳过）及正常/重�
 | BK04 | 主线调整 | 客户流失轻量兼容性测试 | tests/configs | 已有合成数据、固定候选、改造后同一提交的新运行报告；docs/phase25.md；examples/phase25/verification.json（G2.5 Mock 范围） | 2.5–6 | 共用新编排与执行核心，二分类评分/回写通过；不扩充业务 UI | G2.5/G3/G5 | verified |
 | BK05 | 主线调整 | 任务数据与知识适用条件隔离 | knowledge/orchestrator/validation | 数据模式、字段、标签空间、指标规则及经验适用条件；docs/phase25.md；examples/phase25/verification.json（G2.5 Mock 范围）；Phase 2.5 不消费 Experience，经验复用另由 BK08 验收 | 2.5–4 | 拒绝错配字段/标签/阈值及不兼容经验 | G2.5/G3/G4 | verified |
 | BK06 | 主线调整 | 主案例与兼容案例验收证据索引 | scripts/reporting/docs | 命令、提交、时间、环境、代码/数据散列及两任务报告；docs/phase25.md；examples/phase25/verification.json（G2.5 Mock 范围） | 2.5–6 | 必需测试零跳过；重开记录和证据匹配；支撑 X08 | G2.5/G1/G3/G4/G5 | verified |
-| BK07 | 主线调整 | BANKING77 有界修复与候选比较 | planning/generation/validation | Demo B、多候选排名、代码父子版本与停止记录 | 3 | 至少两候选同协议；最多两次修复；客户流失兼容检查通过 | G2/G3 | planned |
+| BK07 | 主线调整 | BANKING77 有界修复与候选比较 | planning/generation/validation | Demo B、多候选排名、代码父子版本与停止记录；docs/phase3.md（待阶段验收） | 3 | 至少两候选同协议；最多两次修复；客户流失兼容检查通过 | G2/G3 | implemented |
 | BK08 | 主线调整 | BANKING77 已验证经验复用 | experience/knowledge | Demo C、检索引用及启用/关闭经验对照 | 4 | 同输入/划分/预算对照；不声称客户流失效果改善 | G4 | planned |
