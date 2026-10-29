@@ -255,10 +255,11 @@ def run_workflow(
             "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
         }
         write_json(directory / "experience-retrieval.json", report["experience_usage"])
-        trace.add(
-            "experience_retrieved",
-            "已匹配经验参考" if experience_query["matches"] else "经验关闭或没有适用的已验证经验",
-        )
+        if use_experiences:
+            trace.add(
+                "experience_retrieved",
+                "已匹配经验参考" if experience_query["matches"] else "没有适用的已验证经验",
+            )
         builder_request = ProviderRequest(
             role="builder",
             operation="repair_code" if repair else "generate_code",

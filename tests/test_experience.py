@@ -156,3 +156,25 @@ def test_nonmatching_scope_cannot_be_marked_verified(memory):
         entity["record"]["repair_evidence"]["scope"].update(changes)
         with pytest.raises(ValidationError):
             KnowledgeBatch.model_validate(altered)
+
+
+def test_failed_trials_do_not_become_zero_measured_scores(monkeypatch):
+    monkeypatch.syspath_prepend(str(ROOT / "scripts"))
+    from verify_phase4 import metrics_by_arm
+
+    result = metrics_by_arm(
+        [
+            {
+                "enabled": True,
+                "status": "failed",
+                "repair_calls": 0,
+                "new_provider_calls": 1,
+                "known_input_tokens": 0,
+                "known_output_tokens": 0,
+                "macro_f1": None,
+            }
+        ]
+    )
+    assert result["on"]["validated"] == 0
+    assert result["on"]["mean_validation_macro_f1"] is None
+    assert result["off"]["mean_validation_macro_f1"] is None

@@ -61,6 +61,7 @@ def metrics_by_arm(trials):
     results = {}
     for enabled in (False, True):
         selected = [t for t in trials if t["enabled"] is enabled]
+        measured = [t["macro_f1"] for t in selected if t["macro_f1"] is not None]
         results["on" if enabled else "off"] = {
             "trials": len(selected),
             "validated": sum(t["status"] == "validated" for t in selected),
@@ -68,10 +69,7 @@ def metrics_by_arm(trials):
             "new_provider_calls": sum(t["new_provider_calls"] for t in selected),
             "known_input_tokens": sum(t["known_input_tokens"] for t in selected),
             "known_output_tokens": sum(t["known_output_tokens"] for t in selected),
-            "mean_validation_macro_f1": sum(
-                t["macro_f1"] for t in selected if t["macro_f1"] is not None
-            )
-            / max(1, sum(t["macro_f1"] is not None for t in selected)),
+            "mean_validation_macro_f1": sum(measured) / len(measured) if measured else None,
         }
     return results
 
