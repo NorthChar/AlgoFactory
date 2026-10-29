@@ -10,6 +10,9 @@ from pathlib import Path
 
 def parser():
     root = argparse.ArgumentParser(description="AlgoFactory 知识抽取与检索")
+    root.add_argument(
+        "--env-file", type=Path, help="显式读取本地配置；系统环境变量优先，不执行 shell"
+    )
     commands = root.add_subparsers(dest="command", required=True)
     commands.add_parser("status", help="显示已实现阶段")
     commands.add_parser("sandbox-status", help="检查 Docker 是否可用")
@@ -174,7 +177,7 @@ def run(args):
                 args.fault, max_calls=args.llm_call_budget or (32 if args.compare else 8)
             )
             if args.mode == "mock"
-            else APIProvider(APIConfig.from_env())
+            else APIProvider(APIConfig.from_env(args.env_file))
         )
         if args.llm_call_budget is not None:
             provider.max_calls = args.llm_call_budget
@@ -239,7 +242,7 @@ def run(args):
         elif args.mode == "api":
             if args.fixture:
                 raise ValueError("An API request cannot use a Mock fixture")
-            provider = APIProvider(APIConfig.from_env())
+            provider = APIProvider(APIConfig.from_env(args.env_file))
         else:
             raise ValueError("Provider mode must be mock or api")
         source = SourceDocument.from_text(

@@ -1,0 +1,46 @@
+[
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "收到显式任务，开始单候选流程",
+    "sequence": 0,
+    "source_ids": [],
+    "state": "received",
+    "timestamp": "2026-10-29T17:07:30.700686+08:00",
+    "workflow_id": "workflow:dd062b2204414939866690fe22ba4c37"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+    "reason": "需求契约已校验，并绑定数据指纹与冻结规则",
+    "sequence": 1,
+    "source_ids": [],
+    "state": "parsed",
+    "timestamp": "2026-10-29T17:07:33.670930+08:00",
+    "workflow_id": "workflow:dd062b2204414939866690fe22ba4c37"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+    "reason": "结果已通过事务写入知识库；失败记录保留失败状态",
+    "sequence": 2,
+    "source_ids": [],
+    "state": "persisted",
+    "timestamp": "2026-10-29T17:07:50.730069+08:00",
+    "workflow_id": "workflow:dd062b2204414939866690fe22ba4c37"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+    "reason": "invalid_knowledge_graph",
+    "sequence": 3,
+    "source_ids": [],
+    "state": "failed",
+    "timestamp": "2026-10-29T17:07:50.732817+08:00",
+    "workflow_id": "workflow:dd062b2204414939866690fe22ba4c37"
+  }
+]

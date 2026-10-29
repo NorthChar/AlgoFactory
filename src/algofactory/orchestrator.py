@@ -15,7 +15,7 @@ from algofactory.experience import persist_execution
 from algofactory.generation.safety import check_code
 from algofactory.knowledge.extraction import ingest_document
 from algofactory.knowledge.store import KnowledgeStore
-from algofactory.llm.providers import Provider, ProviderError, ProviderRequest
+from algofactory.llm.providers import APIProvider, Provider, ProviderError, ProviderRequest
 from algofactory.reporting import save_report
 from algofactory.schemas.contracts import (
     AgentDecision,
@@ -426,6 +426,8 @@ def run_workflow(
     write_json(
         directory / "provider-audit.json", [item.model_dump(mode="json") for item in provider.audit]
     )
+    if isinstance(provider, APIProvider):
+        write_json(directory / "provider-usage.json", provider.usage_summary())
     trace.add(
         report["status"],
         report["error_category"]

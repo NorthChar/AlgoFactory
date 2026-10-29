@@ -1,0 +1,14 @@
+[
+  {
+    "action": "STOP",
+    "budget_remaining": 0,
+    "decision_id": "workflow:dd062b2204414939866690fe22ba4c37:review",
+    "evidence_ids": [
+      "workflow:dd062b2204414939866690fe22ba4c37"
+    ],
+    "reason": "确定性独立验证结果：invalid_knowledge_graph",
+    "role": "review",
+    "run_id": "workflow:dd062b2204414939866690fe22ba4c37",
+    "schema_version": 1
+  }
+]

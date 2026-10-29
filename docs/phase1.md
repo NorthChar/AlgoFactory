@@ -44,21 +44,21 @@ ID 格式为 `source:<原文 UTF-8 SHA-256>:<局部名称>`。源文档 ID 只�
 
 兼容端点须支持 `POST <base_url>/chat/completions`、Bearer 认证、messages、response_format=json_object、max_tokens、temperature=0，以及 choices[0].message.content 和 finish_reason=stop 的响应结构。不承诺兼容所有模型或服务；不支持这些字段的服务需新增适配器。请求 schema 放入 system 指令，业务文档作为 user 数据。
 
-复制 .env.example 为 .env，填写以下环境变量后在自己的 shell 中导出：
+当前版本同时支持 Azure Responses，配置与真实运行结果见 [API 接入记录](api-integration.md)。复制 .env.example 为 .env，填写以下配置：
 
 - ALGOFACTORY_API_BASE_URL：HTTPS API 根地址，通常包含 /v1，不含 /chat/completions。
 - ALGOFACTORY_API_MODEL：服务提供的模型标识。
 - ALGOFACTORY_API_KEY：访问凭据。
-- ALGOFACTORY_API_INPUT_USD_PER_MILLION / OUTPUT_USD_PER_MILLION：所选模型的实际输入/输出单价。
-- ALGOFACTORY_API_MAX_COST_USD：本 Provider 实例的保守估算预算。
+- ALGOFACTORY_API_INPUT_USD_PER_MILLION / OUTPUT_USD_PER_MILLION：两项均填写所选模型单价，或两项均留空表示待核对。
+- ALGOFACTORY_API_MAX_COST_USD：本 Provider 实例的保守估算预算；留空可关闭金额限制，调用次数仍受限。设置金额时必须提供两项单价。
 
-程序不自动加载 .env。可以执行 `set -a`、`source .env`、`set +a` 显式加载，然后运行：
+程序不自动加载 .env。通过 `--env-file` 显式解析本地配置，不执行 shell；运行：
 
 ```sh
-.venv/bin/python -m algofactory.cli ingest data/customer_churn.txt --mode api --db runtime/live-api.sqlite
+.venv/bin/python -m algofactory.cli --env-file .env ingest data/customer_churn.txt --mode api --db runtime/live-api.sqlite
 ```
 
-默认连接/读取超时 30 秒，每个 Provider 最多 4 次请求，每次完整调用最多重试 1 次，最多输出 8192 token，请求 JSON 最大 128 KiB，响应最大 2,000,000 字节。认证错误不重试；限流、服务错误、网络错误和非法结构化响应在预算内重试。原文引用或关系校验失败直接拒绝入库。可通过 Python APIConfig 显式调整这些限制。
+默认连接/读取超时 30 秒，每个 Provider 最多 4 次请求，每次完整调用最多重试 1 次，最多输出 8192 token，请求 JSON 最大 128 KiB，响应最大 2,000,000 字节。认证错误不重试；限流、服务错误、网络错误和非法结构化响应在预算内重试。原文引用或关系校验失败直接拒绝入库。可通过 Python APIConfig 或对应环境变量显式调整这些限制；当前小规模接入模板将自动重试设为 0。
 
 费用预算按请求 UTF-8 字节数加 1024 的输入 token 估算，以及最大输出 token 数和所填单价预留。失败请求也不返还预留，避免重试低估消耗。reserved_cost_usd 是估算预留而非实际账单；供应商的额外收费/推理 token 可能使用不同计费方式，真实费用硬限额应由供应商侧配置。本阶段未记录虚构的实际支出。
 

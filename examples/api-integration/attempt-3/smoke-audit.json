@@ -1,0 +1,14 @@
+[
+  {
+    "attempt": 1,
+    "http_status": null,
+    "input_tokens": 133,
+    "mode": "api",
+    "operation": "connection_check",
+    "output_tokens": 18,
+    "reserved_cost_usd": null,
+    "schema_version": 1,
+    "service_error_code": null,
+    "status": "ok"
+  }
+]
