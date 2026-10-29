@@ -193,7 +193,11 @@ def graph_view(snapshot, focus):
     for identifier in sorted(ids):
         entity = entities[identifier]
         label = entity["type"] + "\n" + entity["name"][:45]
-        lines.append(f"{json.dumps(identifier)} [label={json.dumps(label)}];")
+        if entity["type"] == "ValidationRun":
+            label += "\n" + entity["result"]["status"]
+        if entity["type"] == "Implementation":
+            label += "\nversion " + str(entity["version"])
+        lines.append(f"{json.dumps(identifier)} [label={json.dumps(label, ensure_ascii=False)}];")
     for edge in edges:
         lines.append(
             f"{json.dumps(edge['head_id'])} -> {json.dumps(edge['tail_id'])} [label={json.dumps(edge['type'])}];"

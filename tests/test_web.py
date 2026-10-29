@@ -89,6 +89,8 @@ def test_graph_read_only_hash_and_source_edges():
     entity = next(e for e in snapshot["entities"] if e["type"] == "Experience")
     dot, record = graph_view(snapshot, entity["id"])
     assert "DERIVED_FROM" in dot and record == entity and path.read_bytes() == before
+    assert "文本适配修复" in dot and "passed" in dot and "failed" in dot
+    assert "\\u6587" not in dot
 
 
 def test_app_default_and_reports_and_graph(tmp_path, monkeypatch):
