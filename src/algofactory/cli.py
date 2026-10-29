@@ -49,6 +49,7 @@ def parser():
             "repairable_interface",
             "persistent_interface",
             "unrepairable",
+            "text_adapter",
         ],
     )
     demo.add_argument(
@@ -56,6 +57,18 @@ def parser():
     )
     demo.add_argument("--max-repairs", type=int, choices=[0, 1, 2], default=2)
     demo.add_argument("--attempt-budget", type=int, choices=range(1, 7), default=6)
+    demo.add_argument(
+        "--experiences", action="store_true", help="检索适用的已验证经验并记录模型采用情况"
+    )
+    demo.add_argument(
+        "--learn-experiences", action="store_true", help="比较流程中从通过重测的修复链沉淀经验"
+    )
+    demo.add_argument(
+        "--validation-only", action="store_true", help="只运行验证集，经验对照不打开最终测试"
+    )
+    demo.add_argument(
+        "--reuse-knowledge", action="store_true", help="比较时复用数据库中同内容文档的已校验知识"
+    )
     demo.add_argument(
         "--llm-call-budget",
         type=int,
@@ -65,6 +78,22 @@ def parser():
     workflow = commands.add_parser("workflow-show", help="查询持久化的流程结果")
     workflow.add_argument("workflow_id")
     workflow.add_argument("--db", type=Path, default=Path("runtime/phase2.sqlite"))
+    learn = commands.add_parser(
+        "learn-experience", help="从持久化失败和通过重测的版本提炼可追溯经验"
+    )
+    learn.add_argument("--failed-dir", type=Path, required=True)
+    learn.add_argument("--repaired-dir", type=Path, required=True)
+    learn.add_argument("--algorithm", choices=["text_logistic", "text_nb"], required=True)
+    learn.add_argument("--db", type=Path, required=True)
+    experience_search = commands.add_parser(
+        "experience-search", help="按任务、算法、冻结协议和错误类型检索已验证经验"
+    )
+    experience_search.add_argument("--db", type=Path, required=True)
+    experience_search.add_argument("--dataset-dir", type=Path, required=True)
+    experience_search.add_argument(
+        "--algorithm", choices=["text_logistic", "text_nb"], required=True
+    )
+    experience_search.add_argument("--failure-category")
     ingest = commands.add_parser("ingest", help="从 UTF-8 业务文档抽取知识并入库")
     ingest.add_argument("document", type=Path)
     ingest.add_argument(
@@ -107,11 +136,12 @@ def parser():
 def run(args):
     if args.command == "status":
         return {
-            "phase": 3,
+            "phase": 4,
             "tasks": ["banking77", "churn"],
             "status": "single_candidate_workflow",
             "core_workflow": "implemented_docker_required",
-            "live_api": "requires_configuration_and_verification",
+            "live_api": "phase3_evidence_available; current credentials and environment required",
+            "experience_reuse": "scoped_repair_evidence_and_opt_in_retrieval",
         }
     from importlib.resources import files
 
@@ -121,6 +151,29 @@ def run(args):
     from algofactory.llm.providers import APIConfig, APIProvider, MockProvider, ProviderError
     from algofactory.schemas import contracts
     from algofactory.schemas.knowledge import Extraction, KnowledgeBatch, SourceDocument
+
+    if args.command == "learn-experience":
+        from algofactory.experience_reuse import synthesize_repair
+
+        with KnowledgeStore(args.db) as store:
+            return synthesize_repair(store, args.failed_dir, args.repaired_dir, args.algorithm)
+    if args.command == "experience-search":
+        from algofactory.datasets import verify_dataset
+        from algofactory.experience_reuse import retrieve_repairs
+        from algofactory.tasks import profile_for
+        from algofactory.validation.protocol import calibrate
+
+        manifest = verify_dataset(args.dataset_dir)
+        protocol = calibrate(args.dataset_dir, args.dataset_dir / "protocol.json")
+        with KnowledgeStore(args.db) as store:
+            return retrieve_repairs(
+                store,
+                profile=profile_for(manifest),
+                algorithm=args.algorithm,
+                manifest=manifest,
+                protocol=protocol,
+                category=args.failure_category,
+            )
 
     if args.command in {"prepare-data", "prepare-banking77", "calibrate", "demo", "sandbox-status"}:
         from algofactory.datasets import generate_dataset
@@ -154,8 +207,11 @@ def run(args):
             "repairable_interface",
             "persistent_interface",
             "unrepairable",
+            "text_adapter",
         }:
             raise ValueError("This fault fixture requires --compare")
+        if not args.compare and (args.learn_experiences or args.reuse_knowledge):
+            raise ValueError("Learning and persisted knowledge reuse require --compare")
         args.knowledge_document = args.knowledge_document or Path("data") / (
             "banking77-phase3.txt" if args.compare else profile.document
         )
@@ -182,7 +238,7 @@ def run(args):
         if args.llm_call_budget is not None:
             provider.max_calls = args.llm_call_budget
         workflow = run_workflow
-        extra = {}
+        extra = {"use_experiences": args.experiences, "validation_only": args.validation_only}
         if args.compare:
             from algofactory.planning import SearchPolicy
             from algofactory.search import run_search
@@ -190,6 +246,9 @@ def run(args):
             workflow = run_search
             extra["policy"] = SearchPolicy(
                 max_repairs=args.max_repairs, attempt_budget=args.attempt_budget
+            )
+            extra.update(
+                learn_experiences=args.learn_experiences, reuse_knowledge=args.reuse_knowledge
             )
         report = workflow(
             directory=args.output_dir.resolve(),

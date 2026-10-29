@@ -1,4 +1,4 @@
-"""Persist measured runs with graph provenance; experience synthesis starts in Phase 4."""
+"""Persist measured runs with graph provenance; scoped synthesis lives in experience_reuse."""
 
 from algofactory.knowledge.store import KnowledgeStore, canonical
 from algofactory.schemas.contracts import ValidationResult
@@ -28,6 +28,7 @@ def persist_execution(store: KnowledgeStore, report: dict, manifest: dict, task,
         "candidate": report.get("candidate"),
         "evaluation_scope": report.get("evaluation_scope", "validation_and_final_test"),
         "search_summary": report.get("search_summary"),
+        "experience_usage": report.get("experience_usage"),
     }
     source = SourceDocument.from_text(report["workflow_id"] + ".json", canonical(evidence))
     span = SourceSpan(start=0, end=len(source.content), quote=source.content)
@@ -111,6 +112,7 @@ def persist_execution(store: KnowledgeStore, report: dict, manifest: dict, task,
         "report_paths": result.report_paths,
         "search_summary": report.get("search_summary"),
         "evaluation_scope": report.get("evaluation_scope", "validation_and_final_test"),
+        "experience_usage": report.get("experience_usage"),
     }
     store.put_batch(
         KnowledgeBatch(

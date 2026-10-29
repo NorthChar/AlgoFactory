@@ -10,6 +10,7 @@ from pathlib import Path
 from algofactory.datasets import sha256_file, verify_dataset, write_json
 from algofactory.execution.docker import DockerExecutor
 from algofactory.experience import persist_execution
+from algofactory.experience_reuse import synthesize_repair
 from algofactory.knowledge.store import KnowledgeStore, canonical
 from algofactory.orchestrator import Trace, run_workflow
 from algofactory.planning import SearchPolicy, diagnose, rank_candidates
@@ -22,6 +23,7 @@ from algofactory.schemas.contracts import (
     TaskSpec,
     ValidationResult,
 )
+from algofactory.schemas.knowledge import KnowledgeBatch, SourceDocument
 from algofactory.tasks import BANKING77, profile_for
 from algofactory.validation.final_test import evaluate_final
 from algofactory.validation.protocol import calibrate
@@ -44,6 +46,10 @@ def run_search(
     provider,
     policy: SearchPolicy | None = None,
     resume_failures: dict[str, Path] | None = None,
+    use_experiences: bool = False,
+    learn_experiences: bool = False,
+    validation_only: bool = False,
+    reuse_knowledge: bool = False,
 ):
     policy = policy or SearchPolicy()
     if directory.exists() and any(directory.iterdir()):
@@ -60,7 +66,11 @@ def run_search(
         "error_category": None,
         "test_attempted": False,
         "execution_evidence": [],
-        "evaluation_scope": "comparison_and_final_test",
+        "evaluation_scope": "comparison_validation_only"
+        if validation_only
+        else "comparison_and_final_test",
+        "experience_enabled": use_experiences,
+        "learned_experiences": [],
         "fault_fixture": getattr(provider, "fault", None),
         "attempts": [],
         "candidate_stops": [],
@@ -92,6 +102,33 @@ def run_search(
         if profile_for(manifest) != BANKING77:
             raise WorkflowFailure("unsupported_search_task")
         protocol = calibrate(dataset_dir, dataset_dir / "protocol.json")
+        with KnowledgeStore(db_path) as store:
+            snapshot = store.snapshot()
+        initial = KnowledgeBatch.model_validate(snapshot) if snapshot["entities"] else None
+        experience_ids = (
+            {e.id for e in initial.entities if e.type == "Experience"} if initial else set()
+        )
+        if reuse_knowledge:
+            source = SourceDocument.from_text(
+                knowledge_document.name, knowledge_document.read_text()
+            )
+            if (
+                initial
+                and source in initial.sources
+                and any(
+                    e.source_id == source.id and e.type == "Algorithm" for e in initial.entities
+                )
+            ):
+                knowledge_cache.add(source.id)
+        write_json(
+            directory / "experience-library.json",
+            {
+                "eligible_ids": sorted(experience_ids),
+                "enabled": use_experiences,
+                "library_snapshot_hash": hashlib.sha256(canonical(snapshot).encode()).hexdigest(),
+                "learned_during_search_not_consumed": True,
+            },
+        )
         resumed = {}
         for algorithm, origin in (resume_failures or {}).items():
             if algorithm not in policy.algorithms or policy.max_repairs < 1:
@@ -111,6 +148,10 @@ def run_search(
             "data_fingerprint": manifest["data_fingerprint"],
             "split_id": manifest["split_id"],
             "seed": manifest["seed"],
+            "experience_enabled": use_experiences,
+            "learn_experiences": learn_experiences,
+            "validation_only": validation_only,
+            "reuse_knowledge": reuse_knowledge,
         }
         report["search_config_hash"] = hashlib.sha256(canonical(frozen).encode()).hexdigest()
         write_json(
@@ -177,6 +218,8 @@ def run_search(
                         repair=repair,
                         repair_limit=policy.max_repairs,
                         knowledge_cache=knowledge_cache,
+                        use_experiences=use_experiences,
+                        experience_ids=experience_ids,
                     )
                 result = child.get("validation", {})
                 entry = {
@@ -195,6 +238,7 @@ def run_search(
                     "split_id": result.get("split_id"),
                     "test_attempted": child["test_attempted"],
                     "historical_failure": historical,
+                    "experience_usage": child.get("experience_usage"),
                 }
                 report["attempts"].append(entry)
                 write_json(directory / "attempts.json", report["attempts"])
@@ -203,6 +247,18 @@ def run_search(
                 if not child["persisted"]:
                     raise WorkflowFailure("knowledge_writeback_failed")
                 if child["status"] == "validated":
+                    if learn_experiences and repair:
+                        with KnowledgeStore(db_path) as store:
+                            learned = synthesize_repair(
+                                store,
+                                attempt_dir.parent / f"attempt-{attempt - 1}",
+                                attempt_dir,
+                                algorithm,
+                            )
+                        report["learned_experiences"].append(learned)
+                        write_json(
+                            directory / "learned-experiences.json", report["learned_experiences"]
+                        )
                     break
                 diagnostic = diagnose(child)
                 write_json(attempt_dir / "diagnosis.json", diagnostic)
@@ -300,37 +356,41 @@ def run_search(
             config_hash=protocol["config_hash"],
         )
         trace.add("selected", "按验证集 Macro-F1、Accuracy、预设候选顺序选定版本；测试失败不换候选")
-        config = BANKING77.intent() | {
-            "seed": task.seed,
-            "class_labels": task.class_labels,
-            "stage": "test",
-        }
-        executor = DockerExecutor(approval_path, requirements_path)
-        final, scores = evaluate_final(
-            directory,
-            dataset_dir,
-            manifest,
-            task,
-            candidate,
-            protocol,
-            executor,
-            config,
-            report,
-            selected["validation_metrics"],
-        )
-        report["validation"].update(test_metrics=scores["metrics"], final_test_evaluated=True)
-        report["validation"]["resources"]["elapsed_seconds"] += final.elapsed_seconds
-        report["validation"]["resources"]["peak_memory_mib"] = max(
-            report["validation"]["resources"]["peak_memory_mib"], final.peak_memory_mib
-        )
-        write_json(directory / "test-class-details.json", scores["class_details"])
-        if not scores["metrics_passed"]:
-            report["validation"]["metrics"] = {
-                "status": "failed",
-                "details": "最终测试未达到冻结门槛，不重选、不修复",
+        if validation_only:
+            report["status"] = "validated"
+        else:
+            config = BANKING77.intent() | {
+                "seed": task.seed,
+                "class_labels": task.class_labels,
+                "stage": "test",
             }
-            raise WorkflowFailure("final_test_threshold_failed")
-        report["status"] = "accepted"
+            executor = DockerExecutor(approval_path, requirements_path)
+            final, scores = evaluate_final(
+                directory,
+                dataset_dir,
+                manifest,
+                task,
+                candidate,
+                protocol,
+                executor,
+                config,
+                report,
+                selected["validation_metrics"],
+            )
+            report["validation"].update(test_metrics=scores["metrics"], final_test_evaluated=True)
+            report["validation"]["resources"]["elapsed_seconds"] += final.elapsed_seconds
+            report["validation"]["resources"]["peak_memory_mib"] = max(
+                report["validation"]["resources"]["peak_memory_mib"], final.peak_memory_mib
+            )
+            write_json(directory / "test-class-details.json", scores["class_details"])
+            if not scores["metrics_passed"]:
+                report["validation"]["metrics"] = {
+                    "status": "failed",
+                    "details": "最终测试未达到冻结门槛，不重选、不修复",
+                }
+                raise WorkflowFailure("final_test_threshold_failed")
+            report["status"] = "accepted"
+
     except SearchStop as exc:
         report.update(status="stopped", error_category=exc.category)
     except (WorkflowFailure, ValueError, OSError, KeyError, sqlite3.Error) as exc:
@@ -348,7 +408,7 @@ def run_search(
         for key in ("policy", "budget_usage", "attempts", "candidate_stops", "ranking")
     }
     if "validation" in report:
-        if report["status"] != "accepted":
+        if report["status"] not in {"accepted", "validated"}:
             report["validation"].update(status="failed", error_category=report["error_category"])
             if report["test_attempted"] and not report["validation"]["final_test_evaluated"]:
                 report["validation"]["functional"] = {
@@ -380,8 +440,13 @@ def run_search(
             writeback_error_type=type(exc).__name__,
         )
     decision(
-        "ACCEPT" if report["status"] == "accepted" else "STOP",
-        report["error_category"] or "选定版本最终测试通过且结果已回写",
+        "ACCEPT" if report["status"] in {"accepted", "validated"} else "STOP",
+        report["error_category"]
+        or (
+            "验证集比较通过且已回写，未访问最终测试"
+            if validation_only
+            else "选定版本最终测试通过且结果已回写"
+        ),
         [report.get("selected_implementation_id") or workflow_id],
     )
     write_json(

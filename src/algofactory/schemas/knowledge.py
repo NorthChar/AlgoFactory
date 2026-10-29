@@ -271,7 +271,10 @@ class KnowledgeBatch(Contract):
                     if isinstance(head, ImplementationEntity)
                     else head.record.source_run_id
                 )
-                if parent != tail.id:
+                allowed = {parent}
+                if isinstance(head, ExperienceEntity) and head.record.repair_evidence:
+                    allowed.add(head.record.repair_evidence.failed_run_id)
+                if tail.id not in allowed:
                     raise ValueError("DERIVED_FROM edge disagrees with the parent/run reference")
             if edge.type == "EVALUATES" and head.result.implementation_id != tail.id:
                 raise ValueError("EVALUATES edge disagrees with the validation result")
@@ -313,4 +316,63 @@ class KnowledgeBatch(Contract):
                         raise ValueError("Experience requires a DERIVED_FROM edge")
                     if record.verification_status == "verified" and run.result.status != "passed":
                         raise ValueError("Verified experience requires a passed retest")
+                    proof = record.repair_evidence
+                    if proof and record.verification_status == "verified":
+                        failed = entities.get(proof.failed_run_id)
+                        repaired = entities.get(proof.repaired_implementation_id)
+                        previous = entities.get(proof.failed_implementation_id)
+                        if (
+                            proof.rule == "unclassified"
+                            or not isinstance(failed, ValidationRunEntity)
+                            or not isinstance(repaired, ImplementationEntity)
+                            or not isinstance(previous, ImplementationEntity)
+                            or failed.result.status != "failed"
+                            or failed.result.error_category != proof.failure_category
+                            or failed.result.implementation_id != previous.id
+                            or run.result.implementation_id != repaired.id
+                            or repaired.parent_id != previous.id
+                            or repaired.version != previous.version + 1
+                            or previous.code_hash != proof.failed_code_hash
+                            or repaired.code_hash != proof.repaired_code_hash
+                            or previous.code_hash == repaired.code_hash
+                            or failed.result.final_test_evaluated
+                            or run.result.final_test_evaluated
+                            or failed.result.config_hash != run.result.config_hash
+                            or run.result.config_hash != proof.scope.config_hash
+                            or failed.result.split_id != run.result.split_id
+                            or run.result.split_id != proof.scope.split_id
+                            or (entity.id, "DERIVED_FROM", failed.id) not in edge_set
+                        ):
+                            raise ValueError(
+                                "Repair experience requires matching failed and passed lineage"
+                            )
+                        for measured in (failed, run):
+                            datasets = [
+                                entities[e.tail_id]
+                                for e in self.relations
+                                if e.head_id == measured.id and e.type == "USES_DATASET"
+                            ]
+                            if (
+                                len(datasets) != 1
+                                or datasets[0].fingerprint != proof.scope.data_fingerprint
+                                or sorted(proof.scope.text_features)
+                                != sorted(
+                                    name
+                                    for name, dtype in datasets[0].field_schema.items()
+                                    if dtype == "text"
+                                )
+                            ):
+                                raise ValueError("Repair experience dataset scope mismatch")
+                        algorithm_name = {
+                            "text_logistic": "TF-IDF + Logistic Regression",
+                            "text_nb": "TF-IDF + MultinomialNB",
+                        }[proof.scope.algorithm]
+                        for implementation in (previous, repaired):
+                            algorithms = [
+                                entities[e.tail_id]
+                                for e in self.relations
+                                if e.head_id == implementation.id and e.type == "USES"
+                            ]
+                            if len(algorithms) != 1 or algorithms[0].name != algorithm_name:
+                                raise ValueError("Repair experience algorithm scope mismatch")
         return self

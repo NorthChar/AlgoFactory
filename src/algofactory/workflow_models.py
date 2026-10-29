@@ -15,10 +15,17 @@ class TaskIntent(Contract):
     text_features: list[Text] = Field(default_factory=list)
 
 
+class ExperienceUse(Contract):
+    experience_id: Identifier
+    decision: Literal["adopted", "not_applicable"]
+    reason: Annotated[str, Field(min_length=1, max_length=1000)]
+
+
 class GeneratedCode(Contract):
     interface: Literal["build_pipeline"]
     code: Annotated[str, Field(min_length=1, max_length=32768)]
     plan_id: Identifier
+    experience_use: list[ExperienceUse] = Field(default_factory=list, max_length=3)
 
 
 class WorkerResult(Contract):

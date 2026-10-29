@@ -2,7 +2,7 @@
 
 from typing import Annotated, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, model_serializer, model_validator
 
 Text = Annotated[str, Field(min_length=1, pattern=r"\S")]
 Identifier = Annotated[str, Field(min_length=1, max_length=240, pattern=r"^[a-zA-Z0-9_.:-]+$")]
@@ -175,6 +175,29 @@ class AgentDecision(Contract):
     budget_remaining: int = Field(ge=0)
 
 
+class ExperienceScope(Contract):
+    task_profile: Literal["banking77"] = "banking77"
+    task_type: Literal["multiclass_classification"] = "multiclass_classification"
+    data_kind: Literal["text"] = "text"
+    input_container: Literal["pandas_dataframe"] = "pandas_dataframe"
+    algorithm: Literal["text_logistic", "text_nb"]
+    text_features: list[Text] = Field(default_factory=lambda: ["text"])
+    data_fingerprint: Digest
+    config_hash: Digest
+    split_id: Identifier
+
+
+class RepairEvidence(Contract):
+    rule: Literal["text_dataframe_adapter", "unclassified"]
+    scope: ExperienceScope
+    failed_run_id: Identifier
+    failed_implementation_id: Identifier
+    repaired_implementation_id: Identifier
+    failed_code_hash: Digest
+    repaired_code_hash: Digest
+    failure_category: Text
+
+
 class ExperienceRecord(Contract):
     experience_id: Identifier
     condition: Text
@@ -182,6 +205,14 @@ class ExperienceRecord(Contract):
     outcome: Text
     source_run_id: Identifier | None = None
     verification_status: Literal["proposed", "verified"] = "proposed"
+    repair_evidence: RepairEvidence | None = None
+
+    @model_serializer(mode="wrap")
+    def preserve_legacy_payload(self, handler):
+        data = handler(self)
+        if self.repair_evidence is None:
+            data.pop("repair_evidence", None)
+        return data
 
     @model_validator(mode="after")
     def check_evidence(self):

@@ -60,6 +60,7 @@ BANKING77 = TaskProfile(
     "banking77.txt",
 )
 PROFILES = {p.name: p for p in (CHURN, BANKING77)}
+BANKING77_REUSE_REQUEST = "为另一个调用方复用相同 BANKING77 输入协议，请生成并验证可接收 DataFrame 的 77 类英文客服意图分类组件。"
 
 
 def profile_for(manifest):

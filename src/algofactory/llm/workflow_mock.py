@@ -4,7 +4,7 @@ import json
 from importlib.resources import files
 
 from algofactory.llm.providers import Provider, ProviderError, ProviderRequest
-from algofactory.tasks import PROFILES
+from algofactory.tasks import BANKING77_REUSE_REQUEST, PROFILES
 
 
 class MockWorkflowProvider(Provider):
@@ -20,6 +20,7 @@ class MockWorkflowProvider(Provider):
             "repairable_interface",
             "persistent_interface",
             "unrepairable",
+            "text_adapter",
         }:
             raise ValueError("Unknown explicit fault fixture")
         self.fault = fault
@@ -45,6 +46,8 @@ class MockWorkflowProvider(Provider):
             response = fixtures[data["sha256"]]["response"]
         elif request.operation == "parse_task":
             profile = next((p for p in PROFILES.values() if p.request == data["request"]), None)
+            if data["request"] == BANKING77_REUSE_REQUEST:
+                profile = PROFILES["banking77"]
             if profile is None:
                 raise ProviderError("mock_request_unsupported")
             response = profile.intent()
@@ -119,10 +122,26 @@ class MockWorkflowProvider(Provider):
                     code = code.replace("max_iter=500", "max_iter=" + str(500 + repair["attempt"]))
             if self.fault == "unsafe_code":
                 code = "import os\n" + code
+            if self.fault == "text_adapter" and not repair:
+                start = code.index("    preprocess = ColumnTransformer(")
+                end = code.index("    model =", start)
+                code = (
+                    code[:start]
+                    + "    preprocess = TfidfVectorizer(ngram_range=(1, 2), sublinear_tf=True, max_features=30000)\n"
+                    + code[end:]
+                )
             response = {
                 "interface": "build_pipeline",
                 "code": code,
                 "plan_id": data["plan"]["plan_id"],
+                "experience_use": [
+                    {
+                        "experience_id": item["experience_id"],
+                        "decision": "adopted",
+                        "reason": "显式 Mock：输出固定的、符合文本适配经验的模板；不代表模型推理或收益。",
+                    }
+                    for item in data.get("retrieved_experiences", [])
+                ],
             }
         else:
             raise ProviderError("unsupported_mock_operation")

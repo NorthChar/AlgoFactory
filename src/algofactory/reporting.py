@@ -67,7 +67,7 @@ def save_report(directory: Path, report: dict):
         "完整输入散列、状态轨迹、Provider 调用和容器证据见同目录 JSON 文件。",
         "",
     ]
-    if report.get("evaluation_scope") == "validation_only":
+    if report.get("evaluation_scope") in {"validation_only", "comparison_validation_only"}:
         lines += ["本报告仅用于验证集候选比较；validated 不表示最终测试通过。", ""]
     if "attempts" in report:
         lines += [
@@ -102,4 +102,22 @@ def save_report(directory: Path, report: dict):
             lines.append(
                 f"- {detail['rule']}：{detail.get('object_kind', 'graph')} {detail.get('object_index', '')}"
             )
+    uses = [report["experience_usage"]] if report.get("experience_usage") else []
+    uses += [a["experience_usage"] for a in report.get("attempts", []) if a.get("experience_usage")]
+    if uses:
+        lines += [
+            "",
+            "## 经验复用轨迹",
+            "",
+            "模型声明采用与代码规则检查分别记录；单次采用不代表普遍收益。",
+            "",
+        ]
+        for use in uses:
+            lines.append(
+                f"- 经验开关：{use['enabled']}；匹配数：{len(use['matches'])}；输出满足经验规则：{use['observed_rule_satisfied']}"
+            )
+            for item in use["model_decisions"]:
+                lines.append(
+                    f"- {item['experience_id']}：{item['decision']}；{item['reason'].replace(chr(10), ' ')}"
+                )
     (directory / "report.md").write_text("\n".join(lines), encoding="utf-8")
