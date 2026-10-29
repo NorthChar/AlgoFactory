@@ -1,6 +1,6 @@
 # AlgoFactory 架构与契约
 
-2026-10-29 主线调整见 [ADR-001](decisions/0001-banking77-main-case.md)。Phase 2.5 已实现 BANKING77 英文文本多分类与客户流失二分类的共享流程，阶段验收待运行；详见 [指南](phase25.md)。
+2026-10-29 主线调整见 [ADR-001](decisions/0001-banking77-main-case.md)。Phase 2.5 已实现 BANKING77 英文文本多分类与客户流失二分类的共享流程，G2.5 已通过；详见 [指南](phase25.md)。
 
 ## 模块边界
 
@@ -70,7 +70,7 @@ MockWorkflowProvider 和 APIProvider 共用 run_workflow；仅 Provider 的响�
 
 实现、数据、验证运行及失败实体和 workflow_runs 记录在同一事务写入。执行证据作为来源文本，使用内容散列命名空间；实际分数保留 ValidationResult。Phase 2 不创建 Experience，不将失败诊断自动标为已验证经验。
 
-## Phase 2.5 任务适配实现（implemented，待阶段验收）
+## Phase 2.5 任务适配实现（verified，限 G2.5 范围）
 
 共享路径为：CLI/未来 Web → 任务配置与数据适配 → 同一 Orchestrator → Provider/知识检索/生成 → 同一 Docker 执行器 → 按任务协议独立评分 → 共用报告与事务回写。适配器负责输入和任务差异；不复制 BANKING77 专用编排器，不让任意配置触发动态模块导入。
 

@@ -1,6 +1,22 @@
 # Phase 2.5：BANKING77 主案例与客户流失兼容性
 
-2026-10-29，承接 [ADR-001](decisions/0001-banking77-main-case.md)。实现已完成，阶段验收待运行；最终状态以 [G2.5](acceptance-gates.md) 和阶段 verification.json 为准。Phase 1/2 的历史证据不改写。
+2026-10-29，承接 [ADR-001](decisions/0001-banking77-main-case.md)。实现与 G2.5 阶段验收均已完成，详见 [统一证据索引](../examples/phase25/verification.json)。Phase 1/2 的历史证据不改写。
+
+## 阶段验收结果
+
+2026-10-29（Asia/Shanghai），实现提交 `c40ab0a32c21037f81a2472b8ec60d0626716288`，源码干净；124 项测试通过，0 失败、0 错误、0 跳过。两任务使用该提交的公共编排器、Docker 执行器、评分入口与知识库回写。
+
+| 案例 | 验证集 | 最终测试集 | 验收结论 |
+| --- | --- | --- | --- |
+| BANKING77 | Macro-F1 0.872975；Accuracy 0.873437 | Macro-F1 0.878695；Accuracy 0.878247 | 四维通过，Macro-F1 高于冻结门槛 0.82；相同配置重复结果一致 |
+| 客户流失兼容性 | F1 0.645740；ROC-AUC 0.800455 | F1 0.666667；ROC-AUC 0.816260 | 四维通过；所有指标与历史固定候选相同 |
+
+- [BANKING77 主案例报告](../examples/phase25/banking77/report.md)和[逐类测试指标及混淆矩阵](../examples/phase25/banking77/test-class-details.json)。
+- [客户流失兼容报告](../examples/phase25/churn-compatibility/report.md)。
+- [数据处理审计](../examples/phase25/banking77-data/audit.json)、[类别映射](../examples/phase25/banking77-data/labels.json)及[冻结协议](../examples/phase25/banking77-data/protocol.json)。
+- [统一证据索引](../examples/phase25/verification.json)：全部命令、环境、提交、散列与六个示例；包含接口缺失、危险代码、非法响应的失败记录，均未进入测试集。测试另验证任务/知识错配、数据篡改和概率列错配。
+
+知识库重开、事务记录和 GraphML 往返通过；原始资料 docs/source 及 examples/phase1、examples/phase2 保持原样。G2.5 通过不代表全项目 G1–G5 或真实 API 通过。
 
 ## 实现范围
 

@@ -2,7 +2,7 @@
 
 AI Agent 算法能力工厂原型，目标是能力抽取、代码复刻、独立验证、修复与经验回写。2026-10-29 确定主案例为“基于 BANKING77 的客服意图分类算法生成与验证”，已有客户流失案例保留为轻量兼容性测试，详见 [ADR-001](docs/decisions/0001-banking77-main-case.md)。
 
-Phase 2.5 已实现 BANKING77 文本多分类与客户流失共享的单候选流程，阶段验收待运行。训练、Docker 执行、主机独立评分和回写均使用同一核心；后续进入 Phase 3 修复和候选比较。真实 API、经验复用和 Streamlit 仍待验收。
+Phase 2.5 已实现 BANKING77 文本多分类与客户流失共享的单候选流程，G2.5 已通过：124 项测试零失败、零跳过，BANKING77 最终测试 Macro-F1 0.8787、Accuracy 87.82%，客户流失指标与历史基线一致。训练、Docker 执行、主机独立评分和回写均使用同一核心；后续进入 Phase 3 修复和候选比较。真实 API、经验复用和 Streamlit 仍待验收。
 
 ## 文档入口
 
@@ -14,7 +14,7 @@ Phase 2.5 已实现 BANKING77 文本多分类与客户流失共享的单候选�
 - [验收 Gate 与演示协议](docs/acceptance-gates.md)
 - [Phase 1 使用与验收说明](docs/phase1.md) 与 [实际验证证据](examples/phase1/verification.json)
 
-- [Phase 2.5 主案例与兼容性指南](docs/phase25.md)
+- [Phase 2.5 主案例与兼容性指南](docs/phase25.md) 与 [验收证据](examples/phase25/verification.json)
 - [Phase 2 Mock 闭环指南](docs/phase2.md) 与 [运行报告](examples/phase2/normal/report.md)
 
 ## 安装与运行
@@ -115,7 +115,7 @@ ALGOFACTORY_DOCKER_TESTS=1 .venv/bin/python -m pytest -q
 7. 生成代码示例：见 examples/phase2/normal/candidate.py。
 8. 验证结果与报告：四维结果、验证/测试指标及失败报告见 examples/phase2。
 9. 挑战和解决方案：来源追踪、事务失败、隔离运行、测试标签隔离及冻结门槛。
-10. 扩展方向：先完成 Phase 2.5 的 BANKING77 适配与客户流失兼容检查，再在主案例上推进 Phase 3 修复比较、经验复用、界面与插件。
+10. 扩展方向：Phase 2.5 已通过；下一步在 BANKING77 上推进 Phase 3 修复与候选比较，再进行经验复用、界面与插件。
 
 ## 工作区与版本管理
 

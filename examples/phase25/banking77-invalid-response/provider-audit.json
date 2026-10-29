@@ -1,0 +1,18 @@
+[
+  {
+    "attempt": 1,
+    "mode": "mock",
+    "operation": "parse_task",
+    "reserved_cost_usd": 0.0,
+    "schema_version": 1,
+    "status": "invalid_structured_response"
+  },
+  {
+    "attempt": 2,
+    "mode": "mock",
+    "operation": "parse_task",
+    "reserved_cost_usd": 0.0,
+    "schema_version": 1,
+    "status": "invalid_structured_response"
+  }
+]

@@ -1,0 +1,115 @@
+[
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "收到显式任务，开始单候选流程",
+    "sequence": 0,
+    "source_ids": [],
+    "state": "received",
+    "timestamp": "2026-10-29T15:57:31.236312+08:00",
+    "workflow_id": "workflow:ec153d3885ea4ea5b7a79b6abfb38453"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+    "reason": "需求契约已校验，并绑定数据指纹与冻结规则",
+    "sequence": 1,
+    "source_ids": [],
+    "state": "parsed",
+    "timestamp": "2026-10-29T15:57:31.362012+08:00",
+    "workflow_id": "workflow:ec153d3885ea4ea5b7a79b6abfb38453"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+    "reason": "检索到有原文依据的能力与候选算法",
+    "sequence": 2,
+    "source_ids": [
+      "source:3dde8ad7a184814bbf10b4c8afcc4c9bdc739d84d4bcb00a2cb6e4dd1a0ca840"
+    ],
+    "state": "retrieved",
+    "timestamp": "2026-10-29T15:57:31.369189+08:00",
+    "workflow_id": "workflow:ec153d3885ea4ea5b7a79b6abfb38453"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+    "reason": "选择适用的单候选并保存证据引用",
+    "sequence": 3,
+    "source_ids": [
+      "source:3dde8ad7a184814bbf10b4c8afcc4c9bdc739d84d4bcb00a2cb6e4dd1a0ca840"
+    ],
+    "state": "planned",
+    "timestamp": "2026-10-29T15:57:31.369723+08:00",
+    "workflow_id": "workflow:ec153d3885ea4ea5b7a79b6abfb38453"
+  },
+  {
+    "candidate_id": "workflow:ec153d3885ea4ea5b7a79b6abfb38453:candidate",
+    "code_hash": "0d9f08d7a0fbbae4940581b85c671ce5daf14e3f612b3101bcc239e0e7447472",
+    "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+    "reason": "已生成独立 Python 文件并记录代码散列",
+    "sequence": 4,
+    "source_ids": [
+      "source:3dde8ad7a184814bbf10b4c8afcc4c9bdc739d84d4bcb00a2cb6e4dd1a0ca840"
+    ],
+    "state": "generated",
+    "timestamp": "2026-10-29T15:57:31.370388+08:00",
+    "workflow_id": "workflow:ec153d3885ea4ea5b7a79b6abfb38453"
+  },
+  {
+    "candidate_id": "workflow:ec153d3885ea4ea5b7a79b6abfb38453:candidate",
+    "code_hash": "0d9f08d7a0fbbae4940581b85c671ce5daf14e3f612b3101bcc239e0e7447472",
+    "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+    "reason": "代码符合受限工厂语法；接下来使用 Docker 隔离执行",
+    "sequence": 5,
+    "source_ids": [
+      "source:3dde8ad7a184814bbf10b4c8afcc4c9bdc739d84d4bcb00a2cb6e4dd1a0ca840"
+    ],
+    "state": "checked",
+    "timestamp": "2026-10-29T15:57:31.370757+08:00",
+    "workflow_id": "workflow:ec153d3885ea4ea5b7a79b6abfb38453"
+  },
+  {
+    "candidate_id": "workflow:ec153d3885ea4ea5b7a79b6abfb38453:candidate",
+    "code_hash": "0d9f08d7a0fbbae4940581b85c671ce5daf14e3f612b3101bcc239e0e7447472",
+    "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+    "reason": "候选在隔离容器中完成训练与验证集预测",
+    "sequence": 6,
+    "source_ids": [
+      "source:3dde8ad7a184814bbf10b4c8afcc4c9bdc739d84d4bcb00a2cb6e4dd1a0ca840"
+    ],
+    "state": "executed",
+    "timestamp": "2026-10-29T15:57:32.229185+08:00",
+    "workflow_id": "workflow:ec153d3885ea4ea5b7a79b6abfb38453"
+  },
+  {
+    "candidate_id": "workflow:ec153d3885ea4ea5b7a79b6abfb38453:candidate",
+    "code_hash": "0d9f08d7a0fbbae4940581b85c671ce5daf14e3f612b3101bcc239e0e7447472",
+    "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+    "reason": "结果已通过事务写入知识库；失败记录保留失败状态",
+    "sequence": 7,
+    "source_ids": [
+      "source:3dde8ad7a184814bbf10b4c8afcc4c9bdc739d84d4bcb00a2cb6e4dd1a0ca840"
+    ],
+    "state": "persisted",
+    "timestamp": "2026-10-29T15:57:32.235287+08:00",
+    "workflow_id": "workflow:ec153d3885ea4ea5b7a79b6abfb38453"
+  },
+  {
+    "candidate_id": "workflow:ec153d3885ea4ea5b7a79b6abfb38453:candidate",
+    "code_hash": "0d9f08d7a0fbbae4940581b85c671ce5daf14e3f612b3101bcc239e0e7447472",
+    "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+    "reason": "interface_missing_predict_proba",
+    "sequence": 8,
+    "source_ids": [
+      "source:3dde8ad7a184814bbf10b4c8afcc4c9bdc739d84d4bcb00a2cb6e4dd1a0ca840"
+    ],
+    "state": "failed",
+    "timestamp": "2026-10-29T15:57:32.235840+08:00",
+    "workflow_id": "workflow:ec153d3885ea4ea5b7a79b6abfb38453"
+  }
+]

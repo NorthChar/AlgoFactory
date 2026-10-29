@@ -1,0 +1,16 @@
+{
+  "status": "accepted",
+  "error_category": null,
+  "workflow_id": "workflow:a71f69db332f44dfbbb4d4cc1ab5985a",
+  "persisted": true,
+  "report_json": "/Users/northchar/Documents/Codex/AlgoFactory/examples/phase25/banking77/report.json",
+  "report_markdown": "/Users/northchar/Documents/Codex/AlgoFactory/examples/phase25/banking77/report.md",
+  "validation_metrics": {
+    "macro_f1": 0.8729749094121176,
+    "accuracy": 0.8734367183591796
+  },
+  "test_metrics": {
+    "macro_f1": 0.8786952175736858,
+    "accuracy": 0.8782467532467533
+  }
+}

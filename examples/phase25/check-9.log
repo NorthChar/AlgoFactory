@@ -1,0 +1,10 @@
+{
+  "status": "failed",
+  "error_category": "unapproved_import",
+  "workflow_id": "workflow:4cd361f9909e48bab35c1e47495b7137",
+  "persisted": true,
+  "report_json": "/Users/northchar/Documents/Codex/AlgoFactory/examples/phase25/banking77-unsafe-code/report.json",
+  "report_markdown": "/Users/northchar/Documents/Codex/AlgoFactory/examples/phase25/banking77-unsafe-code/report.md",
+  "validation_metrics": {},
+  "test_metrics": {}
+}

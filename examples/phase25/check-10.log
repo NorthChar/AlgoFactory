@@ -1,0 +1,10 @@
+{
+  "status": "failed",
+  "error_category": "invalid_structured_response",
+  "workflow_id": "workflow:89885c29642144638e9bbccf974fc4c5",
+  "persisted": true,
+  "report_json": "/Users/northchar/Documents/Codex/AlgoFactory/examples/phase25/banking77-invalid-response/report.json",
+  "report_markdown": "/Users/northchar/Documents/Codex/AlgoFactory/examples/phase25/banking77-invalid-response/report.md",
+  "validation_metrics": {},
+  "test_metrics": {}
+}
