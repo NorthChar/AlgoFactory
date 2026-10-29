@@ -447,3 +447,33 @@ def test_resume_rejects_changed_or_tested_evidence_before_calls(simulated, tmp_p
     )
     assert report["status"] == "failed"
     assert provider.calls == 0 and not report["test_attempted"]
+
+
+def test_parameter_deviation_uses_bounded_repair_before_any_test(simulated, tmp_path):
+    class MissingParameters(MockWorkflowProvider):
+        def _raw(self, request, schema):
+            result = super()._raw(request, schema)
+            if (
+                request.operation == "generate_code"
+                and request.source["algorithm_key"] == "text_nb"
+            ):
+                data = json.loads(result)
+                data["code"] = data["code"].replace(
+                    "TfidfVectorizer(ngram_range=(1, 2), sublinear_tf=True, max_features=30000)",
+                    "TfidfVectorizer()",
+                )
+                return json.dumps(data)
+            return result
+
+    provider = MissingParameters(max_calls=10)
+    report = invoke(tmp_path / "parameters", simulated[0], provider)
+    assert report["status"] == "accepted"
+    first, bad, repaired = report["attempts"]
+    assert bad["error_category"] == "algorithm_configuration_mismatch"
+    assert not bad["test_attempted"] and repaired["parent_id"] == bad["implementation_id"]
+    feedback = json.loads(
+        (tmp_path / "parameters/candidates/text_nb/attempt-1/repair-input.json").read_text()
+    )
+    assert feedback["diagnosis"]["configuration_diagnostics"][0]["rule"] == "tfidf_parameters"
+    assert "test_metrics" not in json.dumps(feedback)
+    assert provider.calls == 10

@@ -124,6 +124,11 @@ def main():
         assert len(report["ranking"]) == 2
         assert {a["algorithm"] for a in report["ranking"]} == {"text_logistic", "text_nb"}
         assert all(not a["test_attempted"] for a in report["attempts"])
+        for attempt in report["ranking"]:
+            check = json.loads(
+                (Path(attempt["report"]).parent / "configuration-check.json").read_text()
+            )
+            assert check["status"] == "passed"
         assert len(list((out / "comparison").rglob("test-access.json"))) == 1
         repaired = [a for a in report["attempts"] if a["parent_id"] and a["status"] == "validated"]
         assert repaired and any(
@@ -154,6 +159,7 @@ def main():
             knowledge_reopened=True,
             graph_roundtrip_verified=True,
             one_selected_final_test=True,
+            candidate_configuration_verified=True,
             ranking=[
                 {k: a[k] for k in ("algorithm", "attempt", "code_hash", "validation_metrics")}
                 for a in report["ranking"]

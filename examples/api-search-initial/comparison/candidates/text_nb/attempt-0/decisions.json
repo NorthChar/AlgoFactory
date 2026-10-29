@@ -1,0 +1,26 @@
+[
+  {
+    "action": "GENERATE",
+    "budget_remaining": 0,
+    "decision_id": "workflow:3cda0c12983f47ae8276c58b303442cb:generate",
+    "evidence_ids": [
+      "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_multinomialnb"
+    ],
+    "reason": "根据检索证据生成单个候选",
+    "role": "builder",
+    "run_id": "workflow:3cda0c12983f47ae8276c58b303442cb",
+    "schema_version": 1
+  },
+  {
+    "action": "ACCEPT",
+    "budget_remaining": 0,
+    "decision_id": "workflow:3cda0c12983f47ae8276c58b303442cb:review",
+    "evidence_ids": [
+      "source:d2d1b1924b9d7deebea0943adff9f50e72f03ac203c19b6f3acaf90c8ad16616:validation"
+    ],
+    "reason": "确定性独立验证结果：全部通过且已回写",
+    "role": "review",
+    "run_id": "workflow:3cda0c12983f47ae8276c58b303442cb",
+    "schema_version": 1
+  }
+]

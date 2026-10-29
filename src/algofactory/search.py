@@ -137,8 +137,16 @@ def run_search(
                     else repair.diagnosis["action"]
                     if repair
                     else "GENERATE",
-                    repair.diagnosis["reason"] if repair else "基于适用知识生成候选：" + algorithm,
-                    [repair.parent_id] if repair else [workflow_id],
+                    "恢复已核验的历史失败，保留原始执行证据"
+                    if historical
+                    else repair.diagnosis["reason"]
+                    if repair
+                    else "基于适用知识生成候选：" + algorithm,
+                    [resumed[algorithm]["knowledge_ids"]["implementation_id"]]
+                    if historical
+                    else [repair.parent_id]
+                    if repair
+                    else [workflow_id],
                 )
                 if historical:
                     origin = resume_failures[algorithm]

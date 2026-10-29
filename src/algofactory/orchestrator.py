@@ -12,6 +12,7 @@ import pandas as pd
 from algofactory.datasets import sha256_file, verify_dataset, write_json
 from algofactory.execution.docker import DockerExecutor
 from algofactory.experience import persist_execution
+from algofactory.generation.configuration import required_configuration, validate_configuration
 from algofactory.generation.plan import SandboxAlgorithmPlan, validate_plan
 from algofactory.generation.safety import check_code
 from algofactory.knowledge.extraction import ingest_document
@@ -244,6 +245,9 @@ def run_workflow(
                     ),
                     "task_profile": profile.name,
                     "algorithm_key": algorithm,
+                    "required_configuration": required_configuration(algorithm, task.seed, repair)
+                    if algorithm
+                    else None,
                     "repair": repair.model_dump(mode="json") if repair else None,
                     **profile.intent(),
                 },
@@ -314,6 +318,22 @@ def run_workflow(
             raise WorkflowFailure(worker.error_category or "worker_failed")
         if worker.training_rows != len(manifest["split_indices"]["train"]):
             raise WorkflowFailure("training_row_count_mismatch")
+        if algorithm:
+            try:
+                configuration = validate_configuration(
+                    generated.code, required_configuration(algorithm, task.seed, repair)
+                )
+                write_json(directory / "configuration-check.json", configuration)
+            except WorkflowFailure as exc:
+                dimensions["interface"] = {"status": "failed", "details": exc.category}
+                write_json(
+                    directory / "configuration-check.json",
+                    {
+                        "status": "failed",
+                        "diagnostics": exc.diagnostics,
+                    },
+                )
+                raise
         measured = score_predictions(
             worker, pd.read_csv(dataset_dir / "validation_labels.csv"), protocol
         )

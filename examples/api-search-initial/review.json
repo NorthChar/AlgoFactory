@@ -1,0 +1,7 @@
+{
+  "calls_consumed": 7,
+  "finding": "NB candidate omitted frozen TF-IDF ngram_range, sublinear_tf and max_features; defaults differ from documented comparison protocol. Runtime success and LR repair remain valid evidence; this run is not the final phase exit evidence.",
+  "next_action": "Enforce documented configuration on returned pipeline and rerun within remaining 13 requests. No threshold or model settings changed using held-out results.",
+  "original_automated_result": "passed",
+  "status": "not_verified_for_strict_comparison"
+}

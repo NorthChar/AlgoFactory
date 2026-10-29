@@ -31,6 +31,7 @@ class SearchPolicy(Contract):
 
 
 REPAIRABLE = {
+    "algorithm_configuration_mismatch",
     "interface_missing_predict_proba",
     "interface_missing_predict",
     "interface_missing_fit",
@@ -71,6 +72,9 @@ def diagnose(report):
     return {
         "action": action,
         "category": category or "none",
+        "configuration_diagnostics": report.get("error_details", [])
+        if category == "algorithm_configuration_mismatch"
+        else [],
         "reason": reason,
         "validation_metrics": dimensions.get("validation_metrics", {}),
         "dimensions": {

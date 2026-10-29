@@ -1,0 +1,35 @@
+{
+  "attempt": 1,
+  "diagnosis": {
+    "action": "REPAIR",
+    "category": "worker_ValueError",
+    "dimensions": {
+      "functional": {
+        "details": "worker_ValueError",
+        "schema_version": 1,
+        "status": "failed"
+      },
+      "interface": {
+        "details": "尚未执行",
+        "schema_version": 1,
+        "status": "not_run"
+      },
+      "metrics": {
+        "details": "尚未执行",
+        "schema_version": 1,
+        "status": "not_run"
+      },
+      "stability": {
+        "details": "尚未执行",
+        "schema_version": 1,
+        "status": "not_run"
+      }
+    },
+    "reason": "根据实际接口、执行或稳定性错误修复当前候选",
+    "validation_metrics": {}
+  },
+  "parent_id": "source:e07f4ba322366209482f45b28dcf214d96d3e673b1aba5d658bff4aa892eecd6:implementation",
+  "previous_code": "from sklearn.pipeline import Pipeline\nfrom sklearn.feature_extraction.text import TfidfVectorizer\nfrom sklearn.linear_model import LogisticRegression\n\ndef build_pipeline(config):\n    pipeline = Pipeline([\n        ('tfidf', TfidfVectorizer(\n            ngram_range=(1, 2),\n            sublinear_tf=True,\n            max_features=30000\n        )),\n        ('logreg', LogisticRegression(\n            C=4.0,\n            max_iter=500,\n            random_state=config['seed']\n        ))\n    ])\n    return pipeline",
+  "previous_code_hash": "ac0dfe38edbd8df9fe67122198adf4e18d5204ac92cfa09b61bd130447cea6ab",
+  "schema_version": 1
+}
