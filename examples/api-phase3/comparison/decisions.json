@@ -1,0 +1,62 @@
+[
+  {
+    "action": "REPAIR",
+    "budget_remaining": 6,
+    "decision_id": "search:97be6ba506af4cef99e4803a2691a8e4:decision:0",
+    "evidence_ids": [
+      "source:e07f4ba322366209482f45b28dcf214d96d3e673b1aba5d658bff4aa892eecd6:implementation"
+    ],
+    "reason": "恢复已核验的历史失败，保留原始执行证据",
+    "role": "review",
+    "run_id": "search:97be6ba506af4cef99e4803a2691a8e4",
+    "schema_version": 1
+  },
+  {
+    "action": "REPAIR",
+    "budget_remaining": 5,
+    "decision_id": "search:97be6ba506af4cef99e4803a2691a8e4:decision:1",
+    "evidence_ids": [
+      "source:e07f4ba322366209482f45b28dcf214d96d3e673b1aba5d658bff4aa892eecd6:implementation"
+    ],
+    "reason": "根据实际接口、执行或稳定性错误修复当前候选",
+    "role": "review",
+    "run_id": "search:97be6ba506af4cef99e4803a2691a8e4",
+    "schema_version": 1
+  },
+  {
+    "action": "SWITCH",
+    "budget_remaining": 4,
+    "decision_id": "search:97be6ba506af4cef99e4803a2691a8e4:decision:2",
+    "evidence_ids": [
+      "workflow:e6d4d433c8914466bfb049c4816fefc9"
+    ],
+    "reason": "转到下一候选；比较使用同一冻结协议",
+    "role": "review",
+    "run_id": "search:97be6ba506af4cef99e4803a2691a8e4",
+    "schema_version": 1
+  },
+  {
+    "action": "GENERATE",
+    "budget_remaining": 4,
+    "decision_id": "search:97be6ba506af4cef99e4803a2691a8e4:decision:3",
+    "evidence_ids": [
+      "search:97be6ba506af4cef99e4803a2691a8e4"
+    ],
+    "reason": "基于适用知识生成候选：text_nb",
+    "role": "review",
+    "run_id": "search:97be6ba506af4cef99e4803a2691a8e4",
+    "schema_version": 1
+  },
+  {
+    "action": "ACCEPT",
+    "budget_remaining": 3,
+    "decision_id": "search:97be6ba506af4cef99e4803a2691a8e4:decision:4",
+    "evidence_ids": [
+      "source:eba0bdd0d7df6bf940ee372d81d7cb48d035212db6a356d24e0608cdc749d4ee:implementation"
+    ],
+    "reason": "选定版本最终测试通过且结果已回写",
+    "role": "review",
+    "run_id": "search:97be6ba506af4cef99e4803a2691a8e4",
+    "schema_version": 1
+  }
+]

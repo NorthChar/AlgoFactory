@@ -2,7 +2,7 @@
 
 本项目面向 Mac M5 Pro 48GB 的本地演示，主案例为“基于 BANKING77 的客服意图分类算法生成与验证”，以此证明能力抽取、代码复刻、独立验证与知识沉淀的完整闭环。已有合成客户流失案例保留为轻量兼容性测试。该调整于 2026-10-29 经用户确认，来源、理由和范围见 [ADR-001](decisions/0001-banking77-main-case.md)。
 
-当前已实现 Phase 1 知识基础、Phase 2 客户流失闭环及 Phase 2.5 BANKING77 文本多分类/共享框架改造；Phase 2.5 的 G2.5 已通过（124 项测试、零跳过），见 [指南](phase25.md) 与 [证据](../examples/phase25/verification.json)。Phase 3 的比较、有界修复和版本关系已通过 Mock 阶段验收（141 项测试、零跳过），见 [指南](phase3.md) 与 [证据](../examples/phase3/verification.json)。真实 API 服务调用尚待配置与验证。docs/source 保持原始资料，当前计划通过 ADR 与原始要求、阶段证据关联。
+当前已实现 Phase 1 知识基础、Phase 2 客户流失闭环及 Phase 2.5 BANKING77 文本多分类/共享框架改造；Phase 2.5 的 G2.5 已通过（124 项测试、零跳过），见 [指南](phase25.md) 与 [证据](../examples/phase25/verification.json)。Phase 3 的比较、有界修复和版本关系已通过 Mock 阶段验收（141 项测试、零跳过），见 [指南](phase3.md) 与 [证据](../examples/phase3/verification.json)。Azure GPT-4o 已完成真实自动修复、两候选严格比较、一次选定版本最终测试与回写，见 [真实验收](../examples/api-phase3/verification.json) 及 [20 次请求总账](../examples/api-phase3/campaign-summary.json)。当前 Phase 3 的真实 API 补验收已完成，Phase 4 进入实施准备，功能仍 planned，见 [Phase 4 入口](phase4.md)。docs/source 保持原始资料，当前计划通过 ADR 与原始要求、阶段证据关联。
 
 ## 问题定义与目标
 
@@ -33,7 +33,7 @@
 
 Python 3.11 作为首个验证版本，采用标准 Python 编排器，避免额外 Agent 框架成本。SQLite 降低运维成本，NetworkX 支持关系遍历与导出，scikit-learn 用于轻量 CPU 文本/表格分类，Streamlit 用于演示。无需购买服务器或训练本地大模型。LLM 通过显式 Provider 在 Mock/API 间切换，Mock 使用固定响应和可控故障，API 使用环境变量密钥，禁止静默降级。
 
-初始预算为两候选、每候选最多两次修复、生成代码每次执行 120 秒、容器 2 CPU/4 GiB、禁网。预算为待基线实测的起点，不是硬件性能承诺。API 设置调用次数、超时及费用上限；日志脱敏。Docker 不可用时阻止真实生成代码执行，可展示 Mock 轨迹但不能签署执行验收。
+初始预算为两候选、每候选最多两次修复、生成代码每次执行 120 秒、容器 2 CPU/4 GiB、禁网。预算为待基线实测的起点，不是硬件性能承诺。API 设置调用次数、输出长度和超时上限；金额上限按用户授权暂不设置，价格未知时不冒称实际费用；日志脱敏。Docker 不可用时阻止真实生成代码执行，可展示 Mock 轨迹但不能签署执行验收。
 
 主案例固定 BANKING77 上游版本、原始文件散列、许可和署名；去重、标签映射及划分规则先于模型运行冻结。官方测试集保留，按固定规则移除训练侧重复及跨测试重叠，再从训练侧按类别分层划分训练/验证（初始 80/20、种子 42）；详细规则见 ADR-001。以 Macro-F1 为主指标，并报告 Accuracy、逐类指标和混淆情况。客户流失兼容案例继续使用已有合成数据与 60/20/20 独立协议，不复用 BANKING77 的阈值。
 
@@ -41,10 +41,10 @@ Python 3.11 作为首个验证版本，采用标准 Python 编排器，避免额
 
 ## 实施依赖与风险处理
 
-后续顺序为 Phase 2.5 主案例适配与兼容性 → Phase 3 修复比较 → Phase 4 经验复用。Phase 2.5 须先扩展当前二分类输出和评分契约，再接入文本；不能复制独立编排器规避改造，也不能为新模型放宽静态检查、Docker 隔离或标签边界。API 不可用应记录 blocked 状态及重试条件，不把 Mock 当真实 API 证据。回写使用事务、稳定 ID 与幂等键；取消或超时保留可诊断状态。经验仅在真实重测后标为 verified，推测建议单独存为 proposed。
+实施顺序为 Phase 2.5 主案例适配与兼容性 → Phase 3 修复比较 → 真实 API 补验收 → Phase 4 经验复用；前三项与真实 API 补验收现已完成。真实 API 补验收属于原 G2 要求，不新增业务阶段。Phase 2.5 须先扩展当前二分类输出和评分契约，再接入文本；不能复制独立编排器规避改造，也不能为新模型放宽静态检查、Docker 隔离或标签边界。API 不可用应记录 blocked 状态及重试条件，不把 Mock 当真实 API 证据。回写使用事务、稳定 ID 与幂等键；取消或超时保留可诊断状态。经验仅在真实重测后标为 verified，推测建议单独存为 proposed。
 
 Phase 1 已基于 Python 3.11.16 / arm64 生成 uv.lock 及带散列的 requirements 文件，并验证知识层依赖。后续阶段加入新依赖时须更新锁文件并重新验证。GitHub 远端和发布仍在 Phase 6 配置。
 
 ## 评分证据与后续动作
 
-技术能力 40% 由真实闭环、图谱检索、修复与统一验证证明；代码质量 30% 由契约、错误处理、日志、兼容测试及复现证明；创新性 15% 由三角色决策、经验复用对照及框架跨场景证据支持；完整性 15% 由矩阵、文档、UI 和交付样例证明。Phase 1 验收及限制见 [phase1.md](phase1.md) 与 [验证报告](../examples/phase1/verification.json)。历史 Phase 2 实现及验收边界见 [phase2.md](phase2.md)。Phase 2.5 已通过 G2.5，Phase 3 也已完成 Mock 阶段验收，下一步进入 Phase 4，见 [指南](phase3.md)；Mock 闭环不代表真实 API 已验收。
+技术能力 40% 由真实闭环、图谱检索、修复与统一验证证明；代码质量 30% 由契约、错误处理、日志、兼容测试及复现证明；创新性 15% 由三角色决策、经验复用对照及框架跨场景证据支持；完整性 15% 由矩阵、文档、UI 和交付样例证明。Phase 1 验收及限制见 [phase1.md](phase1.md) 与 [验证报告](../examples/phase1/verification.json)。历史 Phase 2 实现及验收边界见 [phase2.md](phase2.md)。Phase 2.5 已通过 G2.5，Phase 3 的 Mock 与真实 API 修复比较现均有证据，最新回归 190 项通过、零跳过；下一步按 [Phase 4 入口](phase4.md) 实施经验提炼与复用对照。Phase 3 的通过不代表经验复用、界面或项目最终交付已完成。

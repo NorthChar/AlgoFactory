@@ -8,7 +8,7 @@
 | --- | --- | --- | --- |
 | G0 规格基线 | 原题与方案归档；基础要求全部映射；架构、范围和演示明确 | 来源散列、需求矩阵、计划和契约 | 文档已建立，待用户评审 |
 | G1 功能完整性 | 所有基础交付及选定范围有实际产物 | 矩阵逐项证据、抽取结果、代码及报告 | planned |
-| G2 运行正确性 | Mock 可重复；API 至少一次真实闭环；修复与候选比较可运行 | 两模式运行记录、代码、四维验证与回写 | planned |
+| G2 运行正确性 | Mock 可重复；API 至少一次真实闭环；修复与候选比较可运行 | 两模式运行记录、代码、四维验证与回写；examples/phase3、examples/api-phase3 | verified（当前 BANKING77 主线；新增功能仍须回归） |
 | G3 验证可信性 | 独立评分、训练拟合、同划分比较、测试集隔离 | 数据指纹、划分、冻结规则、泄漏及稳定性测试 | planned |
 | G4 创新有效性 | 角色协作可追踪；历史经验在后续任务实际使用；同一框架支持表格/文本 | Demo B/C、经验对照、同一提交上的主案例与兼容运行证据 | planned |
 | G5 交付复现性 | 新环境按 README 安装测试运行；全部交付可定位 | 依赖锁、arm64 环境记录、冷启动日志、GitHub 地址 | planned |
@@ -89,7 +89,7 @@ E 兼容与跨场景（Phase 2.5 起）：在改造后的同一实现提交上�
 | 只测试唯一选中版本，失败不重选 | BK07 / G3 | 一次性测试记录、单元边界检查 | verified |
 | 原客户流失兼容及完整阶段证据 | BK04 / BK06 | 新提交上的兼容报告、全量测试零跳过、图谱重开 | verified |
 
-阶段操作与验收入口见 [Phase 3 指南](phase3.md)。真实 API、经验复用与完整 G1–G5 保留原验收范围。
+阶段操作与验收入口见 [Phase 3 指南](phase3.md)。真实 API 补验收见后文；经验复用与完整项目交付保留各自验收范围。
 
 2026-10-29 实现提交 `bdd91bedb19ea00402aca97a9cfddac2b561563f` 完成 141 项测试（0 失败、0 错误、0 跳过）及九个 CLI 示例。排名复现、实际修复重测、两个候选各两次修复耗尽、无进展停止、总尝试/调用预算、安全停止与客户流失兼容均通过，见 [统一证据](../examples/phase3/verification.json)。最终测试失败后禁止重选、API 反馈传输等边界使用明确单元模拟；真实 API 和实际资源压力测试未执行。
 
@@ -104,3 +104,19 @@ Azure GPT-4o Responses 已通过真实连通性与需求解析；首个 BANKING7
 ### 同日规划修复与执行复测
 
 通过已保存的真实检索证据复现 dependencies 被解释为算法组件的问题，收窄规划契约后两轮真实 API 规划通过，代码已进入 Docker。两轮均因文本输入接口问题失败；人工单点修改在验证集上通过，仅作诊断证据，不作模型自动修复或完整闭环通过。未访问最终测试集，完整 G2 状态不变。见 [本轮证据](../examples/api-plan-fix/verification.json)；174 项回归测试零失败、零跳过。
+
+## Phase 3 真实 API 退出记录（2026-10-29，verified）
+
+实现提交 `3c305f6`，源码、环境、镜像、命令、测试和产物散列见 [真实统一证据](../examples/api-phase3/verification.json)。最终复测无 Mock、无故障注入、无人工修改候选代码；190 项回归零失败、零跳过，客户流失兼容通过。
+
+| 检查项 | 状态 | 证据 |
+| --- | --- | --- |
+| 原始真实失败 → GPT-4o 自动修复 → Docker 重测 | verified | comparison/candidates/text_logistic/attempt-0、attempt-1；原失败来源与 parent_id 连续 |
+| 两候选使用既定参数、相同数据与冻结协议 | verified | 两份 configuration-check.json、protocol.json、ranking.json |
+| 只按验证集排名，唯一选定版本一次最终测试 | verified | comparison/ranking.json、selection.json、test-access.json；所有子流程 test_attempted=false |
+| 真实评分、事务回写、重开知识库与图谱重载 | verified | comparison/report.json、knowledge.sqlite、knowledge.json、knowledge.graphml |
+| 有界请求、修复与保留失败 | verified | campaign-summary.json；共 20 次请求，0 自动重试；每候选最多两次修复、全流程最多六次尝试 |
+
+首轮虽然运行通过，但 NB 默认参数不符合约定，见 [复核限制](../examples/api-search-initial/review.json)；第二轮结构错误停止，见 [失败证据](../examples/api-search-structured-failure/verification.json)。它们不替代最后一轮的严格退出证据。全轮记录不声称只有一次测试访问：三个独立流程中两个完成各自一次选定版本测试，中间失败轮没有测试；参数与阈值没有依据测试成绩调整。
+
+G2 当前主线已补齐真实 API 要求。Phase 4 的 BK08/X05 仍 planned，G1/G3/G4/G5 不因此自动通过；后续新增功能和最终交付仍须回归及独立证据。

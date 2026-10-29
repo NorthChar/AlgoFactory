@@ -1,0 +1,26 @@
+{
+  "campaign_summary_sha256": "ae9f0924af311a9eca886fc9eb20270f5290cf59d7487be8cda31862b8271464",
+  "checks": [
+    "All archived artifact SHA-256 values match",
+    "Prediction gzip archives match original uncompressed hashes",
+    "Current implementation matches final verification source hashes",
+    "Both returned pipelines match the frozen candidate configuration",
+    "Selection hash matches highest-ranked validated implementation and executed winner",
+    "No candidate subworkflow accessed final test; exactly one final test reservation in accepted workflow",
+    "SQLite records and implementation ancestry reopened; graph roundtrip passed",
+    "Three-round call ledger equals 20; no automatic retries",
+    "Tracked and unignored files contain no configured credential",
+    "Documentation links and CSV/Markdown requirement matrix agree"
+  ],
+  "limitations": [
+    "One strict successful API comparison does not establish service reliability",
+    "Earlier independent comparison accessed its selected test once but failed subsequent strict-configuration review; retained separately",
+    "Middle independent comparison stopped on invalid structured planning response without test access",
+    "Phase 4 experience reuse and G1/G3/G4/G5 final acceptance remain outstanding"
+  ],
+  "phase3_live_exit": "verified",
+  "phase4": "planned; implementation entry documented, no experience-effect claims",
+  "reviewed_at": "2026-10-29T19:28:40.218032+08:00",
+  "status": "passed",
+  "verification_sha256": "fa691c7e47127c5726ddd127be3d0ec0c950054ae20b4aa6a41d0024161c1a0e"
+}

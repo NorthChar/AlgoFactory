@@ -2,7 +2,7 @@
 
 AI Agent 算法能力工厂原型，目标是能力抽取、代码复刻、独立验证、修复与经验回写。2026-10-29 确定主案例为“基于 BANKING77 的客服意图分类算法生成与验证”，已有客户流失案例保留为轻量兼容性测试，详见 [ADR-001](docs/decisions/0001-banking77-main-case.md)。
 
-Phase 2.5 已实现 BANKING77 文本多分类与客户流失共享的单候选流程，G2.5 已通过：124 项测试零失败、零跳过，BANKING77 最终测试 Macro-F1 0.8787、Accuracy 87.82%，客户流失指标与历史基线一致。训练、Docker 执行、主机独立评分和回写均使用同一核心；Phase 3 修复和候选比较也已通过 Mock 阶段验收：141 项测试、零失败、零跳过。Azure GPT-4o 已接通，真实知识层和规划通过，已生成代码并进入 Docker；当前停在生成代码的文本输入接口问题，完整 API 闭环、经验复用和 Streamlit 仍待验收。
+Phase 2.5 已实现 BANKING77 文本多分类与客户流失共享的单候选流程，G2.5 已通过：124 项测试零失败、零跳过，BANKING77 最终测试 Macro-F1 0.8787、Accuracy 87.82%，客户流失指标与历史基线一致。训练、Docker 执行、主机独立评分和回写均使用同一核心；Phase 3 修复和候选比较也已通过 Mock 阶段验收：141 项测试、零失败、零跳过。Azure GPT-4o 的真实自动修复、两候选严格比较、选定版本最终测试与回写现已通过；最新回归 190 项、零失败、零跳过。本轮累计 20 次请求，最终通过轮为 7 次，见 [真实验收](examples/api-phase3/verification.json) 与 [完整用量及失败记录](examples/api-phase3/campaign-summary.json)。下一阶段为 Phase 4 经验复用，功能与对照实验尚未实施；Streamlit 仍在 Phase 5。
 
 ## 文档入口
 
@@ -14,7 +14,8 @@ Phase 2.5 已实现 BANKING77 文本多分类与客户流失共享的单候选�
 - [验收 Gate 与演示协议](docs/acceptance-gates.md)
 - [Phase 1 使用与验收说明](docs/phase1.md) 与 [实际验证证据](examples/phase1/verification.json)
 
-- [Phase 3 多候选与修复指南](docs/phase3.md) 与 [阶段证据](examples/phase3/verification.json)
+- [Phase 3 多候选与修复指南](docs/phase3.md)、[Mock 阶段证据](examples/phase3/verification.json) 与 [真实 API 证据](examples/api-phase3/verification.json)
+- [Phase 4 经验复用实施入口](docs/phase4.md)（planned）
 - [Phase 2.5 主案例与兼容性指南](docs/phase25.md) 与 [验收证据](examples/phase25/verification.json)
 - [Phase 2 Mock 闭环指南](docs/phase2.md) 与 [运行报告](examples/phase2/normal/report.md)
 
@@ -100,7 +101,7 @@ UTF-8 业务文档 → Mock/API Provider → Pydantic 契约与原文引用校�
 
 示例关系包括 `Task REQUIRES Capability`、`Algorithm IMPLEMENTS Capability` 和 `Algorithm APPLICABLE_TO Task`。文档引用采用原始字符区间，每条知识保存 source_id、source_span 和 schema_version。完整定义见 [架构](docs/architecture.md)，实际结果见 [知识 JSON](examples/phase1/knowledge.json) 和 [GraphML](examples/phase1/knowledge.graphml)。
 
-Mock 使用人工编写、按原文散列匹配的固定 fixture。未知文档会明确失败；API 使用相同抽取及校验流程，可处理新文档。API 端点、模型、密钥与价格需显式配置，详见 [Phase 1 指南](docs/phase1.md)。Azure GPT-4o Responses 已完成真实连接、知识层和规划复测；代码已进入真实 Docker，但文本输入接口尚未通过，真实闭环仍未完成。配置、用量及失败证据见 [真实 API 接入记录](docs/api-integration.md)。
+Mock 使用人工编写、按原文散列匹配的固定 fixture。未知文档会明确失败；API 使用相同抽取及校验流程，可处理新文档。API 端点、模型、密钥与价格需显式配置，详见 [Phase 1 指南](docs/phase1.md)。Azure GPT-4o Responses 已完成真实连接、抽取、规划、生成与自动修复、严格两候选比较、最终测试和回写。配置、用量及失败证据见 [真实 API 接入记录](docs/api-integration.md)。
 
 ## 测试与产物
 
@@ -121,11 +122,11 @@ ALGOFACTORY_DOCKER_TESTS=1 .venv/bin/python -m pytest -q
 3. 图谱 Schema 和示例：类型化 Schema、持久知识与可重载导出。
 4. Agent 工作流：单候选流程及角色调用轨迹；Review 当前由确定性程序判断。
 5. 环境与运行：Python 3.11、锁定依赖、Docker、CLI 和 API 配置指南。
-6. 示例数据和任务：已有客户流失文档及合成 CSV；BANKING77 来源和初检已归档，正式导入与运行待实现。
+6. 示例数据和任务：BANKING77 已完成固定版本导入、去重、训练/验证划分及真实运行；合成客户流失保留为兼容性测试。
 7. 生成代码示例：见 examples/phase2/normal/candidate.py。
 8. 验证结果与报告：四维结果、验证/测试指标及失败报告见 examples/phase2。
 9. 挑战和解决方案：来源追踪、事务失败、隔离运行、测试标签隔离及冻结门槛。
-10. 扩展方向：Phase 2.5 已通过；Phase 3 比较与修复已通过；下一步为 Phase 4 经验复用及效果对照，再进行界面与插件。
+10. 扩展方向：Phase 2.5 已通过；Phase 3 比较与修复的 Mock 及真实 API 验收已通过；下一步为 Phase 4 经验复用及效果对照，再进行界面与插件。
 
 ## 工作区与版本管理
 

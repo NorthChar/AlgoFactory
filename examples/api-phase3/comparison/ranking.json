@@ -1,0 +1,46 @@
+{
+  "candidate_stops": [],
+  "candidates": [
+    {
+      "algorithm": "text_logistic",
+      "attempt": 1,
+      "code_hash": "082384b24d9380c213650ced5d58d24af0240e597d402bccd4f9fc11654700f9",
+      "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+      "error_category": null,
+      "historical_failure": false,
+      "implementation_id": "source:eba0bdd0d7df6bf940ee372d81d7cb48d035212db6a356d24e0608cdc749d4ee:implementation",
+      "parent_id": "source:e07f4ba322366209482f45b28dcf214d96d3e673b1aba5d658bff4aa892eecd6:implementation",
+      "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/live-search-20261029-03/comparison/candidates/text_logistic/attempt-1/report.json",
+      "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+      "status": "validated",
+      "test_attempted": false,
+      "validation_metrics": {
+        "accuracy": 0.8734367183591796,
+        "macro_f1": 0.8729749094121176
+      },
+      "validation_run_id": "source:eba0bdd0d7df6bf940ee372d81d7cb48d035212db6a356d24e0608cdc749d4ee:validation",
+      "workflow_id": "workflow:e6d4d433c8914466bfb049c4816fefc9"
+    },
+    {
+      "algorithm": "text_nb",
+      "attempt": 0,
+      "code_hash": "150e29b06baa8d9621c0effe8af284e1a4f518b6746b04ab9cef9fb6d7c3edfa",
+      "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+      "error_category": null,
+      "historical_failure": false,
+      "implementation_id": "source:5b94dd3384bad75f92a221225af79ed0857033899e876c2d8be1f5a1ebb326c3:implementation",
+      "parent_id": null,
+      "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/live-search-20261029-03/comparison/candidates/text_nb/attempt-0/report.json",
+      "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+      "status": "validated",
+      "test_attempted": false,
+      "validation_metrics": {
+        "accuracy": 0.8359179589794897,
+        "macro_f1": 0.8269238046747743
+      },
+      "validation_run_id": "source:5b94dd3384bad75f92a221225af79ed0857033899e876c2d8be1f5a1ebb326c3:validation",
+      "workflow_id": "workflow:d4438a2160a44f86bb4a7bbbaa2dff34"
+    }
+  ],
+  "rule": "macro_f1_desc_accuracy_desc_algorithm_order"
+}

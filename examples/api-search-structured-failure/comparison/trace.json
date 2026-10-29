@@ -1,0 +1,68 @@
+[
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "启动有界候选比较，所有候选与修复仅使用验证集",
+    "sequence": 0,
+    "source_ids": [],
+    "state": "received",
+    "timestamp": "2026-10-29T19:18:24.271031+08:00",
+    "workflow_id": "search:2d458c8480934d94b9df49aff8a5c6fd"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "恢复已核验的历史失败，保留原始执行证据",
+    "sequence": 1,
+    "source_ids": [],
+    "state": "repair",
+    "timestamp": "2026-10-29T19:18:24.508530+08:00",
+    "workflow_id": "search:2d458c8480934d94b9df49aff8a5c6fd"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "根据实际接口、执行或稳定性错误修复当前候选",
+    "sequence": 2,
+    "source_ids": [],
+    "state": "repair",
+    "timestamp": "2026-10-29T19:18:24.631032+08:00",
+    "workflow_id": "search:2d458c8480934d94b9df49aff8a5c6fd"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "转到下一候选；比较使用同一冻结协议",
+    "sequence": 3,
+    "source_ids": [],
+    "state": "switch",
+    "timestamp": "2026-10-29T19:18:54.611446+08:00",
+    "workflow_id": "search:2d458c8480934d94b9df49aff8a5c6fd"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "基于适用知识生成候选：text_nb",
+    "sequence": 4,
+    "source_ids": [],
+    "state": "generate",
+    "timestamp": "2026-10-29T19:18:54.737155+08:00",
+    "workflow_id": "search:2d458c8480934d94b9df49aff8a5c6fd"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "invalid_structured_response",
+    "sequence": 5,
+    "source_ids": [],
+    "state": "stop",
+    "timestamp": "2026-10-29T19:19:01.267918+08:00",
+    "workflow_id": "search:2d458c8480934d94b9df49aff8a5c6fd"
+  }
+]

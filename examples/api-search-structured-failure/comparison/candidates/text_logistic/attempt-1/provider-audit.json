@@ -1,0 +1,50 @@
+[
+  {
+    "attempt": 1,
+    "http_status": null,
+    "input_tokens": 389,
+    "mode": "api",
+    "operation": "parse_task",
+    "output_tokens": 51,
+    "reserved_cost_usd": null,
+    "schema_version": 1,
+    "service_error_code": null,
+    "status": "ok"
+  },
+  {
+    "attempt": 1,
+    "http_status": null,
+    "input_tokens": 4186,
+    "mode": "api",
+    "operation": "extract_knowledge",
+    "output_tokens": 3646,
+    "reserved_cost_usd": null,
+    "schema_version": 1,
+    "service_error_code": null,
+    "status": "ok"
+  },
+  {
+    "attempt": 1,
+    "http_status": null,
+    "input_tokens": 1578,
+    "mode": "api",
+    "operation": "plan_algorithm",
+    "output_tokens": 201,
+    "reserved_cost_usd": null,
+    "schema_version": 1,
+    "service_error_code": null,
+    "status": "ok"
+  },
+  {
+    "attempt": 1,
+    "http_status": null,
+    "input_tokens": 1440,
+    "mode": "api",
+    "operation": "repair_code",
+    "output_tokens": 221,
+    "reserved_cost_usd": null,
+    "schema_version": 1,
+    "service_error_code": null,
+    "status": "ok"
+  }
+]

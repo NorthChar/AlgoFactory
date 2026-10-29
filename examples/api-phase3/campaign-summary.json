@@ -1,0 +1,55 @@
+{
+  "actual_requests": 20,
+  "automatic_retries": 0,
+  "code_configuration_reference": "data/banking77-phase3.txt",
+  "current_phase": "Phase 3 real API exit verified; Phase 4 implementation pending",
+  "final_evidence": "examples/api-phase3/verification.json",
+  "independent_test_runs": 2,
+  "input_tokens": 30658,
+  "no_manual_generated_code_edits": true,
+  "output_tokens": 13502,
+  "pricing_source_snapshot": "examples/api-integration/reference-prices.json",
+  "reference_cost_scenarios_usd": {
+    "2.5_input_10_output_per_million": 0.211665,
+    "5_input_15_output_per_million": 0.35582
+  },
+  "request_limit": 20,
+  "rounds": [
+    {
+      "calls": 7,
+      "evidence": "examples/api-search-initial/verification.json",
+      "input_tokens": 10464,
+      "output_tokens": 4507,
+      "review_status": "not_verified_for_strict_comparison",
+      "test_attempted": true,
+      "verification_sha256": "916bbd20d5e1a40c786a1e5b78fe44a1791a6e119fb03642e891981125a91379"
+    },
+    {
+      "calls": 6,
+      "evidence": "examples/api-search-structured-failure/verification.json",
+      "input_tokens": 9564,
+      "output_tokens": 4345,
+      "review_status": "failed",
+      "test_attempted": false,
+      "verification_sha256": "db738fb180284a710e8b52518269af9bc11102f96b20cc0b603f06b82fadbc28"
+    },
+    {
+      "calls": 7,
+      "evidence": "examples/api-phase3/verification.json",
+      "input_tokens": 10630,
+      "output_tokens": 4650,
+      "review_status": "passed",
+      "test_attempted": true,
+      "verification_sha256": "fa691c7e47127c5726ddd127be3d0ec0c950054ae20b4aa6a41d0024161c1a0e"
+    }
+  ],
+  "status": "passed",
+  "test_policy": "At most one selected version per independent run; the middle run never tested. Parameters, split and thresholds unchanged from pre-existing protocol. No held-out metrics supplied to repair or candidate selection.",
+  "tests": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 190
+  },
+  "unknown_billed_cost": true
+}

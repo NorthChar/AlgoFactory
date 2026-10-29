@@ -1,0 +1,26 @@
+[
+  {
+    "action": "REPAIR",
+    "budget_remaining": 0,
+    "decision_id": "workflow:e6d4d433c8914466bfb049c4816fefc9:generate",
+    "evidence_ids": [
+      "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_logistic_regression"
+    ],
+    "reason": "根据检索证据生成单个候选",
+    "role": "builder",
+    "run_id": "workflow:e6d4d433c8914466bfb049c4816fefc9",
+    "schema_version": 1
+  },
+  {
+    "action": "ACCEPT",
+    "budget_remaining": 0,
+    "decision_id": "workflow:e6d4d433c8914466bfb049c4816fefc9:review",
+    "evidence_ids": [
+      "source:eba0bdd0d7df6bf940ee372d81d7cb48d035212db6a356d24e0608cdc749d4ee:validation"
+    ],
+    "reason": "确定性独立验证结果：全部通过且已回写",
+    "role": "review",
+    "run_id": "workflow:e6d4d433c8914466bfb049c4816fefc9",
+    "schema_version": 1
+  }
+]

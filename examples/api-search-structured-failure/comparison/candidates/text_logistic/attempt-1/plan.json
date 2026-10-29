@@ -1,0 +1,15 @@
+{
+  "algorithm_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm_tfidf_logreg",
+  "dependencies": [
+    "scikit-learn"
+  ],
+  "evidence_ids": [
+    "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm_tfidf_logreg"
+  ],
+  "plan_id": "workflow:4ef867df2a714d3c8883358fbce459ca:plan",
+  "preprocessing": [
+    "fit TF-IDF on training set only"
+  ],
+  "schema_version": 1,
+  "task_id": "workflow:4ef867df2a714d3c8883358fbce459ca:task"
+}

@@ -58,7 +58,7 @@ TaskSpec 包含 task_id、task_type、target、feature_schema、data_fingerprint
 
 来源采用内容散列 ID，实体和关系使用来源命名空间。source_span 是原文 Unicode 字符的左闭右开区间及精确引用。写入前检查引用、关系端点、ID 冲突、历史验证与实现/划分关联、经验状态和版本环；一个批次在同一事务中提交，重复内容幂等返回。文档抽取只允许 Task/Capability/Algorithm/Dependency，禁止把文档中的模型自述当成真实运行历史。
 
-Provider 为同一结构化调用接口，Mock 按文件散列重放显式 fixture，API 使用 HTTPS chat-completions 兼容接口。两模式经过相同的响应和图谱校验；有限重试、调用数和保守费用预留独立于模型响应。真实服务调用尚待配置和验收，本地 HTTP 测试不能替代它。
+Provider 为同一结构化调用接口，Mock 按文件散列重放显式 fixture，API 使用 HTTPS chat-completions 兼容接口。两模式经过相同的响应和图谱校验；有限重试、调用数和保守费用预留独立于模型响应。上述为初始 Provider 设计；现已增加 Azure Responses/api-key 模式，并取得 [真实服务修复比较证据](../examples/api-phase3/verification.json)。本地 HTTP 测试本身仍不能替代真实服务证据。
 
 ## Phase 2 执行与评分边界
 
@@ -88,8 +88,12 @@ MockWorkflowProvider 和 APIProvider 共用 run_workflow；仅 Provider 的响�
 
 客户流失兼容检查使用固定候选与独立协议，不参与 BANKING77 的候选排名。跨场景通过证据必须来自新版本的共用核心，旧 examples/phase2 仅作为历史参考。
 
-## Phase 3 有界比较与修复（verified，Mock 范围）
+## Phase 3 有界比较与修复（Mock 与真实 API 均有验收证据）
 
 search.run_search 基于统一 run_workflow 执行每个候选版本，以 validation_only 阻止子流程访问最终测试；最终测试由两模式共用的 final_test.evaluate_final 执行。SearchPolicy 固定候选、每候选最多两次修复、最多六次尝试与确定性排序。RepairContext 携带父实现、代码散列和验证集诊断。每次修复保留新目录及 DERIVED_FROM；最终验证引用已选实现。详情见 [Phase 3 指南](phase3.md)。
 
 检索在数量限制前按来源及数据类型过滤，避免累积历史 Task 实体挤出当前算法证据。数据库 schema 仍为 v2，新增流程状态 validated 仅表示候选验证集通过；已归档旧数据库及报告保持不变。
+
+真实 API 补验收增加受校验的历史失败恢复和同一比较内知识抽取复用。恢复只接受尚未测试的初始失败版本，核对代码/产物散列、数据库记录、算法、数据及规则；原历史尝试仍计入预算。已校验文档按内容散列在一次比较内复用，不用 Mock 替代 API 响应，也不将任意历史知识库当成此次抽取证据。
+
+生成代码先经过原有安全检查与隔离执行；成功执行后仍须核对返回流水线的结构和运行前约定参数，才能成为排名候选。参数偏差以可诊断错误进入有界修复，不以较高分数豁免。该检查只解释受限 AST 中的构造器数据，不执行用户代码。当前真实验收见 [Phase 3](phase3.md)，经验提炼仍由 [Phase 4](phase4.md) 实施。

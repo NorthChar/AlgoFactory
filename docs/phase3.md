@@ -1,6 +1,6 @@
 # Phase 3：BANKING77 候选比较与有界修复
 
-承接 [ADR-001](decisions/0001-banking77-main-case.md) 和 [Phase 2.5](phase25.md)。本阶段已于 2026-10-29 完成 Mock 范围验收（141 项测试、零失败、零跳过）；真实外部 API、经验复用与界面仍待后续阶段。
+承接 [ADR-001](decisions/0001-banking77-main-case.md) 和 [Phase 2.5](phase25.md)。本阶段于 2026-10-29 完成 Mock 范围验收（141 项测试、零失败、零跳过），现补齐 Azure GPT-4o 真实修复、严格比较、最终测试和回写证据（最新回归 190 项通过）。历史 Mock 证据保留原样；真实结果见本文末尾。经验复用与界面尚未实现。
 
 ## 已验证结果
 
@@ -38,7 +38,7 @@
 
 候选与参数在查看本阶段最终测试前确定，冻结协议继续使用 Phase 2.5 的数据规则与校准方法。新增来源文档 `data/banking77-phase3.txt` 及其独立 Mock fixture；不覆盖原文档或历史阶段证据。
 
-Mock 的生成/修复响应为明确的固定策略。真实 API 适配器使用同一 `repair_code` 请求和契约，输入包括原代码、原代码散列、父版本 ID、实际错误和验证集反馈；已提供模拟 API 传输测试，但不作为真实服务有效性证据。每次尝试仍通过公共流程重新解析、检索及规划，所以单次尝试通常消耗 4 次 Provider 调用；调用预算由整个比较流程共享。
+Mock 的生成/修复响应为明确的固定策略。真实 API 适配器使用同一 `repair_code` 请求和契约，输入包括原代码、原代码散列、父版本 ID、实际错误和验证集反馈；已提供模拟 API 传输测试，但不作为真实服务有效性证据。每次尝试通过公共流程重新解析、检索及规划；当前同一比较内只抽取同一内容散列的知识文档一次，后续候选和修复复用已校验知识，并记录 knowledge-input.json。因此首次新尝试通常 4 次 Provider 调用，后续 3 次；调用预算由整个比较流程共享。
 
 ## 排名、修复与停止
 
@@ -85,4 +85,36 @@ Mock 的生成/修复响应为明确的固定策略。真实 API 适配器使用
 
 产物包含 search-config.json、attempts.json、ranking.json、decisions.json、candidates/ 下的代码版本与反馈、最终报告及知识库；统一 verification.json 保存命令、源码提交、时间、环境、镜像身份和产物散列。完整预测矩阵按 Phase 2.5 的无损 gzip 约定归档，解压后散列与原报告一致。
 
-本阶段验收跟踪 BK07/A02/A03/X06 的 Mock 范围。完整 G2 仍需要真实 API；完整 G3/G4/G5 及 Phase 4 经验对照不因本阶段通过而自动完成。
+本阶段验收跟踪 BK07/A02/A03/X06 的 Mock 范围。当时 G2 的真实 API 项尚未完成，现由下方增量证据补齐；完整 G3/G4/G5 及 Phase 4 经验对照不因此自动完成。
+
+## 真实 API 补验收（2026-10-29，verified）
+
+最终实现提交 `3c305f6`，完整源码和测试散列见 [verification.json](../examples/api-phase3/verification.json)。最新回归 190 项通过，0 失败、0 错误、0 跳过，包含真实 Docker 与客户流失兼容；本次真实服务为 Azure `gpt-4o`，无故障 fixture、无人工修改模型生成代码。
+
+| 候选/版本 | 实际结果 | 验证集 Macro-F1 | 最终测试 Macro-F1 |
+| --- | --- | --- | --- |
+| Logistic Regression 历史 v1 | 真实 `worker_ValueError`；复用原始失败证据，不冒充新执行 | 未完成 | 未访问 |
+| Logistic Regression 自动修复 v2 | GPT-4o 补上 ColumnTransformer 和标量文本选择器，四维及参数校验通过，排名第一 | 0.8729749094 | 0.8786952176 |
+| MultinomialNB v1 | 模型生成符合预定参数的代码，四维及参数校验通过，排名第二 | 0.8269238047 | 未访问 |
+
+获选版本最终 Accuracy 0.8782467532。原失败、修复输入、代码散列、父子关系、验证集分数及唯一测试预约均已保存；重开 SQLite 与 GraphML 无损往返通过。最终版本未经过人工代码修改，验证器没有降低门槛。
+
+本次增加两项必要支持：
+
+- `resume_failures` 只接纳未访问最终测试、初始版本、失败且可修复、已回写且与当前数据/协议一致的记录。原始代码及产物散列、数据库版本和算法引用全部核对后才进入已有修复循环；历史尝试计入六次总尝试限额，新增调用单独计数。
+- 对返回的实际 Pipeline 做静态参数检查，要求两个候选均使用预先指定的 TF-IDF 参数及各自分类器参数。只解析受限语法，不在宿主导入或执行生成代码；检查不通过时保存 `configuration-check.json`，以 `algorithm_configuration_mismatch` 进入有限修复。传入模型的 `required_configuration` 来自原定配置，不从最终测试分数推导。
+
+三轮记录分别保留：[首轮及人工复核限制](../examples/api-search-initial/review.json)、[结构响应失败轮](../examples/api-search-structured-failure/verification.json)、[最终严格通过轮](../examples/api-phase3/verification.json)。首轮已完成真实修复和运行，但 NB 省略约定参数，不能作为严格比较退出证据；第二轮在 NB 规划结构校验处停止、未访问测试；第三轮全部通过。总请求 **7 + 6 + 7 = 20**，没有自动重试，最终轮用掉其 7 次上限。失败和费用不从总账中剔除。
+
+三轮为独立 workflow；首轮与最终轮各对其唯一获胜版本评估一次，中间轮没有测试。两次测试使用相同既定 LR 参数、数据与冻结门槛，测试结果未提供给修复请求或选优规则。此证据证明本次工作流可完成真实自动修复与比较，不声称任意模型响应都正确或服务成功率已统计稳定。
+
+复现入口会消耗真实额度，必须使用新输出目录；历史数据库只读备份，不修改原始失败证据：
+
+```sh
+ALGOFACTORY_DOCKER_TESTS=1 .venv/bin/python -m pytest -q --junitxml=runtime/live-search-tests.xml
+.venv/bin/python scripts/verify_live_search.py --env-file .env --resume-failure runtime/plan-retest-20261029-02/single-candidate --resume-db runtime/plan-retest-20261029-02/knowledge.sqlite --tests-xml runtime/live-search-tests.xml --call-budget 20 --output-dir runtime/live-search-new
+```
+
+归档版失败产物中的 `predictions.json.gz` 须按散列还原后才能作为恢复输入；历史源码及 runtime 路径可能不在新机器存在，复现前需恢复相应失败目录和知识库。新机器冷启动仍由 Phase 6 验收。
+
+当前已具备进入 [Phase 4](phase4.md) 的条件；经验提炼与复用对照仍需独立实现和验收。
