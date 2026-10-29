@@ -1,0 +1,10 @@
+{
+  "status": "failed",
+  "error_category": "unapproved_import",
+  "workflow_id": "workflow:776e3441d643458eababee71597154ef",
+  "persisted": true,
+  "report_json": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase5-verification-delivery/unsafe/report.json",
+  "report_markdown": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase5-verification-delivery/unsafe/report.md",
+  "validation_metrics": {},
+  "test_metrics": {}
+}

@@ -15,3 +15,6 @@ HTTP 测试只在 127.0.0.1 临时启动模拟服务，使用虚构密钥，不�
 Phase 2 的 test_phase2.py 覆盖数据/协议完整性、安全语法、独立评分、事务迁移及回写失败。超时、OOM、清理失败以模拟 Docker 响应验证错误路径。真实容器用例需先运行 scripts/prepare_sandbox.py，再设置 ALGOFACTORY_DOCKER_TESTS=1；覆盖 Mock 正常重复、接口故障及模拟 API 传输适配。API 适配用例仍不调用真实 LLM。
 
 完整 Phase 2 验证：`.venv/bin/python scripts/verify_phase2.py --output-dir runtime/phase2-verification`。脚本明确启用容器测试，任何跳过或失败都不签署通过，随后运行正常/重复/三类故障 CLI 演示并校验数据库重开和图谱重载。
+
+
+Phase 5 测试需要 web extra（`uv sync --extra web --locked` 或带散列安装 `requirements-dev.txt`）。`tests/test_web.py` 使用 Streamlit AppTest，普通单元测试不启动付费模型；`scripts/verify_phase5.py` 的页面验收实际启动 Mock 后台进程和 Docker，检查提交、刷新、恢复、下载入口、真实超时和三任务兼容。

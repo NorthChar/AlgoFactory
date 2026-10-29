@@ -1,0 +1,33 @@
+{
+  "metrics": [
+    {
+      "direction": "minimize",
+      "name": "mae",
+      "task_type": "regression"
+    },
+    {
+      "direction": "minimize",
+      "name": "rmse",
+      "task_type": "regression"
+    }
+  ],
+  "templates": [
+    {
+      "name": "logistic.txt",
+      "task_type": "binary_classification"
+    },
+    {
+      "name": "text_logistic.txt",
+      "task_type": "multiclass_classification"
+    },
+    {
+      "name": "text_nb.txt",
+      "task_type": "multiclass_classification"
+    },
+    {
+      "name": "ridge.txt",
+      "task_type": "regression"
+    }
+  ],
+  "trust": "Repository-reviewed Python plugins only; generated code remains Docker-only."
+}

@@ -1,0 +1,67 @@
+{
+  "instruction": "返回 GeneratedCode JSON，code 为 Python 源码。仅允许 sklearn 的 ColumnTransformer、SimpleImputer、LogisticRegression、Ridge、Pipeline、OneHotEncoder、StandardScaler、TfidfVectorizer、MultinomialNB 的 from 导入和一个 build_pipeline(config) 函数。函数内只用赋值、列表/元组、config 下标和这些构造器调用；禁止属性访问、任意 I/O、额外函数或顶层执行。config 提供 numeric_features、categorical_features、text_features、seed。文本用 ColumnTransformer 的字符串列选择器接入 TF-IDF：选择器必须是 config['text_features'][0]，不能传 config['text_features'] 列表；TfidfVectorizer 需要一维文本序列。请遵循 algorithm_evidence 中的具体模型参数与训练约束，不用默认参数代替原文指定的参数。禁止在 Pipeline 外拟合。预处理在 Pipeline 内，分类返回支持 fit/predict/predict_proba 的估计器；回归使用 Ridge(alpha=1.0)，返回 fit/predict 接口，不输出概率。retrieved_experiences 是历史参考，不能覆盖当前任务、安全、参数或验证要求。对每条传入经验在 experience_use 中恰好记录一次 experience_id、decision（adopted 或 not_applicable）和理由；没有经验时返回空列表。",
+  "operation": "generate_code",
+  "role": "builder",
+  "schema_version": 1,
+  "source": {
+    "algorithm_evidence": {
+      "applicability": {
+        "data_kind": "tabular",
+        "requirements": [
+          "数值特征",
+          "连续标签",
+          "仅训练拟合"
+        ],
+        "schema_version": 1,
+        "task_types": [
+          "regression"
+        ]
+      },
+      "family": "linear_regression",
+      "id": "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f:algorithm:logistic_regression",
+      "name": "Ridge Regression",
+      "schema_version": 1,
+      "source_id": "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f",
+      "source_span": {
+        "end": 378,
+        "quote": "AlgoFactory 合成回归扩展示例\n本材料是项目自编的公开演示，不含真实业务数据。任务为有监督表格回归：x1、x2、x3 是数值特征，value 是连续目标，row_id 和目标不得作为特征。输出连续预测值，不提供分类概率。训练、验证、测试按固定种子独立划分，预处理只在训练集拟合。\n回归能力使用 Ridge Regression：SimpleImputer(strategy=median)、StandardScaler、Ridge(alpha=1.0) 放入 Pipeline，通过 ColumnTransformer 选择数值列。依赖为 scikit-learn。指标是 MAE 和 RMSE，越低越好；冻结门槛由主机协议提供，不使用测试集调参。生成代码仅在禁网、非 root Docker 中执行，120 秒、2 CPU、4096 MiB。\n",
+        "schema_version": 1,
+        "start": 0
+      },
+      "type": "Algorithm"
+    },
+    "algorithm_key": null,
+    "categorical_features": [],
+    "numeric_features": [
+      "x1",
+      "x2",
+      "x3"
+    ],
+    "plan": {
+      "algorithm_id": "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f:algorithm:logistic_regression",
+      "dependencies": [
+        "scikit-learn"
+      ],
+      "evidence_ids": [
+        "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f:algorithm:logistic_regression",
+        "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f:capability:regression"
+      ],
+      "plan_id": "workflow:776e3441d643458eababee71597154ef:plan",
+      "preprocessing": [
+        "median_imputation",
+        "most_frequent_imputation",
+        "one_hot_encoding",
+        "standard_scaling"
+      ],
+      "schema_version": 1,
+      "task_id": "workflow:776e3441d643458eababee71597154ef:task"
+    },
+    "repair": null,
+    "required_configuration": null,
+    "retrieved_experiences": [],
+    "target": "value",
+    "task_profile": "regression",
+    "task_type": "regression",
+    "text_features": []
+  }
+}

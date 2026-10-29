@@ -1,0 +1,81 @@
+{
+  "class_labels": [
+    0,
+    1
+  ],
+  "constraints": {
+    "allowed_algorithms": [],
+    "candidate_limit": 1,
+    "execution": {
+      "backend": "docker",
+      "cpus": 2,
+      "fail_closed": true,
+      "memory_mib": 4096,
+      "network": false,
+      "schema_version": 1,
+      "timeout_seconds": 120
+    },
+    "max_repairs_per_candidate": 0,
+    "schema_version": 1
+  },
+  "data_fingerprint": "3c6161603386e4e7921699b51a06caff3ef1bcf9fa4a14806ef006b0f721caff",
+  "description": "根据客户特征预测客户是否流失，输出流失类别和概率。",
+  "feature_schema": [
+    {
+      "dtype": "numeric",
+      "name": "tenure_months",
+      "nullable": true,
+      "schema_version": 1
+    },
+    {
+      "dtype": "numeric",
+      "name": "monthly_fee",
+      "nullable": true,
+      "schema_version": 1
+    },
+    {
+      "dtype": "numeric",
+      "name": "support_tickets",
+      "nullable": false,
+      "schema_version": 1
+    },
+    {
+      "dtype": "categorical",
+      "name": "contract_type",
+      "nullable": true,
+      "schema_version": 1
+    }
+  ],
+  "metrics": [
+    {
+      "direction": "maximize",
+      "name": "f1",
+      "schema_version": 1,
+      "threshold": 0.59
+    },
+    {
+      "direction": "maximize",
+      "name": "roc_auc",
+      "schema_version": 1,
+      "threshold": 0.75
+    },
+    {
+      "direction": "maximize",
+      "name": "precision",
+      "schema_version": 1,
+      "threshold": 0.64
+    },
+    {
+      "direction": "maximize",
+      "name": "recall",
+      "schema_version": 1,
+      "threshold": 0.55
+    }
+  ],
+  "schema_version": 1,
+  "seed": 42,
+  "split_id": "split:bcadf9303a79e6ed36975d7f6e0044e5c0d93386438b1430a7cdf1709f78b48b",
+  "target": "churn",
+  "task_id": "workflow:84afd242f75e41c39eb4163f7749ac2a:task",
+  "task_type": "binary_classification"
+}

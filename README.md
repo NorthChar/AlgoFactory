@@ -2,7 +2,7 @@
 
 AI Agent 算法能力工厂原型，目标是能力抽取、代码复刻、独立验证、修复与经验回写。2026-10-29 确定主案例为“基于 BANKING77 的客服意图分类算法生成与验证”，已有客户流失案例保留为轻量兼容性测试，详见 [ADR-001](docs/decisions/0001-banking77-main-case.md)。
 
-Phase 2.5 已实现 BANKING77 文本多分类与客户流失共享的单候选流程，G2.5 已通过：124 项测试零失败、零跳过，BANKING77 最终测试 Macro-F1 0.8787、Accuracy 87.82%，客户流失指标与历史基线一致。训练、Docker 执行、主机独立评分和回写均使用同一核心；Phase 3 修复和候选比较也已通过 Mock 阶段验收：141 项测试、零失败、零跳过。Azure GPT-4o 的真实自动修复、两候选严格比较、选定版本最终测试与回写现已通过；该阶段回归 190 项、零失败、零跳过，累计 20 次请求，最终通过轮为 7 次，见 [真实验收](examples/api-phase3/verification.json) 与 [完整用量及失败记录](examples/api-phase3/campaign-summary.json)。Phase 4 已完成可追溯经验提炼、条件检索、生成/修复消费及开关对照：210 项回归全部通过，Mock/API 各两组对照通过。本次开启与关闭经验均一次修复成功，未观察到收益，开启组多用 1,067 token。下一阶段为 Phase 5 界面与质量；详见 [Phase 4 结果](docs/phase4.md)。
+Phase 2.5 已实现 BANKING77 文本多分类与客户流失共享的单候选流程，G2.5 已通过：124 项测试零失败、零跳过，BANKING77 最终测试 Macro-F1 0.8787、Accuracy 87.82%，客户流失指标与历史基线一致。训练、Docker 执行、主机独立评分和回写均使用同一核心；Phase 3 修复和候选比较也已通过 Mock 阶段验收：141 项测试、零失败、零跳过。Azure GPT-4o 的真实自动修复、两候选严格比较、选定版本最终测试与回写现已通过；该阶段回归 190 项、零失败、零跳过，累计 20 次请求，最终通过轮为 7 次，见 [真实验收](examples/api-phase3/verification.json) 与 [完整用量及失败记录](examples/api-phase3/campaign-summary.json)。Phase 4 已完成可追溯经验提炼、条件检索、生成/修复消费及开关对照：210 项回归全部通过，Mock/API 各两组对照通过。本次开启与关闭经验均一次修复成功，未观察到收益，开启组多用 1,067 token。Phase 5 已实现本地 Streamlit 工作台、图谱与报告、回归插件及任务恢复；231 项测试通过，CLI/Web 真实隔离运行通过，本阶段新增付费 API 请求为零。详见 [Phase 5 使用与验收](docs/phase5.md)。下一阶段为 Phase 6 集成交付。
 
 ## 文档入口
 
@@ -16,6 +16,7 @@ Phase 2.5 已实现 BANKING77 文本多分类与客户流失共享的单候选�
 
 - [Phase 3 多候选与修复指南](docs/phase3.md)、[Mock 阶段证据](examples/phase3/verification.json) 与 [真实 API 证据](examples/api-phase3/verification.json)
 - [Phase 4 经验复用指南与对照结果](docs/phase4.md)及 [验收证据](examples/phase4/verification.json)
+- [Phase 5 本地工作台、插件与回归指南](docs/phase5.md)及 [验收证据](examples/phase5/verification.json)
 - [Phase 2.5 主案例与兼容性指南](docs/phase25.md) 与 [验收证据](examples/phase25/verification.json)
 - [Phase 2 Mock 闭环指南](docs/phase2.md) 与 [运行报告](examples/phase2/normal/report.md)
 
@@ -126,8 +127,18 @@ ALGOFACTORY_DOCKER_TESTS=1 .venv/bin/python -m pytest -q
 7. 生成代码示例：见 examples/phase2/normal/candidate.py。
 8. 验证结果与报告：四维结果、验证/测试指标及失败报告见 examples/phase2。
 9. 挑战和解决方案：来源追踪、事务失败、隔离运行、测试标签隔离及冻结门槛。
-10. 扩展方向：Phase 2.5 已通过；Phase 3 比较与修复的 Mock 及真实 API 验收已通过；Phase 4 经验复用机制及小规模效果对照已通过，未观察到收益；下一步为 Phase 5 界面、插件及质量完善。
+10. 扩展方向：Phase 2.5 已通过；Phase 3 比较与修复的 Mock 及真实 API 验收已通过；Phase 4 经验复用机制及小规模效果对照已通过，未观察到收益；Phase 5 界面、插件、合成回归和异常恢复验收已通过；下一步为 Phase 6 冷启动与集成交付。
 
 ## 工作区与版本管理
 
 此目录为独立本地 Git 仓库。每阶段验收后形成提交，原始资料保持不变。运行产物放 runtime/，经核验的交付样例纳入 examples/。密钥与私人数据禁止提交。
+
+
+## 本地可视化工作台（Phase 5）
+
+```sh
+uv sync --extra web --locked
+.venv/bin/python -m streamlit run src/algofactory/web/app.py --server.address 127.0.0.1 --server.port 8501 --server.headless true --browser.gatherUsageStats false
+```
+
+打开 <http://127.0.0.1:8501>，默认 Mock、BANKING77 比较和验证集评估。可查看报告、候选代码、经验来源与图谱，后台任务可在刷新后恢复查看。回归扩展使用连续值预测及 MAE/RMSE；客户流失继续通过 CLI 验证。界面仅供本机使用，真实 API 需主动选择，单次任务最多 12 次请求。数据和批准镜像需先准备，详见 [操作指南](docs/phase5.md)。

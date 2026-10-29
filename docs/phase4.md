@@ -80,4 +80,4 @@ cp examples/api-phase3/knowledge.sqlite runtime/phase4.sqlite
 .venv/bin/python scripts/verify_phase4.py --output-dir runtime/phase4-live-new --live-api --env-file .env
 ```
 
-当前 BK08/X05 的机制及小规模对照已验收，G4 的当前范围已补齐证据；未承诺未知数据/业务迁移或普遍性能收益。下一阶段是 Phase 5 界面与质量，完整 G1/G3/G5 和 Phase 6 交付复现仍待实施与验收。
+当前 BK08/X05 的机制及小规模对照已验收，G4 的当前范围已补齐证据；未承诺未知数据/业务迁移或普遍性能收益。当时下一阶段为 Phase 5；现已由 [独立界面与质量验收](phase5.md) 完成，完整 G1/G3/G5 和 Phase 6 交付复现仍待总审。

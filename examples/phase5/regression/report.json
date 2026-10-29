@@ -1,0 +1,137 @@
+{
+  "artifacts_sha256": {
+    "builder-input.json": "4ef0c8fc51a6b9e5d41c780ca8865e58c4ae62a09001fa74e7764cb07f421f9b",
+    "candidate.json": "05e43aa748f53355418a9de2907d2c1c49e2f12f9e1f191fe70d7e4a4869be1f",
+    "candidate.py": "89f8e5686986c46bd0f0d329019f9829537644c0ed8e93fbfc0184d5948bfebc",
+    "configuration-check.json": "4cff10c7f59748c1f6f59cef1902850c25a51517324d249bcb7c04e9776222b9",
+    "data-manifest.json": "f7b15dca3f8ff5859b7839feece72b703fd5745f5d8870825d77402d1628745f",
+    "decisions.json": "9226e63f0609139aff38850d7910a49ee043f9195666206b534cb9c867dd58eb",
+    "experience-retrieval.json": "af3f6c94524807e74ea3a6cee452b9da96cd7e15127c5996fbcbcbf6e176662a",
+    "experience-use.json": "af3f6c94524807e74ea3a6cee452b9da96cd7e15127c5996fbcbcbf6e176662a",
+    "knowledge-input.json": "9e3d9476acbb5320c62035f4ab482be18122a12133652321c900c582e1b3aaa3",
+    "plan-proposal.json": "eb5c738156fd043440cd3c12c5e7f7d576d870530f73f243afa18ac4e436a412",
+    "plan.json": "eb5c738156fd043440cd3c12c5e7f7d576d870530f73f243afa18ac4e436a412",
+    "protocol.json": "7a66982ff7e5a9506b621353d708e846c253cb131708f353732d35f0c3b34986",
+    "provider-audit.json": "d1defd4d518c1ac3a6fca3a43a6e930d847d5cb9d72c5e0a68a7b77cf1ee621d",
+    "retrieval.json": "346930bf21b14c5c8822851da175b107a07ca664ce8ffdbd2960404dd2224f1f",
+    "selection.json": "7590f7e3c22d97e6613cb7f92a2f19b7a43ba207e1ea28d3cedcfff546de8608",
+    "task.json": "1d8dd6dd583e40b80b91af1dbea61da73344ae98eb237ddeeafce2ae596b68a0",
+    "test-access.json": "7aa289b4c3a3504de605cbda95818fa2d44a90bcfefa62b61b5718ee5b5e9ef2",
+    "test-execution/cleanup.json": "a15ae912bfed498f5616310d9c7929368cfaf051dcc40bb8bab008286224a78e",
+    "test-execution/container-state.json": "b20682f1c1b000dc2e05c0ae47d4e327ebd66a89ebe3f722f8450f2412620153",
+    "test-execution/execution.json": "845b00ca013ea5942f4b08bd26389cce75938b2eb115f8b65fb1a46c8ced4f16",
+    "test-execution/predictions.json": "15f0e242cc2618cf0aa16ed75f294108f651fa9c4b62cb3d215e5bfc9ae7dd7d",
+    "test-execution/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "trace.json": "a28a166a05c862da1885591e98d733ab6ff1547c3cbacfb38e4cdce21e35a8f9",
+    "validation-execution/cleanup.json": "59a0481f269e85098f22e9241c9c7abd5e5b200d2a86c000807506f1537ddbf3",
+    "validation-execution/container-state.json": "c8615ed71d793e65078f1e3a161eb8955b37c3a8494e17dd83d00b8d17dbf2a5",
+    "validation-execution/execution.json": "c965686a2e8ed45b0cb0e627f9c7b9ff02c2866eced02b6063f0f398977b6a32",
+    "validation-execution/predictions.json": "95abc0c8afe825c81dd4c92043f3328cd96c740371463202b72eed8490668576",
+    "validation-execution/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "candidate": {
+    "attempt": 0,
+    "code_hash": "89f8e5686986c46bd0f0d329019f9829537644c0ed8e93fbfc0184d5948bfebc",
+    "implementation_id": "workflow:b7e98ed8b155419d88d30f62ba6e6d5a:candidate",
+    "parent_id": null,
+    "plan_id": "workflow:b7e98ed8b155419d88d30f62ba6e6d5a:plan",
+    "schema_version": 1
+  },
+  "class_names": [
+    "not_churn",
+    "churn"
+  ],
+  "code_hash": "89f8e5686986c46bd0f0d329019f9829537644c0ed8e93fbfc0184d5948bfebc",
+  "data_fingerprint": "3802b4615716526b64b4737bca9a026bf2def5c06984d4511a4b07d2852a7af8",
+  "design_explanation": {
+    "algorithm_id": "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f:algorithm:logistic_regression",
+    "evidence_ids": [
+      "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f:algorithm:logistic_regression",
+      "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f:capability:regression"
+    ],
+    "final_test_evaluated": true,
+    "selection_basis": "预先指定的单候选；不声称是所有算法中最优",
+    "text": "任务要求预测 value，类型为 regression。方案依据适用知识选择算法实体 source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f:algorithm:logistic_regression，并要求预处理只在训练集拟合。候选是否通过由独立验证器依据冻结门槛决定，不由模型自行评分。此次运行状态为 accepted。",
+    "validation_run_id": "source:f44ed48acee63b0658a25f6b22ea54d327db0820b6c7b28df7df9385a5b4c32b:validation",
+    "workflow_id": "workflow:b7e98ed8b155419d88d30f62ba6e6d5a"
+  },
+  "error_category": null,
+  "evaluation_scope": "validation_and_final_test",
+  "execution_evidence": [
+    "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase5-verification-delivery/regression/validation-execution/execution.json",
+    "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase5-verification-delivery/regression/test-execution/execution.json"
+  ],
+  "experience_usage": {
+    "enabled": false,
+    "excluded": [],
+    "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+    "matches": [],
+    "model_decisions": [],
+    "observed_rule_satisfied": false
+  },
+  "knowledge_ids": {
+    "dataset_id": "source:f44ed48acee63b0658a25f6b22ea54d327db0820b6c7b28df7df9385a5b4c32b:dataset",
+    "implementation_id": "source:f44ed48acee63b0658a25f6b22ea54d327db0820b6c7b28df7df9385a5b4c32b:implementation",
+    "task_id": "source:f44ed48acee63b0658a25f6b22ea54d327db0820b6c7b28df7df9385a5b4c32b:task",
+    "validation_run_id": "source:f44ed48acee63b0658a25f6b22ea54d327db0820b6c7b28df7df9385a5b4c32b:validation"
+  },
+  "persisted": true,
+  "provider_mode": "mock",
+  "split_id": "split:990515a8aa69db63e4e5778c769537cfbcab45a3ca2dfdc773865fa395381e81",
+  "status": "accepted",
+  "task_profile": "regression",
+  "test_attempted": true,
+  "thresholds": {
+    "mae": 1.0,
+    "rmse": 1.5
+  },
+  "validation": {
+    "code_hash": "89f8e5686986c46bd0f0d329019f9829537644c0ed8e93fbfc0184d5948bfebc",
+    "config_hash": "d4a07b9d931ce325705ea1740caeaacea445e727cdcc0e39e6ad75221725b517",
+    "error_category": null,
+    "final_test_evaluated": true,
+    "functional": {
+      "details": "真实 fit/predict，长度、顺序和有限数值校验通过",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "implementation_id": "source:f44ed48acee63b0658a25f6b22ea54d327db0820b6c7b28df7df9385a5b4c32b:implementation",
+    "interface": {
+      "details": "build_pipeline / fit / predict",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "metrics": {
+      "details": "验证集及一次性独立测试均达到冻结门槛",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "report_paths": [
+      "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase5-verification-delivery/regression/report.json",
+      "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase5-verification-delivery/regression/report.md"
+    ],
+    "resources": {
+      "elapsed_seconds": 0.6287649999999871,
+      "peak_memory_mib": 160.1484375,
+      "schema_version": 1
+    },
+    "run_id": "source:f44ed48acee63b0658a25f6b22ea54d327db0820b6c7b28df7df9385a5b4c32b:validation",
+    "schema_version": 1,
+    "split_id": "split:990515a8aa69db63e4e5778c769537cfbcab45a3ca2dfdc773865fa395381e81",
+    "stability": {
+      "details": "{\"seed_repeat\": true, \"missing_column_rejected\": true, \"invalid_numeric_rejected\": true}",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "status": "passed",
+    "test_metrics": {
+      "mae": 0.4053061951726575,
+      "rmse": 0.5010813115442796
+    },
+    "validation_metrics": {
+      "mae": 0.39644322637311186,
+      "rmse": 0.5041327352254483
+    }
+  },
+  "workflow_id": "workflow:b7e98ed8b155419d88d30f62ba6e6d5a"
+}

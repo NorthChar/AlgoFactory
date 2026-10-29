@@ -1,0 +1,50 @@
+[
+  {
+    "action": "GENERATE",
+    "budget_remaining": 4,
+    "decision_id": "search:9529feccbb7a495eace977a9e13c3415:decision:0",
+    "evidence_ids": [
+      "search:9529feccbb7a495eace977a9e13c3415"
+    ],
+    "reason": "基于适用知识生成候选：text_logistic",
+    "role": "review",
+    "run_id": "search:9529feccbb7a495eace977a9e13c3415",
+    "schema_version": 1
+  },
+  {
+    "action": "SWITCH",
+    "budget_remaining": 3,
+    "decision_id": "search:9529feccbb7a495eace977a9e13c3415:decision:1",
+    "evidence_ids": [
+      "workflow:aad8fde2881d4488b291ceac3e199ecf"
+    ],
+    "reason": "转到下一候选；比较使用同一冻结协议",
+    "role": "review",
+    "run_id": "search:9529feccbb7a495eace977a9e13c3415",
+    "schema_version": 1
+  },
+  {
+    "action": "GENERATE",
+    "budget_remaining": 3,
+    "decision_id": "search:9529feccbb7a495eace977a9e13c3415:decision:2",
+    "evidence_ids": [
+      "search:9529feccbb7a495eace977a9e13c3415"
+    ],
+    "reason": "基于适用知识生成候选：text_nb",
+    "role": "review",
+    "run_id": "search:9529feccbb7a495eace977a9e13c3415",
+    "schema_version": 1
+  },
+  {
+    "action": "ACCEPT",
+    "budget_remaining": 2,
+    "decision_id": "search:9529feccbb7a495eace977a9e13c3415:decision:3",
+    "evidence_ids": [
+      "source:acd895a4c40dad8d82306c5cc82e86c8440667e8f24db179497488fa0e37bb27:implementation"
+    ],
+    "reason": "验证集比较通过且已回写，未访问最终测试",
+    "role": "review",
+    "run_id": "search:9529feccbb7a495eace977a9e13c3415",
+    "schema_version": 1
+  }
+]
