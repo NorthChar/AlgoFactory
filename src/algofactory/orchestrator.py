@@ -12,6 +12,7 @@ import pandas as pd
 from algofactory.datasets import sha256_file, verify_dataset, write_json
 from algofactory.execution.docker import DockerExecutor
 from algofactory.experience import persist_execution
+from algofactory.generation.plan import SandboxAlgorithmPlan, validate_plan
 from algofactory.generation.safety import check_code
 from algofactory.knowledge.extraction import ingest_document
 from algofactory.knowledge.store import KnowledgeStore
@@ -19,7 +20,6 @@ from algofactory.llm.providers import APIProvider, Provider, ProviderError, Prov
 from algofactory.reporting import save_report
 from algofactory.schemas.contracts import (
     AgentDecision,
-    AlgorithmPlan,
     Candidate,
     FeatureSpec,
     MetricRule,
@@ -190,40 +190,41 @@ def run_workflow(
             ProviderRequest(
                 role="builder",
                 operation="plan_algorithm",
-                instruction="根据检索证据返回 AlgorithmPlan JSON，使用给定 algorithm，引用适用的真实 evidence_ids。预处理仅在训练集拟合。",
+                instruction="根据检索证据返回 AlgorithmPlan JSON，使用给定 algorithm，引用适用的真实 evidence_ids。预处理仅在训练集拟合。dependencies 仅表示可安装的软件包名，必须与 required_dependencies 完全一致；不能填向量器、分类器、算法组件、模块导入名或版本约束。软件版本由宿主锁文件统一管理。",
                 source={
                     "task_profile": profile.name,
                     "algorithm": algorithm_name,
+                    "required_dependencies": ["scikit-learn"],
                     "plan_id": workflow_id + ":plan",
                     "task_id": task.task_id,
                     "evidence": [entry["record"] for entry in evidence],
                 },
             ),
-            AlgorithmPlan,
+            SandboxAlgorithmPlan,
         )
-        records = {entry["record"]["id"]: entry["record"] for entry in evidence}
-        if (
-            plan.task_id != task.task_id
-            or plan.plan_id != workflow_id + ":plan"
-            or not set(plan.evidence_ids) <= set(records)
-            or plan.algorithm_id not in plan.evidence_ids
-        ):
-            raise WorkflowFailure("plan_evidence_mismatch")
-        if (
-            records[plan.algorithm_id].get("type") != "Algorithm"
-            or records[plan.algorithm_id].get("name") != algorithm_name
-            or plan.dependencies != ["scikit-learn"]
-        ):
-            raise WorkflowFailure("unsupported_phase2_plan")
+        # Keep the proposal even when host-owned constraints reject it. plan.json is accepted only.
+        write_json(directory / "plan-proposal.json", plan.model_dump(mode="json"))
+        validate_plan(
+            plan,
+            task_id=task.task_id,
+            plan_id=workflow_id + ":plan",
+            algorithm=algorithm_name,
+            evidence=[entry["record"] for entry in evidence],
+        )
         write_json(directory / "plan.json", plan.model_dump(mode="json"))
         trace.add("planned", "选择适用的单候选并保存证据引用")
         generated = provider.complete(
             ProviderRequest(
                 role="builder",
                 operation="repair_code" if repair else "generate_code",
-                instruction="返回 GeneratedCode JSON，code 为 Python 源码。仅允许 sklearn 的 ColumnTransformer、SimpleImputer、LogisticRegression、Pipeline、OneHotEncoder、StandardScaler、TfidfVectorizer、MultinomialNB 的 from 导入和一个 build_pipeline(config) 函数。函数内只用赋值、列表/元组、config 下标和这些构造器调用；禁止属性访问、任意 I/O、额外函数或顶层执行。config 提供 numeric_features、categorical_features、text_features、seed。文本用 ColumnTransformer 的字符串列选择器接入 TF-IDF；禁止在 Pipeline 外拟合。预处理在 Pipeline 内，返回支持 fit/predict/predict_proba 的估计器。",
+                instruction="返回 GeneratedCode JSON，code 为 Python 源码。仅允许 sklearn 的 ColumnTransformer、SimpleImputer、LogisticRegression、Pipeline、OneHotEncoder、StandardScaler、TfidfVectorizer、MultinomialNB 的 from 导入和一个 build_pipeline(config) 函数。函数内只用赋值、列表/元组、config 下标和这些构造器调用；禁止属性访问、任意 I/O、额外函数或顶层执行。config 提供 numeric_features、categorical_features、text_features、seed。文本用 ColumnTransformer 的字符串列选择器接入 TF-IDF：选择器必须是 config['text_features'][0]，不能传 config['text_features'] 列表；TfidfVectorizer 需要一维文本序列。请遵循 algorithm_evidence 中的具体模型参数与训练约束，不用默认参数代替原文指定的参数。禁止在 Pipeline 外拟合。预处理在 Pipeline 内，返回支持 fit/predict/predict_proba 的估计器。",
                 source={
                     "plan": plan.model_dump(mode="json"),
+                    "algorithm_evidence": next(
+                        entry["record"]
+                        for entry in evidence
+                        if entry["record"]["id"] == plan.algorithm_id
+                    ),
                     "task_profile": profile.name,
                     "algorithm_key": algorithm,
                     "repair": repair.model_dump(mode="json") if repair else None,
@@ -356,7 +357,7 @@ def run_workflow(
             dimensions["metrics"]["details"] = "验证集及一次性独立测试均达到冻结门槛"
     except (WorkflowFailure, ProviderError, ValueError, OSError, KeyError, sqlite3.Error) as exc:
         report["error_category"] = getattr(exc, "category", type(exc).__name__)
-        if isinstance(exc, ProviderError) and exc.diagnostics:
+        if isinstance(exc, (ProviderError, WorkflowFailure)) and exc.diagnostics:
             report["error_details"] = exc.diagnostics
         report["status"] = "failed"
         if report["error_category"] in {

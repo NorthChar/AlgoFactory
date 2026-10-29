@@ -1,0 +1,14 @@
+[
+  {
+    "attempt": 1,
+    "http_status": null,
+    "input_tokens": 1214,
+    "mode": "api",
+    "operation": "plan_algorithm",
+    "output_tokens": 326,
+    "reserved_cost_usd": null,
+    "schema_version": 1,
+    "service_error_code": null,
+    "status": "ok"
+  }
+]

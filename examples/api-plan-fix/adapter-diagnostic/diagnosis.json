@@ -1,0 +1,15 @@
+{
+  "change": "Add scalar ColumnTransformer text adapter; all estimator hyperparameters unchanged",
+  "diagnostic_code_hash": "c96211639b64786171df9c92dee5078ea70d192414b9773afa1e42d301658f76",
+  "diagnostic_only": true,
+  "error_category": null,
+  "llm_generated_repair": false,
+  "metrics": {
+    "accuracy": 0.8734367183591796,
+    "macro_f1": 0.8729749094121176
+  },
+  "metrics_passed": true,
+  "original_code_hash": "ac0dfe38edbd8df9fe67122198adf4e18d5204ac92cfa09b61bd130447cea6ab",
+  "test_attempted": false,
+  "worker_status": "ok"
+}

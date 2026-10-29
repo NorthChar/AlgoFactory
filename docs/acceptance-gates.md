@@ -100,3 +100,7 @@ Azure GPT-4o Responses 已通过真实连通性与需求解析；首个 BANKING7
 ### 同日知识层修复复测
 
 重新请求并离线重放定位到 `Algorithm DEPENDS_ON Dependency` 不符合运行图谱端点规则。输出契约收窄后，真实 BANKING77 文档抽取、图谱校验、入库和检索通过；随后出现 `unsupported_phase2_plan`，未生成代码、未训练、未访问测试集。该记录只验证知识层修复，不提升完整 G2。见 [本次独立证据](../examples/api-knowledge-fix/verification.json) 和 [详细说明](api-integration.md)。
+
+### 同日规划修复与执行复测
+
+通过已保存的真实检索证据复现 dependencies 被解释为算法组件的问题，收窄规划契约后两轮真实 API 规划通过，代码已进入 Docker。两轮均因文本输入接口问题失败；人工单点修改在验证集上通过，仅作诊断证据，不作模型自动修复或完整闭环通过。未访问最终测试集，完整 G2 状态不变。见 [本轮证据](../examples/api-plan-fix/verification.json)；174 项回归测试零失败、零跳过。

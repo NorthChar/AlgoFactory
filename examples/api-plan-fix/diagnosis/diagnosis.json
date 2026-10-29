@@ -1,0 +1,25 @@
+{
+  "checks": {
+    "algorithm_evidence": true,
+    "algorithm_name": true,
+    "algorithm_type": true,
+    "dependencies": false,
+    "evidence_ids": true,
+    "plan_id": true,
+    "task_id": true
+  },
+  "usage": {
+    "billing_note": "Estimates only; missing usage and subscription pricing require Azure billing reconciliation.",
+    "call_limit": 1,
+    "calls": 1,
+    "calls_with_usage": 1,
+    "calls_without_usage": 0,
+    "input_usd_per_million": null,
+    "known_input_tokens": 1214,
+    "known_output_tokens": 326,
+    "known_usage_cost_estimate_usd": null,
+    "max_cost_usd": null,
+    "output_usd_per_million": null,
+    "reserved_cost_estimate_usd": null
+  }
+}

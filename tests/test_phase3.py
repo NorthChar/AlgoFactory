@@ -344,3 +344,30 @@ def test_real_docker_comparison_repair_and_persisted_parent(tmp_path):
             == report["attempts"][0]["implementation_id"]
         )
         assert store.get_workflow(report["workflow_id"])["status"] == "accepted"
+
+
+def test_rejected_plan_keeps_proposal_and_diagnostics_before_execution(simulated, tmp_path):
+    dataset, state = simulated
+    provider = MockWorkflowProvider(max_calls=8)
+    raw = provider._raw
+
+    def invalid_plan(request, schema):
+        result = json.loads(raw(request, schema))
+        if request.operation == "plan_algorithm":
+            capability = next(e for e in request.source["evidence"] if e["type"] == "Capability")
+            result["algorithm_id"] = capability["id"]
+        return json.dumps(result)
+
+    provider._raw = invalid_plan
+    out = tmp_path / "bad-plan"
+    report = invoke(out, dataset, provider=provider)
+    child = out / "candidates/text_logistic/attempt-0"
+    details = json.loads((child / "report.json").read_text())["error_details"]
+    assert {"rule": "plan_algorithm_type"} in details
+    assert (child / "plan-proposal.json").is_file()
+    assert not (child / "plan.json").exists()
+    assert state["executions"] == [] and not report["test_attempted"]
+    assert "plan_algorithm_type" in (child / "report.md").read_text()
+    with KnowledgeStore(out.parent / "knowledge.sqlite") as store:
+        record = json.loads((child / "report.json").read_text())
+        assert store.get_workflow(record["workflow_id"])["error_details"] == details

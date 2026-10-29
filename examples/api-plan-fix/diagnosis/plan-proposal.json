@@ -1,0 +1,20 @@
+{
+  "algorithm_id": "source:3dde8ad7a184814bbf10b4c8afcc4c9bdc739d84d4bcb00a2cb6e4dd1a0ca840:algorithm:tfidf_logistic_regression",
+  "dependencies": [
+    "TF-IDF vectorizer",
+    "Logistic Regression classifier"
+  ],
+  "evidence_ids": [
+    "source:3dde8ad7a184814bbf10b4c8afcc4c9bdc739d84d4bcb00a2cb6e4dd1a0ca840:algorithm:tfidf_logistic_regression",
+    "source:3dde8ad7a184814bbf10b4c8afcc4c9bdc739d84d4bcb00a2cb6e4dd1a0ca840:capability:intent_classification"
+  ],
+  "plan_id": "workflow:41b9cb11a9814d30a3c1e73b6735f598:plan",
+  "preprocessing": [
+    "Fit TF-IDF vectorizer on training set only",
+    "Use word-level unigrams and bigrams",
+    "Set sublinear_tf=True",
+    "Limit max_features=30000"
+  ],
+  "schema_version": 1,
+  "task_id": "workflow:41b9cb11a9814d30a3c1e73b6735f598:task"
+}

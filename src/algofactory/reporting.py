@@ -93,7 +93,7 @@ def save_report(directory: Path, report: dict):
     if report.get("error_details"):
         lines += [
             "",
-            "## 知识校验诊断",
+            "## 校验诊断",
             "",
             "以下位置按从 0 开始的实体/关系列表索引记录；不包含引用正文。",
             "",

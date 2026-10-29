@@ -42,8 +42,9 @@ class WorkerResult(Contract):
 
 
 class WorkflowFailure(RuntimeError):
-    def __init__(self, category: str):
+    def __init__(self, category: str, *, diagnostics: list[dict] | None = None):
         self.category = category
+        self.diagnostics = diagnostics or []
         super().__init__(category)
 
 
