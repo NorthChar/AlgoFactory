@@ -61,6 +61,8 @@ def calibrate(directory: Path, protocol_path: Path) -> dict:
     manifest = verify_dataset(directory)
     if protocol_path.exists():
         return load_protocol(protocol_path, manifest)
+    if manifest.get("task_profile") == "banking77":
+        return calibrate_text(directory, protocol_path, manifest)
     train = pd.read_csv(directory / "train.csv")
     validation = pd.read_csv(directory / "validation_features.csv")
     labels = pd.read_csv(directory / "validation_labels.csv")
@@ -108,16 +110,118 @@ def load_protocol(path: Path, manifest: dict) -> dict:
     for key in ("data_fingerprint", "split_id", "seed"):
         if protocol[key] != manifest[key]:
             raise WorkflowFailure("protocol_dataset_mismatch")
-    if protocol["test_used_for_calibration"] is not False or set(protocol["thresholds"]) != {
-        "f1",
-        "roc_auc",
-        "precision",
-        "recall",
-    }:
+    text_task = manifest.get("task_profile") == "banking77"
+    expected_type = "multiclass_classification" if text_task else "binary_classification"
+    expected_metrics = {"macro_f1"} if text_task else {"f1", "roc_auc", "precision", "recall"}
+    if (
+        protocol["task_type"] != expected_type
+        or protocol["test_used_for_calibration"] is not False
+        or set(protocol["thresholds"]) != expected_metrics
+    ):
         raise WorkflowFailure("invalid_validation_protocol")
+    if text_task and any(
+        protocol.get(key) != manifest[key]
+        for key in ("task_profile", "target", "class_labels", "class_names")
+    ):
+        raise WorkflowFailure("protocol_label_mapping_mismatch")
+    tolerance = protocol.get("repeat_tolerance")
+    if (
+        not isinstance(tolerance, (int, float))
+        or not math.isfinite(tolerance)
+        or not 0 <= tolerance <= 1e-10
+    ):
+        raise WorkflowFailure("invalid_repeat_tolerance")
     if any(
         not isinstance(v, (int, float)) or not math.isfinite(v) or not 0 <= v <= 1
         for v in protocol["thresholds"].values()
     ):
         raise WorkflowFailure("invalid_validation_thresholds")
+    return protocol
+
+
+def text_reference_pipeline(seed):
+    """Trusted independent baseline implementation, no generated code import."""
+    from sklearn.feature_extraction.text import TfidfVectorizer
+
+    return Pipeline(
+        [
+            (
+                "preprocess",
+                ColumnTransformer(
+                    [
+                        (
+                            "text",
+                            TfidfVectorizer(
+                                ngram_range=(1, 2), sublinear_tf=True, max_features=30000
+                            ),
+                            "text",
+                        )
+                    ]
+                ),
+            ),
+            ("model", LogisticRegression(C=4.0, max_iter=500, random_state=seed)),
+        ]
+    )
+
+
+def multiclass_metrics(labels, predictions, class_labels):
+    from sklearn.metrics import accuracy_score
+
+    return {
+        "macro_f1": float(
+            f1_score(labels, predictions, labels=class_labels, average="macro", zero_division=0)
+        ),
+        "accuracy": float(accuracy_score(labels, predictions)),
+    }
+
+
+def calibrate_text(directory, protocol_path, manifest):
+    from threadpoolctl import threadpool_limits
+
+    train = pd.read_csv(directory / "train.csv")
+    validation = pd.read_csv(directory / "validation_features.csv")
+    labels = pd.read_csv(directory / "validation_labels.csv")
+    reference = text_reference_pipeline(manifest["seed"])
+    with threadpool_limits(limits=1):
+        reference.fit(train[["text"]], train.intent)
+        scores = multiclass_metrics(
+            labels.intent, reference.predict(validation[["text"]]), manifest["class_labels"]
+        )
+    if scores["macro_f1"] < 0.5:
+        raise WorkflowFailure("baseline_below_minimum")
+    protocol = {
+        "schema_version": 1,
+        "task_type": "multiclass_classification",
+        "task_profile": "banking77",
+        "target": "intent",
+        "class_labels": manifest["class_labels"],
+        "class_names": manifest["class_names"],
+        "seed": manifest["seed"],
+        "data_fingerprint": manifest["data_fingerprint"],
+        "split_id": manifest["split_id"],
+        "baseline": {
+            "algorithm": "TF-IDF + LogisticRegression(C=4.0)",
+            "validation_metrics": scores,
+            "calibrator_sha256": sha256_file(Path(__file__)),
+            "sklearn_version": importlib.metadata.version("scikit-learn"),
+            "vocabulary_sha256": hashlib.sha256(
+                canonical(
+                    {
+                        word: int(index)
+                        for word, index in reference.named_steps["preprocess"]
+                        .named_transformers_["text"]
+                        .vocabulary_.items()
+                    }
+                ).encode()
+            ).hexdigest(),
+            "fit_rows": len(train),
+            "fit_split": "train",
+        },
+        "threshold_rule": "macro_f1 >= max(0.50, floor((validation_baseline - 0.05)*100)/100); accuracy descriptive only",
+        "thresholds": {"macro_f1": max(0.5, math.floor((scores["macro_f1"] - 0.05) * 100) / 100)},
+        "repeat_tolerance": 1e-12,
+        "test_used_for_calibration": False,
+    }
+    protocol["config_hash"] = hashlib.sha256(canonical(protocol).encode()).hexdigest()
+    write_json(protocol_path, protocol)
     return protocol

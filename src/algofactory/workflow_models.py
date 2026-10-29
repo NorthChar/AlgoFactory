@@ -8,10 +8,11 @@ from algofactory.schemas.contracts import Contract, Identifier, Text
 
 
 class TaskIntent(Contract):
-    task_type: Literal["binary_classification"]
-    target: Literal["churn"]
+    task_type: Literal["binary_classification", "multiclass_classification"]
+    target: Literal["churn", "intent"]
     numeric_features: list[Text]
     categorical_features: list[Text]
+    text_features: list[Text] = Field(default_factory=list)
 
 
 class GeneratedCode(Contract):
@@ -25,9 +26,12 @@ class WorkerResult(Contract):
     error_category: Text | None = None
     row_ids: list[int] = Field(default_factory=list)
     predictions: list[int] = Field(default_factory=list)
-    probabilities: list[float] = Field(default_factory=list)
+    probabilities: list[float] | list[list[float]] = Field(default_factory=list)
     repeat_predictions: list[int] = Field(default_factory=list)
-    repeat_probabilities: list[float] = Field(default_factory=list)
+    repeat_probabilities: list[float] | list[list[float]] = Field(default_factory=list)
+    classes: list[int] = Field(default_factory=lambda: [0, 1])
+    invalid_text_rejected: bool = False
+    unseen_text_handled: bool = False
     interface_checked: bool = False
     missing_column_rejected: bool = False
     invalid_numeric_rejected: bool = False

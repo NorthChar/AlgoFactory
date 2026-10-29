@@ -13,6 +13,7 @@ def save_report(directory: Path, report: dict):
         "",
         f"- 流程：{report['workflow_id']}",
         f"- 状态：{report['status']}",
+        f"- 任务：{report.get('task_profile', '尚未识别')}",
         f"- LLM 模式：{report['provider_mode']}",
         f"- 代码散列：{report.get('code_hash') or '尚未生成'}",
         f"- 知识库回写：{'已保存' if report.get('persisted') else '未完成'}",
@@ -41,7 +42,11 @@ def save_report(directory: Path, report: dict):
         "| --- | --- | --- | --- |",
     ]
     thresholds = report.get("thresholds", {})
-    for name in ("f1", "roc_auc", "precision", "recall"):
+    for name in (
+        ("macro_f1", "accuracy")
+        if report.get("task_profile") == "banking77"
+        else ("f1", "roc_auc", "precision", "recall")
+    ):
         values = [
             result.get("validation_metrics", {}).get(name),
             result.get("test_metrics", {}).get(name),
@@ -51,7 +56,11 @@ def save_report(directory: Path, report: dict):
         lines.append("| " + " | ".join([name, *cells]) + " |")
     lines += [
         "",
-        "训练/验证/测试按 60/20/20 分层划分；预处理只在训练数据拟合。门槛在独立测试之前冻结。",
+        (
+            "BANKING77 保留官方测试集；训练侧去重后按 80/20 分层划分训练/验证。词表和 IDF 仅在训练集拟合；Macro-F1 为门槛，Accuracy 仅报告。逐类指标及混淆矩阵见 validation-class-details.json / test-class-details.json。"
+            if report.get("task_profile") == "banking77"
+            else "训练/验证/测试按 60/20/20 分层划分；预处理只在训练数据拟合。门槛在独立测试之前冻结。"
+        ),
         "验证通过后锁定代码与配置，独立测试只评估一次；测试失败不触发重新调参或修复。",
         "",
         "完整输入散列、状态轨迹、Provider 调用和容器证据见同目录 JSON 文件。",

@@ -56,5 +56,5 @@ def test_cli_schema_export_and_truthful_status(tmp_path):
     assert len(list(tmp_path.glob("*.json"))) == 8
     assert "TaskSpec" in json.loads(result.stdout)["schemas"]
     result = cli("status")
-    assert json.loads(result.stdout)["phase"] == 2
+    assert json.loads(result.stdout)["phase"] == "2.5"
     assert json.loads(result.stdout)["core_workflow"] == "implemented_docker_required"

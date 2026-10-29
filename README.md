@@ -2,7 +2,7 @@
 
 AI Agent 算法能力工厂原型，目标是能力抽取、代码复刻、独立验证、修复与经验回写。2026-10-29 确定主案例为“基于 BANKING77 的客服意图分类算法生成与验证”，已有客户流失案例保留为轻量兼容性测试，详见 [ADR-001](docs/decisions/0001-banking77-main-case.md)。
 
-当前可运行的实现仍是 Phase 2 客户流失单候选 Mock 闭环，训练、Docker 执行、评分和回写均真实执行。BANKING77 文本/多分类与改造后的兼容检查尚待 Phase 2.5 实现，再进入 Phase 3 修复和候选比较。真实 API、经验复用和 Streamlit 仍待后续验收。
+Phase 2.5 已实现 BANKING77 文本多分类与客户流失共享的单候选流程，阶段验收待运行。训练、Docker 执行、主机独立评分和回写均使用同一核心；后续进入 Phase 3 修复和候选比较。真实 API、经验复用和 Streamlit 仍待验收。
 
 ## 文档入口
 
@@ -14,6 +14,7 @@ AI Agent 算法能力工厂原型，目标是能力抽取、代码复刻、独�
 - [验收 Gate 与演示协议](docs/acceptance-gates.md)
 - [Phase 1 使用与验收说明](docs/phase1.md) 与 [实际验证证据](examples/phase1/verification.json)
 
+- [Phase 2.5 主案例与兼容性指南](docs/phase25.md)
 - [Phase 2 Mock 闭环指南](docs/phase2.md) 与 [运行报告](examples/phase2/normal/report.md)
 
 ## 安装与运行
@@ -41,9 +42,21 @@ python3.11 -m venv .venv
 
 requirements.txt 是运行依赖，requirements-dev.txt 另含测试与检查工具；两者从 uv.lock 导出，带版本和文件散列。构建工具由 pyproject.toml 声明。
 
-## 当前可运行的 Phase 2 客户流失闭环
+## 当前主案例：BANKING77
 
-以下命令仍运行客户流失历史基线；BANKING77 入口尚未实现。该基线将在 Phase 2.5 中适配为共用新框架的兼容性测试。
+```sh
+.venv/bin/python scripts/prepare_sandbox.py
+.venv/bin/python -m algofactory.cli prepare-banking77
+.venv/bin/python -m algofactory.cli demo --task banking77 --mode mock --db runtime/phase25.sqlite
+# 完整阶段验收：源码应已提交，输出目录必须为空
+.venv/bin/python scripts/verify_phase25.py --raw-dir runtime/banking77-data/raw
+```
+
+首次数据导入从固定官方版本下载，并保留许可、署名与处理记录。BANKING77 是英文、77 类已知意图分类；初始候选为 TF-IDF + Logistic Regression，主指标 Macro-F1。完整说明见 [Phase 2.5 指南](docs/phase25.md)。
+
+## 客户流失兼容性入口
+
+以下入口保留旧命令兼容性，通过同一套改造后的核心执行固定客户流失候选。
 
 先安装并启动 Docker Desktop，然后在项目根目录运行：
 
@@ -61,7 +74,7 @@ requirements.txt 是运行依赖，requirements-dev.txt 另含测试与检查工
 .venv/bin/python scripts/verify_phase2.py --output-dir runtime/phase2-verification
 ```
 
-Mock 只接受内置固定需求“根据客户特征预测客户是否流失，输出流失类别和概率。”；不表示模型已能理解任意自然语言。数据与阈值校准规则见 [Phase 2 指南](docs/phase2.md)。
+客户流失 Mock 只接受内置固定需求“根据客户特征预测客户是否流失，输出流失类别和概率。”；BANKING77 使用其独立固定需求，均不表示模型已能理解任意自然语言。数据与阈值校准规则见 [Phase 2 指南](docs/phase2.md)。
 
 ## Phase 1 架构与示例
 

@@ -5,6 +5,7 @@ import ast
 from algofactory.workflow_models import WorkflowFailure
 
 IMPORTS = {
+    "sklearn.feature_extraction.text": {"TfidfVectorizer"},
     "sklearn.compose": {"ColumnTransformer"},
     "sklearn.impute": {"SimpleImputer"},
     "sklearn.linear_model": {"LogisticRegression"},

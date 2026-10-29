@@ -7,8 +7,8 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 Text = Annotated[str, Field(min_length=1, pattern=r"\S")]
 Identifier = Annotated[str, Field(min_length=1, max_length=240, pattern=r"^[a-zA-Z0-9_.:-]+$")]
 Digest = Annotated[str, Field(pattern=r"^[a-f0-9]{64}$")]
-TaskType = Literal["binary_classification", "regression"]
-MetricName = Literal["f1", "roc_auc", "precision", "recall", "mae", "rmse"]
+TaskType = Literal["binary_classification", "multiclass_classification", "regression"]
+MetricName = Literal["f1", "roc_auc", "precision", "recall", "mae", "rmse", "macro_f1", "accuracy"]
 NonemptyTexts = Annotated[list[Text], Field(min_length=1)]
 
 
@@ -37,7 +37,7 @@ class TaskConstraints(Contract):
 
 class FeatureSpec(Contract):
     name: Text
-    dtype: Literal["numeric", "categorical", "boolean"]
+    dtype: Literal["numeric", "categorical", "boolean", "text"]
     nullable: bool = False
 
 
@@ -68,9 +68,14 @@ class TaskSpec(Contract):
     metrics: Annotated[list[MetricRule], Field(min_length=1)]
     constraints: TaskConstraints = Field(default_factory=TaskConstraints)
     seed: int = Field(default=42, ge=0)
+    class_labels: list[int] = Field(default_factory=list)
 
     @model_validator(mode="after")
     def check_fields(self):
+        if self.task_type == "multiclass_classification" and (
+            len(self.class_labels) < 3 or self.class_labels != list(range(len(self.class_labels)))
+        ):
+            raise ValueError("Multiclass tasks require a frozen contiguous label mapping")
         names = [f.name for f in self.feature_schema]
         if len(names) != len(set(names)) or self.target in names:
             raise ValueError("Features must be unique and must exclude the target")
@@ -78,7 +83,11 @@ class TaskSpec(Contract):
         allowed = (
             {"mae", "rmse"}
             if self.task_type == "regression"
-            else {"f1", "roc_auc", "precision", "recall"}
+            else (
+                {"macro_f1", "accuracy"}
+                if self.task_type == "multiclass_classification"
+                else {"f1", "roc_auc", "precision", "recall"}
+            )
         )
         if len(set(metrics)) != len(metrics) or not set(metrics) <= allowed:
             raise ValueError("Metrics must be unique and compatible with task_type")

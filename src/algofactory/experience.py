@@ -40,8 +40,10 @@ def persist_execution(store: KnowledgeStore, report: dict, manifest: dict, task,
     )
     dataset = DatasetEntity(
         **provenance("dataset"),
-        name="Synthetic churn dataset",
-        field_schema={**{f.name: f.dtype for f in task.feature_schema}, "churn": "boolean"},
+        name="BANKING77"
+        if manifest.get("task_profile") == "banking77"
+        else "Synthetic churn dataset",
+        field_schema={**{f.name: f.dtype for f in task.feature_schema}, task.target: "class_label"},
         fingerprint=manifest["data_fingerprint"],
         split_id=manifest["split_id"],
     )

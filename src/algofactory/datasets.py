@@ -96,6 +96,12 @@ def generate_dataset(directory: Path, rows: int = 1500, seed: int = 42) -> dict:
 
 def verify_dataset(directory: Path) -> dict:
     manifest = json.loads((directory / "manifest.json").read_text())
+    if manifest.get("task_profile") == "banking77":
+        from algofactory.banking import verify_banking77
+
+        return verify_banking77(directory, manifest)
+    if manifest.get("task_profile", "churn") != "churn":
+        raise WorkflowFailure("unsupported_task_profile")
     expected = {
         "all_rows.csv",
         "train.csv",
@@ -125,6 +131,8 @@ def verify_dataset(directory: Path) -> dict:
         manifest["numeric_features"] != NUMERIC
         or manifest["categorical_features"] != CATEGORICAL
         or manifest["target"] != "churn"
+        or manifest.get("text_features", []) != []
+        or manifest.get("class_labels", [0, 1]) != [0, 1]
     ):
         raise WorkflowFailure("unsupported_dataset_schema")
     # IDs and target separation are checked before any candidate is allowed to run.

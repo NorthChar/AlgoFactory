@@ -2,7 +2,7 @@
 
 - 决策日期：2026-10-29（Asia/Shanghai）。
 - 决策状态：accepted，用户已在本聊天确认主案例并同意保留轻量兼容性测试。
-- 实现状态：planned；本次只调整文档主线，不表示文本分类、多分类或兼容性改造已完成。
+- 实现状态：Phase 2.5 implemented，待阶段验收；后续比较/修复及经验复用仍 planned。初次决策为规划，后续实现见 [Phase 2.5 指南](../phase25.md)。
 - 主案例：**基于 BANKING77 的客服意图分类算法生成与验证**。
 - 辅助案例：已有合成客户流失二分类，只保留一个固定候选及轻量端到端兼容性检查。
 - 关联文档：[总体计划](../implementation-plan.md)、[架构](../architecture.md)、[验收](../acceptance-gates.md)、[需求矩阵](../requirements-matrix.md)。
@@ -82,5 +82,6 @@ Phase 2.5 是本次插入的适配步骤，不重命名或追认历史 Phase 2 �
 | 2026-10-27 | 客户流失作为 Phase 2 Mock 单候选案例 | 历史 verified，见 examples/phase2/verification.json |
 | 2026-10-28 | 下载并初检公开数据，比较不同业务方向 | 仅结构检查，见 docs/evidence/2026-10-28-dataset-audit.json |
 | 2026-10-29 | 用户确认 BANKING77 主案例与轻量客户流失兼容性检查，并要求纳入主线 | ADR-001 accepted；新增实现及验收均 planned |
+| 2026-10-29 | 实现 BANKING77 数据导入、文本/多分类公共流程和阶段验收入口 | Phase 2.5 implemented，待 G2.5 验收；见 docs/phase25.md |
 
 后续主案例、兼容范围或评估协议若变化，应新增决策记录并关联 ADR-001，不覆盖旧证据。实现提交和阶段报告产生后，在需求矩阵与验收记录补充对应路径和状态。

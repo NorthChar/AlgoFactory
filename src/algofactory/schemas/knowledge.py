@@ -60,7 +60,7 @@ class Provenance(Contract):
 
 class Applicability(Contract):
     task_types: Annotated[list[TaskType], Field(min_length=1)]
-    data_kind: Literal["tabular"] = "tabular"
+    data_kind: Literal["tabular", "text"] = "tabular"
     requirements: NonemptyTexts
 
 

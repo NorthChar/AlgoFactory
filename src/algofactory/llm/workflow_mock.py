@@ -3,8 +3,8 @@
 import json
 from importlib.resources import files
 
-from algofactory.datasets import DEFAULT_REQUEST
 from algofactory.llm.providers import Provider, ProviderError, ProviderRequest
+from algofactory.tasks import PROFILES
 
 
 class MockWorkflowProvider(Provider):
@@ -24,24 +24,24 @@ class MockWorkflowProvider(Provider):
             fixtures = json.loads(
                 files("algofactory.llm").joinpath("fixtures/churn.json").read_text()
             )
+            fixtures.update(
+                json.loads(files("algofactory.llm").joinpath("fixtures/banking77.json").read_text())
+            )
             if data["sha256"] not in fixtures:
                 raise ProviderError("mock_fixture_missing")
             response = fixtures[data["sha256"]]["response"]
         elif request.operation == "parse_task":
-            if data["request"] != DEFAULT_REQUEST:
+            profile = next((p for p in PROFILES.values() if p.request == data["request"]), None)
+            if profile is None:
                 raise ProviderError("mock_request_unsupported")
-            response = {
-                "task_type": "binary_classification",
-                "target": "churn",
-                "numeric_features": data["numeric_features"],
-                "categorical_features": data["categorical_features"],
-            }
+            response = profile.intent()
         elif request.operation == "plan_algorithm":
             algorithm = next(
                 (
                     e
                     for e in data["evidence"]
-                    if e["type"] == "Algorithm" and e["name"] == "Logistic Regression"
+                    if e["type"] == "Algorithm"
+                    and e["name"] == data.get("algorithm", "Logistic Regression")
                 ),
                 None,
             )
@@ -52,7 +52,9 @@ class MockWorkflowProvider(Provider):
                 "plan_id": data["plan_id"],
                 "task_id": data["task_id"],
                 "algorithm_id": algorithm["id"],
-                "preprocessing": [
+                "preprocessing": ["training_only_tfidf", "frozen_class_mapping"]
+                if data.get("task_profile") == "banking77"
+                else [
                     "median_imputation",
                     "most_frequent_imputation",
                     "one_hot_encoding",
@@ -62,12 +64,17 @@ class MockWorkflowProvider(Provider):
                 "evidence_ids": [algorithm["id"], capability["id"]],
             }
         elif request.operation == "generate_code":
-            code = files("algofactory.generation").joinpath("templates/logistic.txt").read_text()
+            profile = PROFILES[data.get("task_profile", "churn")]
+            code = (
+                files("algofactory.generation")
+                .joinpath("templates/" + profile.template)
+                .read_text()
+            )
             if self.fault == "missing_predict_proba":
                 code = code.replace(
                     "from sklearn.linear_model import LogisticRegression",
                     "from sklearn.svm import LinearSVC",
-                ).replace("LogisticRegression(max_iter=500", "LinearSVC(max_iter=500")
+                ).replace("LogisticRegression(", "LinearSVC(")
             if self.fault == "unsafe_code":
                 code = "import os\n" + code
             response = {

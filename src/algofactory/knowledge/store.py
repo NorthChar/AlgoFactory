@@ -207,7 +207,12 @@ class KnowledgeStore:
     ) -> list[dict]:
         if not 1 <= limit <= 100:
             raise ValueError("Search limit must be between 1 and 100")
-        if task_type not in {None, "binary_classification", "regression"}:
+        if task_type not in {
+            None,
+            "binary_classification",
+            "multiclass_classification",
+            "regression",
+        }:
             raise ValueError("Unsupported task type")
         if entity_type is None:
             rows = self.connection.execute("SELECT payload FROM entities ORDER BY id")

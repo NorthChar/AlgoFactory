@@ -204,7 +204,7 @@ class DockerExecutor:
                     raise WorkflowFailure("resource_limit_exceeded")
                 if run.returncode:
                     raise WorkflowFailure("container_nonzero_exit")
-                if len(run.stdout.encode()) > 2_000_000:
+                if len(run.stdout.encode()) > 32_000_000:
                     raise WorkflowFailure("worker_output_too_large")
                 try:
                     worker = WorkerResult.model_validate_json(run.stdout)

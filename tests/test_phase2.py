@@ -166,6 +166,7 @@ def good_worker():
 def test_host_scores_private_labels_and_checks_prediction_integrity():
     labels = pd.DataFrame({"row_id": [1, 2, 3, 4], "churn": [0, 1, 0, 1]})
     protocol = {
+        "task_type": "binary_classification",
         "repeat_tolerance": 1e-12,
         "thresholds": {name: 0.8 for name in ("f1", "roc_auc", "precision", "recall")},
     }

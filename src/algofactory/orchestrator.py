@@ -9,7 +9,7 @@ from zoneinfo import ZoneInfo
 
 import pandas as pd
 
-from algofactory.datasets import CATEGORICAL, NUMERIC, sha256_file, verify_dataset, write_json
+from algofactory.datasets import sha256_file, verify_dataset, write_json
 from algofactory.execution.docker import DockerExecutor
 from algofactory.experience import persist_execution
 from algofactory.generation.safety import check_code
@@ -28,6 +28,7 @@ from algofactory.schemas.contracts import (
     ValidationResult,
 )
 from algofactory.schemas.knowledge import SourceDocument
+from algofactory.tasks import compatible_evidence, profile_for
 from algofactory.validation.protocol import calibrate
 from algofactory.validation.scoring import score_predictions
 from algofactory.workflow_models import GeneratedCode, TaskIntent, WorkflowFailure
@@ -95,6 +96,9 @@ def run_workflow(
     trace.add("received", "收到显式任务，开始单候选流程")
     try:
         manifest = verify_dataset(dataset_dir)
+        profile = profile_for(manifest)
+        report["task_profile"] = profile.name
+        report["class_names"] = manifest.get("class_names", ["not_churn", "churn"])
         protocol = calibrate(dataset_dir, dataset_dir / "protocol.json")
         report["thresholds"] = protocol["thresholds"]
         report["data_fingerprint"], report["split_id"] = (
@@ -108,17 +112,15 @@ def run_workflow(
             ProviderRequest(
                 role="knowledge",
                 operation="parse_task",
-                instruction="将需求解析为 TaskIntent JSON。仅使用给定字段，不得把目标字段或 row_id 放入特征。支持客户流失二分类。",
+                instruction="将需求解析为 TaskIntent JSON。仅使用给定任务类型和字段，不得把目标字段或 row_id 放入特征。",
                 source={
                     "request": request,
-                    "numeric_features": NUMERIC,
-                    "categorical_features": CATEGORICAL,
-                    "target": "churn",
+                    **profile.intent(),
                 },
             ),
             TaskIntent,
         )
-        if intent.numeric_features != NUMERIC or intent.categorical_features != CATEGORICAL:
+        if intent.model_dump(exclude={"schema_version"}) != profile.intent():
             raise WorkflowFailure("intent_feature_mismatch")
         task = TaskSpec(
             task_id=workflow_id + ":task",
@@ -127,17 +129,22 @@ def run_workflow(
             target=intent.target,
             feature_schema=[
                 FeatureSpec(name=name, dtype="numeric", nullable=name != "support_tickets")
-                for name in NUMERIC
+                for name in profile.numeric
             ]
-            + [FeatureSpec(name=name, dtype="categorical", nullable=True) for name in CATEGORICAL],
+            + [
+                FeatureSpec(name=name, dtype="categorical", nullable=True)
+                for name in profile.categorical
+            ]
+            + [FeatureSpec(name=name, dtype="text") for name in profile.text],
             data_fingerprint=manifest["data_fingerprint"],
             split_id=manifest["split_id"],
             seed=manifest["seed"],
+            class_labels=manifest.get("class_labels", [0, 1]),
             metrics=[
                 MetricRule(name=name, direction="maximize", threshold=value)
                 for name, value in protocol["thresholds"].items()
             ],
-            constraints=TaskConstraints(candidate_limit=1),
+            constraints=TaskConstraints(candidate_limit=1, max_repairs_per_candidate=0),
         )
         write_json(directory / "task.json", task.model_dump(mode="json"))
         trace.add("parsed", "需求契约已校验，并绑定数据指纹与冻结规则")
@@ -147,7 +154,7 @@ def run_workflow(
         with KnowledgeStore(db_path) as store:
             ingest_document(source, provider, store)
             evidence = store.search(task_type=task.task_type)
-        evidence = [entry for entry in evidence if entry["record"]["source_id"] == source.id]
+        evidence = [entry for entry in evidence if compatible_evidence(entry, profile, source.id)]
         if not evidence:
             raise WorkflowFailure("empty_knowledge_retrieval")
         trace.context["source_ids"] = [source.id]
@@ -157,8 +164,10 @@ def run_workflow(
             ProviderRequest(
                 role="builder",
                 operation="plan_algorithm",
-                instruction="根据检索证据返回 AlgorithmPlan JSON。Phase 2 只支持 Logistic Regression；引用真实 evidence_ids，预处理缺失值、类别编码与数值缩放。",
+                instruction="根据检索证据返回 AlgorithmPlan JSON，使用给定 algorithm，引用适用的真实 evidence_ids。预处理仅在训练集拟合。",
                 source={
+                    "task_profile": profile.name,
+                    "algorithm": profile.algorithm,
                     "plan_id": workflow_id + ":plan",
                     "task_id": task.task_id,
                     "evidence": [entry["record"] for entry in evidence],
@@ -174,21 +183,23 @@ def run_workflow(
             or plan.algorithm_id not in plan.evidence_ids
         ):
             raise WorkflowFailure("plan_evidence_mismatch")
-        if records[plan.algorithm_id].get("name") != "Logistic Regression" or plan.dependencies != [
-            "scikit-learn"
-        ]:
+        if (
+            records[plan.algorithm_id].get("type") != "Algorithm"
+            or records[plan.algorithm_id].get("name") != profile.algorithm
+            or plan.dependencies != ["scikit-learn"]
+        ):
             raise WorkflowFailure("unsupported_phase2_plan")
         write_json(directory / "plan.json", plan.model_dump(mode="json"))
-        trace.add("planned", "选择单个 Logistic Regression 候选并保存证据引用")
+        trace.add("planned", "选择适用的单候选并保存证据引用")
         generated = provider.complete(
             ProviderRequest(
                 role="builder",
                 operation="generate_code",
-                instruction="返回 GeneratedCode JSON，code 为 Python 源码。仅允许 sklearn 的 ColumnTransformer、SimpleImputer、LogisticRegression、Pipeline、OneHotEncoder、StandardScaler 的 from 导入和一个 build_pipeline(config) 函数。函数内只用赋值、列表/元组、config 下标和这些构造器调用；禁止属性访问、任意 I/O、额外函数或顶层执行。config 提供 numeric_features、categorical_features、seed。预处理在 Pipeline 内，返回支持 fit/predict/predict_proba 的估计器。",
+                instruction="返回 GeneratedCode JSON，code 为 Python 源码。仅允许 sklearn 的 ColumnTransformer、SimpleImputer、LogisticRegression、Pipeline、OneHotEncoder、StandardScaler、TfidfVectorizer 的 from 导入和一个 build_pipeline(config) 函数。函数内只用赋值、列表/元组、config 下标和这些构造器调用；禁止属性访问、任意 I/O、额外函数或顶层执行。config 提供 numeric_features、categorical_features、text_features、seed。文本用 ColumnTransformer 的字符串列选择器接入 TF-IDF；禁止在 Pipeline 外拟合。预处理在 Pipeline 内，返回支持 fit/predict/predict_proba 的估计器。",
                 source={
                     "plan": plan.model_dump(mode="json"),
-                    "numeric_features": NUMERIC,
-                    "categorical_features": CATEGORICAL,
+                    "task_profile": profile.name,
+                    **profile.intent(),
                 },
             ),
             GeneratedCode,
@@ -224,8 +235,8 @@ def run_workflow(
         trace.add("checked", "代码符合受限工厂语法；接下来使用 Docker 隔离执行")
         executor = DockerExecutor(approval_path, requirements_path)
         config = {
-            "numeric_features": NUMERIC,
-            "categorical_features": CATEGORICAL,
+            **profile.intent(),
+            "class_labels": task.class_labels,
             "seed": task.seed,
             "stage": "validation",
         }
@@ -257,6 +268,8 @@ def run_workflow(
             worker, pd.read_csv(dataset_dir / "validation_labels.csv"), protocol
         )
         validation_metrics = measured["metrics"]
+        if "class_details" in measured:
+            write_json(directory / "validation-class-details.json", measured["class_details"])
         dimensions["functional"] = {
             "status": "passed",
             "details": "真实 fit/predict，长度、顺序和有限数值校验通过",
@@ -309,6 +322,8 @@ def run_workflow(
             final, pd.read_csv(dataset_dir / "test_labels.csv"), protocol, require_stability=False
         )
         test_metrics = final_scores["metrics"]
+        if "class_details" in final_scores:
+            write_json(directory / "test-class-details.json", final_scores["class_details"])
         if not final_scores["metrics_passed"]:
             dimensions["metrics"] = {
                 "status": "failed",

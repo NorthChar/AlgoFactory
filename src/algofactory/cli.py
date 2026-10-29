@@ -17,16 +17,26 @@ def parser():
     data.add_argument("--output-dir", type=Path, default=Path("runtime/phase2-data"))
     data.add_argument("--rows", type=int, default=1500)
     data.add_argument("--seed", type=int, default=42)
+    banking = commands.add_parser(
+        "prepare-banking77", help="导入固定版本 BANKING77，保存来源、去重及划分证据"
+    )
+    banking.add_argument("--output-dir", type=Path, default=Path("runtime/banking77-data"))
+    banking.add_argument(
+        "--raw-dir",
+        type=Path,
+        help="已下载的 train.csv/test.csv/LICENSE 目录；省略时从固定官方版本下载",
+    )
     calibration = commands.add_parser("calibrate", help="只用训练/验证集校准并冻结指标门槛")
     calibration.add_argument("--dataset-dir", type=Path, default=Path("runtime/phase2-data"))
     demo = commands.add_parser("demo", help="单候选生成、Docker 执行、独立评分与回写")
     demo.add_argument("--mode", choices=["mock", "api"], default="mock")
-    demo.add_argument("--request", default="根据客户特征预测客户是否流失，输出流失类别和概率。")
+    demo.add_argument("--task", choices=["churn", "banking77"], default="churn")
+    demo.add_argument("--request")
     demo.add_argument("--output-dir", type=Path)
-    demo.add_argument("--dataset-dir", type=Path, default=Path("runtime/phase2-data"))
+    demo.add_argument("--dataset-dir", type=Path)
     demo.add_argument("--db", type=Path, default=Path("runtime/phase2.sqlite"))
     demo.add_argument("--image-approval", type=Path, default=Path("runtime/docker-image.json"))
-    demo.add_argument("--knowledge-document", type=Path, default=Path("data/customer_churn.txt"))
+    demo.add_argument("--knowledge-document", type=Path)
     demo.add_argument("--fault", choices=["missing_predict_proba", "unsafe_code", "invalid_json"])
     workflow = commands.add_parser("workflow-show", help="查询持久化的流程结果")
     workflow.add_argument("workflow_id")
@@ -39,7 +49,9 @@ def parser():
     ingest.add_argument("--fixture", type=Path, help="显式 Mock fixture JSON")
     search = commands.add_parser("search", help="检索知识与来源")
     search.add_argument("--text", default="")
-    search.add_argument("--task-type", choices=["binary_classification", "regression"])
+    search.add_argument(
+        "--task-type", choices=["binary_classification", "multiclass_classification", "regression"]
+    )
     search.add_argument(
         "--entity-type",
         choices=[
@@ -71,7 +83,8 @@ def parser():
 def run(args):
     if args.command == "status":
         return {
-            "phase": 2,
+            "phase": "2.5",
+            "tasks": ["banking77", "churn"],
             "status": "single_candidate_workflow",
             "core_workflow": "implemented_docker_required",
             "live_api": "requires_configuration_and_verification",
@@ -85,7 +98,7 @@ def run(args):
     from algofactory.schemas import contracts
     from algofactory.schemas.knowledge import Extraction, KnowledgeBatch, SourceDocument
 
-    if args.command in {"prepare-data", "calibrate", "demo", "sandbox-status"}:
+    if args.command in {"prepare-data", "prepare-banking77", "calibrate", "demo", "sandbox-status"}:
         from algofactory.datasets import generate_dataset
         from algofactory.execution.docker import docker_ready, locate_docker
         from algofactory.llm.workflow_mock import MockWorkflowProvider
@@ -94,14 +107,31 @@ def run(args):
 
         if args.command == "sandbox-status":
             return docker_ready(locate_docker())
+        if args.command == "prepare-banking77":
+            from algofactory.banking import import_banking77
+
+            return import_banking77(args.output_dir, args.raw_dir)
         if args.command == "prepare-data":
             return generate_dataset(args.output_dir, args.rows, args.seed)
         if args.command == "calibrate":
             return calibrate(args.dataset_dir, args.dataset_dir / "protocol.json")
+        from algofactory.datasets import verify_dataset
+        from algofactory.tasks import PROFILES, profile_for
+
+        profile = PROFILES[args.task]
+        args.dataset_dir = args.dataset_dir or Path(
+            "runtime/banking77-data" if args.task == "banking77" else "runtime/phase2-data"
+        )
+        args.knowledge_document = args.knowledge_document or Path("data") / profile.document
+        args.request = args.request or profile.request
         if args.fault and args.mode != "mock":
             raise ValueError("Explicit fault fixtures are only available in Mock mode")
         if not args.dataset_dir.exists():
+            if args.task == "banking77":
+                raise ValueError("Run prepare-banking77 first")
             generate_dataset(args.dataset_dir)
+        if profile_for(verify_dataset(args.dataset_dir)) != profile:
+            raise ValueError("Task selection does not match dataset profile")
         if args.output_dir is None:
             import uuid
 

@@ -1,5 +1,6 @@
 """Build an approved dependency image from a minimal context, without any project secrets."""
 
+import argparse
 import json
 import shutil
 import subprocess
@@ -13,14 +14,21 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--base-image",
+        default="python:3.11-slim",
+        help="Use the recorded python@sha256 digest to reproduce the base image",
+    )
+    args = parser.parse_args()
     binary = locate_docker()
     environment = docker_ready(binary)
     subprocess.run(
-        [binary, "pull", "python:3.11-slim"], check=True, timeout=900, env=docker_env(binary)
+        [binary, "pull", args.base_image], check=True, timeout=900, env=docker_env(binary)
     )
     base = json.loads(
         subprocess.check_output(
-            [binary, "image", "inspect", "python:3.11-slim"], text=True, env=docker_env(binary)
+            [binary, "image", "inspect", args.base_image], text=True, env=docker_env(binary)
         )
     )[0]
     base_digest = base["RepoDigests"][0]

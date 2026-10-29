@@ -68,7 +68,15 @@ def main():
         command(["-m", "ruff", "check", "src", "tests", "scripts"])
         command(["-m", "ruff", "format", "--check", "src", "tests", "scripts"])
         command(["scripts/check_scaffold.py"])
-        command(["-m", "pytest", "-q", f"--junitxml={out / 'tests.xml'}"])
+        command(
+            [
+                "-m",
+                "pytest",
+                "-q",
+                "--ignore=tests/test_phase25.py",
+                f"--junitxml={out / 'tests.xml'}",
+            ]
+        )
         suite = ET.parse(out / "tests.xml").getroot().find("testsuite")
         summary["tests"] = {
             key: int(suite.attrib[key]) for key in ("tests", "failures", "errors", "skipped")
