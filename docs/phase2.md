@@ -1,5 +1,7 @@
 # Phase 2：Mock LLM 单候选流程验证
 
+本页保留客户流失案例的历史实现与验收说明。2026-10-29 已确认 BANKING77 为新主案例，客户流失转为轻量兼容性测试；新适配尚未实现，后续先执行 Phase 2.5，再进入 Phase 3，见 [ADR-001](decisions/0001-banking77-main-case.md)。下述命令当前仍运行客户流失，不运行 BANKING77。
+
 本阶段用固定 Mock 响应验证需求到结果回写的完整路径。算法代码在真实 Docker 容器里训练、预测，指标由主机上的独立评分器计算。无需提供 API 文件或密钥。真实服务质量、任意需求理解、多候选选择和修复效果不在本阶段证据范围内。
 
 ## 运行
@@ -63,7 +65,7 @@ uv sync --frozen --python 3.11
 
 目标目录必须为空。verification.json 汇总命令、测试数量、时间、提交号、代码散列、环境和产物散列。标准留档目录为 examples/phase2；迁移项目路径后，旧报告中的绝对运行路径仅为历史证据，复现应使用新目录。
 
-当前 APIProvider 已有 `demo --mode api` 入口，并与 Mock 共用编排器。真实调用需要按 phase1.md 配置端点、模型、密钥、价格和预算，再独立验收；不自动回退到 Mock。Phase 3 下一步为缺少 predict_proba 等失败后的有界修复、版本追踪及至少两个候选的同协议比较。G1–G5 的完整范围仍未通过。
+当前 APIProvider 已有 `demo --mode api` 入口，并与 Mock 共用编排器。真实调用需要按 phase1.md 配置端点、模型、密钥、价格和预算，再独立验收；不自动回退到 Mock。后续先完成 Phase 2.5 主案例适配与兼容性，再于 Phase 3 在 BANKING77 上实现有界修复、版本追踪及至少两个候选的同协议比较。G1–G5 的完整范围仍未通过。
 
 
 阶段验收已通过：101 项测试、零跳过；独立测试 F1 0.666667、ROC-AUC 0.816260、Precision 0.760870、Recall 0.593220，均达到冻结门槛。参见 [正常报告](../examples/phase2/normal/report.md)、[故障报告](../examples/phase2/missing-interface/report.md) 和 [完整证据](../examples/phase2/verification.json)。

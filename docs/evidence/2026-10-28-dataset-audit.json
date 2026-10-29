@@ -1,0 +1,111 @@
+{
+  "date": "2026-10-28",
+  "scope": "structural data quality audit only; no models trained or task change",
+  "downloads": {
+    "iranian-churn.zip": {
+      "url": "https://archive.ics.uci.edu/static/public/563/iranian%2Bchurn%2Bdataset.zip",
+      "bytes": 41943,
+      "sha256": "696c3a1812267980751f30d19193a1b430ac4ad76172bb089e664c96813ead66",
+      "status": "downloaded"
+    },
+    "steel-faults.zip": {
+      "url": "https://archive.ics.uci.edu/static/public/198/steel%2Bplates%2Bfaults.zip",
+      "bytes": 100890,
+      "sha256": "cb8eb9859198b63f053e443513036b401746fa517ef58bd17c846c6741c93919",
+      "status": "downloaded"
+    },
+    "banking-train.csv": {
+      "url": "https://raw.githubusercontent.com/PolyAI-LDN/task-specific-datasets/master/banking_data/train.csv",
+      "bytes": 839073,
+      "sha256": "b06e26ac675513959a63135f11b94ea7786ed02da65db93a5650d8838cbc664b",
+      "status": "downloaded"
+    },
+    "banking-test.csv": {
+      "url": "https://raw.githubusercontent.com/PolyAI-LDN/task-specific-datasets/master/banking_data/test.csv",
+      "bytes": 239961,
+      "sha256": "d12d6e3bc4c3103966ae786dc435913c0c563dfa328f5a3646d0e62cfeeb474d",
+      "status": "downloaded"
+    },
+    "banking-LICENSE.txt": {
+      "url": "https://raw.githubusercontent.com/PolyAI-LDN/task-specific-datasets/master/LICENSE",
+      "bytes": 18650,
+      "sha256": "7e7170e3cebf88a9f60c7b8421418323c09304da1af4d5e90f4da1dc1c8a2661",
+      "status": "downloaded"
+    }
+  },
+  "iranian_churn": {
+    "shape": [
+      3150,
+      14
+    ],
+    "columns": [
+      "Call  Failure",
+      "Complains",
+      "Subscription  Length",
+      "Charge  Amount",
+      "Seconds of Use",
+      "Frequency of use",
+      "Frequency of SMS",
+      "Distinct Called Numbers",
+      "Age Group",
+      "Tariff Plan",
+      "Status",
+      "Age",
+      "Customer Value",
+      "Churn"
+    ],
+    "missing_cells": 0,
+    "exact_duplicate_rows_excess": 300,
+    "duplicate_feature_rows_excess": 314,
+    "conflicting_feature_groups": 14,
+    "labels": {
+      "0": 2655,
+      "1": 495
+    },
+    "status_label_crosstab": {
+      "0": {
+        "1": 2243,
+        "2": 412
+      },
+      "1": {
+        "1": 125,
+        "2": 370
+      }
+    }
+  },
+  "banking77": {
+    "train_rows": 10003,
+    "test_rows": 3080,
+    "train_classes": 77,
+    "test_classes": 77,
+    "missing_cells": 0,
+    "blank_texts": 0,
+    "train_class_min": 35,
+    "train_class_max": 187,
+    "test_class_min": 40,
+    "test_class_max": 40,
+    "train_duplicate_texts_excess": 4,
+    "test_duplicate_texts_excess": 1,
+    "normalized_train_test_overlap": 7,
+    "normalized_texts_with_conflicting_labels": 0
+  },
+  "steel_faults": {
+    "shape": [
+      1941,
+      34
+    ],
+    "missing_cells": 0,
+    "exact_duplicate_rows_excess": 0,
+    "duplicate_feature_rows_excess": 0,
+    "invalid_one_hot_rows": 0,
+    "label_counts": {
+      "27": 158,
+      "28": 190,
+      "29": 391,
+      "30": 72,
+      "31": 55,
+      "32": 402,
+      "33": 673
+    }
+  }
+}

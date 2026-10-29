@@ -1,11 +1,14 @@
 # AlgoFactory
 
-面向客户流失预测的 AI Agent 算法能力工厂原型。目标是能力抽取、代码复刻、独立验证、修复与经验回写。当前已实现 Phase 2 单候选闭环：需求解析、知识检索、代码生成、Docker 隔离执行、独立评分及结果回写。Mock 使用固定响应，训练与评分真实执行。真实 API、自动修复、多候选比较和 Streamlit 仍待后续阶段。
+AI Agent 算法能力工厂原型，目标是能力抽取、代码复刻、独立验证、修复与经验回写。2026-10-29 确定主案例为“基于 BANKING77 的客服意图分类算法生成与验证”，已有客户流失案例保留为轻量兼容性测试，详见 [ADR-001](docs/decisions/0001-banking77-main-case.md)。
+
+当前可运行的实现仍是 Phase 2 客户流失单候选 Mock 闭环，训练、Docker 执行、评分和回写均真实执行。BANKING77 文本/多分类与改造后的兼容检查尚待 Phase 2.5 实现，再进入 Phase 3 修复和候选比较。真实 API、经验复用和 Streamlit 仍待后续验收。
 
 ## 文档入口
 
 - [题目原文](docs/source/exam-original.txt) 与 [用户方案原始附件](docs/source/discussion-plan-original.txt)
 - [总体实施计划与问题定义](docs/implementation-plan.md)
+- [主案例调整决策与 Phase 2.5 范围](docs/decisions/0001-banking77-main-case.md)
 - [需求追踪矩阵](docs/requirements-matrix.md) 与 [CSV](docs/requirements-matrix.csv)
 - [架构、图谱及数据契约](docs/architecture.md)
 - [验收 Gate 与演示协议](docs/acceptance-gates.md)
@@ -38,7 +41,9 @@ python3.11 -m venv .venv
 
 requirements.txt 是运行依赖，requirements-dev.txt 另含测试与检查工具；两者从 uv.lock 导出，带版本和文件散列。构建工具由 pyproject.toml 声明。
 
-## Mock 算法闭环
+## 当前可运行的 Phase 2 客户流失闭环
+
+以下命令仍运行客户流失历史基线；BANKING77 入口尚未实现。该基线将在 Phase 2.5 中适配为共用新框架的兼容性测试。
 
 先安装并启动 Docker Desktop，然后在项目根目录运行：
 
@@ -93,11 +98,11 @@ ALGOFACTORY_DOCKER_TESTS=1 .venv/bin/python -m pytest -q
 3. 图谱 Schema 和示例：类型化 Schema、持久知识与可重载导出。
 4. Agent 工作流：单候选流程及角色调用轨迹；Review 当前由确定性程序判断。
 5. 环境与运行：Python 3.11、锁定依赖、Docker、CLI 和 API 配置指南。
-6. 示例数据和任务：业务文档及确定性合成 CSV；正常与故障案例。
+6. 示例数据和任务：已有客户流失文档及合成 CSV；BANKING77 来源和初检已归档，正式导入与运行待实现。
 7. 生成代码示例：见 examples/phase2/normal/candidate.py。
 8. 验证结果与报告：四维结果、验证/测试指标及失败报告见 examples/phase2。
 9. 挑战和解决方案：来源追踪、事务失败、隔离运行、测试标签隔离及冻结门槛。
-10. 扩展方向：Phase 3 加入有界修复与候选比较，之后实现经验复用、界面与插件。
+10. 扩展方向：先完成 Phase 2.5 的 BANKING77 适配与客户流失兼容检查，再在主案例上推进 Phase 3 修复比较、经验复用、界面与插件。
 
 ## 工作区与版本管理
 
