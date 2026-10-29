@@ -193,3 +193,28 @@ def test_regression_shared_workflow_real_docker(tmp_path):
     predictions = json.loads((tmp_path / "run/validation-execution/predictions.json").read_text())
     assert any(v != int(v) for v in predictions["predictions"])
     assert predictions["probabilities"] == []
+
+
+def test_design_explanation_requires_accepted_plan_and_cites_real_ids(tmp_path):
+    from algofactory.reporting import design_explanation
+
+    report = {
+        "workflow_id": "workflow:measured",
+        "status": "validated",
+        "validation": {"run_id": "run:measured", "final_test_evaluated": False},
+    }
+    assert design_explanation(tmp_path, report) is None
+    write_json(tmp_path / "task.json", {"target": "value", "task_type": "regression"})
+    write_json(
+        tmp_path / "plan.json",
+        {"algorithm_id": "source:one:ridge", "evidence_ids": ["source:one:ridge"]},
+    )
+    explanation = design_explanation(tmp_path, report)
+    assert explanation["evidence_ids"] == ["source:one:ridge"]
+    assert explanation["validation_run_id"] == "run:measured"
+    assert not explanation["final_test_evaluated"]
+    assert "预先指定的单候选" in explanation["selection_basis"]
+    write_json(
+        tmp_path / "plan.json", {"algorithm_id": "invented", "evidence_ids": ["source:one:ridge"]}
+    )
+    assert design_explanation(tmp_path, report) is None

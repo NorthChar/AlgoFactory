@@ -1,11 +1,39 @@
 """Human-readable and machine-readable reports, including explicit failure evidence."""
 
+import json
 from pathlib import Path
 
 from algofactory.datasets import write_json
 
 
+def design_explanation(directory: Path, report: dict):
+    """Explain only accepted task/plan facts, with immutable evidence IDs; no new LLM call."""
+    try:
+        task = json.loads((directory / "task.json").read_text())
+        plan = json.loads((directory / "plan.json").read_text())
+        evidence = plan["evidence_ids"]
+        if plan["algorithm_id"] not in evidence:
+            return None
+        validation = report.get("validation", {})
+        return {
+            "text": f"任务要求预测 {task['target']}，类型为 {task['task_type']}。方案依据适用知识选择算法实体 {plan['algorithm_id']}，并要求预处理只在训练集拟合。候选是否通过由独立验证器依据冻结门槛决定，不由模型自行评分。此次运行状态为 {report['status']}。",
+            "algorithm_id": plan["algorithm_id"],
+            "evidence_ids": evidence,
+            "workflow_id": report["workflow_id"],
+            "validation_run_id": validation.get("run_id"),
+            "selection_basis": "同一协议下按验证集排名选定版本"
+            if report.get("selected_algorithm")
+            else "预先指定的单候选；不声称是所有算法中最优",
+            "final_test_evaluated": validation.get("final_test_evaluated", False),
+        }
+    except (OSError, ValueError, KeyError, TypeError):
+        return None
+
+
 def save_report(directory: Path, report: dict):
+    explanation = design_explanation(directory, report)
+    if explanation:
+        report["design_explanation"] = explanation
     write_json(directory / "report.json", report)
     result = report.get("validation") or {}
     lines = [
@@ -128,4 +156,17 @@ def save_report(directory: Path, report: dict):
                 lines.append(
                     f"- {item['experience_id']}：{item['decision']}；{item['reason'].replace(chr(10), ' ')}"
                 )
+    if explanation:
+        lines += [
+            "",
+            "## 设计依据与解释",
+            "",
+            explanation["text"],
+            "",
+            explanation["selection_basis"],
+            "",
+            "知识引用：" + ", ".join(explanation["evidence_ids"]),
+            "验证记录：" + (explanation["validation_run_id"] or "尚未产生"),
+            "",
+        ]
     (directory / "report.md").write_text("\n".join(lines), encoding="utf-8")

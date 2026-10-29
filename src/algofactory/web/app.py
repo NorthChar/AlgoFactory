@@ -88,6 +88,15 @@ def show_report(relative):
             hide_index=True,
             width="stretch",
         )
+    if report.get("design_explanation"):
+        with st.expander("算法设计依据"):
+            explanation = report["design_explanation"]
+            st.write(explanation["text"])
+            st.caption(explanation["selection_basis"])
+            st.json(
+                {k: v for k, v in explanation.items() if k not in {"text", "selection_basis"}},
+                expanded=False,
+            )
     if report.get("attempts"):
         st.write("候选与修复版本")
         st.dataframe(report["attempts"], hide_index=True, width="stretch")
