@@ -14,6 +14,7 @@ from algofactory.knowledge.store import KnowledgeStore, canonical
 from algofactory.orchestrator import Trace, run_workflow
 from algofactory.planning import SearchPolicy, diagnose, rank_candidates
 from algofactory.reporting import save_report
+from algofactory.resume import validate_resume
 from algofactory.schemas.contracts import (
     AgentDecision,
     AlgorithmPlan,
@@ -42,6 +43,7 @@ def run_search(
     request: str,
     provider,
     policy: SearchPolicy | None = None,
+    resume_failures: dict[str, Path] | None = None,
 ):
     policy = policy or SearchPolicy()
     if directory.exists() and any(directory.iterdir()):
@@ -67,6 +69,7 @@ def run_search(
     }
     calls_at_start = provider.calls
     decisions = []
+    knowledge_cache: set[str] = set()
     manifest = task = plan = selected = protocol = None
 
     def decision(action, reason, evidence):
@@ -89,6 +92,13 @@ def run_search(
         if profile_for(manifest) != BANKING77:
             raise WorkflowFailure("unsupported_search_task")
         protocol = calibrate(dataset_dir, dataset_dir / "protocol.json")
+        resumed = {}
+        for algorithm, origin in (resume_failures or {}).items():
+            if algorithm not in policy.algorithms or policy.max_repairs < 1:
+                raise WorkflowFailure("invalid_resume_policy")
+            resumed[algorithm] = validate_resume(origin, db_path, algorithm, manifest, protocol)
+            if resumed[algorithm]["provider_mode"] != provider.mode:
+                raise WorkflowFailure("resume_provider_mismatch")
         report.update(
             thresholds=protocol["thresholds"],
             data_fingerprint=manifest["data_fingerprint"],
@@ -120,25 +130,46 @@ def run_search(
                 ):
                     raise WorkflowFailure("search_inputs_changed")
                 attempt_dir = directory / "candidates" / algorithm / f"attempt-{attempt}"
+                historical = attempt == 0 and algorithm in resumed
                 decision(
-                    repair.diagnosis["action"] if repair else "GENERATE",
+                    "REPAIR"
+                    if historical
+                    else repair.diagnosis["action"]
+                    if repair
+                    else "GENERATE",
                     repair.diagnosis["reason"] if repair else "基于适用知识生成候选：" + algorithm,
                     [repair.parent_id] if repair else [workflow_id],
                 )
-                child = run_workflow(
-                    directory=attempt_dir,
-                    dataset_dir=dataset_dir,
-                    db_path=db_path,
-                    approval_path=approval_path,
-                    requirements_path=requirements_path,
-                    knowledge_document=knowledge_document,
-                    request=request,
-                    provider=provider,
-                    validation_only=True,
-                    algorithm=algorithm,
-                    repair=repair,
-                    repair_limit=policy.max_repairs,
-                )
+                if historical:
+                    origin = resume_failures[algorithm]
+                    shutil.copytree(origin, attempt_dir)
+                    child = resumed[algorithm]
+                    write_json(
+                        attempt_dir / "resume-origin.json",
+                        {
+                            "directory": str(origin.resolve()),
+                            "report_sha256": sha256_file(origin / "report.json"),
+                            "workflow_id": child["workflow_id"],
+                            "reexecuted": False,
+                            "new_provider_calls": 0,
+                        },
+                    )
+                else:
+                    child = run_workflow(
+                        directory=attempt_dir,
+                        dataset_dir=dataset_dir,
+                        db_path=db_path,
+                        approval_path=approval_path,
+                        requirements_path=requirements_path,
+                        knowledge_document=knowledge_document,
+                        request=request,
+                        provider=provider,
+                        validation_only=True,
+                        algorithm=algorithm,
+                        repair=repair,
+                        repair_limit=policy.max_repairs,
+                        knowledge_cache=knowledge_cache,
+                    )
                 result = child.get("validation", {})
                 entry = {
                     "algorithm": algorithm,
@@ -155,6 +186,7 @@ def run_search(
                     "config_hash": result.get("config_hash"),
                     "split_id": result.get("split_id"),
                     "test_attempted": child["test_attempted"],
+                    "historical_failure": historical,
                 }
                 report["attempts"].append(entry)
                 write_json(directory / "attempts.json", report["attempts"])
@@ -347,6 +379,8 @@ def run_search(
     write_json(
         directory / "provider-audit.json", [item.model_dump(mode="json") for item in provider.audit]
     )
+    if hasattr(provider, "usage_summary"):
+        write_json(directory / "provider-usage.json", provider.usage_summary())
     report["artifacts_sha256"] = {
         str(p.relative_to(directory)): sha256_file(p)
         for p in sorted(directory.rglob("*"))

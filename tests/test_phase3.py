@@ -246,7 +246,7 @@ def test_final_failure_never_repairs_or_switches(simulated, tmp_path, failure):
     assert report["error_category"] == (
         "final_test_threshold_failed" if failure == "final_fails" else "execution_timeout"
     )
-    assert len(report["attempts"]) == 2 and provider.calls == 8
+    assert len(report["attempts"]) == 2 and provider.calls == 7
     assert sum(stage == "test" for stage, path in state["executions"]) == 1
     assert len(report["ranking"]) == 2 and report["selected_algorithm"] == "text_logistic"
 
@@ -371,3 +371,79 @@ def test_rejected_plan_keeps_proposal_and_diagnostics_before_execution(simulated
     with KnowledgeStore(out.parent / "knowledge.sqlite") as store:
         record = json.loads((child / "report.json").read_text())
         assert store.get_workflow(record["workflow_id"])["error_details"] == details
+
+
+def test_resume_real_shape_failure_preserves_lineage_and_shared_budget(simulated, tmp_path):
+    dataset, state = simulated
+    failed = invoke(
+        tmp_path / "original",
+        dataset,
+        MockWorkflowProvider("repairable_interface", max_calls=4),
+        SearchPolicy(algorithms=["text_logistic"], max_repairs=0),
+    )
+    origin = tmp_path / "original/candidates/text_logistic/attempt-0"
+    original_bytes = (origin / "report.json").read_bytes()
+    assert failed["status"] == "stopped"
+    provider = MockWorkflowProvider(max_calls=7)
+    result = run_search(
+        directory=tmp_path / "resumed",
+        dataset_dir=dataset,
+        db_path=tmp_path / "knowledge.sqlite",
+        approval_path=ROOT / "runtime/docker-image.json",
+        requirements_path=ROOT / "requirements.txt",
+        knowledge_document=ROOT / "data/banking77-phase3.txt",
+        request=BANKING77.request,
+        provider=provider,
+        resume_failures={"text_logistic": origin},
+    )
+    assert result["status"] == "accepted", result
+    first, repaired, other = result["attempts"]
+    assert first["historical_failure"] and not repaired["historical_failure"]
+    assert repaired["parent_id"] == first["implementation_id"]
+    assert provider.calls == 7  # 4 for repair, 3 for the other candidate; one extraction.
+    assert sum(a.operation == "extract_knowledge" for a in provider.audit) == 1
+    assert sum(a.operation == "repair_code" for a in provider.audit) == 1
+    assert (origin / "report.json").read_bytes() == original_bytes
+    assert len(list((tmp_path / "resumed").rglob("test-access.json"))) == 1
+    assert len(state["executions"]) == 4  # Original failure, two new validations, winner test.
+
+
+@pytest.mark.parametrize("tamper", ["code", "test_access", "split", "artifact", "database"])
+def test_resume_rejects_changed_or_tested_evidence_before_calls(simulated, tmp_path, tamper):
+    dataset, _ = simulated
+    invoke(
+        tmp_path / "original",
+        dataset,
+        MockWorkflowProvider("repairable_interface", max_calls=4),
+        SearchPolicy(algorithms=["text_logistic"], max_repairs=0),
+    )
+    origin = tmp_path / "original/candidates/text_logistic/attempt-0"
+    if tamper == "code":
+        with (origin / "candidate.py").open("a") as stream:
+            stream.write("\n# changed")
+    elif tamper == "test_access":
+        write_json(origin / "test-access.json", {})
+    elif tamper == "split":
+        report = json.loads((origin / "report.json").read_text())
+        report["split_id"] = "split:other"
+        write_json(origin / "report.json", report)
+    elif tamper == "artifact":
+        (origin / "trace.json").write_text("[]")
+    else:
+        with KnowledgeStore(tmp_path / "knowledge.sqlite") as store:
+            store.connection.execute("DELETE FROM workflow_runs")
+            store.connection.commit()
+    provider = MockWorkflowProvider(max_calls=20)
+    report = run_search(
+        directory=tmp_path / "resumed",
+        dataset_dir=dataset,
+        db_path=tmp_path / "knowledge.sqlite",
+        approval_path=ROOT / "runtime/docker-image.json",
+        requirements_path=ROOT / "requirements.txt",
+        knowledge_document=ROOT / "data/banking77-phase3.txt",
+        request=BANKING77.request,
+        provider=provider,
+        resume_failures={"text_logistic": origin},
+    )
+    assert report["status"] == "failed"
+    assert provider.calls == 0 and not report["test_attempted"]

@@ -27,7 +27,7 @@ from algofactory.schemas.contracts import (
     TaskSpec,
     ValidationResult,
 )
-from algofactory.schemas.knowledge import SourceDocument
+from algofactory.schemas.knowledge import KnowledgeBatch, SourceDocument
 from algofactory.tasks import compatible_evidence, profile_for
 from algofactory.validation.final_test import evaluate_final
 from algofactory.validation.protocol import calibrate
@@ -74,6 +74,7 @@ def run_workflow(
     algorithm: str | None = None,
     repair: RepairContext | None = None,
     repair_limit: int = 0,
+    knowledge_cache: set[str] | None = None,
 ) -> dict:
     if not 0 <= repair_limit <= 2 or (repair and repair.attempt > repair_limit):
         raise WorkflowFailure("repair_budget_exceeded")
@@ -176,7 +177,23 @@ def run_workflow(
             knowledge_document.name, knowledge_document.read_bytes().decode("utf-8")
         )
         with KnowledgeStore(db_path) as store:
-            ingest_document(source, provider, store)
+            cached = knowledge_cache is not None and source.id in knowledge_cache
+            if cached:
+                batch = KnowledgeBatch.model_validate(store.snapshot())
+                if source not in batch.sources:
+                    raise WorkflowFailure("cached_source_mismatch")
+            else:
+                ingest_document(source, provider, store)
+                if knowledge_cache is not None:
+                    knowledge_cache.add(source.id)
+            write_json(
+                directory / "knowledge-input.json",
+                {
+                    "source_id": source.id,
+                    "source_sha256": source.sha256,
+                    "reused_within_search": cached,
+                },
+            )
             evidence = store.search(
                 task_type=task.task_type, source_id=source.id, data_kind=profile.data_kind
             )
