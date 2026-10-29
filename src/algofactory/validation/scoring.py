@@ -13,6 +13,10 @@ def score_predictions(
 ) -> dict:
     if result.status != "ok":
         raise WorkflowFailure(result.error_category or "worker_failed")
+    if protocol["task_type"] == "regression":
+        from algofactory.regression import score_regression
+
+        return score_regression(result, labels, protocol, require_stability)
     text_task = protocol["task_type"] == "multiclass_classification"
     target = "intent" if text_task else "churn"
     classes = protocol["class_labels"] if text_task else [0, 1]

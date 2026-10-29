@@ -20,6 +20,11 @@ def checked_features(frame, features, text_features):
 
 
 def outputs(pipeline, data, classes):
+    if not classes:
+        predictions = np.asarray(pipeline.predict(data), dtype=float)
+        if predictions.shape != (len(data),) or not np.isfinite(predictions).all():
+            raise ValueError("invalid_regression_predictions")
+        return predictions, np.empty((0,))
     predictions = np.asarray(pipeline.predict(data))
     probabilities = np.asarray(pipeline.predict_proba(data))
     if probabilities.shape != (len(data), len(classes)) or not np.array_equal(
@@ -47,14 +52,20 @@ def evaluate(factory, train, evaluation, config):
     text_features = config.get("text_features", [])
     features = config["numeric_features"] + config["categorical_features"] + text_features
     target, classes = config.get("target", "churn"), config.get("class_labels", [0, 1])
+    regression = config.get("task_type") == "regression"
     multiclass = config.get("task_type") == "multiclass_classification"
     X = checked_features(train, features, text_features)
     E = checked_features(evaluation, features, text_features)
     y = train[target]
-    if set(y.unique()) != set(classes) or target in evaluation.columns or "row_id" in features:
+    if (
+        (not regression and set(y.unique()) != set(classes))
+        or (regression and (classes or not np.isfinite(y).all()))
+        or target in evaluation.columns
+        or "row_id" in features
+    ):
         return {"status": "failed", "error_category": "worker_input_contract_mismatch"}
     pipeline = factory(config)
-    for method in ("fit", "predict", "predict_proba"):
+    for method in ("fit", "predict") if regression else ("fit", "predict", "predict_proba"):
         if not callable(getattr(pipeline, method, None)):
             return {"status": "failed", "error_category": "interface_missing_" + method}
     pipeline.fit(X, y)
@@ -102,21 +113,22 @@ def evaluate(factory, train, evaluation, config):
             except Exception:
                 invalid_rejected = True
             unseen = E.head(3).copy()
-            unseen[config["categorical_features"][0]] = "unseen-contract-fixture"
+            if config["categorical_features"]:
+                unseen[config["categorical_features"][0]] = "unseen-contract-fixture"
             try:
                 outputs(pipeline, unseen, classes)
                 unseen_handled = True
             except Exception:
                 pass
-    if not multiclass:
+    if not multiclass and not regression:
         probabilities, repeat_probabilities = probabilities[:, 1], repeat_probabilities[:, 1]
     return {
         "status": "ok",
         "classes": classes,
         "row_ids": evaluation.row_id.astype(int).tolist(),
-        "predictions": predictions.astype(int).tolist(),
+        "predictions": predictions.astype(float if regression else int).tolist(),
         "probabilities": probabilities.tolist(),
-        "repeat_predictions": repeat_predictions.astype(int).tolist(),
+        "repeat_predictions": repeat_predictions.astype(float if regression else int).tolist(),
         "repeat_probabilities": repeat_probabilities.tolist(),
         "interface_checked": True,
         "missing_column_rejected": missing_rejected,

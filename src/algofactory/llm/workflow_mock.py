@@ -10,7 +10,9 @@ from algofactory.tasks import BANKING77_REUSE_REQUEST, PROFILES
 class MockWorkflowProvider(Provider):
     mode = "mock"
 
-    def __init__(self, fault: str | None = None, *, max_calls: int = 8):
+    def __init__(
+        self, fault: str | None = None, *, max_calls: int = 8, plugins=None, template_overrides=None
+    ):
         super().__init__(max_calls=max_calls, max_retries=1)
         if fault not in {
             None,
@@ -23,6 +25,12 @@ class MockWorkflowProvider(Provider):
             "text_adapter",
         }:
             raise ValueError("Unknown explicit fault fixture")
+        from algofactory.plugins import default_registry
+
+        self.plugins = plugins if plugins is not None else default_registry()
+        self.template_overrides = dict(template_overrides or {})
+        for task_name, template_name in self.template_overrides.items():
+            self.plugins.template(template_name, PROFILES[task_name].task_type)
         self.fault = fault
 
     def _raw(self, request: ProviderRequest, schema: dict) -> str:
@@ -39,6 +47,11 @@ class MockWorkflowProvider(Provider):
             fixtures.update(
                 json.loads(
                     files("algofactory.llm").joinpath("fixtures/banking77-phase3.json").read_text()
+                )
+            )
+            fixtures.update(
+                json.loads(
+                    files("algofactory.llm").joinpath("fixtures/regression.json").read_text()
                 )
             )
             if data["sha256"] not in fixtures:
@@ -88,7 +101,8 @@ class MockWorkflowProvider(Provider):
                 if data.get("algorithm_key")
                 else profile.template
             )
-            code = files("algofactory.generation").joinpath("templates/" + template).read_text()
+            template = self.template_overrides.get(profile.name, template)
+            code = self.plugins.template(template, profile.task_type)
             repair = data.get("repair")
             if (
                 repair

@@ -61,6 +61,10 @@ def calibrate(directory: Path, protocol_path: Path) -> dict:
     manifest = verify_dataset(directory)
     if protocol_path.exists():
         return load_protocol(protocol_path, manifest)
+    if manifest.get("task_profile") == "regression":
+        from algofactory.regression import calibrate_regression
+
+        return calibrate_regression(directory, protocol_path, manifest)
     if manifest.get("task_profile") == "banking77":
         return calibrate_text(directory, protocol_path, manifest)
     train = pd.read_csv(directory / "train.csv")
@@ -110,6 +114,18 @@ def load_protocol(path: Path, manifest: dict) -> dict:
     for key in ("data_fingerprint", "split_id", "seed"):
         if protocol[key] != manifest[key]:
             raise WorkflowFailure("protocol_dataset_mismatch")
+    if manifest.get("task_profile") == "regression":
+        if (
+            protocol.get("task_type") != "regression"
+            or protocol.get("task_profile") != "regression"
+            or protocol.get("target") != "value"
+            or protocol.get("thresholds") != {"mae": 1.0, "rmse": 1.5}
+            or protocol.get("directions") != {"mae": "minimize", "rmse": "minimize"}
+            or protocol.get("test_used_for_calibration") is not False
+            or protocol.get("repeat_tolerance") != 1e-12
+        ):
+            raise WorkflowFailure("invalid_validation_protocol")
+        return protocol
     text_task = manifest.get("task_profile") == "banking77"
     expected_type = "multiclass_classification" if text_task else "binary_classification"
     expected_metrics = {"macro_f1"} if text_task else {"f1", "roc_auc", "precision", "recall"}

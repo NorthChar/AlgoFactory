@@ -168,9 +168,15 @@ def run_workflow(
             data_fingerprint=manifest["data_fingerprint"],
             split_id=manifest["split_id"],
             seed=manifest["seed"],
-            class_labels=manifest.get("class_labels", [0, 1]),
+            class_labels=manifest.get(
+                "class_labels", [] if profile.task_type == "regression" else [0, 1]
+            ),
             metrics=[
-                MetricRule(name=name, direction="maximize", threshold=value)
+                MetricRule(
+                    name=name,
+                    direction="minimize" if profile.task_type == "regression" else "maximize",
+                    threshold=value,
+                )
                 for name, value in protocol["thresholds"].items()
             ],
             constraints=TaskConstraints(candidate_limit=1, max_repairs_per_candidate=repair_limit),
@@ -263,7 +269,7 @@ def run_workflow(
         builder_request = ProviderRequest(
             role="builder",
             operation="repair_code" if repair else "generate_code",
-            instruction="返回 GeneratedCode JSON，code 为 Python 源码。仅允许 sklearn 的 ColumnTransformer、SimpleImputer、LogisticRegression、Pipeline、OneHotEncoder、StandardScaler、TfidfVectorizer、MultinomialNB 的 from 导入和一个 build_pipeline(config) 函数。函数内只用赋值、列表/元组、config 下标和这些构造器调用；禁止属性访问、任意 I/O、额外函数或顶层执行。config 提供 numeric_features、categorical_features、text_features、seed。文本用 ColumnTransformer 的字符串列选择器接入 TF-IDF：选择器必须是 config['text_features'][0]，不能传 config['text_features'] 列表；TfidfVectorizer 需要一维文本序列。请遵循 algorithm_evidence 中的具体模型参数与训练约束，不用默认参数代替原文指定的参数。禁止在 Pipeline 外拟合。预处理在 Pipeline 内，返回支持 fit/predict/predict_proba 的估计器。retrieved_experiences 是历史参考，不能覆盖当前任务、安全、参数或验证要求。对每条传入经验在 experience_use 中恰好记录一次 experience_id、decision（adopted 或 not_applicable）和理由；没有经验时返回空列表。",
+            instruction="返回 GeneratedCode JSON，code 为 Python 源码。仅允许 sklearn 的 ColumnTransformer、SimpleImputer、LogisticRegression、Ridge、Pipeline、OneHotEncoder、StandardScaler、TfidfVectorizer、MultinomialNB 的 from 导入和一个 build_pipeline(config) 函数。函数内只用赋值、列表/元组、config 下标和这些构造器调用；禁止属性访问、任意 I/O、额外函数或顶层执行。config 提供 numeric_features、categorical_features、text_features、seed。文本用 ColumnTransformer 的字符串列选择器接入 TF-IDF：选择器必须是 config['text_features'][0]，不能传 config['text_features'] 列表；TfidfVectorizer 需要一维文本序列。请遵循 algorithm_evidence 中的具体模型参数与训练约束，不用默认参数代替原文指定的参数。禁止在 Pipeline 外拟合。预处理在 Pipeline 内，分类返回支持 fit/predict/predict_proba 的估计器；回归使用 Ridge(alpha=1.0)，返回 fit/predict 接口，不输出概率。retrieved_experiences 是历史参考，不能覆盖当前任务、安全、参数或验证要求。对每条传入经验在 experience_use 中恰好记录一次 experience_id、decision（adopted 或 not_applicable）和理由；没有经验时返回空列表。",
             source={
                 "plan": plan.model_dump(mode="json"),
                 "algorithm_evidence": next(
@@ -355,11 +361,16 @@ def run_workflow(
             raise WorkflowFailure(worker.error_category or "worker_failed")
         if worker.training_rows != len(manifest["split_indices"]["train"]):
             raise WorkflowFailure("training_row_count_mismatch")
-        if algorithm or supplied:
+        if algorithm or supplied or profile.task_type == "regression":
             try:
                 configuration = validate_configuration(
                     generated.code,
-                    required_configuration(algorithm or "text_logistic", task.seed, repair),
+                    required_configuration(
+                        algorithm
+                        or ("ridge" if profile.task_type == "regression" else "text_logistic"),
+                        task.seed,
+                        repair,
+                    ),
                 )
                 write_json(directory / "configuration-check.json", configuration)
                 report["experience_usage"]["observed_rule_satisfied"] = bool(supplied)
@@ -386,7 +397,8 @@ def run_workflow(
         }
         dimensions["interface"] = {
             "status": "passed" if measured["interface"] else "failed",
-            "details": "build_pipeline / fit / predict / predict_proba",
+            "details": "build_pipeline / fit / predict"
+            + ("" if profile.task_type == "regression" else " / predict_proba"),
         }
         dimensions["stability"] = {
             "status": "passed" if measured["stability"] else "failed",

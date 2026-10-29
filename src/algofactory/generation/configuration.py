@@ -7,6 +7,13 @@ from algofactory.workflow_models import WorkflowFailure
 
 
 def required_configuration(algorithm, seed=42, repair=None):
+    if algorithm == "ridge":
+        return {
+            "classifier": "Ridge",
+            "classifier_parameters": {"alpha": 1.0},
+            "numeric_features": ["x1", "x2", "x3"],
+            "text_selector": "text",
+        }
     classifier = "LogisticRegression" if algorithm == "text_logistic" else "MultinomialNB"
     parameters = {"C": 4.0, "max_iter": 500, "random_state": seed}
     if classifier == "MultinomialNB":
@@ -36,6 +43,7 @@ def validate_configuration(code, required):
         "config": {
             "seed": required["classifier_parameters"].get("random_state", 42),
             "text_features": [required["text_selector"]],
+            "numeric_features": required.get("numeric_features", []),
         }
     }
 
@@ -82,11 +90,23 @@ def validate_configuration(code, required):
         transformers = argument(preprocessor, "transformers")
         assert len(transformers) == 1 and len(transformers[0]) == 3
         _, vectorizer, selector = transformers[0]
-        assert isinstance(vectorizer, Constructor) and vectorizer.name == "TfidfVectorizer"
-        if vectorizer.args or vectorizer.kwargs != required["TfidfVectorizer"]:
-            issues.append({"rule": "tfidf_parameters", "expected": required["TfidfVectorizer"]})
-        if selector != required["text_selector"]:
-            issues.append({"rule": "scalar_text_selector", "expected": required["text_selector"]})
+        if required["classifier"] == "Ridge":
+            assert isinstance(vectorizer, Constructor) and vectorizer.name == "Pipeline"
+            assert len(vectorizer.args) <= 1 and set(vectorizer.kwargs) <= {"steps"}
+            numeric_steps = argument(vectorizer, "steps")
+            assert len(numeric_steps) == 2 and all(len(step) == 2 for step in numeric_steps)
+            impute, scale = [step[1] for step in numeric_steps]
+            assert impute == Constructor("SimpleImputer", [], {"strategy": "median"})
+            assert scale == Constructor("StandardScaler", [], {})
+            assert selector == required["numeric_features"]
+        else:
+            assert isinstance(vectorizer, Constructor) and vectorizer.name == "TfidfVectorizer"
+            if vectorizer.args or vectorizer.kwargs != required["TfidfVectorizer"]:
+                issues.append({"rule": "tfidf_parameters", "expected": required["TfidfVectorizer"]})
+            if selector != required["text_selector"]:
+                issues.append(
+                    {"rule": "scalar_text_selector", "expected": required["text_selector"]}
+                )
         if (
             not isinstance(classifier, Constructor)
             or classifier.name != required["classifier"]
@@ -111,8 +131,10 @@ def validate_configuration(code, required):
     ):
         issues.append(
             {
-                "rule": "text_pipeline_structure",
-                "expected": "Pipeline(ColumnTransformer(TfidfVectorizer, scalar text column), classifier)",
+                "rule": "regression_pipeline_structure"
+                if required["classifier"] == "Ridge"
+                else "text_pipeline_structure",
+                "expected": "Pipeline(ColumnTransformer(training-only preprocessing, frozen columns), classifier)",
             }
         )
     if issues:

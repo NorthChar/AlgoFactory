@@ -96,6 +96,10 @@ def generate_dataset(directory: Path, rows: int = 1500, seed: int = 42) -> dict:
 
 def verify_dataset(directory: Path) -> dict:
     manifest = json.loads((directory / "manifest.json").read_text())
+    if manifest.get("task_profile") == "regression":
+        from algofactory.regression import verify_regression
+
+        return verify_regression(directory, manifest)
     if manifest.get("task_profile") == "banking77":
         from algofactory.banking import verify_banking77
 

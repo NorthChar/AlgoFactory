@@ -9,7 +9,7 @@ IMPORTS = {
     "sklearn.feature_extraction.text": {"TfidfVectorizer"},
     "sklearn.compose": {"ColumnTransformer"},
     "sklearn.impute": {"SimpleImputer"},
-    "sklearn.linear_model": {"LogisticRegression"},
+    "sklearn.linear_model": {"LogisticRegression", "Ridge"},
     "sklearn.pipeline": {"Pipeline"},
     "sklearn.preprocessing": {"OneHotEncoder", "StandardScaler"},
     "sklearn.svm": {"LinearSVC"},

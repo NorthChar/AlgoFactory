@@ -46,7 +46,11 @@ def save_report(directory: Path, report: dict):
     for name in (
         ("macro_f1", "accuracy")
         if report.get("task_profile") == "banking77"
-        else ("f1", "roc_auc", "precision", "recall")
+        else (
+            ("mae", "rmse")
+            if report.get("task_profile") == "regression"
+            else ("f1", "roc_auc", "precision", "recall")
+        )
     ):
         values = [
             result.get("validation_metrics", {}).get(name),
@@ -60,7 +64,11 @@ def save_report(directory: Path, report: dict):
         (
             "BANKING77 保留官方测试集；训练侧去重后按 80/20 分层划分训练/验证。词表和 IDF 仅在训练集拟合；Macro-F1 为门槛，Accuracy 仅报告。逐类指标及混淆矩阵见 validation-class-details.json / test-class-details.json。"
             if report.get("task_profile") == "banking77"
-            else "训练/验证/测试按 60/20/20 分层划分；预处理只在训练数据拟合。门槛在独立测试之前冻结。"
+            else (
+                "合成回归按固定种子 60/20/20 随机划分，预处理只在训练集拟合；MAE/RMSE 越低越好，门槛预先固定。"
+                if report.get("task_profile") == "regression"
+                else "训练/验证/测试按 60/20/20 分层划分；预处理只在训练数据拟合。门槛在独立测试之前冻结。"
+            )
         ),
         "验证通过后锁定代码与配置，独立测试只评估一次；测试失败不触发重新调参或修复。",
         "",

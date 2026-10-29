@@ -59,7 +59,20 @@ BANKING77 = TaskProfile(
     "text_logistic.txt",
     "banking77.txt",
 )
-PROFILES = {p.name: p for p in (CHURN, BANKING77)}
+REGRESSION = TaskProfile(
+    "regression",
+    "regression",
+    "tabular",
+    "value",
+    ("x1", "x2", "x3"),
+    (),
+    (),
+    "根据合成数值特征预测连续值，使用 MAE 和 RMSE 验证回归算法。",
+    "Ridge Regression",
+    "ridge.txt",
+    "synthetic_regression.txt",
+)
+PROFILES = {p.name: p for p in (CHURN, BANKING77, REGRESSION)}
 BANKING77_REUSE_REQUEST = "为另一个调用方复用相同 BANKING77 输入协议，请生成并验证可接收 DataFrame 的 77 类英文客服意图分类组件。"
 
 

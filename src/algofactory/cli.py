@@ -14,12 +14,17 @@ def parser():
         "--env-file", type=Path, help="显式读取本地配置；系统环境变量优先，不执行 shell"
     )
     commands = root.add_subparsers(dest="command", required=True)
+    commands.add_parser("plugins", help="列出已注册的可信模板和指标插件")
     commands.add_parser("status", help="显示已实现阶段")
     commands.add_parser("sandbox-status", help="检查 Docker 是否可用")
     data = commands.add_parser("prepare-data", help="生成固定种子的合成客户数据")
     data.add_argument("--output-dir", type=Path, default=Path("runtime/phase2-data"))
     data.add_argument("--rows", type=int, default=1500)
     data.add_argument("--seed", type=int, default=42)
+    regression = commands.add_parser("prepare-regression", help="生成轻量合成回归数据")
+    regression.add_argument("--output-dir", type=Path, default=Path("runtime/regression-data"))
+    regression.add_argument("--rows", type=int, default=600)
+    regression.add_argument("--seed", type=int, default=42)
     banking = commands.add_parser(
         "prepare-banking77", help="导入固定版本 BANKING77，保存来源、去重及划分证据"
     )
@@ -33,7 +38,7 @@ def parser():
     calibration.add_argument("--dataset-dir", type=Path, default=Path("runtime/phase2-data"))
     demo = commands.add_parser("demo", help="单候选生成、Docker 执行、独立评分与回写")
     demo.add_argument("--mode", choices=["mock", "api"], default="mock")
-    demo.add_argument("--task", choices=["churn", "banking77"], default="churn")
+    demo.add_argument("--task", choices=["churn", "banking77", "regression"], default="churn")
     demo.add_argument("--request")
     demo.add_argument("--output-dir", type=Path)
     demo.add_argument("--dataset-dir", type=Path)
@@ -136,8 +141,8 @@ def parser():
 def run(args):
     if args.command == "status":
         return {
-            "phase": 4,
-            "tasks": ["banking77", "churn"],
+            "phase": 5,
+            "tasks": ["banking77", "churn", "regression"],
             "status": "single_candidate_workflow",
             "core_workflow": "implemented_docker_required",
             "live_api": "phase3_evidence_available; current credentials and environment required",
@@ -152,6 +157,14 @@ def run(args):
     from algofactory.schemas import contracts
     from algofactory.schemas.knowledge import Extraction, KnowledgeBatch, SourceDocument
 
+    if args.command == "plugins":
+        from algofactory.plugins import default_registry
+
+        return default_registry().describe()
+    if args.command == "prepare-regression":
+        from algofactory.regression import generate_regression
+
+        return generate_regression(args.output_dir, args.rows, args.seed)
     if args.command == "learn-experience":
         from algofactory.experience_reuse import synthesize_repair
 
@@ -197,7 +210,12 @@ def run(args):
 
         profile = PROFILES[args.task]
         args.dataset_dir = args.dataset_dir or Path(
-            "runtime/banking77-data" if args.task == "banking77" else "runtime/phase2-data"
+            "runtime/"
+            + {
+                "banking77": "banking77-data",
+                "churn": "phase2-data",
+                "regression": "regression-data",
+            }[args.task]
         )
         if args.compare and args.task != "banking77":
             raise ValueError(
@@ -221,7 +239,12 @@ def run(args):
         if not args.dataset_dir.exists():
             if args.task == "banking77":
                 raise ValueError("Run prepare-banking77 first")
-            generate_dataset(args.dataset_dir)
+            if args.task == "regression":
+                from algofactory.regression import generate_regression
+
+                generate_regression(args.dataset_dir)
+            else:
+                generate_dataset(args.dataset_dir)
         if profile_for(verify_dataset(args.dataset_dir)) != profile:
             raise ValueError("Task selection does not match dataset profile")
         if args.output_dir is None:

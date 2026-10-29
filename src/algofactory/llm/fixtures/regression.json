@@ -1,0 +1,159 @@
+{
+  "b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f": {
+    "description": "Explicit hand-authored Mock fixture; not live LLM evidence.",
+    "faults": [],
+    "response": {
+      "schema_version": 1,
+      "source_id": "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f",
+      "entities": [
+        {
+          "schema_version": 1,
+          "id": "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f:task:regression",
+          "source_id": "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f",
+          "source_span": {
+            "start": 0,
+            "end": 378,
+            "quote": "AlgoFactory 合成回归扩展示例\n本材料是项目自编的公开演示，不含真实业务数据。任务为有监督表格回归：x1、x2、x3 是数值特征，value 是连续目标，row_id 和目标不得作为特征。输出连续预测值，不提供分类概率。训练、验证、测试按固定种子独立划分，预处理只在训练集拟合。\n回归能力使用 Ridge Regression：SimpleImputer(strategy=median)、StandardScaler、Ridge(alpha=1.0) 放入 Pipeline，通过 ColumnTransformer 选择数值列。依赖为 scikit-learn。指标是 MAE 和 RMSE，越低越好；冻结门槛由主机协议提供，不使用测试集调参。生成代码仅在禁网、非 root Docker 中执行，120 秒、2 CPU、4096 MiB。\n"
+          },
+          "type": "Task",
+          "name": "合成回归",
+          "task_type": "regression",
+          "constraints": {
+            "schema_version": 1,
+            "candidate_limit": 2,
+            "max_repairs_per_candidate": 2,
+            "allowed_algorithms": [],
+            "execution": {
+              "schema_version": 1,
+              "backend": "docker",
+              "timeout_seconds": 120,
+              "cpus": 2,
+              "memory_mib": 4096,
+              "network": false,
+              "fail_closed": true
+            }
+          }
+        },
+        {
+          "schema_version": 1,
+          "id": "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f:capability:regression",
+          "source_id": "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f",
+          "source_span": {
+            "start": 0,
+            "end": 378,
+            "quote": "AlgoFactory 合成回归扩展示例\n本材料是项目自编的公开演示，不含真实业务数据。任务为有监督表格回归：x1、x2、x3 是数值特征，value 是连续目标，row_id 和目标不得作为特征。输出连续预测值，不提供分类概率。训练、验证、测试按固定种子独立划分，预处理只在训练集拟合。\n回归能力使用 Ridge Regression：SimpleImputer(strategy=median)、StandardScaler、Ridge(alpha=1.0) 放入 Pipeline，通过 ColumnTransformer 选择数值列。依赖为 scikit-learn。指标是 MAE 和 RMSE，越低越好；冻结门槛由主机协议提供，不使用测试集调参。生成代码仅在禁网、非 root Docker 中执行，120 秒、2 CPU、4096 MiB。\n"
+          },
+          "type": "Capability",
+          "name": "合成连续值预测",
+          "description": "从 x1 x2 x3 预测连续目标 value",
+          "inputs": [
+            "x1",
+            "x2",
+            "x3",
+            "训练标签 value"
+          ],
+          "outputs": [
+            "连续值预测"
+          ],
+          "conditions": {
+            "schema_version": 1,
+            "task_types": [
+              "regression"
+            ],
+            "data_kind": "tabular",
+            "requirements": [
+              "数值特征",
+              "仅在训练集拟合预处理"
+            ]
+          },
+          "metrics": [
+            "f1",
+            "roc_auc",
+            "precision",
+            "recall"
+          ]
+        },
+        {
+          "schema_version": 1,
+          "id": "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f:algorithm:logistic_regression",
+          "source_id": "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f",
+          "source_span": {
+            "start": 0,
+            "end": 378,
+            "quote": "AlgoFactory 合成回归扩展示例\n本材料是项目自编的公开演示，不含真实业务数据。任务为有监督表格回归：x1、x2、x3 是数值特征，value 是连续目标，row_id 和目标不得作为特征。输出连续预测值，不提供分类概率。训练、验证、测试按固定种子独立划分，预处理只在训练集拟合。\n回归能力使用 Ridge Regression：SimpleImputer(strategy=median)、StandardScaler、Ridge(alpha=1.0) 放入 Pipeline，通过 ColumnTransformer 选择数值列。依赖为 scikit-learn。指标是 MAE 和 RMSE，越低越好；冻结门槛由主机协议提供，不使用测试集调参。生成代码仅在禁网、非 root Docker 中执行，120 秒、2 CPU、4096 MiB。\n"
+          },
+          "type": "Algorithm",
+          "name": "Ridge Regression",
+          "family": "linear_regression",
+          "applicability": {
+            "schema_version": 1,
+            "task_types": [
+              "regression"
+            ],
+            "data_kind": "tabular",
+            "requirements": [
+              "数值特征",
+              "连续标签",
+              "仅训练拟合"
+            ]
+          }
+        },
+        {
+          "schema_version": 1,
+          "id": "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f:dependency:sklearn",
+          "source_id": "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f",
+          "source_span": {
+            "start": 0,
+            "end": 378,
+            "quote": "AlgoFactory 合成回归扩展示例\n本材料是项目自编的公开演示，不含真实业务数据。任务为有监督表格回归：x1、x2、x3 是数值特征，value 是连续目标，row_id 和目标不得作为特征。输出连续预测值，不提供分类概率。训练、验证、测试按固定种子独立划分，预处理只在训练集拟合。\n回归能力使用 Ridge Regression：SimpleImputer(strategy=median)、StandardScaler、Ridge(alpha=1.0) 放入 Pipeline，通过 ColumnTransformer 选择数值列。依赖为 scikit-learn。指标是 MAE 和 RMSE，越低越好；冻结门槛由主机协议提供，不使用测试集调参。生成代码仅在禁网、非 root Docker 中执行，120 秒、2 CPU、4096 MiB。\n"
+          },
+          "type": "Dependency",
+          "name": "scikit-learn",
+          "package": "scikit-learn",
+          "version_constraint": ">=1.5,<2"
+        }
+      ],
+      "relations": [
+        {
+          "schema_version": 1,
+          "id": "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f:relation:requires",
+          "source_id": "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f",
+          "source_span": {
+            "start": 0,
+            "end": 378,
+            "quote": "AlgoFactory 合成回归扩展示例\n本材料是项目自编的公开演示，不含真实业务数据。任务为有监督表格回归：x1、x2、x3 是数值特征，value 是连续目标，row_id 和目标不得作为特征。输出连续预测值，不提供分类概率。训练、验证、测试按固定种子独立划分，预处理只在训练集拟合。\n回归能力使用 Ridge Regression：SimpleImputer(strategy=median)、StandardScaler、Ridge(alpha=1.0) 放入 Pipeline，通过 ColumnTransformer 选择数值列。依赖为 scikit-learn。指标是 MAE 和 RMSE，越低越好；冻结门槛由主机协议提供，不使用测试集调参。生成代码仅在禁网、非 root Docker 中执行，120 秒、2 CPU、4096 MiB。\n"
+          },
+          "type": "REQUIRES",
+          "head_id": "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f:task:regression",
+          "tail_id": "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f:capability:regression"
+        },
+        {
+          "schema_version": 1,
+          "id": "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f:relation:implements:logistic_regression",
+          "source_id": "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f",
+          "source_span": {
+            "start": 0,
+            "end": 378,
+            "quote": "AlgoFactory 合成回归扩展示例\n本材料是项目自编的公开演示，不含真实业务数据。任务为有监督表格回归：x1、x2、x3 是数值特征，value 是连续目标，row_id 和目标不得作为特征。输出连续预测值，不提供分类概率。训练、验证、测试按固定种子独立划分，预处理只在训练集拟合。\n回归能力使用 Ridge Regression：SimpleImputer(strategy=median)、StandardScaler、Ridge(alpha=1.0) 放入 Pipeline，通过 ColumnTransformer 选择数值列。依赖为 scikit-learn。指标是 MAE 和 RMSE，越低越好；冻结门槛由主机协议提供，不使用测试集调参。生成代码仅在禁网、非 root Docker 中执行，120 秒、2 CPU、4096 MiB。\n"
+          },
+          "type": "IMPLEMENTS",
+          "head_id": "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f:algorithm:logistic_regression",
+          "tail_id": "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f:capability:regression"
+        },
+        {
+          "schema_version": 1,
+          "id": "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f:relation:applicable:logistic_regression",
+          "source_id": "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f",
+          "source_span": {
+            "start": 0,
+            "end": 378,
+            "quote": "AlgoFactory 合成回归扩展示例\n本材料是项目自编的公开演示，不含真实业务数据。任务为有监督表格回归：x1、x2、x3 是数值特征，value 是连续目标，row_id 和目标不得作为特征。输出连续预测值，不提供分类概率。训练、验证、测试按固定种子独立划分，预处理只在训练集拟合。\n回归能力使用 Ridge Regression：SimpleImputer(strategy=median)、StandardScaler、Ridge(alpha=1.0) 放入 Pipeline，通过 ColumnTransformer 选择数值列。依赖为 scikit-learn。指标是 MAE 和 RMSE，越低越好；冻结门槛由主机协议提供，不使用测试集调参。生成代码仅在禁网、非 root Docker 中执行，120 秒、2 CPU、4096 MiB。\n"
+          },
+          "type": "APPLICABLE_TO",
+          "head_id": "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f:algorithm:logistic_regression",
+          "tail_id": "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f:task:regression"
+        }
+      ]
+    }
+  }
+}
