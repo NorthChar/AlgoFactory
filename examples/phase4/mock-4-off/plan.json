@@ -1,0 +1,17 @@
+{
+  "algorithm_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_logistic_regression",
+  "dependencies": [
+    "scikit-learn"
+  ],
+  "evidence_ids": [
+    "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_logistic_regression",
+    "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:capability:intent_classification"
+  ],
+  "plan_id": "workflow:229682dc4fff464c86d0ef9d6bc3128f:plan",
+  "preprocessing": [
+    "training_only_tfidf",
+    "frozen_class_mapping"
+  ],
+  "schema_version": 1,
+  "task_id": "workflow:229682dc4fff464c86d0ef9d6bc3128f:task"
+}

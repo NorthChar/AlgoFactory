@@ -1,0 +1,57 @@
+[
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "启动有界候选比较，所有候选与修复仅使用验证集",
+    "sequence": 0,
+    "source_ids": [],
+    "state": "received",
+    "timestamp": "2026-10-29T21:29:37.100208+08:00",
+    "workflow_id": "search:aade29231c0446ffab6412055c054615"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "恢复已核验的历史失败，保留原始执行证据",
+    "sequence": 1,
+    "source_ids": [],
+    "state": "repair",
+    "timestamp": "2026-10-29T21:29:37.356178+08:00",
+    "workflow_id": "search:aade29231c0446ffab6412055c054615"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "根据实际接口、执行或稳定性错误修复当前候选",
+    "sequence": 2,
+    "source_ids": [],
+    "state": "repair",
+    "timestamp": "2026-10-29T21:29:37.482506+08:00",
+    "workflow_id": "search:aade29231c0446ffab6412055c054615"
+  },
+  {
+    "candidate_id": "source:37a326650b18052eff5eca3f12fa36badaf0eae08d76b281b7b8b7376af1ec5d:implementation",
+    "code_hash": "4498833ea5e3582152f57959e0e833271d64c668ab136805eda7c2fe3b0cb7a3",
+    "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+    "reason": "按验证集 Macro-F1、Accuracy、预设候选顺序选定版本；测试失败不换候选",
+    "sequence": 3,
+    "source_ids": [],
+    "state": "selected",
+    "timestamp": "2026-10-29T21:29:54.727649+08:00",
+    "workflow_id": "search:aade29231c0446ffab6412055c054615"
+  },
+  {
+    "candidate_id": "source:37a326650b18052eff5eca3f12fa36badaf0eae08d76b281b7b8b7376af1ec5d:implementation",
+    "code_hash": "4498833ea5e3582152f57959e0e833271d64c668ab136805eda7c2fe3b0cb7a3",
+    "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+    "reason": "验证集比较通过且已回写，未访问最终测试",
+    "sequence": 4,
+    "source_ids": [],
+    "state": "accept",
+    "timestamp": "2026-10-29T21:29:54.734451+08:00",
+    "workflow_id": "search:aade29231c0446ffab6412055c054615"
+  }
+]

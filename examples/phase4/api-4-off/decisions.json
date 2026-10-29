@@ -1,0 +1,38 @@
+[
+  {
+    "action": "REPAIR",
+    "budget_remaining": 2,
+    "decision_id": "search:aade29231c0446ffab6412055c054615:decision:0",
+    "evidence_ids": [
+      "source:e07f4ba322366209482f45b28dcf214d96d3e673b1aba5d658bff4aa892eecd6:implementation"
+    ],
+    "reason": "恢复已核验的历史失败，保留原始执行证据",
+    "role": "review",
+    "run_id": "search:aade29231c0446ffab6412055c054615",
+    "schema_version": 1
+  },
+  {
+    "action": "REPAIR",
+    "budget_remaining": 1,
+    "decision_id": "search:aade29231c0446ffab6412055c054615:decision:1",
+    "evidence_ids": [
+      "source:e07f4ba322366209482f45b28dcf214d96d3e673b1aba5d658bff4aa892eecd6:implementation"
+    ],
+    "reason": "根据实际接口、执行或稳定性错误修复当前候选",
+    "role": "review",
+    "run_id": "search:aade29231c0446ffab6412055c054615",
+    "schema_version": 1
+  },
+  {
+    "action": "ACCEPT",
+    "budget_remaining": 0,
+    "decision_id": "search:aade29231c0446ffab6412055c054615:decision:2",
+    "evidence_ids": [
+      "source:37a326650b18052eff5eca3f12fa36badaf0eae08d76b281b7b8b7376af1ec5d:implementation"
+    ],
+    "reason": "验证集比较通过且已回写，未访问最终测试",
+    "role": "review",
+    "run_id": "search:aade29231c0446ffab6412055c054615",
+    "schema_version": 1
+  }
+]

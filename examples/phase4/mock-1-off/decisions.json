@@ -1,0 +1,38 @@
+[
+  {
+    "action": "GENERATE",
+    "budget_remaining": 2,
+    "decision_id": "search:3bc5570e5b814e6889262306e3d46a6d:decision:0",
+    "evidence_ids": [
+      "search:3bc5570e5b814e6889262306e3d46a6d"
+    ],
+    "reason": "基于适用知识生成候选：text_logistic",
+    "role": "review",
+    "run_id": "search:3bc5570e5b814e6889262306e3d46a6d",
+    "schema_version": 1
+  },
+  {
+    "action": "REPAIR",
+    "budget_remaining": 1,
+    "decision_id": "search:3bc5570e5b814e6889262306e3d46a6d:decision:1",
+    "evidence_ids": [
+      "source:bdb4f467c24b7b8f4f54c8a874abaa75ccfe1f53266b15d5770974680450267b:implementation"
+    ],
+    "reason": "根据实际接口、执行或稳定性错误修复当前候选",
+    "role": "review",
+    "run_id": "search:3bc5570e5b814e6889262306e3d46a6d",
+    "schema_version": 1
+  },
+  {
+    "action": "ACCEPT",
+    "budget_remaining": 0,
+    "decision_id": "search:3bc5570e5b814e6889262306e3d46a6d:decision:2",
+    "evidence_ids": [
+      "source:461b227b45991bbfd9b18a2c807607d4d235e3173758f79c48e0bb2d3bd905d5:implementation"
+    ],
+    "reason": "验证集比较通过且已回写，未访问最终测试",
+    "role": "review",
+    "run_id": "search:3bc5570e5b814e6889262306e3d46a6d",
+    "schema_version": 1
+  }
+]

@@ -2,7 +2,7 @@
 
 - 决策日期：2026-10-29（Asia/Shanghai）。
 - 决策状态：accepted，用户已在本聊天确认主案例并同意保留轻量兼容性测试。
-- 实现状态：Phase 2.5 verified（Mock 范围，见阶段证据）；Phase 3 比较/修复的 Mock 及真实 API 均已 verified（见 [增量证据](../../examples/api-phase3/verification.json)）；经验复用仍 planned。初次决策为规划，后续实现见 [Phase 2.5 指南](../phase25.md)。
+- 实现状态：Phase 2.5 verified（Mock 范围，见阶段证据）；Phase 3 比较/修复的 Mock 及真实 API 均已 verified（见 [增量证据](../../examples/api-phase3/verification.json)）；Phase 4 的经验复用机制和小规模开关对照已 verified，详见 [阶段证据](../../examples/phase4/verification.json)；本次未观察到修复次数或指标收益。初次决策为规划，后续实现见 [Phase 2.5 指南](../phase25.md)。
 - 主案例：**基于 BANKING77 的客服意图分类算法生成与验证**。
 - 辅助案例：已有合成客户流失二分类，只保留一个固定候选及轻量端到端兼容性检查。
 - 关联文档：[总体计划](../implementation-plan.md)、[架构](../architecture.md)、[验收](../acceptance-gates.md)、[需求矩阵](../requirements-matrix.md)。

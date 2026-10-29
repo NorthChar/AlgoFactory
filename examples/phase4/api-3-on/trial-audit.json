@@ -1,0 +1,38 @@
+[
+  {
+    "attempt": 1,
+    "http_status": null,
+    "input_tokens": 395,
+    "mode": "api",
+    "operation": "parse_task",
+    "output_tokens": 51,
+    "reserved_cost_usd": null,
+    "schema_version": 1,
+    "service_error_code": null,
+    "status": "ok"
+  },
+  {
+    "attempt": 1,
+    "http_status": null,
+    "input_tokens": 1573,
+    "mode": "api",
+    "operation": "plan_algorithm",
+    "output_tokens": 210,
+    "reserved_cost_usd": null,
+    "schema_version": 1,
+    "service_error_code": null,
+    "status": "ok"
+  },
+  {
+    "attempt": 1,
+    "http_status": null,
+    "input_tokens": 2169,
+    "mode": "api",
+    "operation": "repair_code",
+    "output_tokens": 330,
+    "reserved_cost_usd": null,
+    "schema_version": 1,
+    "service_error_code": null,
+    "status": "ok"
+  }
+]

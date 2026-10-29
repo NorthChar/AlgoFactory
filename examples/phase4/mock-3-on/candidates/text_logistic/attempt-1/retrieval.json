@@ -1,0 +1,434 @@
+[
+  {
+    "record": {
+      "applicability": {
+        "data_kind": "text",
+        "requirements": [
+          "TF-IDF features",
+          "Logistic Regression"
+        ],
+        "schema_version": 1,
+        "task_types": [
+          "multiclass_classification"
+        ]
+      },
+      "family": "Linear Model",
+      "id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_logistic_regression",
+      "name": "TF-IDF + Logistic Regression",
+      "schema_version": 1,
+      "source_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1",
+      "source_span": {
+        "end": 628,
+        "quote": "TF-IDF + Logistic Regression 属于线性文本分类模型，可以实现上述客服意图分类能力。使用词级一元和二元 TF-IDF、sublinear_tf=True、max_features=30000；LogisticRegression 的 C=4.0、max_iter=500、random_state=42。特征提取与分类器放在同一 Pipeline，适用于上述英文文本多分类任务。",
+        "schema_version": 1,
+        "start": 426
+      },
+      "type": "Algorithm"
+    },
+    "relations": [
+      {
+        "record": {
+          "head_id": "source:0f6f4d2b33ae436d595adc2d5525db28e05b89ff646d15bc5d6e459027c99286:implementation",
+          "id": "source:0f6f4d2b33ae436d595adc2d5525db28e05b89ff646d15bc5d6e459027c99286:relation:2",
+          "schema_version": 1,
+          "source_id": "source:0f6f4d2b33ae436d595adc2d5525db28e05b89ff646d15bc5d6e459027c99286",
+          "source_span": {
+            "end": 5091,
+            "quote": "{\"candidate\":{\"attempt\":0,\"code_hash\":\"48ce0fbf6d9a651fc6ba087c25ce577b77e0e7511fc84497fb118b222421bd3e\",\"implementation_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9:candidate\",\"parent_id\":null,\"plan_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9:plan\",\"schema_version\":1},\"code_hash\":\"48ce0fbf6d9a651fc6ba087c25ce577b77e0e7511fc84497fb118b222421bd3e\",\"evaluation_scope\":\"validation_only\",\"execution_evidence\":[\"/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase4-verification-20261029-02/mock-3-on/candidates/text_logistic/attempt-0/validation-execution/execution.json\"],\"experience_usage\":{\"enabled\":true,\"excluded\":[],\"interpretation\":\"Delivery and model-declared use are traceable; causality requires controlled comparison.\",\"matches\":[{\"experience_id\":\"source:b76667cea3ed76845a4b7234d07fc8517bd657e22d1b65d215e15eee9153f963:experience\",\"failure_category\":\"worker_ValueError\",\"guidance\":\"fit/predict 接收 pandas DataFrame。将 TfidfVectorizer 放在 ColumnTransformer 中，使用 config['text_features'][0] 这个字符串列选择器得到一维文本，再连接分类器。保留既定 TF-IDF 与分类器参数，词表/IDF 只在训练集拟合。\",\"match_reason\":\"verified repair; exact task, algorithm, fields, data and frozen protocol match\",\"matched_scope\":{\"algorithm\":\"text_logistic\",\"config_hash\":\"ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42\",\"data_fingerprint\":\"e394adeb965f707d2f3036f95999165ed3d0d43c15a879341c912cbdbb953c79\",\"data_kind\":\"text\",\"input_container\":\"pandas_dataframe\",\"schema_version\":1,\"split_id\":\"split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e\",\"task_profile\":\"banking77\",\"task_type\":\"multiclass_classification\",\"text_features\":[\"text\"]},\"rule\":\"text_dataframe_adapter\",\"source_run_ids\":[\"source:e07f4ba322366209482f45b28dcf214d96d3e673b1aba5d658bff4aa892eecd6:validation\",\"source:eba0bdd0d7df6bf940ee372d81d7cb48d035212db6a356d24e0608cdc749d4ee:validation\"]}],\"model_decisions\":[{\"decision\":\"adopted\",\"experience_id\":\"source:b76667cea3ed76845a4b7234d07fc8517bd657e22d1b65d215e15eee9153f963:experience\",\"reason\":\"显式 Mock：输出固定的、符合文本适配经验的模板；不代表模型推理或收益。\",\"schema_version\":1}],\"observed_rule_satisfied\":false},\"plan\":{\"algorithm_id\":\"source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_logistic_regression\",\"dependencies\":[\"scikit-learn\"],\"evidence_ids\":[\"source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_logistic_regression\",\"source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:capability:intent_classification\"],\"plan_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9:plan\",\"preprocessing\":[\"training_only_tfidf\",\"frozen_class_mapping\"],\"schema_version\":1,\"task_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9:task\"},\"search_summary\":null,\"status\":\"failed\",\"task\":{\"class_labels\":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76],\"constraints\":{\"allowed_algorithms\":[],\"candidate_limit\":1,\"execution\":{\"backend\":\"docker\",\"cpus\":2,\"fail_closed\":true,\"memory_mib\":4096,\"network\":false,\"schema_version\":1,\"timeout_seconds\":120},\"max_repairs_per_candidate\":1,\"schema_version\":1},\"data_fingerprint\":\"e394adeb965f707d2f3036f95999165ed3d0d43c15a879341c912cbdbb953c79\",\"description\":\"为另一个调用方复用相同 BANKING77 输入协议，请生成并验证可接收 DataFrame 的 77 类英文客服意图分类组件。\",\"feature_schema\":[{\"dtype\":\"text\",\"name\":\"text\",\"nullable\":false,\"schema_version\":1}],\"metrics\":[{\"direction\":\"maximize\",\"name\":\"macro_f1\",\"schema_version\":1,\"threshold\":0.82}],\"schema_version\":1,\"seed\":42,\"split_id\":\"split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e\",\"target\":\"intent\",\"task_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9:task\",\"task_type\":\"multiclass_classification\"},\"validation\":{\"code_hash\":\"48ce0fbf6d9a651fc6ba087c25ce577b77e0e7511fc84497fb118b222421bd3e\",\"config_hash\":\"ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42\",\"error_category\":\"worker_ValueError\",\"final_test_evaluated\":false,\"functional\":{\"details\":\"worker_ValueError\",\"schema_version\":1,\"status\":\"failed\"},\"implementation_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9:candidate\",\"interface\":{\"details\":\"尚未执行\",\"schema_version\":1,\"status\":\"not_run\"},\"metrics\":{\"details\":\"尚未执行\",\"schema_version\":1,\"status\":\"not_run\"},\"report_paths\":[\"/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase4-verification-20261029-02/mock-3-on/candidates/text_logistic/attempt-0/report.json\",\"/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase4-verification-20261029-02/mock-3-on/candidates/text_logistic/attempt-0/report.md\"],\"resources\":{\"elapsed_seconds\":0.31339191700001834,\"peak_memory_mib\":155.99609375,\"schema_version\":1},\"run_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9:validation\",\"schema_version\":1,\"split_id\":\"split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e\",\"stability\":{\"details\":\"尚未执行\",\"schema_version\":1,\"status\":\"not_run\"},\"status\":\"failed\",\"test_metrics\":{},\"validation_metrics\":{}},\"workflow_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9\"}",
+            "schema_version": 1,
+            "start": 0
+          },
+          "tail_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_logistic_regression",
+          "type": "USES"
+        },
+        "source": {
+          "id": "source:0f6f4d2b33ae436d595adc2d5525db28e05b89ff646d15bc5d6e459027c99286",
+          "sha256": "0f6f4d2b33ae436d595adc2d5525db28e05b89ff646d15bc5d6e459027c99286",
+          "span": {
+            "end": 5091,
+            "quote": "{\"candidate\":{\"attempt\":0,\"code_hash\":\"48ce0fbf6d9a651fc6ba087c25ce577b77e0e7511fc84497fb118b222421bd3e\",\"implementation_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9:candidate\",\"parent_id\":null,\"plan_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9:plan\",\"schema_version\":1},\"code_hash\":\"48ce0fbf6d9a651fc6ba087c25ce577b77e0e7511fc84497fb118b222421bd3e\",\"evaluation_scope\":\"validation_only\",\"execution_evidence\":[\"/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase4-verification-20261029-02/mock-3-on/candidates/text_logistic/attempt-0/validation-execution/execution.json\"],\"experience_usage\":{\"enabled\":true,\"excluded\":[],\"interpretation\":\"Delivery and model-declared use are traceable; causality requires controlled comparison.\",\"matches\":[{\"experience_id\":\"source:b76667cea3ed76845a4b7234d07fc8517bd657e22d1b65d215e15eee9153f963:experience\",\"failure_category\":\"worker_ValueError\",\"guidance\":\"fit/predict 接收 pandas DataFrame。将 TfidfVectorizer 放在 ColumnTransformer 中，使用 config['text_features'][0] 这个字符串列选择器得到一维文本，再连接分类器。保留既定 TF-IDF 与分类器参数，词表/IDF 只在训练集拟合。\",\"match_reason\":\"verified repair; exact task, algorithm, fields, data and frozen protocol match\",\"matched_scope\":{\"algorithm\":\"text_logistic\",\"config_hash\":\"ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42\",\"data_fingerprint\":\"e394adeb965f707d2f3036f95999165ed3d0d43c15a879341c912cbdbb953c79\",\"data_kind\":\"text\",\"input_container\":\"pandas_dataframe\",\"schema_version\":1,\"split_id\":\"split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e\",\"task_profile\":\"banking77\",\"task_type\":\"multiclass_classification\",\"text_features\":[\"text\"]},\"rule\":\"text_dataframe_adapter\",\"source_run_ids\":[\"source:e07f4ba322366209482f45b28dcf214d96d3e673b1aba5d658bff4aa892eecd6:validation\",\"source:eba0bdd0d7df6bf940ee372d81d7cb48d035212db6a356d24e0608cdc749d4ee:validation\"]}],\"model_decisions\":[{\"decision\":\"adopted\",\"experience_id\":\"source:b76667cea3ed76845a4b7234d07fc8517bd657e22d1b65d215e15eee9153f963:experience\",\"reason\":\"显式 Mock：输出固定的、符合文本适配经验的模板；不代表模型推理或收益。\",\"schema_version\":1}],\"observed_rule_satisfied\":false},\"plan\":{\"algorithm_id\":\"source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_logistic_regression\",\"dependencies\":[\"scikit-learn\"],\"evidence_ids\":[\"source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_logistic_regression\",\"source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:capability:intent_classification\"],\"plan_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9:plan\",\"preprocessing\":[\"training_only_tfidf\",\"frozen_class_mapping\"],\"schema_version\":1,\"task_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9:task\"},\"search_summary\":null,\"status\":\"failed\",\"task\":{\"class_labels\":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76],\"constraints\":{\"allowed_algorithms\":[],\"candidate_limit\":1,\"execution\":{\"backend\":\"docker\",\"cpus\":2,\"fail_closed\":true,\"memory_mib\":4096,\"network\":false,\"schema_version\":1,\"timeout_seconds\":120},\"max_repairs_per_candidate\":1,\"schema_version\":1},\"data_fingerprint\":\"e394adeb965f707d2f3036f95999165ed3d0d43c15a879341c912cbdbb953c79\",\"description\":\"为另一个调用方复用相同 BANKING77 输入协议，请生成并验证可接收 DataFrame 的 77 类英文客服意图分类组件。\",\"feature_schema\":[{\"dtype\":\"text\",\"name\":\"text\",\"nullable\":false,\"schema_version\":1}],\"metrics\":[{\"direction\":\"maximize\",\"name\":\"macro_f1\",\"schema_version\":1,\"threshold\":0.82}],\"schema_version\":1,\"seed\":42,\"split_id\":\"split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e\",\"target\":\"intent\",\"task_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9:task\",\"task_type\":\"multiclass_classification\"},\"validation\":{\"code_hash\":\"48ce0fbf6d9a651fc6ba087c25ce577b77e0e7511fc84497fb118b222421bd3e\",\"config_hash\":\"ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42\",\"error_category\":\"worker_ValueError\",\"final_test_evaluated\":false,\"functional\":{\"details\":\"worker_ValueError\",\"schema_version\":1,\"status\":\"failed\"},\"implementation_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9:candidate\",\"interface\":{\"details\":\"尚未执行\",\"schema_version\":1,\"status\":\"not_run\"},\"metrics\":{\"details\":\"尚未执行\",\"schema_version\":1,\"status\":\"not_run\"},\"report_paths\":[\"/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase4-verification-20261029-02/mock-3-on/candidates/text_logistic/attempt-0/report.json\",\"/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase4-verification-20261029-02/mock-3-on/candidates/text_logistic/attempt-0/report.md\"],\"resources\":{\"elapsed_seconds\":0.31339191700001834,\"peak_memory_mib\":155.99609375,\"schema_version\":1},\"run_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9:validation\",\"schema_version\":1,\"split_id\":\"split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e\",\"stability\":{\"details\":\"尚未执行\",\"schema_version\":1,\"status\":\"not_run\"},\"status\":\"failed\",\"test_metrics\":{},\"validation_metrics\":{}},\"workflow_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9\"}",
+            "schema_version": 1,
+            "start": 0
+          },
+          "title": "workflow:fbb3e519d2a946e286002b9b1e4d0aa9.json"
+        }
+      },
+      {
+        "record": {
+          "head_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_logistic_regression",
+          "id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:relation:algorithm_applicable_to_task_tfidf_logistic",
+          "schema_version": 1,
+          "source_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1",
+          "source_span": {
+            "end": 628,
+            "quote": "TF-IDF + Logistic Regression 属于线性文本分类模型，可以实现上述客服意图分类能力。使用词级一元和二元 TF-IDF、sublinear_tf=True、max_features=30000；LogisticRegression 的 C=4.0、max_iter=500、random_state=42。特征提取与分类器放在同一 Pipeline，适用于上述英文文本多分类任务。",
+            "schema_version": 1,
+            "start": 426
+          },
+          "tail_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:task:banking77_intent_classification",
+          "type": "APPLICABLE_TO"
+        },
+        "source": {
+          "id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1",
+          "sha256": "60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1",
+          "span": {
+            "end": 628,
+            "quote": "TF-IDF + Logistic Regression 属于线性文本分类模型，可以实现上述客服意图分类能力。使用词级一元和二元 TF-IDF、sublinear_tf=True、max_features=30000；LogisticRegression 的 C=4.0、max_iter=500、random_state=42。特征提取与分类器放在同一 Pipeline，适用于上述英文文本多分类任务。",
+            "schema_version": 1,
+            "start": 426
+          },
+          "title": "banking77-phase3.txt"
+        }
+      },
+      {
+        "record": {
+          "head_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_logistic_regression",
+          "id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:relation:algorithm_implements_capability_tfidf_logistic",
+          "schema_version": 1,
+          "source_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1",
+          "source_span": {
+            "end": 628,
+            "quote": "TF-IDF + Logistic Regression 属于线性文本分类模型，可以实现上述客服意图分类能力。使用词级一元和二元 TF-IDF、sublinear_tf=True、max_features=30000；LogisticRegression 的 C=4.0、max_iter=500、random_state=42。特征提取与分类器放在同一 Pipeline，适用于上述英文文本多分类任务。",
+            "schema_version": 1,
+            "start": 426
+          },
+          "tail_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:capability:intent_classification",
+          "type": "IMPLEMENTS"
+        },
+        "source": {
+          "id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1",
+          "sha256": "60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1",
+          "span": {
+            "end": 628,
+            "quote": "TF-IDF + Logistic Regression 属于线性文本分类模型，可以实现上述客服意图分类能力。使用词级一元和二元 TF-IDF、sublinear_tf=True、max_features=30000；LogisticRegression 的 C=4.0、max_iter=500、random_state=42。特征提取与分类器放在同一 Pipeline，适用于上述英文文本多分类任务。",
+            "schema_version": 1,
+            "start": 426
+          },
+          "title": "banking77-phase3.txt"
+        }
+      },
+      {
+        "record": {
+          "head_id": "source:eba0bdd0d7df6bf940ee372d81d7cb48d035212db6a356d24e0608cdc749d4ee:implementation",
+          "id": "source:eba0bdd0d7df6bf940ee372d81d7cb48d035212db6a356d24e0608cdc749d4ee:relation:2",
+          "schema_version": 1,
+          "source_id": "source:eba0bdd0d7df6bf940ee372d81d7cb48d035212db6a356d24e0608cdc749d4ee",
+          "source_span": {
+            "end": 3728,
+            "quote": "{\"candidate\":{\"attempt\":1,\"code_hash\":\"082384b24d9380c213650ced5d58d24af0240e597d402bccd4f9fc11654700f9\",\"implementation_id\":\"workflow:e6d4d433c8914466bfb049c4816fefc9:candidate\",\"parent_id\":\"source:e07f4ba322366209482f45b28dcf214d96d3e673b1aba5d658bff4aa892eecd6:implementation\",\"plan_id\":\"workflow:e6d4d433c8914466bfb049c4816fefc9:plan\",\"schema_version\":1},\"code_hash\":\"082384b24d9380c213650ced5d58d24af0240e597d402bccd4f9fc11654700f9\",\"evaluation_scope\":\"validation_only\",\"execution_evidence\":[\"/Users/northchar/Documents/Codex/AlgoFactory/runtime/live-search-20261029-03/comparison/candidates/text_logistic/attempt-1/validation-execution/execution.json\"],\"plan\":{\"algorithm_id\":\"source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_logistic_regression\",\"dependencies\":[\"scikit-learn\"],\"evidence_ids\":[\"source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_logistic_regression\"],\"plan_id\":\"workflow:e6d4d433c8914466bfb049c4816fefc9:plan\",\"preprocessing\":[\"Fit TF-IDF on training set only\"],\"schema_version\":1,\"task_id\":\"workflow:e6d4d433c8914466bfb049c4816fefc9:task\"},\"search_summary\":null,\"status\":\"validated\",\"task\":{\"class_labels\":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76],\"constraints\":{\"allowed_algorithms\":[],\"candidate_limit\":1,\"execution\":{\"backend\":\"docker\",\"cpus\":2,\"fail_closed\":true,\"memory_mib\":4096,\"network\":false,\"schema_version\":1,\"timeout_seconds\":120},\"max_repairs_per_candidate\":2,\"schema_version\":1},\"data_fingerprint\":\"e394adeb965f707d2f3036f95999165ed3d0d43c15a879341c912cbdbb953c79\",\"description\":\"基于 BANKING77 的英文客服文本生成并验证意图分类算法，输出 77 类已知意图及概率。\",\"feature_schema\":[{\"dtype\":\"text\",\"name\":\"text\",\"nullable\":false,\"schema_version\":1}],\"metrics\":[{\"direction\":\"maximize\",\"name\":\"macro_f1\",\"schema_version\":1,\"threshold\":0.82}],\"schema_version\":1,\"seed\":42,\"split_id\":\"split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e\",\"target\":\"intent\",\"task_id\":\"workflow:e6d4d433c8914466bfb049c4816fefc9:task\",\"task_type\":\"multiclass_classification\"},\"validation\":{\"code_hash\":\"082384b24d9380c213650ced5d58d24af0240e597d402bccd4f9fc11654700f9\",\"config_hash\":\"ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42\",\"error_category\":null,\"final_test_evaluated\":false,\"functional\":{\"details\":\"真实 fit/predict，长度、顺序和有限数值校验通过\",\"schema_version\":1,\"status\":\"passed\"},\"implementation_id\":\"workflow:e6d4d433c8914466bfb049c4816fefc9:candidate\",\"interface\":{\"details\":\"build_pipeline / fit / predict / predict_proba\",\"schema_version\":1,\"status\":\"passed\"},\"metrics\":{\"details\":\"验证集对照预先冻结门槛\",\"schema_version\":1,\"status\":\"passed\"},\"report_paths\":[\"/Users/northchar/Documents/Codex/AlgoFactory/runtime/live-search-20261029-03/comparison/candidates/text_logistic/attempt-1/report.json\",\"/Users/northchar/Documents/Codex/AlgoFactory/runtime/live-search-20261029-03/comparison/candidates/text_logistic/attempt-1/report.md\"],\"resources\":{\"elapsed_seconds\":6.840963044999967,\"peak_memory_mib\":690.7890625,\"schema_version\":1},\"run_id\":\"workflow:e6d4d433c8914466bfb049c4816fefc9:validation\",\"schema_version\":1,\"split_id\":\"split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e\",\"stability\":{\"details\":\"{\\\"seed_repeat\\\": true, \\\"missing_column_rejected\\\": true, \\\"invalid_text_rejected\\\": true, \\\"unseen_text_handled\\\": true}\",\"schema_version\":1,\"status\":\"passed\"},\"status\":\"passed\",\"test_metrics\":{},\"validation_metrics\":{\"accuracy\":0.8734367183591796,\"macro_f1\":0.8729749094121176}},\"workflow_id\":\"workflow:e6d4d433c8914466bfb049c4816fefc9\"}",
+            "schema_version": 1,
+            "start": 0
+          },
+          "tail_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_logistic_regression",
+          "type": "USES"
+        },
+        "source": {
+          "id": "source:eba0bdd0d7df6bf940ee372d81d7cb48d035212db6a356d24e0608cdc749d4ee",
+          "sha256": "eba0bdd0d7df6bf940ee372d81d7cb48d035212db6a356d24e0608cdc749d4ee",
+          "span": {
+            "end": 3728,
+            "quote": "{\"candidate\":{\"attempt\":1,\"code_hash\":\"082384b24d9380c213650ced5d58d24af0240e597d402bccd4f9fc11654700f9\",\"implementation_id\":\"workflow:e6d4d433c8914466bfb049c4816fefc9:candidate\",\"parent_id\":\"source:e07f4ba322366209482f45b28dcf214d96d3e673b1aba5d658bff4aa892eecd6:implementation\",\"plan_id\":\"workflow:e6d4d433c8914466bfb049c4816fefc9:plan\",\"schema_version\":1},\"code_hash\":\"082384b24d9380c213650ced5d58d24af0240e597d402bccd4f9fc11654700f9\",\"evaluation_scope\":\"validation_only\",\"execution_evidence\":[\"/Users/northchar/Documents/Codex/AlgoFactory/runtime/live-search-20261029-03/comparison/candidates/text_logistic/attempt-1/validation-execution/execution.json\"],\"plan\":{\"algorithm_id\":\"source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_logistic_regression\",\"dependencies\":[\"scikit-learn\"],\"evidence_ids\":[\"source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_logistic_regression\"],\"plan_id\":\"workflow:e6d4d433c8914466bfb049c4816fefc9:plan\",\"preprocessing\":[\"Fit TF-IDF on training set only\"],\"schema_version\":1,\"task_id\":\"workflow:e6d4d433c8914466bfb049c4816fefc9:task\"},\"search_summary\":null,\"status\":\"validated\",\"task\":{\"class_labels\":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76],\"constraints\":{\"allowed_algorithms\":[],\"candidate_limit\":1,\"execution\":{\"backend\":\"docker\",\"cpus\":2,\"fail_closed\":true,\"memory_mib\":4096,\"network\":false,\"schema_version\":1,\"timeout_seconds\":120},\"max_repairs_per_candidate\":2,\"schema_version\":1},\"data_fingerprint\":\"e394adeb965f707d2f3036f95999165ed3d0d43c15a879341c912cbdbb953c79\",\"description\":\"基于 BANKING77 的英文客服文本生成并验证意图分类算法，输出 77 类已知意图及概率。\",\"feature_schema\":[{\"dtype\":\"text\",\"name\":\"text\",\"nullable\":false,\"schema_version\":1}],\"metrics\":[{\"direction\":\"maximize\",\"name\":\"macro_f1\",\"schema_version\":1,\"threshold\":0.82}],\"schema_version\":1,\"seed\":42,\"split_id\":\"split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e\",\"target\":\"intent\",\"task_id\":\"workflow:e6d4d433c8914466bfb049c4816fefc9:task\",\"task_type\":\"multiclass_classification\"},\"validation\":{\"code_hash\":\"082384b24d9380c213650ced5d58d24af0240e597d402bccd4f9fc11654700f9\",\"config_hash\":\"ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42\",\"error_category\":null,\"final_test_evaluated\":false,\"functional\":{\"details\":\"真实 fit/predict，长度、顺序和有限数值校验通过\",\"schema_version\":1,\"status\":\"passed\"},\"implementation_id\":\"workflow:e6d4d433c8914466bfb049c4816fefc9:candidate\",\"interface\":{\"details\":\"build_pipeline / fit / predict / predict_proba\",\"schema_version\":1,\"status\":\"passed\"},\"metrics\":{\"details\":\"验证集对照预先冻结门槛\",\"schema_version\":1,\"status\":\"passed\"},\"report_paths\":[\"/Users/northchar/Documents/Codex/AlgoFactory/runtime/live-search-20261029-03/comparison/candidates/text_logistic/attempt-1/report.json\",\"/Users/northchar/Documents/Codex/AlgoFactory/runtime/live-search-20261029-03/comparison/candidates/text_logistic/attempt-1/report.md\"],\"resources\":{\"elapsed_seconds\":6.840963044999967,\"peak_memory_mib\":690.7890625,\"schema_version\":1},\"run_id\":\"workflow:e6d4d433c8914466bfb049c4816fefc9:validation\",\"schema_version\":1,\"split_id\":\"split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e\",\"stability\":{\"details\":\"{\\\"seed_repeat\\\": true, \\\"missing_column_rejected\\\": true, \\\"invalid_text_rejected\\\": true, \\\"unseen_text_handled\\\": true}\",\"schema_version\":1,\"status\":\"passed\"},\"status\":\"passed\",\"test_metrics\":{},\"validation_metrics\":{\"accuracy\":0.8734367183591796,\"macro_f1\":0.8729749094121176}},\"workflow_id\":\"workflow:e6d4d433c8914466bfb049c4816fefc9\"}",
+            "schema_version": 1,
+            "start": 0
+          },
+          "title": "workflow:e6d4d433c8914466bfb049c4816fefc9.json"
+        }
+      }
+    ],
+    "source": {
+      "id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1",
+      "sha256": "60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1",
+      "span": {
+        "end": 628,
+        "quote": "TF-IDF + Logistic Regression 属于线性文本分类模型，可以实现上述客服意图分类能力。使用词级一元和二元 TF-IDF、sublinear_tf=True、max_features=30000；LogisticRegression 的 C=4.0、max_iter=500、random_state=42。特征提取与分类器放在同一 Pipeline，适用于上述英文文本多分类任务。",
+        "schema_version": 1,
+        "start": 426
+      },
+      "title": "banking77-phase3.txt"
+    }
+  },
+  {
+    "record": {
+      "applicability": {
+        "data_kind": "text",
+        "requirements": [
+          "TF-IDF features",
+          "MultinomialNB"
+        ],
+        "schema_version": 1,
+        "task_types": [
+          "multiclass_classification"
+        ]
+      },
+      "family": "Naive Bayes",
+      "id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_multinomialnb",
+      "name": "TF-IDF + MultinomialNB",
+      "schema_version": 1,
+      "source_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1",
+      "source_span": {
+        "end": 911,
+        "quote": "TF-IDF + MultinomialNB 属于朴素贝叶斯文本分类模型，可以实现上述客服意图分类能力。使用与线性模型相同的训练集拟合 TF-IDF，特征非负，MultinomialNB 的 alpha=0.1。若验证集指标不达标，最多按预先固定的 alpha=0.05、0.01 尝试优化；不改变数据划分、标签映射或验收门槛。",
+        "schema_version": 1,
+        "start": 747
+      },
+      "type": "Algorithm"
+    },
+    "relations": [
+      {
+        "record": {
+          "head_id": "source:5b94dd3384bad75f92a221225af79ed0857033899e876c2d8be1f5a1ebb326c3:implementation",
+          "id": "source:5b94dd3384bad75f92a221225af79ed0857033899e876c2d8be1f5a1ebb326c3:relation:2",
+          "schema_version": 1,
+          "source_id": "source:5b94dd3384bad75f92a221225af79ed0857033899e876c2d8be1f5a1ebb326c3",
+          "source_span": {
+            "end": 3595,
+            "quote": "{\"candidate\":{\"attempt\":0,\"code_hash\":\"150e29b06baa8d9621c0effe8af284e1a4f518b6746b04ab9cef9fb6d7c3edfa\",\"implementation_id\":\"workflow:d4438a2160a44f86bb4a7bbbaa2dff34:candidate\",\"parent_id\":null,\"plan_id\":\"workflow:d4438a2160a44f86bb4a7bbbaa2dff34:plan\",\"schema_version\":1},\"code_hash\":\"150e29b06baa8d9621c0effe8af284e1a4f518b6746b04ab9cef9fb6d7c3edfa\",\"evaluation_scope\":\"validation_only\",\"execution_evidence\":[\"/Users/northchar/Documents/Codex/AlgoFactory/runtime/live-search-20261029-03/comparison/candidates/text_nb/attempt-0/validation-execution/execution.json\"],\"plan\":{\"algorithm_id\":\"source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_multinomialnb\",\"dependencies\":[\"scikit-learn\"],\"evidence_ids\":[\"source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_multinomialnb\"],\"plan_id\":\"workflow:d4438a2160a44f86bb4a7bbbaa2dff34:plan\",\"preprocessing\":[\"训练集拟合 TF-IDF\"],\"schema_version\":1,\"task_id\":\"workflow:d4438a2160a44f86bb4a7bbbaa2dff34:task\"},\"search_summary\":null,\"status\":\"validated\",\"task\":{\"class_labels\":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76],\"constraints\":{\"allowed_algorithms\":[],\"candidate_limit\":1,\"execution\":{\"backend\":\"docker\",\"cpus\":2,\"fail_closed\":true,\"memory_mib\":4096,\"network\":false,\"schema_version\":1,\"timeout_seconds\":120},\"max_repairs_per_candidate\":2,\"schema_version\":1},\"data_fingerprint\":\"e394adeb965f707d2f3036f95999165ed3d0d43c15a879341c912cbdbb953c79\",\"description\":\"基于 BANKING77 的英文客服文本生成并验证意图分类算法，输出 77 类已知意图及概率。\",\"feature_schema\":[{\"dtype\":\"text\",\"name\":\"text\",\"nullable\":false,\"schema_version\":1}],\"metrics\":[{\"direction\":\"maximize\",\"name\":\"macro_f1\",\"schema_version\":1,\"threshold\":0.82}],\"schema_version\":1,\"seed\":42,\"split_id\":\"split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e\",\"target\":\"intent\",\"task_id\":\"workflow:d4438a2160a44f86bb4a7bbbaa2dff34:task\",\"task_type\":\"multiclass_classification\"},\"validation\":{\"code_hash\":\"150e29b06baa8d9621c0effe8af284e1a4f518b6746b04ab9cef9fb6d7c3edfa\",\"config_hash\":\"ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42\",\"error_category\":null,\"final_test_evaluated\":false,\"functional\":{\"details\":\"真实 fit/predict，长度、顺序和有限数值校验通过\",\"schema_version\":1,\"status\":\"passed\"},\"implementation_id\":\"workflow:d4438a2160a44f86bb4a7bbbaa2dff34:candidate\",\"interface\":{\"details\":\"build_pipeline / fit / predict / predict_proba\",\"schema_version\":1,\"status\":\"passed\"},\"metrics\":{\"details\":\"验证集对照预先冻结门槛\",\"schema_version\":1,\"status\":\"passed\"},\"report_paths\":[\"/Users/northchar/Documents/Codex/AlgoFactory/runtime/live-search-20261029-03/comparison/candidates/text_nb/attempt-0/report.json\",\"/Users/northchar/Documents/Codex/AlgoFactory/runtime/live-search-20261029-03/comparison/candidates/text_nb/attempt-0/report.md\"],\"resources\":{\"elapsed_seconds\":0.5021555839999792,\"peak_memory_mib\":257.796875,\"schema_version\":1},\"run_id\":\"workflow:d4438a2160a44f86bb4a7bbbaa2dff34:validation\",\"schema_version\":1,\"split_id\":\"split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e\",\"stability\":{\"details\":\"{\\\"seed_repeat\\\": true, \\\"missing_column_rejected\\\": true, \\\"invalid_text_rejected\\\": true, \\\"unseen_text_handled\\\": true}\",\"schema_version\":1,\"status\":\"passed\"},\"status\":\"passed\",\"test_metrics\":{},\"validation_metrics\":{\"accuracy\":0.8359179589794897,\"macro_f1\":0.8269238046747743}},\"workflow_id\":\"workflow:d4438a2160a44f86bb4a7bbbaa2dff34\"}",
+            "schema_version": 1,
+            "start": 0
+          },
+          "tail_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_multinomialnb",
+          "type": "USES"
+        },
+        "source": {
+          "id": "source:5b94dd3384bad75f92a221225af79ed0857033899e876c2d8be1f5a1ebb326c3",
+          "sha256": "5b94dd3384bad75f92a221225af79ed0857033899e876c2d8be1f5a1ebb326c3",
+          "span": {
+            "end": 3595,
+            "quote": "{\"candidate\":{\"attempt\":0,\"code_hash\":\"150e29b06baa8d9621c0effe8af284e1a4f518b6746b04ab9cef9fb6d7c3edfa\",\"implementation_id\":\"workflow:d4438a2160a44f86bb4a7bbbaa2dff34:candidate\",\"parent_id\":null,\"plan_id\":\"workflow:d4438a2160a44f86bb4a7bbbaa2dff34:plan\",\"schema_version\":1},\"code_hash\":\"150e29b06baa8d9621c0effe8af284e1a4f518b6746b04ab9cef9fb6d7c3edfa\",\"evaluation_scope\":\"validation_only\",\"execution_evidence\":[\"/Users/northchar/Documents/Codex/AlgoFactory/runtime/live-search-20261029-03/comparison/candidates/text_nb/attempt-0/validation-execution/execution.json\"],\"plan\":{\"algorithm_id\":\"source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_multinomialnb\",\"dependencies\":[\"scikit-learn\"],\"evidence_ids\":[\"source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_multinomialnb\"],\"plan_id\":\"workflow:d4438a2160a44f86bb4a7bbbaa2dff34:plan\",\"preprocessing\":[\"训练集拟合 TF-IDF\"],\"schema_version\":1,\"task_id\":\"workflow:d4438a2160a44f86bb4a7bbbaa2dff34:task\"},\"search_summary\":null,\"status\":\"validated\",\"task\":{\"class_labels\":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76],\"constraints\":{\"allowed_algorithms\":[],\"candidate_limit\":1,\"execution\":{\"backend\":\"docker\",\"cpus\":2,\"fail_closed\":true,\"memory_mib\":4096,\"network\":false,\"schema_version\":1,\"timeout_seconds\":120},\"max_repairs_per_candidate\":2,\"schema_version\":1},\"data_fingerprint\":\"e394adeb965f707d2f3036f95999165ed3d0d43c15a879341c912cbdbb953c79\",\"description\":\"基于 BANKING77 的英文客服文本生成并验证意图分类算法，输出 77 类已知意图及概率。\",\"feature_schema\":[{\"dtype\":\"text\",\"name\":\"text\",\"nullable\":false,\"schema_version\":1}],\"metrics\":[{\"direction\":\"maximize\",\"name\":\"macro_f1\",\"schema_version\":1,\"threshold\":0.82}],\"schema_version\":1,\"seed\":42,\"split_id\":\"split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e\",\"target\":\"intent\",\"task_id\":\"workflow:d4438a2160a44f86bb4a7bbbaa2dff34:task\",\"task_type\":\"multiclass_classification\"},\"validation\":{\"code_hash\":\"150e29b06baa8d9621c0effe8af284e1a4f518b6746b04ab9cef9fb6d7c3edfa\",\"config_hash\":\"ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42\",\"error_category\":null,\"final_test_evaluated\":false,\"functional\":{\"details\":\"真实 fit/predict，长度、顺序和有限数值校验通过\",\"schema_version\":1,\"status\":\"passed\"},\"implementation_id\":\"workflow:d4438a2160a44f86bb4a7bbbaa2dff34:candidate\",\"interface\":{\"details\":\"build_pipeline / fit / predict / predict_proba\",\"schema_version\":1,\"status\":\"passed\"},\"metrics\":{\"details\":\"验证集对照预先冻结门槛\",\"schema_version\":1,\"status\":\"passed\"},\"report_paths\":[\"/Users/northchar/Documents/Codex/AlgoFactory/runtime/live-search-20261029-03/comparison/candidates/text_nb/attempt-0/report.json\",\"/Users/northchar/Documents/Codex/AlgoFactory/runtime/live-search-20261029-03/comparison/candidates/text_nb/attempt-0/report.md\"],\"resources\":{\"elapsed_seconds\":0.5021555839999792,\"peak_memory_mib\":257.796875,\"schema_version\":1},\"run_id\":\"workflow:d4438a2160a44f86bb4a7bbbaa2dff34:validation\",\"schema_version\":1,\"split_id\":\"split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e\",\"stability\":{\"details\":\"{\\\"seed_repeat\\\": true, \\\"missing_column_rejected\\\": true, \\\"invalid_text_rejected\\\": true, \\\"unseen_text_handled\\\": true}\",\"schema_version\":1,\"status\":\"passed\"},\"status\":\"passed\",\"test_metrics\":{},\"validation_metrics\":{\"accuracy\":0.8359179589794897,\"macro_f1\":0.8269238046747743}},\"workflow_id\":\"workflow:d4438a2160a44f86bb4a7bbbaa2dff34\"}",
+            "schema_version": 1,
+            "start": 0
+          },
+          "title": "workflow:d4438a2160a44f86bb4a7bbbaa2dff34.json"
+        }
+      },
+      {
+        "record": {
+          "head_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_multinomialnb",
+          "id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:relation:algorithm_applicable_to_task_tfidf_multinomialnb",
+          "schema_version": 1,
+          "source_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1",
+          "source_span": {
+            "end": 911,
+            "quote": "TF-IDF + MultinomialNB 属于朴素贝叶斯文本分类模型，可以实现上述客服意图分类能力。使用与线性模型相同的训练集拟合 TF-IDF，特征非负，MultinomialNB 的 alpha=0.1。若验证集指标不达标，最多按预先固定的 alpha=0.05、0.01 尝试优化；不改变数据划分、标签映射或验收门槛。",
+            "schema_version": 1,
+            "start": 747
+          },
+          "tail_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:task:banking77_intent_classification",
+          "type": "APPLICABLE_TO"
+        },
+        "source": {
+          "id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1",
+          "sha256": "60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1",
+          "span": {
+            "end": 911,
+            "quote": "TF-IDF + MultinomialNB 属于朴素贝叶斯文本分类模型，可以实现上述客服意图分类能力。使用与线性模型相同的训练集拟合 TF-IDF，特征非负，MultinomialNB 的 alpha=0.1。若验证集指标不达标，最多按预先固定的 alpha=0.05、0.01 尝试优化；不改变数据划分、标签映射或验收门槛。",
+            "schema_version": 1,
+            "start": 747
+          },
+          "title": "banking77-phase3.txt"
+        }
+      },
+      {
+        "record": {
+          "head_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_multinomialnb",
+          "id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:relation:algorithm_implements_capability_tfidf_multinomialnb",
+          "schema_version": 1,
+          "source_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1",
+          "source_span": {
+            "end": 911,
+            "quote": "TF-IDF + MultinomialNB 属于朴素贝叶斯文本分类模型，可以实现上述客服意图分类能力。使用与线性模型相同的训练集拟合 TF-IDF，特征非负，MultinomialNB 的 alpha=0.1。若验证集指标不达标，最多按预先固定的 alpha=0.05、0.01 尝试优化；不改变数据划分、标签映射或验收门槛。",
+            "schema_version": 1,
+            "start": 747
+          },
+          "tail_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:capability:intent_classification",
+          "type": "IMPLEMENTS"
+        },
+        "source": {
+          "id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1",
+          "sha256": "60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1",
+          "span": {
+            "end": 911,
+            "quote": "TF-IDF + MultinomialNB 属于朴素贝叶斯文本分类模型，可以实现上述客服意图分类能力。使用与线性模型相同的训练集拟合 TF-IDF，特征非负，MultinomialNB 的 alpha=0.1。若验证集指标不达标，最多按预先固定的 alpha=0.05、0.01 尝试优化；不改变数据划分、标签映射或验收门槛。",
+            "schema_version": 1,
+            "start": 747
+          },
+          "title": "banking77-phase3.txt"
+        }
+      }
+    ],
+    "source": {
+      "id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1",
+      "sha256": "60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1",
+      "span": {
+        "end": 911,
+        "quote": "TF-IDF + MultinomialNB 属于朴素贝叶斯文本分类模型，可以实现上述客服意图分类能力。使用与线性模型相同的训练集拟合 TF-IDF，特征非负，MultinomialNB 的 alpha=0.1。若验证集指标不达标，最多按预先固定的 alpha=0.05、0.01 尝试优化；不改变数据划分、标签映射或验收门槛。",
+        "schema_version": 1,
+        "start": 747
+      },
+      "title": "banking77-phase3.txt"
+    }
+  },
+  {
+    "record": {
+      "conditions": {
+        "data_kind": "text",
+        "requirements": [
+          "supervised labels"
+        ],
+        "schema_version": 1,
+        "task_types": [
+          "multiclass_classification"
+        ]
+      },
+      "description": "Classifies customer intents from English text into 77 predefined categories.",
+      "id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:capability:intent_classification",
+      "inputs": [
+        "text",
+        "training labels"
+      ],
+      "metrics": [
+        "Macro-F1",
+        "Accuracy",
+        "Precision",
+        "Recall",
+        "F1",
+        "Confusion Matrix"
+      ],
+      "name": "Intent Classification",
+      "outputs": [
+        "intent category",
+        "probabilities in fixed order"
+      ],
+      "schema_version": 1,
+      "source_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1",
+      "source_span": {
+        "end": 424,
+        "quote": "客服意图分类能力接收英文文本和训练标签，输出意图类别及按固定类别顺序排列的概率。适用条件是有监督标签的文本多分类。使用固定数据版本与类别映射；仅在训练集拟合词表和 IDF。评价指标为 Macro-F1 与 Accuracy，同时报告逐类 Precision/Recall/F1 和混淆矩阵；阈值通过训练/验证基线校准并在最终测试前冻结。",
+        "schema_version": 1,
+        "start": 256
+      },
+      "type": "Capability"
+    },
+    "relations": [
+      {
+        "record": {
+          "head_id": "source:0f6f4d2b33ae436d595adc2d5525db28e05b89ff646d15bc5d6e459027c99286:task",
+          "id": "source:0f6f4d2b33ae436d595adc2d5525db28e05b89ff646d15bc5d6e459027c99286:relation:4",
+          "schema_version": 1,
+          "source_id": "source:0f6f4d2b33ae436d595adc2d5525db28e05b89ff646d15bc5d6e459027c99286",
+          "source_span": {
+            "end": 5091,
+            "quote": "{\"candidate\":{\"attempt\":0,\"code_hash\":\"48ce0fbf6d9a651fc6ba087c25ce577b77e0e7511fc84497fb118b222421bd3e\",\"implementation_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9:candidate\",\"parent_id\":null,\"plan_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9:plan\",\"schema_version\":1},\"code_hash\":\"48ce0fbf6d9a651fc6ba087c25ce577b77e0e7511fc84497fb118b222421bd3e\",\"evaluation_scope\":\"validation_only\",\"execution_evidence\":[\"/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase4-verification-20261029-02/mock-3-on/candidates/text_logistic/attempt-0/validation-execution/execution.json\"],\"experience_usage\":{\"enabled\":true,\"excluded\":[],\"interpretation\":\"Delivery and model-declared use are traceable; causality requires controlled comparison.\",\"matches\":[{\"experience_id\":\"source:b76667cea3ed76845a4b7234d07fc8517bd657e22d1b65d215e15eee9153f963:experience\",\"failure_category\":\"worker_ValueError\",\"guidance\":\"fit/predict 接收 pandas DataFrame。将 TfidfVectorizer 放在 ColumnTransformer 中，使用 config['text_features'][0] 这个字符串列选择器得到一维文本，再连接分类器。保留既定 TF-IDF 与分类器参数，词表/IDF 只在训练集拟合。\",\"match_reason\":\"verified repair; exact task, algorithm, fields, data and frozen protocol match\",\"matched_scope\":{\"algorithm\":\"text_logistic\",\"config_hash\":\"ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42\",\"data_fingerprint\":\"e394adeb965f707d2f3036f95999165ed3d0d43c15a879341c912cbdbb953c79\",\"data_kind\":\"text\",\"input_container\":\"pandas_dataframe\",\"schema_version\":1,\"split_id\":\"split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e\",\"task_profile\":\"banking77\",\"task_type\":\"multiclass_classification\",\"text_features\":[\"text\"]},\"rule\":\"text_dataframe_adapter\",\"source_run_ids\":[\"source:e07f4ba322366209482f45b28dcf214d96d3e673b1aba5d658bff4aa892eecd6:validation\",\"source:eba0bdd0d7df6bf940ee372d81d7cb48d035212db6a356d24e0608cdc749d4ee:validation\"]}],\"model_decisions\":[{\"decision\":\"adopted\",\"experience_id\":\"source:b76667cea3ed76845a4b7234d07fc8517bd657e22d1b65d215e15eee9153f963:experience\",\"reason\":\"显式 Mock：输出固定的、符合文本适配经验的模板；不代表模型推理或收益。\",\"schema_version\":1}],\"observed_rule_satisfied\":false},\"plan\":{\"algorithm_id\":\"source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_logistic_regression\",\"dependencies\":[\"scikit-learn\"],\"evidence_ids\":[\"source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_logistic_regression\",\"source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:capability:intent_classification\"],\"plan_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9:plan\",\"preprocessing\":[\"training_only_tfidf\",\"frozen_class_mapping\"],\"schema_version\":1,\"task_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9:task\"},\"search_summary\":null,\"status\":\"failed\",\"task\":{\"class_labels\":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76],\"constraints\":{\"allowed_algorithms\":[],\"candidate_limit\":1,\"execution\":{\"backend\":\"docker\",\"cpus\":2,\"fail_closed\":true,\"memory_mib\":4096,\"network\":false,\"schema_version\":1,\"timeout_seconds\":120},\"max_repairs_per_candidate\":1,\"schema_version\":1},\"data_fingerprint\":\"e394adeb965f707d2f3036f95999165ed3d0d43c15a879341c912cbdbb953c79\",\"description\":\"为另一个调用方复用相同 BANKING77 输入协议，请生成并验证可接收 DataFrame 的 77 类英文客服意图分类组件。\",\"feature_schema\":[{\"dtype\":\"text\",\"name\":\"text\",\"nullable\":false,\"schema_version\":1}],\"metrics\":[{\"direction\":\"maximize\",\"name\":\"macro_f1\",\"schema_version\":1,\"threshold\":0.82}],\"schema_version\":1,\"seed\":42,\"split_id\":\"split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e\",\"target\":\"intent\",\"task_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9:task\",\"task_type\":\"multiclass_classification\"},\"validation\":{\"code_hash\":\"48ce0fbf6d9a651fc6ba087c25ce577b77e0e7511fc84497fb118b222421bd3e\",\"config_hash\":\"ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42\",\"error_category\":\"worker_ValueError\",\"final_test_evaluated\":false,\"functional\":{\"details\":\"worker_ValueError\",\"schema_version\":1,\"status\":\"failed\"},\"implementation_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9:candidate\",\"interface\":{\"details\":\"尚未执行\",\"schema_version\":1,\"status\":\"not_run\"},\"metrics\":{\"details\":\"尚未执行\",\"schema_version\":1,\"status\":\"not_run\"},\"report_paths\":[\"/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase4-verification-20261029-02/mock-3-on/candidates/text_logistic/attempt-0/report.json\",\"/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase4-verification-20261029-02/mock-3-on/candidates/text_logistic/attempt-0/report.md\"],\"resources\":{\"elapsed_seconds\":0.31339191700001834,\"peak_memory_mib\":155.99609375,\"schema_version\":1},\"run_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9:validation\",\"schema_version\":1,\"split_id\":\"split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e\",\"stability\":{\"details\":\"尚未执行\",\"schema_version\":1,\"status\":\"not_run\"},\"status\":\"failed\",\"test_metrics\":{},\"validation_metrics\":{}},\"workflow_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9\"}",
+            "schema_version": 1,
+            "start": 0
+          },
+          "tail_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:capability:intent_classification",
+          "type": "REQUIRES"
+        },
+        "source": {
+          "id": "source:0f6f4d2b33ae436d595adc2d5525db28e05b89ff646d15bc5d6e459027c99286",
+          "sha256": "0f6f4d2b33ae436d595adc2d5525db28e05b89ff646d15bc5d6e459027c99286",
+          "span": {
+            "end": 5091,
+            "quote": "{\"candidate\":{\"attempt\":0,\"code_hash\":\"48ce0fbf6d9a651fc6ba087c25ce577b77e0e7511fc84497fb118b222421bd3e\",\"implementation_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9:candidate\",\"parent_id\":null,\"plan_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9:plan\",\"schema_version\":1},\"code_hash\":\"48ce0fbf6d9a651fc6ba087c25ce577b77e0e7511fc84497fb118b222421bd3e\",\"evaluation_scope\":\"validation_only\",\"execution_evidence\":[\"/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase4-verification-20261029-02/mock-3-on/candidates/text_logistic/attempt-0/validation-execution/execution.json\"],\"experience_usage\":{\"enabled\":true,\"excluded\":[],\"interpretation\":\"Delivery and model-declared use are traceable; causality requires controlled comparison.\",\"matches\":[{\"experience_id\":\"source:b76667cea3ed76845a4b7234d07fc8517bd657e22d1b65d215e15eee9153f963:experience\",\"failure_category\":\"worker_ValueError\",\"guidance\":\"fit/predict 接收 pandas DataFrame。将 TfidfVectorizer 放在 ColumnTransformer 中，使用 config['text_features'][0] 这个字符串列选择器得到一维文本，再连接分类器。保留既定 TF-IDF 与分类器参数，词表/IDF 只在训练集拟合。\",\"match_reason\":\"verified repair; exact task, algorithm, fields, data and frozen protocol match\",\"matched_scope\":{\"algorithm\":\"text_logistic\",\"config_hash\":\"ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42\",\"data_fingerprint\":\"e394adeb965f707d2f3036f95999165ed3d0d43c15a879341c912cbdbb953c79\",\"data_kind\":\"text\",\"input_container\":\"pandas_dataframe\",\"schema_version\":1,\"split_id\":\"split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e\",\"task_profile\":\"banking77\",\"task_type\":\"multiclass_classification\",\"text_features\":[\"text\"]},\"rule\":\"text_dataframe_adapter\",\"source_run_ids\":[\"source:e07f4ba322366209482f45b28dcf214d96d3e673b1aba5d658bff4aa892eecd6:validation\",\"source:eba0bdd0d7df6bf940ee372d81d7cb48d035212db6a356d24e0608cdc749d4ee:validation\"]}],\"model_decisions\":[{\"decision\":\"adopted\",\"experience_id\":\"source:b76667cea3ed76845a4b7234d07fc8517bd657e22d1b65d215e15eee9153f963:experience\",\"reason\":\"显式 Mock：输出固定的、符合文本适配经验的模板；不代表模型推理或收益。\",\"schema_version\":1}],\"observed_rule_satisfied\":false},\"plan\":{\"algorithm_id\":\"source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_logistic_regression\",\"dependencies\":[\"scikit-learn\"],\"evidence_ids\":[\"source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_logistic_regression\",\"source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:capability:intent_classification\"],\"plan_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9:plan\",\"preprocessing\":[\"training_only_tfidf\",\"frozen_class_mapping\"],\"schema_version\":1,\"task_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9:task\"},\"search_summary\":null,\"status\":\"failed\",\"task\":{\"class_labels\":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76],\"constraints\":{\"allowed_algorithms\":[],\"candidate_limit\":1,\"execution\":{\"backend\":\"docker\",\"cpus\":2,\"fail_closed\":true,\"memory_mib\":4096,\"network\":false,\"schema_version\":1,\"timeout_seconds\":120},\"max_repairs_per_candidate\":1,\"schema_version\":1},\"data_fingerprint\":\"e394adeb965f707d2f3036f95999165ed3d0d43c15a879341c912cbdbb953c79\",\"description\":\"为另一个调用方复用相同 BANKING77 输入协议，请生成并验证可接收 DataFrame 的 77 类英文客服意图分类组件。\",\"feature_schema\":[{\"dtype\":\"text\",\"name\":\"text\",\"nullable\":false,\"schema_version\":1}],\"metrics\":[{\"direction\":\"maximize\",\"name\":\"macro_f1\",\"schema_version\":1,\"threshold\":0.82}],\"schema_version\":1,\"seed\":42,\"split_id\":\"split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e\",\"target\":\"intent\",\"task_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9:task\",\"task_type\":\"multiclass_classification\"},\"validation\":{\"code_hash\":\"48ce0fbf6d9a651fc6ba087c25ce577b77e0e7511fc84497fb118b222421bd3e\",\"config_hash\":\"ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42\",\"error_category\":\"worker_ValueError\",\"final_test_evaluated\":false,\"functional\":{\"details\":\"worker_ValueError\",\"schema_version\":1,\"status\":\"failed\"},\"implementation_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9:candidate\",\"interface\":{\"details\":\"尚未执行\",\"schema_version\":1,\"status\":\"not_run\"},\"metrics\":{\"details\":\"尚未执行\",\"schema_version\":1,\"status\":\"not_run\"},\"report_paths\":[\"/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase4-verification-20261029-02/mock-3-on/candidates/text_logistic/attempt-0/report.json\",\"/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase4-verification-20261029-02/mock-3-on/candidates/text_logistic/attempt-0/report.md\"],\"resources\":{\"elapsed_seconds\":0.31339191700001834,\"peak_memory_mib\":155.99609375,\"schema_version\":1},\"run_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9:validation\",\"schema_version\":1,\"split_id\":\"split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e\",\"stability\":{\"details\":\"尚未执行\",\"schema_version\":1,\"status\":\"not_run\"},\"status\":\"failed\",\"test_metrics\":{},\"validation_metrics\":{}},\"workflow_id\":\"workflow:fbb3e519d2a946e286002b9b1e4d0aa9\"}",
+            "schema_version": 1,
+            "start": 0
+          },
+          "title": "workflow:fbb3e519d2a946e286002b9b1e4d0aa9.json"
+        }
+      },
+      {
+        "record": {
+          "head_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_logistic_regression",
+          "id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:relation:algorithm_implements_capability_tfidf_logistic",
+          "schema_version": 1,
+          "source_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1",
+          "source_span": {
+            "end": 628,
+            "quote": "TF-IDF + Logistic Regression 属于线性文本分类模型，可以实现上述客服意图分类能力。使用词级一元和二元 TF-IDF、sublinear_tf=True、max_features=30000；LogisticRegression 的 C=4.0、max_iter=500、random_state=42。特征提取与分类器放在同一 Pipeline，适用于上述英文文本多分类任务。",
+            "schema_version": 1,
+            "start": 426
+          },
+          "tail_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:capability:intent_classification",
+          "type": "IMPLEMENTS"
+        },
+        "source": {
+          "id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1",
+          "sha256": "60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1",
+          "span": {
+            "end": 628,
+            "quote": "TF-IDF + Logistic Regression 属于线性文本分类模型，可以实现上述客服意图分类能力。使用词级一元和二元 TF-IDF、sublinear_tf=True、max_features=30000；LogisticRegression 的 C=4.0、max_iter=500、random_state=42。特征提取与分类器放在同一 Pipeline，适用于上述英文文本多分类任务。",
+            "schema_version": 1,
+            "start": 426
+          },
+          "title": "banking77-phase3.txt"
+        }
+      },
+      {
+        "record": {
+          "head_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:tfidf_multinomialnb",
+          "id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:relation:algorithm_implements_capability_tfidf_multinomialnb",
+          "schema_version": 1,
+          "source_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1",
+          "source_span": {
+            "end": 911,
+            "quote": "TF-IDF + MultinomialNB 属于朴素贝叶斯文本分类模型，可以实现上述客服意图分类能力。使用与线性模型相同的训练集拟合 TF-IDF，特征非负，MultinomialNB 的 alpha=0.1。若验证集指标不达标，最多按预先固定的 alpha=0.05、0.01 尝试优化；不改变数据划分、标签映射或验收门槛。",
+            "schema_version": 1,
+            "start": 747
+          },
+          "tail_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:capability:intent_classification",
+          "type": "IMPLEMENTS"
+        },
+        "source": {
+          "id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1",
+          "sha256": "60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1",
+          "span": {
+            "end": 911,
+            "quote": "TF-IDF + MultinomialNB 属于朴素贝叶斯文本分类模型，可以实现上述客服意图分类能力。使用与线性模型相同的训练集拟合 TF-IDF，特征非负，MultinomialNB 的 alpha=0.1。若验证集指标不达标，最多按预先固定的 alpha=0.05、0.01 尝试优化；不改变数据划分、标签映射或验收门槛。",
+            "schema_version": 1,
+            "start": 747
+          },
+          "title": "banking77-phase3.txt"
+        }
+      },
+      {
+        "record": {
+          "head_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:task:banking77_intent_classification",
+          "id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:relation:task_requires_capability",
+          "schema_version": 1,
+          "source_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1",
+          "source_span": {
+            "end": 424,
+            "quote": "客服意图分类能力接收英文文本和训练标签，输出意图类别及按固定类别顺序排列的概率。适用条件是有监督标签的文本多分类。使用固定数据版本与类别映射；仅在训练集拟合词表和 IDF。评价指标为 Macro-F1 与 Accuracy，同时报告逐类 Precision/Recall/F1 和混淆矩阵；阈值通过训练/验证基线校准并在最终测试前冻结。",
+            "schema_version": 1,
+            "start": 256
+          },
+          "tail_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:capability:intent_classification",
+          "type": "REQUIRES"
+        },
+        "source": {
+          "id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1",
+          "sha256": "60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1",
+          "span": {
+            "end": 424,
+            "quote": "客服意图分类能力接收英文文本和训练标签，输出意图类别及按固定类别顺序排列的概率。适用条件是有监督标签的文本多分类。使用固定数据版本与类别映射；仅在训练集拟合词表和 IDF。评价指标为 Macro-F1 与 Accuracy，同时报告逐类 Precision/Recall/F1 和混淆矩阵；阈值通过训练/验证基线校准并在最终测试前冻结。",
+            "schema_version": 1,
+            "start": 256
+          },
+          "title": "banking77-phase3.txt"
+        }
+      }
+    ],
+    "source": {
+      "id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1",
+      "sha256": "60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1",
+      "span": {
+        "end": 424,
+        "quote": "客服意图分类能力接收英文文本和训练标签，输出意图类别及按固定类别顺序排列的概率。适用条件是有监督标签的文本多分类。使用固定数据版本与类别映射；仅在训练集拟合词表和 IDF。评价指标为 Macro-F1 与 Accuracy，同时报告逐类 Precision/Recall/F1 和混淆矩阵；阈值通过训练/验证基线校准并在最终测试前冻结。",
+        "schema_version": 1,
+        "start": 256
+      },
+      "title": "banking77-phase3.txt"
+    }
+  }
+]

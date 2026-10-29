@@ -1,0 +1,55 @@
+[
+  {
+    "algorithm": "text_logistic",
+    "attempt": 0,
+    "code_hash": "48ce0fbf6d9a651fc6ba087c25ce577b77e0e7511fc84497fb118b222421bd3e",
+    "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+    "error_category": "worker_ValueError",
+    "experience_usage": {
+      "enabled": false,
+      "excluded": [],
+      "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+      "matches": [],
+      "model_decisions": [],
+      "observed_rule_satisfied": false
+    },
+    "historical_failure": false,
+    "implementation_id": "source:b89b3451263a80929b08623f9730eb44f4918d42fec961eab2add0abc377b805:implementation",
+    "parent_id": null,
+    "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase4-verification-20261029-02/mock-4-off/candidates/text_logistic/attempt-0/report.json",
+    "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+    "status": "failed",
+    "test_attempted": false,
+    "validation_metrics": {},
+    "validation_run_id": "source:b89b3451263a80929b08623f9730eb44f4918d42fec961eab2add0abc377b805:validation",
+    "workflow_id": "workflow:d579b25a04804deb8ea630416f2dfb8b"
+  },
+  {
+    "algorithm": "text_logistic",
+    "attempt": 1,
+    "code_hash": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+    "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+    "error_category": null,
+    "experience_usage": {
+      "enabled": false,
+      "excluded": [],
+      "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+      "matches": [],
+      "model_decisions": [],
+      "observed_rule_satisfied": false
+    },
+    "historical_failure": false,
+    "implementation_id": "source:de6939b261cc1603f6c0cbdb6d39474cda5d77a584330d7a4fdd7dba33ac6c4b:implementation",
+    "parent_id": "source:b89b3451263a80929b08623f9730eb44f4918d42fec961eab2add0abc377b805:implementation",
+    "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase4-verification-20261029-02/mock-4-off/candidates/text_logistic/attempt-1/report.json",
+    "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+    "status": "validated",
+    "test_attempted": false,
+    "validation_metrics": {
+      "accuracy": 0.8734367183591796,
+      "macro_f1": 0.8729749094121176
+    },
+    "validation_run_id": "source:de6939b261cc1603f6c0cbdb6d39474cda5d77a584330d7a4fdd7dba33ac6c4b:validation",
+    "workflow_id": "workflow:229682dc4fff464c86d0ef9d6bc3128f"
+  }
+]

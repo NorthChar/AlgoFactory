@@ -12,6 +12,8 @@ Phase 3 的 BK07/A02/A03/X06 已通过 Mock 范围验收，见 [统一证据](..
 
 2026-10-29 真实 API 补验收已通过：T01/D07 更新为 verified，BK07/A02/A03/X06 增补真实证据，见 [最终严格复测](../examples/api-phase3/verification.json) 和 [全部三轮及用量](../examples/api-phase3/campaign-summary.json)。190 项回归测试全部通过，客户流失兼容仍通过；G2 的当前主线运行要求已满足。Phase 4 的 BK08/X05 保持 planned，实施入口见 [phase4.md](phase4.md)。
 
+Phase 4 的 BK08/X05 现已 verified，见 [统一证据](../examples/phase4/verification.json)：210 项回归零失败、零跳过，Mock/API 各两组同条件对照及客户流失兼容通过。两组均一次修复、相同验证指标；开启组 token 更多，未证明普遍收益。此前 planned 记录为历史阶段时点，当前范围见 [Phase 4 指南](phase4.md)，下一阶段为 Phase 5。
+
 | ID | 类别 | 要求 | 责任模块 | 交付或证据 | Phase | 验收方法 | Gate | 状态 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | B01 | 基础 | 完整的项目代码库 | 全模块 | Git 仓库 | 6 | 冷启动完整运行 | G1/G5 | planned |
@@ -32,7 +34,7 @@ Phase 3 的 BK07/A02/A03/X06 已通过 Mock 范围验收，见 [统一证据](..
 | T05 | 任务 | 功能、指标、稳定性、接口统一验证 | validation | 四维检查与配置；examples/phase2/verification.json（Mock 范围） | 2 | 正常及失败用例 | G1/G2/G3 | verified |
 | T06 | 任务 | 提供用户入口 | cli/app | CLI 与 Streamlit | 2/5 | 各自完成主流程 | G1/G2/G3 | implemented |
 | F01 | 流程 | 理解需求 | agents | 状态轨迹与对应产物；examples/phase2/verification.json（Mock 范围） | 1–4 | TaskSpec 校验 | G2/G3 | verified |
-| F02 | 流程 | 检索能力知识 | knowledge | 状态轨迹与对应产物；examples/phase2/verification.json（Mock 范围） | 1–4 | 返回实体与来源 ID | G2/G3 | verified |
+| F02 | 流程 | 检索能力知识 | knowledge | 状态轨迹与对应产物；examples/phase2/verification.json（Mock 范围）；examples/phase4/verification.json（210 项回归、经验隔离/幂等与当前兼容检查） | 1–4 | 返回实体与来源 ID | G2/G3 | verified |
 | F03 | 流程 | 规划方案 | planning | 状态轨迹与对应产物；examples/phase2/verification.json（Mock 范围） | 1–4 | AlgorithmPlan 与证据 | G2/G3 | verified |
 | F04 | 流程 | 生成代码 | generation | 状态轨迹与对应产物；examples/phase2/verification.json（Mock 范围） | 1–4 | Python 文件可加载 | G2/G3 | verified |
 | F05 | 流程 | 自动测试与评估 | validation | 状态轨迹与对应产物；examples/phase2/verification.json（Mock 范围） | 1–4 | 确定性指标 | G2/G3 | verified |
@@ -43,14 +45,14 @@ Phase 3 的 BK07/A02/A03/X06 已通过 Mock 范围验收，见 [统一证据](..
 | A03 | 进阶 | 多个候选自动比较 | planning/validation | 候选排名表；docs/phase3.md；examples/phase3/verification.json（Mock 范围）；examples/api-phase3/verification.json（真实 Azure API 修复/严格比较/最终测试/回写）；campaign-summary.json（含全部失败与 20 次请求） | 3 | 至少两候选同划分同预算 | G1/G2/G3 | verified |
 | A04 | 进阶 | 知识图谱可视化 | knowledge/app | 图谱视图与 GraphML | 5 | 显示实体及验证关联 | G1/G2/G3 | planned |
 | A05 | 进阶 | 自动验证报告 | reporting | JSON/Markdown；examples/phase2/verification.json（Mock 范围） | 2/5 | 字段完整、失败也报告 | G1/G2/G3 | verified |
-| A06 | 进阶 | 验证结果回写 | knowledge/experience | SQLite 运行记录；examples/phase2/verification.json（Mock 范围） | 2 | 事务与幂等重试 | G1/G2/G3 | verified |
+| A06 | 进阶 | 验证结果回写 | knowledge/experience | SQLite 运行记录；examples/phase2/verification.json（Mock 范围）；examples/phase4/verification.json（210 项回归、经验隔离/幂等与当前兼容检查） | 2 | 事务与幂等重试 | G1/G2/G3 | verified |
 | A07 | 进阶 | 不同任务类型验证配置 | configs/validation | 表格二分类、文本多分类；保留轻量回归配置计划 | 2.5/5 | Demo A/E；Phase 5 Demo D 真实运行 | G1/G2/G3 | planned |
 | A08 | 进阶 | 模板和指标插件 | plugins | 注册协议及插件样例 | 5 | 新增插件不改编排器 | G1/G2/G3 | planned |
 | X01 | 加分 | 图搜索、Beam Search 或 MCTS | planning | 候选预算优先 | — | 候选预算优先 | — | out_of_scope |
 | X02 | 加分 | 多智能体协作 | agents | 三角色独立输入输出与决策轨迹 | 3–5 | 三角色独立输入输出与决策轨迹 | G4 | planned |
 | X03 | 加分 | 真实仓库抽取 | knowledge | 额外复杂性暂缓 | — | 额外复杂性暂缓 | — | out_of_scope |
 | X04 | 加分 | 安全检查与沙箱 | execution | 非 root、禁网、限资源、超时、缺 Docker 拒绝；examples/phase2/verification.json（Mock 范围） | 2–5 | 真实容器正常/接口故障；超时/OOM/清理失败模拟测试 | G4 | verified |
-| X05 | 加分 | 失败分析与复用经验 | experience | Demo C 与检索开关对照 | 3–5 | Demo C 与检索开关对照 | G4 | planned |
+| X05 | 加分 | 失败分析与复用经验 | experience | Demo C 与检索开关对照；docs/phase4.md；examples/phase4/verification.json（Mock/API 各两组；机制通过，未观察到次数/指标收益） | 3–5 | Demo C 与检索开关对照 | G4 | verified |
 | X06 | 加分 | 能力版本管理 | experience | 父版本、散列、修改原因、报告关联；docs/phase3.md；examples/phase3/verification.json（Mock 范围）；examples/api-phase3/verification.json（真实 Azure API 修复/严格比较/最终测试/回写）；campaign-summary.json（含全部失败与 20 次请求） | 3–5 | 父版本、散列、修改原因、报告关联 | G4 | verified |
 | X07 | 加分 | 设计依据自然语言解释 | reporting | 解释引用真实知识与运行 ID | 3–5 | 解释引用真实知识与运行 ID | G4 | planned |
 | X08 | 加分 | 跨场景迁移 | orchestrator/validation | ADR-001、BK04/BK06：同一核心运行表格与文本任务；docs/phase25.md；examples/phase25/verification.json（G2.5 Mock 范围） | 2.5–5 | 同一提交及共用编排、隔离、评分/回写；两任务真实证据；不承诺经验跨业务提升 | G3/G4 | verified |
@@ -80,8 +82,8 @@ Phase 3 的 BK07/A02/A03/X06 已通过 Mock 范围验收，见 [统一证据](..
 | BK01 | 主线调整 | BANKING77 数据来源固定与防泄漏处理 | datasets/configs | 版本、许可、原始/处理后散列、去重清单及类别映射；docs/phase25.md；examples/phase25/verification.json（G2.5 Mock 范围） | 2.5 | 重复导入可复现；按 ADR-001 划分且词表只 fit 训练集 | G2.5/G3/G5 | verified |
 | BK02 | 主线调整 | 文本和多分类契约及独立验证 | schemas/execution/validation | 文本输入、77 类映射与概率矩阵、Macro-F1/逐类报告；docs/phase25.md；examples/phase25/verification.json（G2.5 Mock 范围） | 2.5 | 真实容器训练；输出对齐与标签隔离；非法输入拒绝 | G2.5/G2/G3 | verified |
 | BK03 | 主线调整 | BANKING77 主案例单候选闭环 | orchestrator/llm/generation | Demo A 代码、角色轨迹、四维报告和知识回写；docs/phase25.md；examples/phase25/verification.json（G2.5 Mock 范围） | 2.5 | Mock 真执行可重复；失败不接受；真实 API 另验收 | G2.5/G1/G2 | verified |
-| BK04 | 主线调整 | 客户流失轻量兼容性测试 | tests/configs | 已有合成数据、固定候选、改造后同一提交的新运行报告；docs/phase25.md；examples/phase25/verification.json（G2.5 Mock 范围）；examples/phase3/verification.json（持续兼容/证据） | 2.5–6 | 共用新编排与执行核心，二分类评分/回写通过；不扩充业务 UI | G2.5/G3/G5 | verified |
-| BK05 | 主线调整 | 任务数据与知识适用条件隔离 | knowledge/orchestrator/validation | 数据模式、字段、标签空间、指标规则及经验适用条件；docs/phase25.md；examples/phase25/verification.json（G2.5 Mock 范围）；Phase 2.5 不消费 Experience，经验复用另由 BK08 验收 | 2.5–4 | 拒绝错配字段/标签/阈值及不兼容经验 | G2.5/G3/G4 | verified |
+| BK04 | 主线调整 | 客户流失轻量兼容性测试 | tests/configs | 已有合成数据、固定候选、改造后同一提交的新运行报告；docs/phase25.md；examples/phase25/verification.json（G2.5 Mock 范围）；examples/phase3/verification.json（持续兼容/证据）；examples/phase4/verification.json（210 项回归、经验隔离/幂等与当前兼容检查） | 2.5–6 | 共用新编排与执行核心，二分类评分/回写通过；不扩充业务 UI | G2.5/G3/G5 | verified |
+| BK05 | 主线调整 | 任务数据与知识适用条件隔离 | knowledge/orchestrator/validation | 数据模式、字段、标签空间、指标规则及经验适用条件；docs/phase25.md；examples/phase25/verification.json（G2.5 Mock 范围）；Phase 2.5 不消费 Experience，经验复用另由 BK08 验收；examples/phase4/verification.json（210 项回归、经验隔离/幂等与当前兼容检查） | 2.5–4 | 拒绝错配字段/标签/阈值及不兼容经验 | G2.5/G3/G4 | verified |
 | BK06 | 主线调整 | 主案例与兼容案例验收证据索引 | scripts/reporting/docs | 命令、提交、时间、环境、代码/数据散列及两任务报告；docs/phase25.md；examples/phase25/verification.json（G2.5 Mock 范围）；examples/phase3/verification.json（持续兼容/证据） | 2.5–6 | 必需测试零跳过；重开记录和证据匹配；支撑 X08 | G2.5/G1/G3/G4/G5 | verified |
 | BK07 | 主线调整 | BANKING77 有界修复与候选比较 | planning/generation/validation | Demo B、多候选排名、代码父子版本与停止记录；docs/phase3.md；examples/phase3/verification.json（Mock 范围）；examples/api-phase3/verification.json（真实 Azure API 修复/严格比较/最终测试/回写）；campaign-summary.json（含全部失败与 20 次请求） | 3 | 至少两候选同协议；最多两次修复；客户流失兼容检查通过 | G2/G3 | verified |
-| BK08 | 主线调整 | BANKING77 已验证经验复用 | experience/knowledge | Demo C、检索引用及启用/关闭经验对照 | 4 | 同输入/划分/预算对照；不声称客户流失效果改善 | G4 | planned |
+| BK08 | 主线调整 | BANKING77 已验证经验复用 | experience/knowledge | Demo C、检索引用及启用/关闭经验对照；docs/phase4.md；examples/phase4/verification.json（Mock/API 各两组；机制通过，未观察到次数/指标收益） | 4 | 同输入/划分/预算对照；不声称客户流失效果改善 | G4 | verified |

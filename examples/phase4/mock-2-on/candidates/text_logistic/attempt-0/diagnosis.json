@@ -1,0 +1,29 @@
+{
+  "action": "REPAIR",
+  "category": "worker_ValueError",
+  "configuration_diagnostics": [],
+  "dimensions": {
+    "functional": {
+      "details": "worker_ValueError",
+      "schema_version": 1,
+      "status": "failed"
+    },
+    "interface": {
+      "details": "尚未执行",
+      "schema_version": 1,
+      "status": "not_run"
+    },
+    "metrics": {
+      "details": "尚未执行",
+      "schema_version": 1,
+      "status": "not_run"
+    },
+    "stability": {
+      "details": "尚未执行",
+      "schema_version": 1,
+      "status": "not_run"
+    }
+  },
+  "reason": "根据实际接口、执行或稳定性错误修复当前候选",
+  "validation_metrics": {}
+}

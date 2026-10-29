@@ -1,0 +1,34 @@
+{
+  "enabled": true,
+  "excluded": [],
+  "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+  "matches": [
+    {
+      "experience_id": "source:b76667cea3ed76845a4b7234d07fc8517bd657e22d1b65d215e15eee9153f963:experience",
+      "failure_category": "worker_ValueError",
+      "guidance": "fit/predict 接收 pandas DataFrame。将 TfidfVectorizer 放在 ColumnTransformer 中，使用 config['text_features'][0] 这个字符串列选择器得到一维文本，再连接分类器。保留既定 TF-IDF 与分类器参数，词表/IDF 只在训练集拟合。",
+      "match_reason": "verified repair; exact task, algorithm, fields, data and frozen protocol match",
+      "matched_scope": {
+        "algorithm": "text_logistic",
+        "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+        "data_fingerprint": "e394adeb965f707d2f3036f95999165ed3d0d43c15a879341c912cbdbb953c79",
+        "data_kind": "text",
+        "input_container": "pandas_dataframe",
+        "schema_version": 1,
+        "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+        "task_profile": "banking77",
+        "task_type": "multiclass_classification",
+        "text_features": [
+          "text"
+        ]
+      },
+      "rule": "text_dataframe_adapter",
+      "source_run_ids": [
+        "source:e07f4ba322366209482f45b28dcf214d96d3e673b1aba5d658bff4aa892eecd6:validation",
+        "source:eba0bdd0d7df6bf940ee372d81d7cb48d035212db6a356d24e0608cdc749d4ee:validation"
+      ]
+    }
+  ],
+  "model_decisions": [],
+  "observed_rule_satisfied": false
+}

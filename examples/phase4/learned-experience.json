@@ -1,0 +1,53 @@
+{
+  "experience": {
+    "id": "source:b76667cea3ed76845a4b7234d07fc8517bd657e22d1b65d215e15eee9153f963:experience",
+    "name": "BANKING77 DataFrame 文本适配修复",
+    "record": {
+      "action": "fit/predict 接收 pandas DataFrame。将 TfidfVectorizer 放在 ColumnTransformer 中，使用 config['text_features'][0] 这个字符串列选择器得到一维文本，再连接分类器。保留既定 TF-IDF 与分类器参数，词表/IDF 只在训练集拟合。",
+      "condition": "冻结 BANKING77 协议下的 DataFrame→一维文本接口",
+      "experience_id": "source:b76667cea3ed76845a4b7234d07fc8517bd657e22d1b65d215e15eee9153f963:experience",
+      "outcome": "修复后通过验证集四维检查；不表示普遍效果提升。",
+      "repair_evidence": {
+        "failed_code_hash": "ac0dfe38edbd8df9fe67122198adf4e18d5204ac92cfa09b61bd130447cea6ab",
+        "failed_implementation_id": "source:e07f4ba322366209482f45b28dcf214d96d3e673b1aba5d658bff4aa892eecd6:implementation",
+        "failed_run_id": "source:e07f4ba322366209482f45b28dcf214d96d3e673b1aba5d658bff4aa892eecd6:validation",
+        "failure_category": "worker_ValueError",
+        "repaired_code_hash": "082384b24d9380c213650ced5d58d24af0240e597d402bccd4f9fc11654700f9",
+        "repaired_implementation_id": "source:eba0bdd0d7df6bf940ee372d81d7cb48d035212db6a356d24e0608cdc749d4ee:implementation",
+        "rule": "text_dataframe_adapter",
+        "schema_version": 1,
+        "scope": {
+          "algorithm": "text_logistic",
+          "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+          "data_fingerprint": "e394adeb965f707d2f3036f95999165ed3d0d43c15a879341c912cbdbb953c79",
+          "data_kind": "text",
+          "input_container": "pandas_dataframe",
+          "schema_version": 1,
+          "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+          "task_profile": "banking77",
+          "task_type": "multiclass_classification",
+          "text_features": [
+            "text"
+          ]
+        }
+      },
+      "schema_version": 1,
+      "source_run_id": "source:eba0bdd0d7df6bf940ee372d81d7cb48d035212db6a356d24e0608cdc749d4ee:validation",
+      "verification_status": "verified"
+    },
+    "schema_version": 1,
+    "source_id": "source:b76667cea3ed76845a4b7234d07fc8517bd657e22d1b65d215e15eee9153f963",
+    "source_span": {
+      "end": 1608,
+      "quote": "{\"failed_report_sha256\":\"03557bb851222d8f3b0cc2076aa189cb4b0fa0f9a8686169c8fc7e5fe411dc7e\",\"limitation\":\"Observed repair on this frozen BANKING77 protocol; no causal or cross-business performance claim.\",\"method\":\"deterministic_adapter_delta_v1\",\"passed_validation_run_id\":\"source:eba0bdd0d7df6bf940ee372d81d7cb48d035212db6a356d24e0608cdc749d4ee:validation\",\"repair_evidence\":{\"failed_code_hash\":\"ac0dfe38edbd8df9fe67122198adf4e18d5204ac92cfa09b61bd130447cea6ab\",\"failed_implementation_id\":\"source:e07f4ba322366209482f45b28dcf214d96d3e673b1aba5d658bff4aa892eecd6:implementation\",\"failed_run_id\":\"source:e07f4ba322366209482f45b28dcf214d96d3e673b1aba5d658bff4aa892eecd6:validation\",\"failure_category\":\"worker_ValueError\",\"repaired_code_hash\":\"082384b24d9380c213650ced5d58d24af0240e597d402bccd4f9fc11654700f9\",\"repaired_implementation_id\":\"source:eba0bdd0d7df6bf940ee372d81d7cb48d035212db6a356d24e0608cdc749d4ee:implementation\",\"rule\":\"text_dataframe_adapter\",\"schema_version\":1,\"scope\":{\"algorithm\":\"text_logistic\",\"config_hash\":\"ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42\",\"data_fingerprint\":\"e394adeb965f707d2f3036f95999165ed3d0d43c15a879341c912cbdbb953c79\",\"data_kind\":\"text\",\"input_container\":\"pandas_dataframe\",\"schema_version\":1,\"split_id\":\"split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e\",\"task_profile\":\"banking77\",\"task_type\":\"multiclass_classification\",\"text_features\":[\"text\"]}},\"repaired_report_sha256\":\"fc222d83e3d7daffed9a73f1181a11307106352737bdd10de1ba341ea3e1f64a\",\"validation_metrics\":{\"accuracy\":0.8734367183591796,\"macro_f1\":0.8729749094121176}}",
+      "schema_version": 1,
+      "start": 0
+    },
+    "type": "Experience"
+  },
+  "inserted": {
+    "entities": 1,
+    "relations": 2,
+    "sources": 1
+  }
+}

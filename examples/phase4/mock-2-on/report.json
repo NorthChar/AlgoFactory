@@ -1,0 +1,627 @@
+{
+  "artifacts_sha256": {
+    "attempts.json": "cd965e06a25caaa23aa80eca1487b5853c948b5f686cb2affcc3adb245dabcb4",
+    "candidate.json": "d983c7c9a7d7ea0a981cb713f70511653c7c7f4567c32d36d5b197cf3616c6e8",
+    "candidate.py": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+    "candidates/text_logistic/attempt-0/builder-input.json": "9de0363045af4799d8bd0918d2948fa42a5fe9a5d1a8d1ee4d687f170a1d96b0",
+    "candidates/text_logistic/attempt-0/candidate.json": "98ea86249caa29d4e346e1680cd10b042bb1387cca3c6cff41b0e09b5ff2fe29",
+    "candidates/text_logistic/attempt-0/candidate.py": "48ce0fbf6d9a651fc6ba087c25ce577b77e0e7511fc84497fb118b222421bd3e",
+    "candidates/text_logistic/attempt-0/data-manifest.json": "5b520b475f5dc63877c0a03c35c32d42ef4aefe2284bd6f68f48222e4b9c6720",
+    "candidates/text_logistic/attempt-0/decisions.json": "c1cde75a662831dedb20fe2e8a50bd865e619f64e1cc39a1c199a63f3cd071a2",
+    "candidates/text_logistic/attempt-0/diagnosis.json": "d1ea16d74d29a5fe3c2ef5311c74c8bc1fa6ebd132bcfeb1614447491bf2588a",
+    "candidates/text_logistic/attempt-0/experience-retrieval.json": "4b19a898e521f6aad4acc5edb9b88e59cbb104553a19cfffc2968f5d368fc0fc",
+    "candidates/text_logistic/attempt-0/experience-use.json": "947d89bfc2ea7f8524bd981195e9c4a9951df38b542ce59f974d7f1e37d92dd7",
+    "candidates/text_logistic/attempt-0/knowledge-input.json": "282851d5338831b02872d63d61ba65c2a1ba337ad87cf3eff7ffbbce8cf9e2d3",
+    "candidates/text_logistic/attempt-0/plan-proposal.json": "5c270ce4d8dcae71602186626c52e8aef9a55467c5b1923fc532a13c57378662",
+    "candidates/text_logistic/attempt-0/plan.json": "5c270ce4d8dcae71602186626c52e8aef9a55467c5b1923fc532a13c57378662",
+    "candidates/text_logistic/attempt-0/protocol.json": "6e305c1f489dbedd152d47a5a751effef7764890b575e7e8c0725661ced70411",
+    "candidates/text_logistic/attempt-0/provider-audit.json": "2443c14544b24ef498e8cecf5dfc459da06d8631156c92999f009941b18b8ee0",
+    "candidates/text_logistic/attempt-0/report.json": "3eb553ed580b3ce077b3ea98365a5179fb8c65af0a3c2db37f4d9dd984108f6b",
+    "candidates/text_logistic/attempt-0/report.md": "7131f78dcb45df8f4a356e90ba540c9bed2627a39e8999428fc2825f3c85c45a",
+    "candidates/text_logistic/attempt-0/retrieval.json": "ec6e4919628243a8c4c57b82e07a271de78467c4eeb576862ba5b5ff9873adc5",
+    "candidates/text_logistic/attempt-0/task.json": "c1c2030a829428b3d915df6133062479c3e2f69b56d29987e658729f1b34db05",
+    "candidates/text_logistic/attempt-0/trace.json": "13cefc1363869ad8ef28e64e3a48e712ba9235ef900fa6bc22d016237bc3510b",
+    "candidates/text_logistic/attempt-0/validation-execution/cleanup.json": "1dfed281f2d33146a54e91faa69a4f0223ff829d434e14176f36f58d16199563",
+    "candidates/text_logistic/attempt-0/validation-execution/container-state.json": "6053f40292efa3ebe3ee09f87b20df4eb5d6e2c0c900fca24ca9a713580d790e",
+    "candidates/text_logistic/attempt-0/validation-execution/execution.json": "138818de106f805bb14ac87e83b47cdd9b64a4765953b821b32aa5aa2ff6f85b",
+    "candidates/text_logistic/attempt-0/validation-execution/predictions.json": "9e04134afcbc7bc9f62f3fa1840d3bcf3fa8c4f77c7905a84b67f00f69cd2b37",
+    "candidates/text_logistic/attempt-0/validation-execution/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "candidates/text_logistic/attempt-1/builder-input.json": "3e390ebcf2af4764f2375e0170d4db391f2db0268a7129fc0fe4bbcf3a295f55",
+    "candidates/text_logistic/attempt-1/candidate.json": "d983c7c9a7d7ea0a981cb713f70511653c7c7f4567c32d36d5b197cf3616c6e8",
+    "candidates/text_logistic/attempt-1/candidate.py": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+    "candidates/text_logistic/attempt-1/configuration-check.json": "77c14ee37cf7b4ae4ccb7aa0853bf4b99c9171d7f640ad8fea668ee2387c4c3a",
+    "candidates/text_logistic/attempt-1/data-manifest.json": "5b520b475f5dc63877c0a03c35c32d42ef4aefe2284bd6f68f48222e4b9c6720",
+    "candidates/text_logistic/attempt-1/decisions.json": "751c7fef3e363db688b3421ed4e6eb98759870ebe050067d51ceb6692daa37ba",
+    "candidates/text_logistic/attempt-1/experience-retrieval.json": "4b19a898e521f6aad4acc5edb9b88e59cbb104553a19cfffc2968f5d368fc0fc",
+    "candidates/text_logistic/attempt-1/experience-use.json": "172621317a04356aab5fc584e93bbe14aabeeb852039d8686b4362af3fef2c97",
+    "candidates/text_logistic/attempt-1/knowledge-input.json": "282851d5338831b02872d63d61ba65c2a1ba337ad87cf3eff7ffbbce8cf9e2d3",
+    "candidates/text_logistic/attempt-1/plan-proposal.json": "59d5ede5560f54d88ac1808d43e684d73d9d4cd47d462e40c182d39bf10a9d30",
+    "candidates/text_logistic/attempt-1/plan.json": "59d5ede5560f54d88ac1808d43e684d73d9d4cd47d462e40c182d39bf10a9d30",
+    "candidates/text_logistic/attempt-1/protocol.json": "6e305c1f489dbedd152d47a5a751effef7764890b575e7e8c0725661ced70411",
+    "candidates/text_logistic/attempt-1/provider-audit.json": "23574154e3a344d508a5ffde91ff617194eb81f7e6659e4956246033b2f074a3",
+    "candidates/text_logistic/attempt-1/repair-input.json": "4d78a0a9eb3708487225025c47a329016c4250a0afe50f7d4d1cf12ff833c222",
+    "candidates/text_logistic/attempt-1/report.json": "994367b54855cdeb2b0d5ffe7f64527ed7a49c90963bccad463ec619cc0cdffa",
+    "candidates/text_logistic/attempt-1/report.md": "a5382dfef74730ab3709f08738591b798c3ed5b18642380768caefb5d899fb96",
+    "candidates/text_logistic/attempt-1/retrieval.json": "c0a7bcba71060c43a73cefe6576e58e55f1f7ec782b6244c017ee72a8342fdc8",
+    "candidates/text_logistic/attempt-1/task.json": "55c80f771537565cc114231a971095a4f6b306cefc57978ac04f5fa37878f638",
+    "candidates/text_logistic/attempt-1/trace.json": "b37cf49c19bdc587b5b9452facc2ca6ab46197e2245b49759a600cc2bd5e7470",
+    "candidates/text_logistic/attempt-1/validation-class-details.json": "7867b5c516dc2a30c0da8f4193288e8303847d00933f1519f76401e21fe5296f",
+    "candidates/text_logistic/attempt-1/validation-execution/cleanup.json": "da3e480d303bd9c69999b96cb29e0e82820eedb7f1716378223511652ee1d520",
+    "candidates/text_logistic/attempt-1/validation-execution/container-state.json": "b7cd58f46a7ce5550a3b64f3bfd25ea0ccfb5a0d6ffb14e4e2ba7da42142d49c",
+    "candidates/text_logistic/attempt-1/validation-execution/execution.json": "fc10afff5ccb284fb6ad645f80fc08e2f05998b622caf75862a45b1f2ef379c1",
+    "candidates/text_logistic/attempt-1/validation-execution/predictions.json": "4325eccab2069e1823af6e9104a8b8282c526a985e54049634a17037d486b212",
+    "candidates/text_logistic/attempt-1/validation-execution/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "data-manifest.json": "5b520b475f5dc63877c0a03c35c32d42ef4aefe2284bd6f68f48222e4b9c6720",
+    "decisions.json": "299faf5736513571df8e5a1a7762f16cd844fa9b4be0ce955908a2f6d20572d3",
+    "experience-library.json": "7ac12c9a241891de8e25cf4210c41b9e87a656a87e7123a066f286ae3d04bd3b",
+    "plan.json": "59d5ede5560f54d88ac1808d43e684d73d9d4cd47d462e40c182d39bf10a9d30",
+    "protocol.json": "6e305c1f489dbedd152d47a5a751effef7764890b575e7e8c0725661ced70411",
+    "provider-audit.json": "23574154e3a344d508a5ffde91ff617194eb81f7e6659e4956246033b2f074a3",
+    "ranking.json": "8180233166a22a76ebf663937d2f70849aa55bd2a48d6dc528a2683f3d55bdfc",
+    "search-config.json": "41d0182fe45814d64796fdbc47f4016f5f860d2199b4ffb76ed4aae52715f4ad",
+    "task.json": "55c80f771537565cc114231a971095a4f6b306cefc57978ac04f5fa37878f638",
+    "trace.json": "8660c1834163d65c0cb6a3b47663af5f2e2af69f2b3bcec407ffd74cbfcb59e5",
+    "validation-class-details.json": "7867b5c516dc2a30c0da8f4193288e8303847d00933f1519f76401e21fe5296f"
+  },
+  "attempts": [
+    {
+      "algorithm": "text_logistic",
+      "attempt": 0,
+      "code_hash": "48ce0fbf6d9a651fc6ba087c25ce577b77e0e7511fc84497fb118b222421bd3e",
+      "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+      "error_category": "worker_ValueError",
+      "experience_usage": {
+        "enabled": true,
+        "excluded": [],
+        "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+        "matches": [
+          {
+            "experience_id": "source:b76667cea3ed76845a4b7234d07fc8517bd657e22d1b65d215e15eee9153f963:experience",
+            "failure_category": "worker_ValueError",
+            "guidance": "fit/predict 接收 pandas DataFrame。将 TfidfVectorizer 放在 ColumnTransformer 中，使用 config['text_features'][0] 这个字符串列选择器得到一维文本，再连接分类器。保留既定 TF-IDF 与分类器参数，词表/IDF 只在训练集拟合。",
+            "match_reason": "verified repair; exact task, algorithm, fields, data and frozen protocol match",
+            "matched_scope": {
+              "algorithm": "text_logistic",
+              "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+              "data_fingerprint": "e394adeb965f707d2f3036f95999165ed3d0d43c15a879341c912cbdbb953c79",
+              "data_kind": "text",
+              "input_container": "pandas_dataframe",
+              "schema_version": 1,
+              "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+              "task_profile": "banking77",
+              "task_type": "multiclass_classification",
+              "text_features": [
+                "text"
+              ]
+            },
+            "rule": "text_dataframe_adapter",
+            "source_run_ids": [
+              "source:e07f4ba322366209482f45b28dcf214d96d3e673b1aba5d658bff4aa892eecd6:validation",
+              "source:eba0bdd0d7df6bf940ee372d81d7cb48d035212db6a356d24e0608cdc749d4ee:validation"
+            ]
+          }
+        ],
+        "model_decisions": [
+          {
+            "decision": "adopted",
+            "experience_id": "source:b76667cea3ed76845a4b7234d07fc8517bd657e22d1b65d215e15eee9153f963:experience",
+            "reason": "显式 Mock：输出固定的、符合文本适配经验的模板；不代表模型推理或收益。",
+            "schema_version": 1
+          }
+        ],
+        "observed_rule_satisfied": false
+      },
+      "historical_failure": false,
+      "implementation_id": "source:266cc5ad1416a071a90ea67aec4890d3510ca966969d4ff7b9e7646e85cbc3e6:implementation",
+      "parent_id": null,
+      "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase4-verification-20261029-02/mock-2-on/candidates/text_logistic/attempt-0/report.json",
+      "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+      "status": "failed",
+      "test_attempted": false,
+      "validation_metrics": {},
+      "validation_run_id": "source:266cc5ad1416a071a90ea67aec4890d3510ca966969d4ff7b9e7646e85cbc3e6:validation",
+      "workflow_id": "workflow:d258c50dea324a0987b2f8b7a9e62e2d"
+    },
+    {
+      "algorithm": "text_logistic",
+      "attempt": 1,
+      "code_hash": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+      "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+      "error_category": null,
+      "experience_usage": {
+        "enabled": true,
+        "excluded": [],
+        "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+        "matches": [
+          {
+            "experience_id": "source:b76667cea3ed76845a4b7234d07fc8517bd657e22d1b65d215e15eee9153f963:experience",
+            "failure_category": "worker_ValueError",
+            "guidance": "fit/predict 接收 pandas DataFrame。将 TfidfVectorizer 放在 ColumnTransformer 中，使用 config['text_features'][0] 这个字符串列选择器得到一维文本，再连接分类器。保留既定 TF-IDF 与分类器参数，词表/IDF 只在训练集拟合。",
+            "match_reason": "verified repair; exact task, algorithm, fields, data and frozen protocol match",
+            "matched_scope": {
+              "algorithm": "text_logistic",
+              "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+              "data_fingerprint": "e394adeb965f707d2f3036f95999165ed3d0d43c15a879341c912cbdbb953c79",
+              "data_kind": "text",
+              "input_container": "pandas_dataframe",
+              "schema_version": 1,
+              "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+              "task_profile": "banking77",
+              "task_type": "multiclass_classification",
+              "text_features": [
+                "text"
+              ]
+            },
+            "rule": "text_dataframe_adapter",
+            "source_run_ids": [
+              "source:e07f4ba322366209482f45b28dcf214d96d3e673b1aba5d658bff4aa892eecd6:validation",
+              "source:eba0bdd0d7df6bf940ee372d81d7cb48d035212db6a356d24e0608cdc749d4ee:validation"
+            ]
+          }
+        ],
+        "model_decisions": [
+          {
+            "decision": "adopted",
+            "experience_id": "source:b76667cea3ed76845a4b7234d07fc8517bd657e22d1b65d215e15eee9153f963:experience",
+            "reason": "显式 Mock：输出固定的、符合文本适配经验的模板；不代表模型推理或收益。",
+            "schema_version": 1
+          }
+        ],
+        "observed_rule_satisfied": true
+      },
+      "historical_failure": false,
+      "implementation_id": "source:c1b01c1bd02415cb0d9cfc7ba6f9376fa0ae73f446512669e3322e2aebdfc2ab:implementation",
+      "parent_id": "source:266cc5ad1416a071a90ea67aec4890d3510ca966969d4ff7b9e7646e85cbc3e6:implementation",
+      "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase4-verification-20261029-02/mock-2-on/candidates/text_logistic/attempt-1/report.json",
+      "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+      "status": "validated",
+      "test_attempted": false,
+      "validation_metrics": {
+        "accuracy": 0.8734367183591796,
+        "macro_f1": 0.8729749094121176
+      },
+      "validation_run_id": "source:c1b01c1bd02415cb0d9cfc7ba6f9376fa0ae73f446512669e3322e2aebdfc2ab:validation",
+      "workflow_id": "workflow:aaa5ee508a8f4cc787f44587d6e0af0a"
+    }
+  ],
+  "budget_usage": {
+    "attempt_limit": 2,
+    "attempts": 2,
+    "provider_call_limit": 24,
+    "provider_calls": 6
+  },
+  "candidate": {
+    "attempt": 1,
+    "code_hash": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+    "implementation_id": "workflow:aaa5ee508a8f4cc787f44587d6e0af0a:candidate",
+    "parent_id": "source:266cc5ad1416a071a90ea67aec4890d3510ca966969d4ff7b9e7646e85cbc3e6:implementation",
+    "plan_id": "workflow:aaa5ee508a8f4cc787f44587d6e0af0a:plan",
+    "schema_version": 1
+  },
+  "candidate_stops": [],
+  "class_names": [
+    "Refund_not_showing_up",
+    "activate_my_card",
+    "age_limit",
+    "apple_pay_or_google_pay",
+    "atm_support",
+    "automatic_top_up",
+    "balance_not_updated_after_bank_transfer",
+    "balance_not_updated_after_cheque_or_cash_deposit",
+    "beneficiary_not_allowed",
+    "cancel_transfer",
+    "card_about_to_expire",
+    "card_acceptance",
+    "card_arrival",
+    "card_delivery_estimate",
+    "card_linking",
+    "card_not_working",
+    "card_payment_fee_charged",
+    "card_payment_not_recognised",
+    "card_payment_wrong_exchange_rate",
+    "card_swallowed",
+    "cash_withdrawal_charge",
+    "cash_withdrawal_not_recognised",
+    "change_pin",
+    "compromised_card",
+    "contactless_not_working",
+    "country_support",
+    "declined_card_payment",
+    "declined_cash_withdrawal",
+    "declined_transfer",
+    "direct_debit_payment_not_recognised",
+    "disposable_card_limits",
+    "edit_personal_details",
+    "exchange_charge",
+    "exchange_rate",
+    "exchange_via_app",
+    "extra_charge_on_statement",
+    "failed_transfer",
+    "fiat_currency_support",
+    "get_disposable_virtual_card",
+    "get_physical_card",
+    "getting_spare_card",
+    "getting_virtual_card",
+    "lost_or_stolen_card",
+    "lost_or_stolen_phone",
+    "order_physical_card",
+    "passcode_forgotten",
+    "pending_card_payment",
+    "pending_cash_withdrawal",
+    "pending_top_up",
+    "pending_transfer",
+    "pin_blocked",
+    "receiving_money",
+    "request_refund",
+    "reverted_card_payment?",
+    "supported_cards_and_currencies",
+    "terminate_account",
+    "top_up_by_bank_transfer_charge",
+    "top_up_by_card_charge",
+    "top_up_by_cash_or_cheque",
+    "top_up_failed",
+    "top_up_limits",
+    "top_up_reverted",
+    "topping_up_by_card",
+    "transaction_charged_twice",
+    "transfer_fee_charged",
+    "transfer_into_account",
+    "transfer_not_received_by_recipient",
+    "transfer_timing",
+    "unable_to_verify_identity",
+    "verify_my_identity",
+    "verify_source_of_funds",
+    "verify_top_up",
+    "virtual_card_not_working",
+    "visa_or_mastercard",
+    "why_verify_identity",
+    "wrong_amount_of_cash_received",
+    "wrong_exchange_rate_for_cash_withdrawal"
+  ],
+  "code_hash": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+  "data_fingerprint": "e394adeb965f707d2f3036f95999165ed3d0d43c15a879341c912cbdbb953c79",
+  "error_category": null,
+  "evaluation_scope": "comparison_validation_only",
+  "execution_evidence": [],
+  "experience_enabled": true,
+  "fault_fixture": "text_adapter",
+  "knowledge_ids": {
+    "dataset_id": "source:4b085affe72108942897218f3cc8cfc024b43324ac40393ab5bacb2c870fe2cf:dataset",
+    "implementation_id": "source:c1b01c1bd02415cb0d9cfc7ba6f9376fa0ae73f446512669e3322e2aebdfc2ab:implementation",
+    "task_id": "source:4b085affe72108942897218f3cc8cfc024b43324ac40393ab5bacb2c870fe2cf:task",
+    "validation_run_id": "source:4b085affe72108942897218f3cc8cfc024b43324ac40393ab5bacb2c870fe2cf:validation"
+  },
+  "learned_experiences": [],
+  "persisted": true,
+  "policy": {
+    "algorithms": [
+      "text_logistic"
+    ],
+    "attempt_budget": 2,
+    "max_repairs": 1,
+    "ranking": "macro_f1_desc_accuracy_desc_algorithm_order",
+    "schema_version": 1
+  },
+  "provider_mode": "mock",
+  "ranking": [
+    {
+      "algorithm": "text_logistic",
+      "attempt": 1,
+      "code_hash": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+      "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+      "error_category": null,
+      "experience_usage": {
+        "enabled": true,
+        "excluded": [],
+        "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+        "matches": [
+          {
+            "experience_id": "source:b76667cea3ed76845a4b7234d07fc8517bd657e22d1b65d215e15eee9153f963:experience",
+            "failure_category": "worker_ValueError",
+            "guidance": "fit/predict 接收 pandas DataFrame。将 TfidfVectorizer 放在 ColumnTransformer 中，使用 config['text_features'][0] 这个字符串列选择器得到一维文本，再连接分类器。保留既定 TF-IDF 与分类器参数，词表/IDF 只在训练集拟合。",
+            "match_reason": "verified repair; exact task, algorithm, fields, data and frozen protocol match",
+            "matched_scope": {
+              "algorithm": "text_logistic",
+              "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+              "data_fingerprint": "e394adeb965f707d2f3036f95999165ed3d0d43c15a879341c912cbdbb953c79",
+              "data_kind": "text",
+              "input_container": "pandas_dataframe",
+              "schema_version": 1,
+              "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+              "task_profile": "banking77",
+              "task_type": "multiclass_classification",
+              "text_features": [
+                "text"
+              ]
+            },
+            "rule": "text_dataframe_adapter",
+            "source_run_ids": [
+              "source:e07f4ba322366209482f45b28dcf214d96d3e673b1aba5d658bff4aa892eecd6:validation",
+              "source:eba0bdd0d7df6bf940ee372d81d7cb48d035212db6a356d24e0608cdc749d4ee:validation"
+            ]
+          }
+        ],
+        "model_decisions": [
+          {
+            "decision": "adopted",
+            "experience_id": "source:b76667cea3ed76845a4b7234d07fc8517bd657e22d1b65d215e15eee9153f963:experience",
+            "reason": "显式 Mock：输出固定的、符合文本适配经验的模板；不代表模型推理或收益。",
+            "schema_version": 1
+          }
+        ],
+        "observed_rule_satisfied": true
+      },
+      "historical_failure": false,
+      "implementation_id": "source:c1b01c1bd02415cb0d9cfc7ba6f9376fa0ae73f446512669e3322e2aebdfc2ab:implementation",
+      "parent_id": "source:266cc5ad1416a071a90ea67aec4890d3510ca966969d4ff7b9e7646e85cbc3e6:implementation",
+      "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase4-verification-20261029-02/mock-2-on/candidates/text_logistic/attempt-1/report.json",
+      "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+      "status": "validated",
+      "test_attempted": false,
+      "validation_metrics": {
+        "accuracy": 0.8734367183591796,
+        "macro_f1": 0.8729749094121176
+      },
+      "validation_run_id": "source:c1b01c1bd02415cb0d9cfc7ba6f9376fa0ae73f446512669e3322e2aebdfc2ab:validation",
+      "workflow_id": "workflow:aaa5ee508a8f4cc787f44587d6e0af0a"
+    }
+  ],
+  "search_config_hash": "7f1e47ee41537b3646e8cf3fb62c95a6db34a229bc2ba2d06ae1fc488cc9bac0",
+  "search_summary": {
+    "attempts": [
+      {
+        "algorithm": "text_logistic",
+        "attempt": 0,
+        "code_hash": "48ce0fbf6d9a651fc6ba087c25ce577b77e0e7511fc84497fb118b222421bd3e",
+        "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+        "error_category": "worker_ValueError",
+        "experience_usage": {
+          "enabled": true,
+          "excluded": [],
+          "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+          "matches": [
+            {
+              "experience_id": "source:b76667cea3ed76845a4b7234d07fc8517bd657e22d1b65d215e15eee9153f963:experience",
+              "failure_category": "worker_ValueError",
+              "guidance": "fit/predict 接收 pandas DataFrame。将 TfidfVectorizer 放在 ColumnTransformer 中，使用 config['text_features'][0] 这个字符串列选择器得到一维文本，再连接分类器。保留既定 TF-IDF 与分类器参数，词表/IDF 只在训练集拟合。",
+              "match_reason": "verified repair; exact task, algorithm, fields, data and frozen protocol match",
+              "matched_scope": {
+                "algorithm": "text_logistic",
+                "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+                "data_fingerprint": "e394adeb965f707d2f3036f95999165ed3d0d43c15a879341c912cbdbb953c79",
+                "data_kind": "text",
+                "input_container": "pandas_dataframe",
+                "schema_version": 1,
+                "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+                "task_profile": "banking77",
+                "task_type": "multiclass_classification",
+                "text_features": [
+                  "text"
+                ]
+              },
+              "rule": "text_dataframe_adapter",
+              "source_run_ids": [
+                "source:e07f4ba322366209482f45b28dcf214d96d3e673b1aba5d658bff4aa892eecd6:validation",
+                "source:eba0bdd0d7df6bf940ee372d81d7cb48d035212db6a356d24e0608cdc749d4ee:validation"
+              ]
+            }
+          ],
+          "model_decisions": [
+            {
+              "decision": "adopted",
+              "experience_id": "source:b76667cea3ed76845a4b7234d07fc8517bd657e22d1b65d215e15eee9153f963:experience",
+              "reason": "显式 Mock：输出固定的、符合文本适配经验的模板；不代表模型推理或收益。",
+              "schema_version": 1
+            }
+          ],
+          "observed_rule_satisfied": false
+        },
+        "historical_failure": false,
+        "implementation_id": "source:266cc5ad1416a071a90ea67aec4890d3510ca966969d4ff7b9e7646e85cbc3e6:implementation",
+        "parent_id": null,
+        "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase4-verification-20261029-02/mock-2-on/candidates/text_logistic/attempt-0/report.json",
+        "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+        "status": "failed",
+        "test_attempted": false,
+        "validation_metrics": {},
+        "validation_run_id": "source:266cc5ad1416a071a90ea67aec4890d3510ca966969d4ff7b9e7646e85cbc3e6:validation",
+        "workflow_id": "workflow:d258c50dea324a0987b2f8b7a9e62e2d"
+      },
+      {
+        "algorithm": "text_logistic",
+        "attempt": 1,
+        "code_hash": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+        "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+        "error_category": null,
+        "experience_usage": {
+          "enabled": true,
+          "excluded": [],
+          "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+          "matches": [
+            {
+              "experience_id": "source:b76667cea3ed76845a4b7234d07fc8517bd657e22d1b65d215e15eee9153f963:experience",
+              "failure_category": "worker_ValueError",
+              "guidance": "fit/predict 接收 pandas DataFrame。将 TfidfVectorizer 放在 ColumnTransformer 中，使用 config['text_features'][0] 这个字符串列选择器得到一维文本，再连接分类器。保留既定 TF-IDF 与分类器参数，词表/IDF 只在训练集拟合。",
+              "match_reason": "verified repair; exact task, algorithm, fields, data and frozen protocol match",
+              "matched_scope": {
+                "algorithm": "text_logistic",
+                "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+                "data_fingerprint": "e394adeb965f707d2f3036f95999165ed3d0d43c15a879341c912cbdbb953c79",
+                "data_kind": "text",
+                "input_container": "pandas_dataframe",
+                "schema_version": 1,
+                "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+                "task_profile": "banking77",
+                "task_type": "multiclass_classification",
+                "text_features": [
+                  "text"
+                ]
+              },
+              "rule": "text_dataframe_adapter",
+              "source_run_ids": [
+                "source:e07f4ba322366209482f45b28dcf214d96d3e673b1aba5d658bff4aa892eecd6:validation",
+                "source:eba0bdd0d7df6bf940ee372d81d7cb48d035212db6a356d24e0608cdc749d4ee:validation"
+              ]
+            }
+          ],
+          "model_decisions": [
+            {
+              "decision": "adopted",
+              "experience_id": "source:b76667cea3ed76845a4b7234d07fc8517bd657e22d1b65d215e15eee9153f963:experience",
+              "reason": "显式 Mock：输出固定的、符合文本适配经验的模板；不代表模型推理或收益。",
+              "schema_version": 1
+            }
+          ],
+          "observed_rule_satisfied": true
+        },
+        "historical_failure": false,
+        "implementation_id": "source:c1b01c1bd02415cb0d9cfc7ba6f9376fa0ae73f446512669e3322e2aebdfc2ab:implementation",
+        "parent_id": "source:266cc5ad1416a071a90ea67aec4890d3510ca966969d4ff7b9e7646e85cbc3e6:implementation",
+        "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase4-verification-20261029-02/mock-2-on/candidates/text_logistic/attempt-1/report.json",
+        "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+        "status": "validated",
+        "test_attempted": false,
+        "validation_metrics": {
+          "accuracy": 0.8734367183591796,
+          "macro_f1": 0.8729749094121176
+        },
+        "validation_run_id": "source:c1b01c1bd02415cb0d9cfc7ba6f9376fa0ae73f446512669e3322e2aebdfc2ab:validation",
+        "workflow_id": "workflow:aaa5ee508a8f4cc787f44587d6e0af0a"
+      }
+    ],
+    "budget_usage": {
+      "attempt_limit": 2,
+      "attempts": 2,
+      "provider_call_limit": 24,
+      "provider_calls": 6
+    },
+    "candidate_stops": [],
+    "policy": {
+      "algorithms": [
+        "text_logistic"
+      ],
+      "attempt_budget": 2,
+      "max_repairs": 1,
+      "ranking": "macro_f1_desc_accuracy_desc_algorithm_order",
+      "schema_version": 1
+    },
+    "ranking": [
+      {
+        "algorithm": "text_logistic",
+        "attempt": 1,
+        "code_hash": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+        "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+        "error_category": null,
+        "experience_usage": {
+          "enabled": true,
+          "excluded": [],
+          "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+          "matches": [
+            {
+              "experience_id": "source:b76667cea3ed76845a4b7234d07fc8517bd657e22d1b65d215e15eee9153f963:experience",
+              "failure_category": "worker_ValueError",
+              "guidance": "fit/predict 接收 pandas DataFrame。将 TfidfVectorizer 放在 ColumnTransformer 中，使用 config['text_features'][0] 这个字符串列选择器得到一维文本，再连接分类器。保留既定 TF-IDF 与分类器参数，词表/IDF 只在训练集拟合。",
+              "match_reason": "verified repair; exact task, algorithm, fields, data and frozen protocol match",
+              "matched_scope": {
+                "algorithm": "text_logistic",
+                "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+                "data_fingerprint": "e394adeb965f707d2f3036f95999165ed3d0d43c15a879341c912cbdbb953c79",
+                "data_kind": "text",
+                "input_container": "pandas_dataframe",
+                "schema_version": 1,
+                "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+                "task_profile": "banking77",
+                "task_type": "multiclass_classification",
+                "text_features": [
+                  "text"
+                ]
+              },
+              "rule": "text_dataframe_adapter",
+              "source_run_ids": [
+                "source:e07f4ba322366209482f45b28dcf214d96d3e673b1aba5d658bff4aa892eecd6:validation",
+                "source:eba0bdd0d7df6bf940ee372d81d7cb48d035212db6a356d24e0608cdc749d4ee:validation"
+              ]
+            }
+          ],
+          "model_decisions": [
+            {
+              "decision": "adopted",
+              "experience_id": "source:b76667cea3ed76845a4b7234d07fc8517bd657e22d1b65d215e15eee9153f963:experience",
+              "reason": "显式 Mock：输出固定的、符合文本适配经验的模板；不代表模型推理或收益。",
+              "schema_version": 1
+            }
+          ],
+          "observed_rule_satisfied": true
+        },
+        "historical_failure": false,
+        "implementation_id": "source:c1b01c1bd02415cb0d9cfc7ba6f9376fa0ae73f446512669e3322e2aebdfc2ab:implementation",
+        "parent_id": "source:266cc5ad1416a071a90ea67aec4890d3510ca966969d4ff7b9e7646e85cbc3e6:implementation",
+        "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase4-verification-20261029-02/mock-2-on/candidates/text_logistic/attempt-1/report.json",
+        "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+        "status": "validated",
+        "test_attempted": false,
+        "validation_metrics": {
+          "accuracy": 0.8734367183591796,
+          "macro_f1": 0.8729749094121176
+        },
+        "validation_run_id": "source:c1b01c1bd02415cb0d9cfc7ba6f9376fa0ae73f446512669e3322e2aebdfc2ab:validation",
+        "workflow_id": "workflow:aaa5ee508a8f4cc787f44587d6e0af0a"
+      }
+    ]
+  },
+  "selected_algorithm": "text_logistic",
+  "selected_implementation_id": "source:c1b01c1bd02415cb0d9cfc7ba6f9376fa0ae73f446512669e3322e2aebdfc2ab:implementation",
+  "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+  "status": "validated",
+  "task_profile": "banking77",
+  "test_attempted": false,
+  "thresholds": {
+    "macro_f1": 0.82
+  },
+  "validation": {
+    "code_hash": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+    "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+    "error_category": null,
+    "final_test_evaluated": false,
+    "functional": {
+      "details": "真实 fit/predict，长度、顺序和有限数值校验通过",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "implementation_id": "source:c1b01c1bd02415cb0d9cfc7ba6f9376fa0ae73f446512669e3322e2aebdfc2ab:implementation",
+    "interface": {
+      "details": "build_pipeline / fit / predict / predict_proba",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "metrics": {
+      "details": "验证集对照预先冻结门槛",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "report_paths": [
+      "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase4-verification-20261029-02/mock-2-on/report.json",
+      "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase4-verification-20261029-02/mock-2-on/report.md"
+    ],
+    "resources": {
+      "elapsed_seconds": 6.632612002999991,
+      "peak_memory_mib": 685.92578125,
+      "schema_version": 1
+    },
+    "run_id": "source:4b085affe72108942897218f3cc8cfc024b43324ac40393ab5bacb2c870fe2cf:validation",
+    "schema_version": 1,
+    "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+    "stability": {
+      "details": "{\"seed_repeat\": true, \"missing_column_rejected\": true, \"invalid_text_rejected\": true, \"unseen_text_handled\": true}",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "status": "passed",
+    "test_metrics": {},
+    "validation_metrics": {
+      "accuracy": 0.8734367183591796,
+      "macro_f1": 0.8729749094121176
+    }
+  },
+  "workflow_id": "search:4d4ef92edac14190a31390e87be4b84b"
+}

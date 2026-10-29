@@ -1,0 +1,74 @@
+[
+  {
+    "attempt": 1,
+    "http_status": null,
+    "input_tokens": null,
+    "mode": "mock",
+    "operation": "parse_task",
+    "output_tokens": null,
+    "reserved_cost_usd": 0.0,
+    "schema_version": 1,
+    "service_error_code": null,
+    "status": "ok"
+  },
+  {
+    "attempt": 1,
+    "http_status": null,
+    "input_tokens": null,
+    "mode": "mock",
+    "operation": "plan_algorithm",
+    "output_tokens": null,
+    "reserved_cost_usd": 0.0,
+    "schema_version": 1,
+    "service_error_code": null,
+    "status": "ok"
+  },
+  {
+    "attempt": 1,
+    "http_status": null,
+    "input_tokens": null,
+    "mode": "mock",
+    "operation": "generate_code",
+    "output_tokens": null,
+    "reserved_cost_usd": 0.0,
+    "schema_version": 1,
+    "service_error_code": null,
+    "status": "ok"
+  },
+  {
+    "attempt": 1,
+    "http_status": null,
+    "input_tokens": null,
+    "mode": "mock",
+    "operation": "parse_task",
+    "output_tokens": null,
+    "reserved_cost_usd": 0.0,
+    "schema_version": 1,
+    "service_error_code": null,
+    "status": "ok"
+  },
+  {
+    "attempt": 1,
+    "http_status": null,
+    "input_tokens": null,
+    "mode": "mock",
+    "operation": "plan_algorithm",
+    "output_tokens": null,
+    "reserved_cost_usd": 0.0,
+    "schema_version": 1,
+    "service_error_code": null,
+    "status": "ok"
+  },
+  {
+    "attempt": 1,
+    "http_status": null,
+    "input_tokens": null,
+    "mode": "mock",
+    "operation": "repair_code",
+    "output_tokens": null,
+    "reserved_cost_usd": 0.0,
+    "schema_version": 1,
+    "service_error_code": null,
+    "status": "ok"
+  }
+]

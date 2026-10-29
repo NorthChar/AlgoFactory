@@ -23,7 +23,7 @@
 | 安全停止 | 危险导入被静态检查拒绝，不进入 Docker 或最终测试 | [安全报告](../examples/phase3/unsafe-code/report.md) |
 | 客户流失兼容 | 同一提交、共用核心、固定候选仍通过 | [兼容报告](../examples/phase3/churn-compatibility/report.md) |
 
-所有子流程与最终流程可从重开的数据库查询，父子版本和 GraphML 无损往返已核验。修复故障为明确 fixture，未调用真实外部 LLM。下一步是 Phase 4 的经验提炼、适用条件检索及启用/关闭经验的对照验证。
+所有子流程与最终流程可从重开的数据库查询，父子版本和 GraphML 无损往返已核验。修复故障为明确 fixture，未调用真实外部 LLM。当时下一步是 Phase 4 的经验提炼、适用条件检索及启用/关闭经验的对照验证；现已由 [独立阶段证据](phase4.md) 完成。
 
 ## 实现及边界
 
@@ -117,4 +117,4 @@ ALGOFACTORY_DOCKER_TESTS=1 .venv/bin/python -m pytest -q --junitxml=runtime/live
 
 归档版失败产物中的 `predictions.json.gz` 须按散列还原后才能作为恢复输入；历史源码及 runtime 路径可能不在新机器存在，复现前需恢复相应失败目录和知识库。新机器冷启动仍由 Phase 6 验收。
 
-当前已具备进入 [Phase 4](phase4.md) 的条件；经验提炼与复用对照仍需独立实现和验收。
+该验收具备进入 Phase 4 的条件；经验提炼与复用对照现已完成独立实现和验收，结果与限制见 [Phase 4](phase4.md)。

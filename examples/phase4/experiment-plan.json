@@ -1,0 +1,34 @@
+{
+  "api_initial_failure_hash": "ac0dfe38edbd8df9fe67122198adf4e18d5204ac92cfa09b61bd130447cea6ab",
+  "api_max_new_calls_per_trial": 3,
+  "api_total_call_limit": 12,
+  "config_hash": "ff32d5a227258c2bc1fe1640179bffdc8a19686a92b10f13a7752967bcc64d42",
+  "data_fingerprint": "e394adeb965f707d2f3036f95999165ed3d0d43c15a879341c912cbdbb953c79",
+  "interpretation": "Paired descriptive workflow check, not a statistically powered performance study; unchanged prompts/configuration within each mode except the experience payload and unavoidable run identifiers.",
+  "knowledge_from_prior_verified_api": true,
+  "library_snapshot_hash": "506fc1afb88abdf25ff6fdf75dfdc8bde703b94a3cf02373ca9575afe56b2497",
+  "mock_initial_fault": "explicit text_adapter fixture; same faulty code regardless of toggle",
+  "order": [
+    false,
+    true,
+    true,
+    false
+  ],
+  "pairs": 2,
+  "policy": {
+    "algorithms": [
+      "text_logistic"
+    ],
+    "attempt_budget": 2,
+    "max_repairs": 1,
+    "ranking": "macro_f1_desc_accuracy_desc_algorithm_order",
+    "schema_version": 1
+  },
+  "request": "为另一个调用方复用相同 BANKING77 输入协议，请生成并验证可接收 DataFrame 的 77 类英文客服意图分类组件。",
+  "seed": 42,
+  "source_experience_id": "source:b76667cea3ed76845a4b7234d07fc8517bd657e22d1b65d215e15eee9153f963:experience",
+  "source_failed_report_sha256": "03557bb851222d8f3b0cc2076aa189cb4b0fa0f9a8686169c8fc7e5fe411dc7e",
+  "source_passed_report_sha256": "fc222d83e3d7daffed9a73f1181a11307106352737bdd10de1ba341ea3e1f64a",
+  "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+  "validation_only": true
+}

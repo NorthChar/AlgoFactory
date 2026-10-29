@@ -1,0 +1,74 @@
+[
+  {
+    "attempt": 1,
+    "http_status": null,
+    "input_tokens": 395,
+    "mode": "api",
+    "operation": "parse_task",
+    "output_tokens": 51,
+    "reserved_cost_usd": null,
+    "schema_version": 1,
+    "service_error_code": null,
+    "status": "ok"
+  },
+  {
+    "attempt": 1,
+    "http_status": null,
+    "input_tokens": 1569,
+    "mode": "api",
+    "operation": "plan_algorithm",
+    "output_tokens": 205,
+    "reserved_cost_usd": null,
+    "schema_version": 1,
+    "service_error_code": null,
+    "status": "ok"
+  },
+  {
+    "attempt": 1,
+    "http_status": null,
+    "input_tokens": 1727,
+    "mode": "api",
+    "operation": "repair_code",
+    "output_tokens": 235,
+    "reserved_cost_usd": null,
+    "schema_version": 1,
+    "service_error_code": null,
+    "status": "ok"
+  },
+  {
+    "attempt": 1,
+    "http_status": null,
+    "input_tokens": 395,
+    "mode": "api",
+    "operation": "parse_task",
+    "output_tokens": 51,
+    "reserved_cost_usd": null,
+    "schema_version": 1,
+    "service_error_code": null,
+    "status": "ok"
+  },
+  {
+    "attempt": 1,
+    "http_status": null,
+    "input_tokens": 1571,
+    "mode": "api",
+    "operation": "plan_algorithm",
+    "output_tokens": 207,
+    "reserved_cost_usd": null,
+    "schema_version": 1,
+    "service_error_code": null,
+    "status": "ok"
+  },
+  {
+    "attempt": 1,
+    "http_status": null,
+    "input_tokens": 2166,
+    "mode": "api",
+    "operation": "repair_code",
+    "output_tokens": 335,
+    "reserved_cost_usd": null,
+    "schema_version": 1,
+    "service_error_code": null,
+    "status": "ok"
+  }
+]
