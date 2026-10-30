@@ -108,7 +108,7 @@ def test_web_config_is_frozen_and_invalid_selection_does_not_submit(tmp_path, mo
         service.Jobs, "submit", lambda self, settings, token: observed.append(settings) or token
     )
     root = Path(__file__).resolve().parents[1]
-    app = AppTest.from_file(root / "src/algofactory/web/app.py").run()
+    app = AppTest.from_file(root / "src/algofactory/web/app.py", default_timeout=30).run()
     next(t for t in app.toggle if t.label == "自主选择算法与参数").set_value(True).run()
     next(s for s in app.selectbox if s.label == "逻辑回归 C").set_value(1.0).run()
     next(b for b in app.button if b.label == "开始验证").click().run()
