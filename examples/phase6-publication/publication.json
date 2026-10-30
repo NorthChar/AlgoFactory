@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "checked_at": "2026-10-30T11:50:12.603337+08:00",
+  "repository": "NorthChar/AlgoFactory",
+  "repository_id": 1439244398,
+  "url": "https://github.com/NorthChar/AlgoFactory",
+  "visibility": "private",
+  "default_branch": "main",
+  "published_delivery_commit": "24098381010e2cec6d07974d71358de10cbee306",
+  "remote_commit": "24098381010e2cec6d07974d71358de10cbee306",
+  "tree_sha": "9dd23dadbf2c0f16283665c8c7d30c43ba6da5db",
+  "remote_tree_sha": "9dd23dadbf2c0f16283665c8c7d30c43ba6da5db",
+  "history_commits": 29,
+  "local_cold_start_report": "examples/phase6/verification.json",
+  "pre_publication_audit": "examples/phase6-publication/pre-publication-audit.json",
+  "scope": "Initial tested delivery and its complete reachable history; final documentation commit is checked separately after push.",
+  "paid_api_calls": 0
+}

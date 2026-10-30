@@ -1,6 +1,6 @@
 # Phase 6 本地交付证据
 
-实现提交：`da42b56eb6b3dfce1db733679f8ebc024824d430`。233 项测试通过、零跳过，付费 API 请求为 0。GitHub 私有发布独立跟踪，尚未完成。
+实现提交：`da42b56eb6b3dfce1db733679f8ebc024824d430`。233 项测试通过、零跳过，付费 API 请求为 0。GitHub 私有发布已完成，见[独立发布证据](../phase6-publication/publication.json)；本目录中的原始运行报告保持验收时点的记录。
 
 - [统一报告](verification.json)：独立副本、新环境、wheel 安装、无缓存容器重建、命令、环境、提交及散列。
 - [安装记录](installation.json)与 [wheel](algofactory-0.6.0-py3-none-any.whl)。

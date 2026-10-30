@@ -1,6 +1,6 @@
 # AlgoFactory
 
-基于 BANKING77 的客服意图分类算法生成与验证。主线覆盖知识抽取、方案规划、代码生成、隔离训练、独立验证、有界修复、候选比较与经验回写。当前版本 0.6.0；Phase 1–5 已验收，Phase 6 本地冷启动与交付检查已通过（233 项测试、零跳过），私有 GitHub 发布待接续，见 [交付记录](docs/phase6.md)。
+基于 BANKING77 的客服意图分类算法生成与验证。主线覆盖知识抽取、方案规划、代码生成、隔离训练、独立验证、有界修复、候选比较与经验回写。当前版本 0.6.0；Phase 1–5 已验收，Phase 6 冷启动与私有 GitHub 交付已通过（233 项测试、零跳过），G1–G5 在声明范围内全部验收，见 [交付记录](docs/phase6.md)。
 
 ## 1. 项目背景和目标
 
@@ -43,7 +43,7 @@
 
 ## 5. 环境配置和运行方法
 
-已验证平台为 macOS ARM64、Python 3.11。需安装 uv，启动 Docker Desktop。首次安装依赖及构建镜像需要网络，生成代码执行时禁网。`uv.lock` 与三个 `requirements*.txt` 固定版本和散列，构建工具也固定版本。
+已验证平台为 macOS ARM64、Python 3.11。需安装 uv，启动 Docker Desktop。取得私有仓库访问权限后，可先运行 `git clone https://github.com/NorthChar/AlgoFactory.git`，进入 `AlgoFactory` 目录再执行下列命令。首次安装依赖及构建镜像需要网络，生成代码执行时禁网。`uv.lock` 与三个 `requirements*.txt` 固定版本和散列，构建工具也固定版本。
 
 ```sh
 uv sync --extra web --locked --python 3.11
@@ -113,4 +113,4 @@ BANKING77 来源 PolyAI，作者 Iñigo Casanueva、Tadas Temcinas、Daniela Ger
 
 先依据真实业务数据增加任务协议、字段适配、可信模板及独立指标，再评估是否扩充候选。可进一步验证更多失败类型的经验收益、中文/未知意图、其他硬件环境及生产访问控制。当前不包含任意自然语言任务自动适配、自动回复机器人、生产部署、Beam/MCTS 或跨业务效果保证。
 
-交付目标为私有仓库 `Northchar/AlgoFactory`；访问需要仓库授权。源码、文档及脱敏验收产物进入 Git，`.env`、本地运行数据、缓存及开发环境不上传。阶段提交与[需求矩阵 CSV](docs/requirements-matrix.csv)保持可追溯；仓库创建及远端提交验证记录在 [Phase 6](docs/phase6.md)。
+项目已发布至私有仓库 [NorthChar/AlgoFactory](https://github.com/NorthChar/AlgoFactory)，默认分支为 `main`；访问需要仓库授权。源码、文档及脱敏验收产物进入 Git，`.env`、本地运行数据、缓存及开发环境不上传。阶段提交与[需求矩阵 CSV](docs/requirements-matrix.csv)保持可追溯；仓库私有属性、远端提交及完整文件树已核对，见[发布证据](examples/phase6-publication/publication.json)和 [Phase 6](docs/phase6.md)。

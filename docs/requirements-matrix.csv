@@ -1,5 +1,5 @@
 ID,类别,要求,责任模块,交付或证据,Phase,验收方法,Gate,状态
-B01,基础,完整的项目代码库,全模块,Git 仓库；examples/phase6/verification.json（233 项、同机独立环境及 wheel、三任务/CLI/Web）；GitHub 私有发布待接续,6,冷启动完整运行,G1/G5,implemented
+B01,基础,完整的项目代码库,全模块,Git 仓库；examples/phase6/verification.json（233 项、同机独立环境及 wheel、三任务/CLI/Web）；examples/phase6-publication/publication.json（私有仓库、远端提交及文件树一致）,6,冷启动完整运行,G1/G5,verified
 B02,基础,示例行业数据、文档或模拟业务材料,data,数据生成器、CSV、业务文档；examples/phase2/verification.json（Mock 范围）,1–2,种子与数据指纹一致,G1/G5,verified
 B03,基础,能力知识图谱 schema 设计说明,schemas/knowledge,docs/architecture.md、schema,1,实体关系约束测试,G1/G5,verified
 B04,基础,知识抽取结果文件,knowledge,JSON、SQLite、GraphML,1,文档抽取与图谱导出重载,G1/G5,verified
@@ -41,10 +41,10 @@ X07,加分,设计依据自然语言解释,reporting,报告基于已接受 TaskSp
 X08,加分,跨场景迁移,orchestrator/validation,ADR-001、BK04/BK06：同一核心运行表格与文本任务；docs/phase25.md；examples/phase25/verification.json（G2.5 Mock 范围）；examples/phase5/verification.json（231 项回归、CLI/Web、三任务及异常证据）,2.5–5,同一提交及共用编排、隔离、评分/回写；两任务真实证据；不承诺经验跨业务提升,G3/G4,verified
 X09,加分,自动接口文档或部署配置,reporting,当前非交付重点,—,当前非交付重点,—,out_of_scope
 X10,加分,性能优化和资源消耗分析,execution,仅安全预算与记录，不承诺优化,—,仅安全预算与记录，不承诺优化,—,out_of_scope
-D01,开发,Git 清晰提交,Git,阶段提交历史；examples/phase6/verification.json（233 项、同机独立环境及 wheel、三任务/CLI/Web）,6,提交可追踪,G5,verified
+D01,开发,Git 清晰提交,Git,阶段提交历史；examples/phase6/verification.json（233 项、同机独立环境及 wheel、三任务/CLI/Web）；examples/phase6-publication/publication.json,6,提交可追踪,G5,verified
 D02,开发,完整文档,docs,README、指南、示例；examples/phase6/verification.json（233 项、同机独立环境及 wheel、三任务/CLI/Web）,6,十项内容齐全,G5,verified
 D03,开发,模块化及注释,src,契约、边界、说明；examples/phase6/verification.json（233 项、同机独立环境及 wheel、三任务/CLI/Web）,1–6,静态检查及代码评审,G5,verified
-D04,开发,本地复现,scripts,环境与复现记录；examples/phase6/verification.json（233 项、同机独立环境及 wheel、三任务/CLI/Web）,6,冷启动,G5,verified
+D04,开发,本地复现,scripts,环境与复现记录；examples/phase6/verification.json（233 项、同机独立环境及 wheel、三任务/CLI/Web）；examples/phase6-publication/publication.json,6,冷启动,G5,verified
 D05,开发,Python 主语言,src,Python 包；examples/phase6/verification.json（233 项、同机独立环境及 wheel、三任务/CLI/Web）,0–6,包入口运行,G5,verified
 D06,开发,工具选型说明,docs,实施计划及架构；examples/phase6/verification.json（233 项、同机独立环境及 wheel、三任务/CLI/Web）,0,每个核心工具有理由,G5,verified
 D07,开发,Mock/API 演示,llm,Provider 与 fixtures；examples/api-phase3/verification.json（真实 Azure API 修复/严格比较/最终测试/回写）；campaign-summary.json（含全部失败与 20 次请求）,1–2,不得静默降级,G5,verified
