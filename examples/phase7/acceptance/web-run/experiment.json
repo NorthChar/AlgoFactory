@@ -1,0 +1,19 @@
+{
+  "configuration": {
+    "algorithms": [
+      "text_logistic"
+    ],
+    "logistic_c": 1.0,
+    "max_features": 30000,
+    "nb_alpha": 0.1,
+    "nb_alpha_schedule": [
+      0.1,
+      0.05,
+      0.01
+    ],
+    "ngram_max": 2,
+    "optimization": "frozen_nb_schedule",
+    "schema_version": 1
+  },
+  "experiment_hash": "dcca5697b7353868a731cf7111ffe182592ca77b5da054477c2ca5c1e715ad1c"
+}

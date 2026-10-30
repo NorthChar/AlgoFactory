@@ -1,0 +1,8 @@
+2026-10-30 14:26:52.146 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+Traceback (most recent call last):
+  File "/Users/northchar/Documents/Codex/AlgoFactory/scripts/verify_phase7.py", line 183, in <module>
+    main()
+  File "/Users/northchar/Documents/Codex/AlgoFactory/scripts/verify_phase7.py", line 134, in main
+    assert not app.exception and any("概率" in d.value.columns for d in app.dataframe)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

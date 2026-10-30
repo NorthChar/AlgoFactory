@@ -1,6 +1,6 @@
 # AlgoFactory
 
-基于 BANKING77 的客服意图分类算法生成与验证。主线覆盖知识抽取、方案规划、代码生成、隔离训练、独立验证、有界修复、候选比较与经验回写。当前开发版本 **0.7.0**（交付复现进行中），增加数据浏览、隔离预测与可配置实验，见 [版本变更](CHANGELOG.md)。0.6.0 的 Phase 1–6 在声明范围内已验收（Phase 6 冷启动 233 项测试、零跳过），见 [历史交付记录](docs/phase6.md)；不将旧测试数量当作当前增量的全量验收。
+基于 BANKING77 的客服意图分类算法生成与验证。主线覆盖知识抽取、方案规划、代码生成、隔离训练、独立验证、有界修复、候选比较与经验回写。当前版本 **0.7.0**，增加数据浏览、隔离预测与可配置实验，见 [版本变更](CHANGELOG.md)。0.6.0 的 Phase 1–6 在声明范围内已验收（Phase 6 冷启动 233 项测试、零跳过），见 [历史交付记录](docs/phase6.md)；不将旧测试数量当作当前增量的全量验收。
 
 ## 1. 项目背景和目标
 
@@ -113,7 +113,7 @@ BANKING77 来源 PolyAI，作者 Iñigo Casanueva、Tadas Temcinas、Daniela Ger
 
 ## 10. 后续可扩展方向
 
-[Phase 7 可操作工作台](docs/phase7.md) 已实现数据与验证错误浏览、模型保存及单条英文预测、受限实验配置；7D 独立复现进行中。先按 [工作台使用指南](docs/workbench-guide.md) 完成一次无费用操作。范围决定见 [ADR-002](docs/decisions/0002-interactive-workbench.md)。
+[Phase 7 可操作工作台](docs/phase7.md) 已实现数据与验证错误浏览、模型保存及单条英文预测、受限实验配置；7A–7D 已验收：当前工作区和独立安装环境均为 262 项测试通过、零跳过，见 [增量证据](examples/phase7/verification.json)。先按 [工作台使用指南](docs/workbench-guide.md) 完成一次无费用操作。范围决定见 [ADR-002](docs/decisions/0002-interactive-workbench.md)。
 
 Phase 7 完成后再评估题目中的自动接口文档或资源消耗分析；任意数据上传、自然语言自动适配新任务、自动回复机器人、生产部署、Beam/MCTS 及跨业务效果保证不在当前增量范围内。
 

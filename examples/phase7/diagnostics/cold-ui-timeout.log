@@ -1,0 +1,76 @@
+..................................................................F..... [ 27%]
+........................................................................ [ 55%]
+........................................................................ [ 83%]
+............................................                             [100%]
+=================================== FAILURES ===================================
+_______ test_web_config_is_frozen_and_invalid_selection_does_not_submit ________
+
+tmp_path = PosixPath('/private/var/folders/nc/__qkxtr10ml31r2qk72yx_nc0000gn/T/pytest-of-northchar/pytest-83/test_web_config_is_frozen_and_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11fecee50>
+
+    def test_web_config_is_frozen_and_invalid_selection_does_not_submit(tmp_path, monkeypatch):
+        from streamlit.testing.v1 import AppTest
+    
+        import algofactory.web.service as service
+    
+        monkeypatch.setenv("ALGOFACTORY_PROJECT_ROOT", str(tmp_path))
+        observed = []
+        monkeypatch.setattr(
+            service.Jobs, "submit", lambda self, settings, token: observed.append(settings) or token
+        )
+        root = Path(__file__).resolve().parents[1]
+>       app = AppTest.from_file(root / "src/algofactory/web/app.py").run()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_experiments.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../environment/lib/python3.11/site-packages/streamlit/testing/v1/app_test.py:643: in run
+    return self._tree.run(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../environment/lib/python3.11/site-packages/streamlit/testing/v1/element_tree.py:3870: in run
+    result = self._runner._run(widget_states, timeout=timeout)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../environment/lib/python3.11/site-packages/streamlit/testing/v1/app_test.py:547: in _run
+    self._tree = script_runner.run(
+../environment/lib/python3.11/site-packages/streamlit/testing/v1/local_script_runner.py:183: in run
+    require_widgets_deltas(self, timeout)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+runner = LocalScriptRunner(forward_msg_queue=<streamlit.runtime.forward_msg_queue.ForwardMsgQueue object at 0x11f464090>, scrip...opilot"
+  installed_agents: "cursor"
+}
+}, {}, {'client_state': page_script_hash: "2be2fd3c114a79d4f7f2fd6db12b0e48"
+}])
+timeout = 3
+
+    def require_widgets_deltas(runner: LocalScriptRunner, timeout: float = 3) -> None:
+        """Wait for the given ScriptRunner to emit a completion event. If the timeout
+        is reached, the runner will be shutdown and an error will be thrown.
+        """
+    
+        t0 = time.time()
+        while time.time() - t0 < timeout:
+            time.sleep(0.001)
+            if runner.script_stopped():
+                return
+    
+        # If we get here, the runner hasn't yet completed before our
+        # timeout. Create an error string for debugging.
+        err_string = f"AppTest script run timed out after {timeout}(s)"
+    
+        # Shutdown the runner before throwing an error, so that the script
+        # doesn't hang forever.
+        runner.request_stop()
+        runner.join()
+    
+>       raise RuntimeError(err_string)
+E       RuntimeError: AppTest script run timed out after 3(s)
+
+../environment/lib/python3.11/site-packages/streamlit/testing/v1/local_script_runner.py:247: RuntimeError
+----------------------------- Captured stderr call -----------------------------
+2026-10-30 14:41:38.232 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+------------------------------ Captured log call -------------------------------
+WARNING  streamlit.runtime.scriptrunner_utils.script_run_context:script_run_context.py:508 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+=========================== short test summary info ============================
+FAILED tests/test_experiments.py::test_web_config_is_frozen_and_invalid_selection_does_not_submit
+1 failed, 259 passed in 59.71s

@@ -1,0 +1,12 @@
+{
+  "algorithms": [
+    "text_logistic",
+    "text_nb"
+  ],
+  "logistic_c": 4.0,
+  "max_features": 30000,
+  "nb_alpha": 0.1,
+  "ngram_max": 2,
+  "optimization": "frozen_nb_schedule",
+  "schema_version": 1
+}

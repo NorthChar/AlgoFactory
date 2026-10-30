@@ -1,0 +1,166 @@
+{
+  "checks": [],
+  "command": [
+    "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase7-release-verification/environment/bin/python",
+    "scripts/verify_phase7.py",
+    "--output-dir",
+    "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase7-release-verification/acceptance"
+  ],
+  "data": {
+    "archived_accuracy": 0.8734367183591796,
+    "archived_errors": 253,
+    "train": 7993,
+    "validation": 1999
+  },
+  "experiments": [
+    {
+      "code_hash": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+      "experiment_hash": "a39df525cb30074ebebc78305aa3a1cfa6c2eff90ab25b31c77769592c2552a2",
+      "validation_metrics": {
+        "accuracy": 0.8734367183591796,
+        "macro_f1": 0.8729749094121176
+      },
+      "workflow_id": "search:7e9fd58756c54165a48eadf297e578f2"
+    },
+    {
+      "code_hash": "ec421867614513cabdc5686e23ff4f4ab38b093e68b9b4d99dd415ed226141e5",
+      "experiment_hash": "c70275cd8891ea6d1f839d3012a58f4010b776eb358dbae6afd1ffb300eb38cc",
+      "validation_metrics": {
+        "accuracy": 0.8584292146073037,
+        "macro_f1": 0.8541916054420526
+      },
+      "workflow_id": "search:9cb63ca65a2443d69cec57394fa0efe7"
+    },
+    {
+      "code_hash": "f2019deef87f93b84159808e3d83a2b7e1a1a1c8161c81adc94377d4e4e75178",
+      "experiment_hash": "395e9cb40701e3600c527195fc307a6fc6687aea6ece2d65a31729254c277687",
+      "validation_metrics": {
+        "accuracy": 0.8359179589794897,
+        "macro_f1": 0.8269238046747743
+      },
+      "workflow_id": "search:7f78e3cf4b9b4669aaf85bdf66e6abbc"
+    }
+  ],
+  "final_test_attempted": false,
+  "historical_preparation": {
+    "code_hash": "082384b24d9380c213650ced5d58d24af0240e597d402bccd4f9fc11654700f9",
+    "model_sha256": "b25bf0fb8201b768589bbb9b2b5ed94cb0759bc04ae99c1b58bff945910bcd03",
+    "origin": "用户显式重新准备的模型（仅训练集拟合）",
+    "top3": [
+      {
+        "意图": "card_swallowed",
+        "概率": 0.13034566941794962
+      },
+      {
+        "意图": "wrong_amount_of_cash_received",
+        "概率": 0.07890883878977657
+      },
+      {
+        "意图": "pending_cash_withdrawal",
+        "概率": 0.04790781638683344
+      }
+    ]
+  },
+  "image": {
+    "base_image_digest": "python@sha256:673719e071ecf27434fd2635bbd8d00f49f4fdd81f243143438a42ced8bedf60",
+    "container_environment": {
+      "machine": "aarch64",
+      "packages": {
+        "networkx": "3.6.1",
+        "numpy": "2.4.6",
+        "pandas": "2.3.3",
+        "pydantic": "2.14.1",
+        "scikit-learn": "1.9.1"
+      },
+      "python": "3.11.18"
+    },
+    "environment": {
+      "architecture": "aarch64",
+      "os_type": "linux",
+      "server_version": "29.9.2"
+    },
+    "image_id": "sha256:3eef0e1082ca726a3fa1d4063d23408a3e68eb4ce438c2fa17a561540e65e810",
+    "requirements_sha256": "55227ca8f46b692e04aeda4dc3554560e5ef6353ec0033925e474241050336f9",
+    "schema_version": 1,
+    "worker_sha256": "e65e603d4d686c3480e8251a335adac7be50a5042a506794fc89b2ba722a3156"
+  },
+  "paid_api_calls": 0,
+  "source_sha256": {
+    "src/algofactory/__init__.py": "934b067410b80790cdbbbd81cf40ec7dcf17661f47fd7b29b44410efb54e183f",
+    "src/algofactory/banking.py": "2718d4cebbae9c4f302c55e3b891c1feecbcd55f5c5f507d826341a5c3ff9218",
+    "src/algofactory/cli.py": "0aa168f64b3e97f19a842f90ec4e01988d80d977ef956be712b3fc3a484675d4",
+    "src/algofactory/datasets.py": "d3dfa0e61db39c427c0a35556ba7546defd2a012848e95179c492b8f6f537c19",
+    "src/algofactory/delivery.py": "ebdebee4f843a2cf5c069fd5383623be0914ec4c8ed64865cbe2947d1c34194e",
+    "src/algofactory/execution/__init__.py": "83adc200c7186b8a29ed1fc6279a520a2e9f1136c8b2c816b3eb2d5cc4bed9dd",
+    "src/algofactory/execution/docker.py": "264333d87232b9f06fb1be609e3e10806813ca7acdf69b3c155bd2dd73a45dbd",
+    "src/algofactory/execution/worker.py": "e65e603d4d686c3480e8251a335adac7be50a5042a506794fc89b2ba722a3156",
+    "src/algofactory/experience.py": "93f93719fcde6c097bd5e9e17b2a40cd178660017193cd83f0cbf41a449b1480",
+    "src/algofactory/experience_reuse.py": "18eca0bf24bb0d803dec63e3a37211fda95976bdb8cf0a12488f2f56a2f6fc1d",
+    "src/algofactory/experiments.py": "31e52f5c7e643bb8390dd3c5de6681802e007fd8ca8aa561200ad3948350d3f0",
+    "src/algofactory/generation/__init__.py": "3f67bf06473ef976bbd1ce4ba27b2892de4988b172a97273b2b1d15e141cfd95",
+    "src/algofactory/generation/configuration.py": "99c723c3ce18094b244b59aa411ee2805b820378cf2d124f63150ea62b6fd7de",
+    "src/algofactory/generation/plan.py": "1b9575b4d0bdbc1d209f969091d8ea6074c00f13b755e443b2fb1c52b7883509",
+    "src/algofactory/generation/safety.py": "dffbf287cf27e82fcae528fc3db5a29e165b551cde11ff172a67f90307291419",
+    "src/algofactory/knowledge/__init__.py": "92e9684ca09bba34b6a81ec13028cbef12ac41ce97942e593e4552f342c52d2b",
+    "src/algofactory/knowledge/extraction.py": "f1cf4df72c3e27e1e86873dcd0e3f4e3056a85ae22175ae47e3ad6b2f50a37da",
+    "src/algofactory/knowledge/graph.py": "704767859f6c8ec8b0f58278c46ee55211a420d1a6e7d6078fa0dc080cb0f64a",
+    "src/algofactory/knowledge/store.py": "587d3df3cd652c8b699d371f3b1618f93a4d40c6fd7c6f88282daeb407d0375a",
+    "src/algofactory/llm/__init__.py": "9b3e652ebc649b6428d49affded5ec85f963bb59e3b8bc22062509a21d6b39df",
+    "src/algofactory/llm/providers.py": "ab893d0ab024d606d3ec09b570b594103cf33f073363807dbfb728bef3345433",
+    "src/algofactory/llm/workflow_mock.py": "637aa505ffd30fac896d4562ca734dfedba8ada50219c12d66256191a013f2c4",
+    "src/algofactory/orchestrator.py": "fc15af29401ce60784bf087ae3b943207aa801b7344bd8b3e398413caa49203a",
+    "src/algofactory/planning.py": "bd647bf166f94dc239961447eaacb300c77b71440b6bdb06537d0415ba8ef4d0",
+    "src/algofactory/plugins.py": "0be4bd7f68120d84c279df3e4146bb9fbd89fd112008bcb1f50deb994a762c95",
+    "src/algofactory/regression.py": "7fb3581b344eec1c145ff300ff63b985a8b66a856f752f7249f5b9ce79c22f4a",
+    "src/algofactory/reporting.py": "249409dbfdc02a3dc8b1d15198679661e6f7af683c8d0d4ed0225f390e3fed9e",
+    "src/algofactory/resume.py": "547b420b1a768e1ab730f9f2280daf5a43e9a247cb14d1afbaf3863f4dba0435",
+    "src/algofactory/schemas/__init__.py": "688a8305891467112213b6d90cdc01e2abe5e2c5357b89d534a4ddfb94222039",
+    "src/algofactory/schemas/contracts.py": "aaf65639a4815523b79f79f0b88f1be07ea8301a18ca7f1d0af1a0d04a9b91ed",
+    "src/algofactory/schemas/knowledge.py": "f984b70d7f78e3589d4e104882c00d1a1b051e48b04d6d920d554d1f559caf27",
+    "src/algofactory/search.py": "6db0baf44f06614df175ff7a0f94b7d3b75d533c8bbf0d558dc182703b9f01ae",
+    "src/algofactory/tasks.py": "a374bc258fa64cdb1348eacd02118b29c7f67c351c3bf8fb591267bde8f4e292",
+    "src/algofactory/validation/__init__.py": "e2bc9f7d07d5ac3a477b0b79d7900ff6e731bbf6c019b04cbb1dd5c18326f057",
+    "src/algofactory/validation/final_test.py": "cf9bcc2455a5e026877a881a76a8648a7201e8eb9e2320c169d1909fd007ea42",
+    "src/algofactory/validation/protocol.py": "e7d302a7becbafb67d0950111d46584aa8e733cd6e97cb2610adc30532b58e82",
+    "src/algofactory/validation/scoring.py": "991b239f6245ca2c201c4ee1eda376a98fc7c2dd6a31b1ed4a3ccb5aaeb55487",
+    "src/algofactory/web/__init__.py": "f70ba9124e3dec6f342b5946ce503170c1ca786d34a2600e727035c54b2ff443",
+    "src/algofactory/web/app.py": "66cd47d09b2bdd6017dc1ba55074b8a724c39d31d332791fdc1a307d2d9508cb",
+    "src/algofactory/web/data_view.py": "d0a3c6952da4331b969efcce81bffc1f0bd42d8352dfbca10c8c293d79e2cd17",
+    "src/algofactory/web/evidence.py": "b669ff39384227d0272d4e86e6acf67073ac18245aa6ae64c9f2a88f65d72421",
+    "src/algofactory/web/models.py": "aa1476cd21d10772cd499326f3c46ee91e525a13eebae09cf5d3a063fbaef163",
+    "src/algofactory/web/runner.py": "1cd3927d591c12a51c5da557f111773a3e545ce230550339162de499523ff8cb",
+    "src/algofactory/web/service.py": "6180ab4ebe85b30a50b3286f27611ea9ef8a2966da1697ecae21cfa5b569c431",
+    "src/algofactory/web/workflow_view.py": "e797a5bea46f322f387e42cd23e2239b0cdf9d8cee520fb256eca7f8012c8b3d",
+    "src/algofactory/workflow_models.py": "8c73b0b56dbcc11cb6b9dea3fad95ca224f2ef05cd235cc8215c9710f101c0ec"
+  },
+  "status": "passed",
+  "web": {
+    "experiment_hash": "dcca5697b7353868a731cf7111ffe182592ca77b5da054477c2ca5c1e715ad1c",
+    "final_test_attempted": false,
+    "job_id": "67c83c93b84a4b41a60f58197bec114d",
+    "prediction": {
+      "code_hash": "8e07ae8924a1c298c366bd47b0e051af9b30cbd5626912a924de51a3071456a8",
+      "model_sha256": "243eff4f8122d7f3f8ec11068906b61d48dafbb1e3f9e91bb4b320d21a952588",
+      "origin": "此版本验证时保存的模型",
+      "top3": [
+        {
+          "意图": "wrong_amount_of_cash_received",
+          "概率": 0.05204981595828055
+        },
+        {
+          "意图": "card_swallowed",
+          "概率": 0.039606012737797985
+        },
+        {
+          "意图": "pending_cash_withdrawal",
+          "概率": 0.03443611033782327
+        }
+      ]
+    },
+    "prediction_form": "actual AppTest form",
+    "report": "runtime/web-jobs/67c83c93b84a4b41a60f58197bec114d/run",
+    "status": "validated",
+    "submission": "actual AppTest form and durable job subprocess",
+    "validation_errors": 306
+  }
+}

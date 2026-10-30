@@ -1,0 +1,21 @@
+{
+  "config_hash": "b177257e287803281d48391ac39ac538cedc1490df537cd3a31e0dab03def815",
+  "data_fingerprint": "e394adeb965f707d2f3036f95999165ed3d0d43c15a879341c912cbdbb953c79",
+  "experience_enabled": false,
+  "experiment_hash": "dcca5697b7353868a731cf7111ffe182592ca77b5da054477c2ca5c1e715ad1c",
+  "learn_experiences": false,
+  "policy": {
+    "algorithms": [
+      "text_logistic"
+    ],
+    "attempt_budget": 2,
+    "max_repairs": 1,
+    "ranking": "macro_f1_desc_accuracy_desc_algorithm_order",
+    "schema_version": 1
+  },
+  "reuse_knowledge": false,
+  "search_config_hash": "1d60f5adf7c26962c2b66c1d646439a40e5488841a266bb1c39adf3282e25c7e",
+  "seed": 42,
+  "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+  "validation_only": true
+}

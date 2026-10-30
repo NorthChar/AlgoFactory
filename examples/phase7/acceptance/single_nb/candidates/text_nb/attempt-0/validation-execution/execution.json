@@ -1,0 +1,46 @@
+{
+  "command": [
+    "/Users/northchar/.docker/bin/docker",
+    "create",
+    "--name",
+    "algofactory-80d5dbc9b80946e9a821911f22d0dc98",
+    "--pull=never",
+    "--network=none",
+    "--read-only",
+    "--user=65534:65534",
+    "--cap-drop=ALL",
+    "--security-opt=no-new-privileges",
+    "--pids-limit=128",
+    "--cpus=2",
+    "--memory=4096m",
+    "--memory-swap=4096m",
+    "--ulimit=nofile=256:256",
+    "--tmpfs=/tmp:rw,noexec,nosuid,size=256m,mode=1777",
+    "--workdir=/tmp",
+    "--env=ALGOFACTORY_SANDBOX=1",
+    "--env=OMP_NUM_THREADS=1",
+    "--env=OPENBLAS_NUM_THREADS=1",
+    "--env=MKL_NUM_THREADS=1",
+    "--env=PYTHONDONTWRITEBYTECODE=1",
+    "--env=PYTHONHASHSEED=42",
+    "--mount",
+    "type=bind,src=/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase7-release-verification/acceptance/single_nb/candidates/text_nb/attempt-0/validation-execution/input-dd37hrws,dst=/input,readonly",
+    "sha256:3eef0e1082ca726a3fa1d4063d23408a3e68eb4ce438c2fa17a561540e65e810",
+    "python",
+    "-I",
+    "/opt/algofactory/worker.py"
+  ],
+  "environment": {
+    "architecture": "aarch64",
+    "os_type": "linux",
+    "server_version": "29.9.2"
+  },
+  "image_id": "sha256:3eef0e1082ca726a3fa1d4063d23408a3e68eb4ce438c2fa17a561540e65e810",
+  "input_files": [
+    "candidate.py",
+    "config.json",
+    "evaluation_features.csv",
+    "train.csv"
+  ],
+  "stage": "validation"
+}

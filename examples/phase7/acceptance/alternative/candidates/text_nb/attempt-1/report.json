@@ -1,0 +1,223 @@
+{
+  "artifacts_sha256": {
+    "builder-input.json": "829b14ff8950a2e15047dadf021ef2be0004e7dfbeaa6b46dab19abdf3de415b",
+    "candidate.json": "74cf490dc929d36317efdc458a1f23cf6de3c81f1dd2a738adc620f10c684ea1",
+    "candidate.py": "cfd06c4b06636a3699c5951a0431d019a2385ab3838317760bc0160fc80f3adb",
+    "configuration-check.json": "aac9b716846c14738c56e8e75601ab351f2687a8320fd785ef6130d13977232b",
+    "data-manifest.json": "dd952ee30c7fcdc57ff33578d8ffa6bf5a61692dffe7fba5709435e4cf9d7373",
+    "decisions.json": "176de6a86b81c938b5c75e36e89d9279ae24e748909d5fd5e48d12d1d6553f79",
+    "experience-retrieval.json": "af3f6c94524807e74ea3a6cee452b9da96cd7e15127c5996fbcbcbf6e176662a",
+    "experience-use.json": "af3f6c94524807e74ea3a6cee452b9da96cd7e15127c5996fbcbcbf6e176662a",
+    "experiment.json": "31e7f0b298617c7dfdc2815ee09ccb5f44b452661b57a215e033bd4ec8bd5bfd",
+    "knowledge-input.json": "282851d5338831b02872d63d61ba65c2a1ba337ad87cf3eff7ffbbce8cf9e2d3",
+    "plan-proposal.json": "06b62b04d781b237d05319435991dc7638d33f7d3e53043cbb478e1678db73ce",
+    "plan.json": "06b62b04d781b237d05319435991dc7638d33f7d3e53043cbb478e1678db73ce",
+    "protocol.json": "d8891704f9a745df5f9b41c00b95c3c621d2dedcfc3d76421e6405231d297862",
+    "provider-audit.json": "8266a4947762b40885a0b5ef48cb17b9a6e97586aec639ba12c29d5852b4a6b2",
+    "repair-input.json": "6df5e76b22d9328d53cc9e3cc82b376b616efca66dd759a7df8653f18762fb7a",
+    "retrieval.json": "fb17617c75a8383e8c1bd43e2f6ec744b84b3d8b9d1a676522fd09c618aa8e0f",
+    "task.json": "8ef9339bd373b5f5b14af1451941199fb31062d4c36775582716fc042b2b22e4",
+    "trace.json": "c48a97d245a3bcdd8bf6b3b95099980bb430e4bb07f3a65ae54750457f6f9010",
+    "validation-class-details.json": "563bb862ed84c181177ded6c2f1ad46bfcade86faa72026c4fbf3f07e61a97c8",
+    "validation-execution/cleanup.json": "e55e8ea921c9f2c5fc719f8fca12749fa32e281466c0334ca5b8f644ea70adf5",
+    "validation-execution/container-state.json": "eb5c16cb7f28657b25507dbb49fa09b0f916f605e01a079eb08e6b096ad3a7d7",
+    "validation-execution/execution.json": "8d484eb54bc8378affed6723282cb3b653a671790e22503318bcf623d8a1011c",
+    "validation-execution/model-provenance.json": "047622be2cae6659bcc449db8bcc27c8499ff8c557c4660411914bc5992bc022",
+    "validation-execution/model.pkl.gz": "521f09c0716b8e9aff3ed44d29ac2c38e1cd6d35f868948095ad5f9eeb25a307",
+    "validation-execution/predictions.json": "89dcca53a59905226e5ed06f8c6e5cff0c866faa916e9229e868aa8b72b58d60",
+    "validation-execution/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "candidate": {
+    "attempt": 1,
+    "code_hash": "cfd06c4b06636a3699c5951a0431d019a2385ab3838317760bc0160fc80f3adb",
+    "implementation_id": "workflow:c47cf3575a3f4343833c5deeb9291009:candidate",
+    "parent_id": "source:f22e0f63fa585306c70132c82ac91d595090bfd7e951a2cf0606fc539e1f7019:implementation",
+    "plan_id": "workflow:c47cf3575a3f4343833c5deeb9291009:plan",
+    "schema_version": 1
+  },
+  "class_names": [
+    "Refund_not_showing_up",
+    "activate_my_card",
+    "age_limit",
+    "apple_pay_or_google_pay",
+    "atm_support",
+    "automatic_top_up",
+    "balance_not_updated_after_bank_transfer",
+    "balance_not_updated_after_cheque_or_cash_deposit",
+    "beneficiary_not_allowed",
+    "cancel_transfer",
+    "card_about_to_expire",
+    "card_acceptance",
+    "card_arrival",
+    "card_delivery_estimate",
+    "card_linking",
+    "card_not_working",
+    "card_payment_fee_charged",
+    "card_payment_not_recognised",
+    "card_payment_wrong_exchange_rate",
+    "card_swallowed",
+    "cash_withdrawal_charge",
+    "cash_withdrawal_not_recognised",
+    "change_pin",
+    "compromised_card",
+    "contactless_not_working",
+    "country_support",
+    "declined_card_payment",
+    "declined_cash_withdrawal",
+    "declined_transfer",
+    "direct_debit_payment_not_recognised",
+    "disposable_card_limits",
+    "edit_personal_details",
+    "exchange_charge",
+    "exchange_rate",
+    "exchange_via_app",
+    "extra_charge_on_statement",
+    "failed_transfer",
+    "fiat_currency_support",
+    "get_disposable_virtual_card",
+    "get_physical_card",
+    "getting_spare_card",
+    "getting_virtual_card",
+    "lost_or_stolen_card",
+    "lost_or_stolen_phone",
+    "order_physical_card",
+    "passcode_forgotten",
+    "pending_card_payment",
+    "pending_cash_withdrawal",
+    "pending_top_up",
+    "pending_transfer",
+    "pin_blocked",
+    "receiving_money",
+    "request_refund",
+    "reverted_card_payment?",
+    "supported_cards_and_currencies",
+    "terminate_account",
+    "top_up_by_bank_transfer_charge",
+    "top_up_by_card_charge",
+    "top_up_by_cash_or_cheque",
+    "top_up_failed",
+    "top_up_limits",
+    "top_up_reverted",
+    "topping_up_by_card",
+    "transaction_charged_twice",
+    "transfer_fee_charged",
+    "transfer_into_account",
+    "transfer_not_received_by_recipient",
+    "transfer_timing",
+    "unable_to_verify_identity",
+    "verify_my_identity",
+    "verify_source_of_funds",
+    "verify_top_up",
+    "virtual_card_not_working",
+    "visa_or_mastercard",
+    "why_verify_identity",
+    "wrong_amount_of_cash_received",
+    "wrong_exchange_rate_for_cash_withdrawal"
+  ],
+  "code_hash": "cfd06c4b06636a3699c5951a0431d019a2385ab3838317760bc0160fc80f3adb",
+  "data_fingerprint": "e394adeb965f707d2f3036f95999165ed3d0d43c15a879341c912cbdbb953c79",
+  "design_explanation": {
+    "algorithm_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:text_nb",
+    "evidence_ids": [
+      "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:text_nb",
+      "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:capability:intent"
+    ],
+    "final_test_evaluated": false,
+    "selection_basis": "预先指定的单候选；不声称是所有算法中最优",
+    "text": "任务要求预测 intent，类型为 multiclass_classification。方案依据适用知识选择算法实体 source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:text_nb，并要求预处理只在训练集拟合。候选是否通过由独立验证器依据冻结门槛决定，不由模型自行评分。此次运行状态为 failed。",
+    "validation_run_id": "source:e0f08caa39d5a2cdc906620e0aa58a6d79e78522bde3daab1f1860cd4bbc1ce3:validation",
+    "workflow_id": "workflow:c47cf3575a3f4343833c5deeb9291009"
+  },
+  "error_category": "validation_checks_failed",
+  "evaluation_scope": "validation_only",
+  "execution_evidence": [
+    "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase7-release-verification/acceptance/alternative/candidates/text_nb/attempt-1/validation-execution/execution.json"
+  ],
+  "experience_usage": {
+    "enabled": false,
+    "excluded": [],
+    "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+    "matches": [],
+    "model_decisions": [],
+    "observed_rule_satisfied": false
+  },
+  "experiment": {
+    "algorithms": [
+      "text_logistic",
+      "text_nb"
+    ],
+    "logistic_c": 1.0,
+    "max_features": 10000,
+    "nb_alpha": 0.5,
+    "nb_alpha_schedule": [
+      0.5,
+      0.25,
+      0.05
+    ],
+    "ngram_max": 1,
+    "optimization": "frozen_nb_schedule",
+    "schema_version": 1
+  },
+  "experiment_hash": "c70275cd8891ea6d1f839d3012a58f4010b776eb358dbae6afd1ffb300eb38cc",
+  "knowledge_ids": {
+    "dataset_id": "source:e0f08caa39d5a2cdc906620e0aa58a6d79e78522bde3daab1f1860cd4bbc1ce3:dataset",
+    "implementation_id": "source:e0f08caa39d5a2cdc906620e0aa58a6d79e78522bde3daab1f1860cd4bbc1ce3:implementation",
+    "task_id": "source:e0f08caa39d5a2cdc906620e0aa58a6d79e78522bde3daab1f1860cd4bbc1ce3:task",
+    "validation_run_id": "source:e0f08caa39d5a2cdc906620e0aa58a6d79e78522bde3daab1f1860cd4bbc1ce3:validation"
+  },
+  "persisted": true,
+  "provider_mode": "mock",
+  "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+  "status": "failed",
+  "task_profile": "banking77",
+  "test_attempted": false,
+  "thresholds": {
+    "macro_f1": 0.82
+  },
+  "validation": {
+    "code_hash": "cfd06c4b06636a3699c5951a0431d019a2385ab3838317760bc0160fc80f3adb",
+    "config_hash": "b177257e287803281d48391ac39ac538cedc1490df537cd3a31e0dab03def815",
+    "error_category": "validation_checks_failed",
+    "final_test_evaluated": false,
+    "functional": {
+      "details": "真实 fit/predict，长度、顺序和有限数值校验通过",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "implementation_id": "source:e0f08caa39d5a2cdc906620e0aa58a6d79e78522bde3daab1f1860cd4bbc1ce3:implementation",
+    "interface": {
+      "details": "build_pipeline / fit / predict / predict_proba",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "metrics": {
+      "details": "验证集对照预先冻结门槛",
+      "schema_version": 1,
+      "status": "failed"
+    },
+    "report_paths": [
+      "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase7-release-verification/acceptance/alternative/candidates/text_nb/attempt-1/report.json",
+      "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase7-release-verification/acceptance/alternative/candidates/text_nb/attempt-1/report.md"
+    ],
+    "resources": {
+      "elapsed_seconds": 0.4771517919999724,
+      "peak_memory_mib": 183.70703125,
+      "schema_version": 1
+    },
+    "run_id": "source:e0f08caa39d5a2cdc906620e0aa58a6d79e78522bde3daab1f1860cd4bbc1ce3:validation",
+    "schema_version": 1,
+    "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+    "stability": {
+      "details": "{\"seed_repeat\": true, \"missing_column_rejected\": true, \"invalid_text_rejected\": true, \"unseen_text_handled\": true}",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "status": "failed",
+    "test_metrics": {},
+    "validation_metrics": {
+      "accuracy": 0.8284142071035517,
+      "macro_f1": 0.8075396990359693
+    }
+  },
+  "workflow_id": "workflow:c47cf3575a3f4343833c5deeb9291009"
+}

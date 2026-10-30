@@ -1,0 +1,39 @@
+{
+  "attempt": 1,
+  "diagnosis": {
+    "action": "OPTIMIZE",
+    "category": "validation_checks_failed",
+    "configuration_diagnostics": [],
+    "dimensions": {
+      "functional": {
+        "details": "真实 fit/predict，长度、顺序和有限数值校验通过",
+        "schema_version": 1,
+        "status": "passed"
+      },
+      "interface": {
+        "details": "build_pipeline / fit / predict / predict_proba",
+        "schema_version": 1,
+        "status": "passed"
+      },
+      "metrics": {
+        "details": "验证集对照预先冻结门槛",
+        "schema_version": 1,
+        "status": "failed"
+      },
+      "stability": {
+        "details": "{\"seed_repeat\": true, \"missing_column_rejected\": true, \"invalid_text_rejected\": true, \"unseen_text_handled\": true}",
+        "schema_version": 1,
+        "status": "passed"
+      }
+    },
+    "reason": "验证集指标未达到冻结门槛；仅调整当前候选，禁止改阈值或查看测试集",
+    "validation_metrics": {
+      "accuracy": 0.8179089544772387,
+      "macro_f1": 0.7847029860826926
+    }
+  },
+  "parent_id": "source:f22e0f63fa585306c70132c82ac91d595090bfd7e951a2cf0606fc539e1f7019:implementation",
+  "previous_code": "from sklearn.compose import ColumnTransformer\nfrom sklearn.feature_extraction.text import TfidfVectorizer\nfrom sklearn.naive_bayes import MultinomialNB\nfrom sklearn.pipeline import Pipeline\n\n\ndef build_pipeline(config):\n    preprocess = ColumnTransformer([\n        (\"text\", TfidfVectorizer(ngram_range=(1, 1), sublinear_tf=True, max_features=10000), config[\"text_features\"][0])\n    ])\n    model = MultinomialNB(alpha=0.5)\n    return Pipeline([(\"preprocess\", preprocess), (\"model\", model)])\n",
+  "previous_code_hash": "701669edae8e5a004b60414adcddf607cd8bd4281dc18c22c9963855fff557df",
+  "schema_version": 1
+}

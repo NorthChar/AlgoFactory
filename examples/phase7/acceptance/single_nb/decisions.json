@@ -1,0 +1,26 @@
+[
+  {
+    "action": "GENERATE",
+    "budget_remaining": 6,
+    "decision_id": "search:7f78e3cf4b9b4669aaf85bdf66e6abbc:decision:0",
+    "evidence_ids": [
+      "search:7f78e3cf4b9b4669aaf85bdf66e6abbc"
+    ],
+    "reason": "基于适用知识生成候选：text_nb",
+    "role": "review",
+    "run_id": "search:7f78e3cf4b9b4669aaf85bdf66e6abbc",
+    "schema_version": 1
+  },
+  {
+    "action": "ACCEPT",
+    "budget_remaining": 5,
+    "decision_id": "search:7f78e3cf4b9b4669aaf85bdf66e6abbc:decision:1",
+    "evidence_ids": [
+      "source:118854b8b3c1582a9216cae5eb6cf88f6f8660b3a3c5cc6790531d1082720262:implementation"
+    ],
+    "reason": "验证集比较通过且已回写，未访问最终测试",
+    "role": "review",
+    "run_id": "search:7f78e3cf4b9b4669aaf85bdf66e6abbc",
+    "schema_version": 1
+  }
+]

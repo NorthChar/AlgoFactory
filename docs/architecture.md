@@ -113,3 +113,12 @@ search.run_search 基于统一 run_workflow 执行每个候选版本，以 valid
 Streamlit 是既有 CLI/编排器的入口，后台进程拥有独立数据副本、数据库与运行目录；提交 ID 幂等，进程锁限制并发，终态报告可恢复展示。读档不重新执行模型或测试，历史数据库只读。配置由 `RunSettings` 校验，Web API 请求上限 12，页面不接收密钥。
 
 回归任务扩展共享 TaskProfile、WorkerResult、Docker worker、主机评分和回写；连续预测不再强制转整数，分类仍检查标签和概率空间。新增 Ridge 构造器保持受限 AST 工厂规则；返回流水线、数值列和 alpha 参数需通过结构检查。MAE/RMSE 由可信注册表计算，阈值方向明确为 minimize。模板通过注册表传给 Mock Provider，第三方代码不会由界面动态导入。具体限制、插件例和恢复语义见 [Phase 5](phase5.md)。
+
+
+## Phase 7 可操作实验与模型边界
+
+`experiments.ExperimentConfig` 把 BANKING77 候选、词表、词组范围和分类器参数冻结为 `experiment_hash`；评分协议仍用原 `config_hash`。CLI/Web 先验证配置，生成提示包含明确参数，静态检查验证生成代码确实遵守，再进入同一隔离执行和知识回写流程。单候选也复用有界修复协调器，报告不声称比较获胜。
+
+`web/data_view.py` 只显示训练/验证样本；历史验证预测按归档散列校验后以 row_id 对齐。`web/models.py` 只接受已登记报告中的合格代码版本，核验模型、训练文件、类别、代码、实验及环境来源。worker 在容器内序列化和加载模型；宿主不执行生成代码或反序列化 pickle。预测容器只接收模型和本条输入，不挂载训练、验证或测试数据；测试文本重复守卫在宿主执行，不向模型提供测试标签。
+
+新增功能的验收边界、版本及操作说明见 [Phase 7](phase7.md) 和 [工作台指南](workbench-guide.md)。

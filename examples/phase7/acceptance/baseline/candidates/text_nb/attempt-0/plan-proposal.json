@@ -1,0 +1,17 @@
+{
+  "algorithm_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:text_nb",
+  "dependencies": [
+    "scikit-learn"
+  ],
+  "evidence_ids": [
+    "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:text_nb",
+    "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:capability:intent"
+  ],
+  "plan_id": "workflow:28affd5d0f874d5883a750461a4a8ff2:plan",
+  "preprocessing": [
+    "training_only_tfidf",
+    "frozen_class_mapping"
+  ],
+  "schema_version": 1,
+  "task_id": "workflow:28affd5d0f874d5883a750461a4a8ff2:task"
+}
