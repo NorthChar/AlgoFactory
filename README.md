@@ -1,144 +1,114 @@
 # AlgoFactory
 
-AI Agent 算法能力工厂原型，目标是能力抽取、代码复刻、独立验证、修复与经验回写。2026-10-29 确定主案例为“基于 BANKING77 的客服意图分类算法生成与验证”，已有客户流失案例保留为轻量兼容性测试，详见 [ADR-001](docs/decisions/0001-banking77-main-case.md)。
+基于 BANKING77 的客服意图分类算法生成与验证。主线覆盖知识抽取、方案规划、代码生成、隔离训练、独立验证、有界修复、候选比较与经验回写。当前版本 0.6.0；Phase 1–5 已验收，Phase 6 正在进行冷启动与私有仓库交付，见 [交付记录](docs/phase6.md)。
 
-Phase 2.5 已实现 BANKING77 文本多分类与客户流失共享的单候选流程，G2.5 已通过：124 项测试零失败、零跳过，BANKING77 最终测试 Macro-F1 0.8787、Accuracy 87.82%，客户流失指标与历史基线一致。训练、Docker 执行、主机独立评分和回写均使用同一核心；Phase 3 修复和候选比较也已通过 Mock 阶段验收：141 项测试、零失败、零跳过。Azure GPT-4o 的真实自动修复、两候选严格比较、选定版本最终测试与回写现已通过；该阶段回归 190 项、零失败、零跳过，累计 20 次请求，最终通过轮为 7 次，见 [真实验收](examples/api-phase3/verification.json) 与 [完整用量及失败记录](examples/api-phase3/campaign-summary.json)。Phase 4 已完成可追溯经验提炼、条件检索、生成/修复消费及开关对照：210 项回归全部通过，Mock/API 各两组对照通过。本次开启与关闭经验均一次修复成功，未观察到收益，开启组多用 1,067 token。Phase 5 已实现本地 Streamlit 工作台、图谱与报告、回归插件及任务恢复；231 项测试通过，CLI/Web 真实隔离运行通过，本阶段新增付费 API 请求为零。详见 [Phase 5 使用与验收](docs/phase5.md)。下一阶段为 Phase 6 集成交付。
+## 1. 项目背景和目标
 
-## 文档入口
+本项目验证 AI 生成算法的可执行性与可追溯性：输入业务需求和知识材料，输出 Python 算法、验证报告、代码版本及持久化知识。没有合格候选时明确失败。主案例是英文银行客服的 77 类已知意图分类；合成客户流失和回归任务用于验证公共框架兼容性。
 
-- [题目原文](docs/source/exam-original.txt) 与 [用户方案原始附件](docs/source/discussion-plan-original.txt)
-- [总体实施计划与问题定义](docs/implementation-plan.md)
-- [主案例调整决策与 Phase 2.5 范围](docs/decisions/0001-banking77-main-case.md)
-- [需求追踪矩阵](docs/requirements-matrix.md) 与 [CSV](docs/requirements-matrix.csv)
-- [架构、图谱及数据契约](docs/architecture.md)
-- [验收 Gate 与演示协议](docs/acceptance-gates.md)
-- [Phase 1 使用与验收说明](docs/phase1.md) 与 [实际验证证据](examples/phase1/verification.json)
+[原题](docs/source/exam-original.txt)和[原始讨论方案](docs/source/discussion-plan-original.txt)保持原样；[实施计划](docs/implementation-plan.md)、[主案例决策 ADR-001](docs/decisions/0001-banking77-main-case.md)及[需求矩阵](docs/requirements-matrix.md)记录范围变化及验收状态。
 
-- [Phase 3 多候选与修复指南](docs/phase3.md)、[Mock 阶段证据](examples/phase3/verification.json) 与 [真实 API 证据](examples/api-phase3/verification.json)
-- [Phase 4 经验复用指南与对照结果](docs/phase4.md)及 [验收证据](examples/phase4/verification.json)
-- [Phase 5 本地工作台、插件与回归指南](docs/phase5.md)及 [验收证据](examples/phase5/verification.json)
-- [Phase 2.5 主案例与兼容性指南](docs/phase25.md) 与 [验收证据](examples/phase25/verification.json)
-- [Phase 2 Mock 闭环指南](docs/phase2.md) 与 [运行报告](examples/phase2/normal/report.md)
+## 2. 系统架构和模块设计
 
-## 安装与运行
+```text
+业务文档 / 自然语言需求
+  → Mock 或 API Provider → 类型及引用校验 → SQLite 知识库
+  → 条件检索 → 算法方案 → 代码生成 → 静态检查
+  → Docker 训练与预测 → 主机独立评分 → 有界修复 / 验证集排名
+  → 选定版本最终测试 → 报告、版本和经验回写
+                            ↓
+                   CLI / Streamlit / GraphML
+```
 
-已在 macOS ARM64、Python 3.11.16 验证。使用 uv 的项目环境：
+`src/algofactory` 中的 `schemas` 定义契约，`llm` 管理结构化调用与预算，`knowledge` 管理持久知识，`orchestrator` 与 `search` 编排任务，`execution` 隔离运行，`validation` 独立评分，`plugins` 注册可信模板及指标，`web` 提供本地工作台。SQLite 降低运维成本，Pydantic 保证接口一致，scikit-learn 支持 CPU 轻量模型，NetworkX 支持图谱导出。详见[架构与边界](docs/architecture.md)。
+
+## 3. 知识图谱 Schema 和示例
+
+知识包含任务、能力、算法、数据集、实现、验证和经验等类型化实体及关系。例如 `Task REQUIRES Capability`、`Algorithm IMPLEMENTS Capability`、`Algorithm APPLICABLE_TO Task`。知识保存稳定 ID、来源字符区间和 Schema 版本；验证记录关联实际代码散列、父版本及运行 ID。
+
+可检查[知识 JSON](examples/phase1/knowledge.json)、[GraphML](examples/phase1/knowledge.graphml)及[Schema 设计](docs/architecture.md)。导出和检索：
 
 ```sh
-uv sync --frozen --python 3.11
-.venv/bin/python -m algofactory.cli status
 .venv/bin/python -m algofactory.cli ingest data/customer_churn.txt --mode mock
 .venv/bin/python -m algofactory.cli search --entity-type Algorithm --task-type binary_classification
 .venv/bin/python -m algofactory.cli export --output-dir runtime/knowledge-export
-.venv/bin/python scripts/verify_phase1.py --output-dir runtime/phase1
-```
-
-首次安装依赖需要联网；安装后 Mock 演示与测试无需外部网络或 API Key。测试会在 127.0.0.1 临时启动模拟 HTTP 服务。预期知识导入为 6 个实体、7 条关系，检索返回 3 个候选算法及原文证据；重复导入新增数量为 0。
-
-不用 uv 时，可以使用已有的 Python 3.11：
-
-```sh
-python3.11 -m venv .venv
-.venv/bin/python -m pip install --require-hashes -r requirements-dev.txt
-.venv/bin/python -m pip install --no-deps -e .
-```
-
-requirements.txt 是运行依赖，requirements-dev.txt 另含测试与检查工具；两者从 uv.lock 导出，带版本和文件散列。构建工具由 pyproject.toml 声明。
-
-## Phase 3：比较与修复
-
-```sh
-.venv/bin/python -m algofactory.cli demo --task banking77 --compare
-.venv/bin/python -m algofactory.cli demo --task banking77 --compare --fault repairable_interface
-```
-
-两个候选共用冻结协议，只按验证集排名；每个候选最多两次修复，唯一获胜版本最终测试一次。操作与停止条件见 [Phase 3 指南](docs/phase3.md)。
-
-## 当前主案例：BANKING77
-
-```sh
-.venv/bin/python scripts/prepare_sandbox.py
-.venv/bin/python -m algofactory.cli prepare-banking77
-.venv/bin/python -m algofactory.cli demo --task banking77 --mode mock --db runtime/phase25.sqlite
-# 完整阶段验收：源码应已提交，输出目录必须为空
-.venv/bin/python scripts/verify_phase25.py --raw-dir runtime/banking77-data/raw
-```
-
-首次数据导入从固定官方版本下载，并保留许可、署名与处理记录。BANKING77 是英文、77 类已知意图分类；初始候选为 TF-IDF + Logistic Regression，主指标 Macro-F1。完整说明见 [Phase 2.5 指南](docs/phase25.md)。
-
-## 客户流失兼容性入口
-
-以下入口保留旧命令兼容性，通过同一套改造后的核心执行固定客户流失候选。
-
-先安装并启动 Docker Desktop，然后在项目根目录运行：
-
-```sh
-.venv/bin/python scripts/prepare_sandbox.py
-.venv/bin/python -m algofactory.cli demo --mode mock
-```
-
-首次构建镜像需要联网，生成算法运行时禁网。默认生成 1,500 行客户流失合成数据，以 60/20/20 分层划分；训练 Logistic Regression，输出四维验证报告和知识库记录。每次运行生成新的目录，并打印报告路径。不需要 LLM API Key。
-
-```sh
-# 明确注入缺少概率预测接口的故障，预期退出码为 1
-.venv/bin/python -m algofactory.cli demo --mode mock --fault missing_predict_proba
-# 全量验收，目标目录必须为空；包含真实 Docker 测试和正常/失败示例
-.venv/bin/python scripts/verify_phase2.py --output-dir runtime/phase2-verification
-```
-
-客户流失 Mock 只接受内置固定需求“根据客户特征预测客户是否流失，输出流失类别和概率。”；BANKING77 使用其独立固定需求，均不表示模型已能理解任意自然语言。数据与阈值校准规则见 [Phase 2 指南](docs/phase2.md)。
-
-## Phase 1 架构与示例
-
-```text
-UTF-8 业务文档 → Mock/API Provider → Pydantic 契约与原文引用校验
-                                   ↓
-                           SQLite 原子化入库
-                                   ↓
-                   条件检索与来源证据 / JSON / NetworkX GraphML
-```
-
-模块位于 src/algofactory：schemas 定义六类核心契约和九类知识实体；llm 提供有预算的结构化调用；knowledge 负责抽取、持久化、检索及导出；cli 提供上述命令。
-
-示例关系包括 `Task REQUIRES Capability`、`Algorithm IMPLEMENTS Capability` 和 `Algorithm APPLICABLE_TO Task`。文档引用采用原始字符区间，每条知识保存 source_id、source_span 和 schema_version。完整定义见 [架构](docs/architecture.md)，实际结果见 [知识 JSON](examples/phase1/knowledge.json) 和 [GraphML](examples/phase1/knowledge.graphml)。
-
-Mock 使用人工编写、按原文散列匹配的固定 fixture。未知文档会明确失败；API 使用相同抽取及校验流程，可处理新文档。API 端点、模型、密钥与价格需显式配置，详见 [Phase 1 指南](docs/phase1.md)。Azure GPT-4o Responses 已完成真实连接、抽取、规划、生成与自动修复、严格两候选比较、最终测试和回写。配置、用量及失败证据见 [真实 API 接入记录](docs/api-integration.md)。
-
-## 测试与产物
-
-```sh
-.venv/bin/python -m pytest -q
-# 已准备 Docker 镜像时，显式启用真实容器测试
-ALGOFACTORY_DOCKER_TESTS=1 .venv/bin/python -m pytest -q
-.venv/bin/python -m ruff check src tests scripts
 .venv/bin/python -m algofactory.cli schemas --output-dir runtime/schemas
 ```
 
-验收脚本生成知识 JSON、SQLite、GraphML、检索结果、调用轨迹、测试日志和 verification.json。报告记录命令、环境、代码提交/散列及产物散列。Phase 1 证据保留在 examples/phase1；Phase 2 的完整验收脚本包含 Docker 实跑、独立指标、失败拦截和回写。未启用 Docker 的普通测试会跳过容器用例，不能作为闭环验收。
+## 4. Agent 工作流设计
 
-## 最终交付进度
+知识、构建、审查是三个逻辑角色，分别负责证据检索、方案/代码生成、确定性验收。它们共享编排与显式契约；目前不是三个独立自治进程。每个阶段记录输入、输出、判断和停止原因。
 
-1. 背景和目标：见本页及实施计划。
-2. 架构和模块：契约、知识、编排、生成、隔离执行、验证及回写已实现。
-3. 图谱 Schema 和示例：类型化 Schema、持久知识与可重载导出。
-4. Agent 工作流：单候选流程及角色调用轨迹；Review 当前由确定性程序判断。
-5. 环境与运行：Python 3.11、锁定依赖、Docker、CLI 和 API 配置指南。
-6. 示例数据和任务：BANKING77 已完成固定版本导入、去重、训练/验证划分及真实运行；合成客户流失保留为兼容性测试。
-7. 生成代码示例：见 examples/phase2/normal/candidate.py。
-8. 验证结果与报告：四维结果、验证/测试指标及失败报告见 examples/phase2。
-9. 挑战和解决方案：来源追踪、事务失败、隔离运行、测试标签隔离及冻结门槛。
-10. 扩展方向：Phase 2.5 已通过；Phase 3 比较与修复的 Mock 及真实 API 验收已通过；Phase 4 经验复用机制及小规模效果对照已通过，未观察到收益；Phase 5 界面、插件、合成回归和异常恢复验收已通过；下一步为 Phase 6 冷启动与集成交付。
+比较模式使用冻结数据协议、两种候选及每候选最多两次修复；只依据验证集选择。最终测试每次工作流仅允许选定版本评估一次，结果不用于修复或重新选择。失败经验必须有关联的失败、修复和重测证据；搜索开始后冻结经验库，避免同轮污染。详见[修复与比较](docs/phase3.md)、[经验复用](docs/phase4.md)。
 
-## 工作区与版本管理
+## 5. 环境配置和运行方法
 
-此目录为独立本地 Git 仓库。每阶段验收后形成提交，原始资料保持不变。运行产物放 runtime/，经核验的交付样例纳入 examples/。密钥与私人数据禁止提交。
-
-
-## 本地可视化工作台（Phase 5）
+已验证平台为 macOS ARM64、Python 3.11。需安装 uv，启动 Docker Desktop。首次安装依赖及构建镜像需要网络，生成代码执行时禁网。`uv.lock` 与三个 `requirements*.txt` 固定版本和散列，构建工具也固定版本。
 
 ```sh
-uv sync --extra web --locked
+uv sync --extra web --locked --python 3.11
+.venv/bin/python -m algofactory.cli status
+.venv/bin/python scripts/prepare_sandbox.py --base-image python@sha256:673719e071ecf27434fd2635bbd8d00f49f4fdd81f243143438a42ced8bedf60
+.venv/bin/python -m algofactory.cli prepare-banking77 --raw-dir examples/phase25/banking77-data/raw
+.venv/bin/python -m algofactory.cli demo --task banking77 --mode mock --db runtime/demo.sqlite
+.venv/bin/python -m algofactory.cli demo --task banking77 --compare --fault repairable_interface
 .venv/bin/python -m streamlit run src/algofactory/web/app.py --server.address 127.0.0.1 --server.port 8501 --server.headless true --browser.gatherUsageStats false
 ```
 
-打开 <http://127.0.0.1:8501>，默认 Mock、BANKING77 比较和验证集评估。可查看报告、候选代码、经验来源与图谱，后台任务可在刷新后恢复查看。回归扩展使用连续值预测及 MAE/RMSE；客户流失继续通过 CLI 验证。界面仅供本机使用，真实 API 需主动选择，单次任务最多 12 次请求。数据和批准镜像需先准备，详见 [操作指南](docs/phase5.md)。
+打开 [本地工作台](http://127.0.0.1:8501)，默认 Mock、BANKING77 比较与验证集评估，可查看代码、报告、图谱及经验来源。刷新可恢复查看后台任务，取消会保留状态。操作见 [Phase 5 指南](docs/phase5.md)。
+
+Mock 无需密钥，只接受内置任务及文档 fixture；API 使用同一契约且不会静默降级。真实 Azure GPT-4o 接入配置见 [API 指南](docs/api-integration.md)。从 `.env.example` 复制为被忽略的 `.env` 后在本机填写密钥；不要将密钥填入示例文件。显式选择 API 会产生费用，需设置请求次数限制；本阶段复验使用 Mock。
+
+```sh
+# 完整测试必须先准备数据及批准镜像；未启用 Docker 的普通测试会跳过容器用例
+ALGOFACTORY_DOCKER_TESTS=1 .venv/bin/python -m pytest -q
+.venv/bin/python -m ruff check src tests scripts
+# 源码与文档须全部提交，输出目录必须尚不存在
+.venv/bin/python scripts/verify_phase6.py --output-dir runtime/phase6-cold-start
+```
+
+该脚本从 Git 提交创建独立副本、全新环境、非 editable wheel，并无缓存安装依赖及重建容器。复现边界及日志见 [Phase 6](docs/phase6.md)。
+
+## 6. 示例数据和测试任务
+
+| 任务 | 数据及划分 | 模型与指标 |
+| --- | --- | --- |
+| BANKING77 主案例 | 官方固定版本；去重后训练侧按 80/20 分层划分；保留官方测试集 | TF-IDF + Logistic Regression / MultinomialNB；Macro-F1、Accuracy |
+| 客户流失兼容性 | 固定种子生成 1,500 行；60/20/20 分层划分 | Logistic Regression；F1、ROC-AUC |
+| 回归扩展 | 固定种子生成 600 行；60/20/20 划分 | Ridge；MAE、RMSE（越低越好） |
+
+BANKING77 来源 PolyAI，作者 Iñigo Casanueva、Tadas Temcinas、Daniela Gerz、Matthew Henderson、Ivan Vulić（2020），论文 *Efficient Intent Detection with Dual Sentence Encoders*。保留[原许可 CC BY 4.0](examples/phase25/banking77-data/raw/LICENSE)，固定上游提交为 `57ec275d8078af65b7731c2a98be812d844a6d6b`；去重和划分属于本项目的处理，详见[导入协议](docs/phase25.md)。客户流失和回归是合成数据，不代表真实业务效果。
+
+```sh
+.venv/bin/python -m algofactory.cli demo --task churn --mode mock
+.venv/bin/python -m algofactory.cli demo --task regression --mode mock
+```
+
+## 7. 生成算法代码示例
+
+[真实 API 生成并修复后的 BANKING77 算法](examples/api-phase3/comparison/candidate.py)与[对应报告](examples/api-phase3/comparison/report.md)包含完整来源链。当前 Mock 演示可检查 [BANKING77](examples/phase5/banking77/candidate.py)、[客户流失](examples/phase5/churn/candidate.py)及[回归](examples/phase5/regression/candidate.py)代码。
+
+代码必须符合任务接口，并在隔离容器内加载、训练、输出预测。主机保管评分标签并计算指标；回归输出连续值，不沿用分类概率契约。模板/指标插件由可信代码显式注册，不能把任意不受信任模块加载到主机评分进程。
+
+## 8. 验证结果和报告样例
+
+[Phase 5 验收](examples/phase5/verification.json)记录 231 项测试全部通过，CLI 三任务、Web 两任务、图谱、取消及真实一秒超时清理通过。主案例最终测试 Macro-F1 0.878695、Accuracy 0.878247；客户流失 F1 0.666667、ROC-AUC 0.816260；回归 MAE 0.405306、RMSE 0.501081。指标仅适用于归档的数据协议和候选。
+
+[真实 API Phase 3](examples/api-phase3/verification.json)通过生成、训练、修复、严格比较、最终测试和回写；[完整总账](examples/api-phase3/campaign-summary.json)保留全部 20 次请求及失败轮次。[Phase 4](examples/phase4/verification.json)的 Mock/API 各两组经验开关对照均通过机制验收，但未观察到修复次数或指标收益，开启组多用 1,067 token。
+
+历史报告按当时提交保留；哈希完整不代表其中每次失败尝试都通过语义验收。统一验证维度为功能、指标、稳定性、接口。当前交付状态见 [Phase 6](docs/phase6.md)，Gate 定义见[验收协议](docs/acceptance-gates.md)。
+
+## 9. 挑战和解决方案
+
+- 生成内容可能不合法：结构化契约、来源引用校验、静态检查、真实容器执行及确定性审查逐层约束。
+- 评估可能泄漏：冻结划分和门槛，预处理仅训练集拟合，标签留在主机，验证排名与最终测试分开。
+- 修复可能无限循环或耗费 API：限制候选、修复轮次、总请求、输出长度和执行时间，保留失败状态。
+- 历史经验可能失真：只复用有重测证据且协议匹配的记录，保存引用并进行开关对照，不把机制通过描述成效果提升。
+- 生成代码有执行风险：非 root、只读文件系统、禁网、资源/时间限制；缺少批准镜像时拒绝执行。OOM 等部分异常目前以模拟测试覆盖，不声称完成真实资源压测。
+- 交付可能依赖开发环境：版本/散列锁定，独立副本和 wheel 安装复验，文档链接与历史产物哈希检查，发布前检查当前密钥及高置信凭据模式。
+
+## 10. 后续可扩展方向
+
+先依据真实业务数据增加任务协议、字段适配、可信模板及独立指标，再评估是否扩充候选。可进一步验证更多失败类型的经验收益、中文/未知意图、其他硬件环境及生产访问控制。当前不包含任意自然语言任务自动适配、自动回复机器人、生产部署、Beam/MCTS 或跨业务效果保证。
+
+交付目标为私有仓库 `Northchar/AlgoFactory`；访问需要仓库授权。源码、文档及脱敏验收产物进入 Git，`.env`、本地运行数据、缓存及开发环境不上传。阶段提交与[需求矩阵 CSV](docs/requirements-matrix.csv)保持可追溯；仓库创建及远端提交验证记录在 [Phase 6](docs/phase6.md)。

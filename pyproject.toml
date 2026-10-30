@@ -1,10 +1,10 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools==84.2.1"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "algofactory"
-version = "0.2.0"
+version = "0.6.0"
 description = "Knowledge and validation driven algorithm factory prototype"
 requires-python = ">=3.11"
 dependencies = ["pydantic>=2.12,<3", "networkx>=3.4,<4", "scikit-learn>=1.5,<2", "pandas>=2.2,<3", "numpy>=2,<3"]
@@ -13,7 +13,11 @@ dependencies = ["pydantic>=2.12,<3", "networkx>=3.4,<4", "scikit-learn>=1.5,<2",
 web = ["streamlit>=1.46,<2", "graphviz>=0.20,<1"]
 
 [dependency-groups]
-dev = ["pytest>=8,<10", "ruff>=0.11,<1"]
+dev = [
+    "pytest>=8,<10",
+    "ruff>=0.11,<1",
+    "setuptools==84.2.1",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

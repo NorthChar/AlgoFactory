@@ -20,6 +20,11 @@ def main():
         default="python:3.11-slim",
         help="Use the recorded python@sha256 digest to reproduce the base image",
     )
+    parser.add_argument(
+        "--no-cache",
+        action="store_true",
+        help="Rebuild dependency layers for cold-start verification",
+    )
     args = parser.parse_args()
     binary = locate_docker()
     environment = docker_ready(binary)
@@ -44,6 +49,7 @@ def main():
             [
                 binary,
                 "build",
+                *(["--no-cache"] if args.no_cache else []),
                 "--tag",
                 "algofactory-sandbox:phase2",
                 "--build-arg",

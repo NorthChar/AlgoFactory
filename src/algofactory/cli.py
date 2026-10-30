@@ -141,7 +141,7 @@ def parser():
 def run(args):
     if args.command == "status":
         return {
-            "phase": 5,
+            "phase": 6,
             "tasks": ["banking77", "churn", "regression"],
             "status": "single_candidate_workflow",
             "core_workflow": "implemented_docker_required",

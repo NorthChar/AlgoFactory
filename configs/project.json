@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "phase": 1,
+  "phase": 6,
   "llm_mode": "mock",
   "seed": 42,
-  "task_types": ["binary_classification", "regression"],
+  "task_types": ["binary_classification", "multiclass_classification", "regression"],
   "candidate_limit": 2,
   "max_repairs_per_candidate": 2,
   "execution": {"backend": "docker", "timeout_seconds": 120, "cpus": 2, "memory_mib": 4096, "network": false, "fail_closed": true},
-  "note": "后续编排器的设计配置；Phase 1 CLI 不加载此文件，实际契约默认值定义在 schemas/contracts.py，API 配置读取环境变量。隔离执行在 Phase 2 实现。"
+  "note": "Architecture summary only; not a runtime configuration file. Actual constraints are defined by TaskProfile, TaskSpec, frozen protocol.json and CLI options. Web settings are validated by RunSettings. API credentials are read only from explicit .env/environment configuration."
 }

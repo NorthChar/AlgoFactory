@@ -18,7 +18,7 @@ Phase 5 已验证 T06/A01/A04/A07/A08/X02/X07，并补齐 F06 的既有修复证
 
 | ID | 类别 | 要求 | 责任模块 | 交付或证据 | Phase | 验收方法 | Gate | 状态 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| B01 | 基础 | 完整的项目代码库 | 全模块 | Git 仓库 | 6 | 冷启动完整运行 | G1/G5 | planned |
+| B01 | 基础 | 完整的项目代码库 | 全模块 | Git 仓库；docs/phase6.md（待冷启动与发布核验） | 6 | 冷启动完整运行 | G1/G5 | implemented |
 | B02 | 基础 | 示例行业数据、文档或模拟业务材料 | data | 数据生成器、CSV、业务文档；examples/phase2/verification.json（Mock 范围） | 1–2 | 种子与数据指纹一致 | G1/G5 | verified |
 | B03 | 基础 | 能力知识图谱 schema 设计说明 | schemas/knowledge | docs/architecture.md、schema | 1 | 实体关系约束测试 | G1/G5 | verified |
 | B04 | 基础 | 知识抽取结果文件 | knowledge | JSON、SQLite、GraphML | 1 | 文档抽取与图谱导出重载 | G1/G5 | verified |
@@ -26,7 +26,7 @@ Phase 5 已验证 T06/A01/A04/A07/A08/X02/X07，并补齐 F06 的既有修复证
 | B06 | 基础 | 至少 1 个从能力描述到算法代码生成的完整示例 | generation/examples | Demo A Python 与完整轨迹；examples/phase2/verification.json（Mock 范围） | 2 | 生成代码实际加载与执行 | G1/G5 | verified |
 | B07 | 基础 | 自动验证脚本 | validation/scripts | 验证入口与四维检查；examples/phase2/verification.json（Mock 范围） | 2 | 故障 fixture 验证四维判断 | G1/G5 | verified |
 | B08 | 基础 | 验证报告样例 | reporting/examples | 真实运行 JSON/Markdown；examples/phase2/verification.json（Mock 范围） | 2 | 报告与运行 ID、代码散列一致 | G1/G5 | verified |
-| B09 | 基础 | 项目文档 README.md | docs | README 十项内容 | 6 | 逐项核对且命令可执行 | G1/G5 | planned |
+| B09 | 基础 | 项目文档 README.md | docs | README 十项内容；docs/phase6.md（待冷启动与发布核验） | 6 | 逐项核对且命令可执行 | G1/G5 | implemented |
 | B10 | 基础 | 环境依赖文件 requirements.txt 或 environment.yml | configs | requirements.txt 及锁文件 | 1/6 | Mac arm64 干净环境安装 | G1/G5 | verified |
 | B11 | 基础 | 使用示例和测试用例 | examples/tests | Demo A–D、单元及集成测试 | 2–6 | 依 README 执行且输出符合预期 | G1/G5 | implemented |
 | T01 | 任务 | LLM 理解、抽取、生成或修复 | llm | API/Mock 契约与调用记录；examples/api-phase3/verification.json（真实 Azure API 修复/严格比较/最终测试/回写）；campaign-summary.json（含全部失败与 20 次请求） | 1–3 | 两模式同编排器，API 真实调用 | G1/G2/G3 | verified |
@@ -60,23 +60,23 @@ Phase 5 已验证 T06/A01/A04/A07/A08/X02/X07，并补齐 F06 的既有修复证
 | X08 | 加分 | 跨场景迁移 | orchestrator/validation | ADR-001、BK04/BK06：同一核心运行表格与文本任务；docs/phase25.md；examples/phase25/verification.json（G2.5 Mock 范围）；examples/phase5/verification.json（231 项回归、CLI/Web、三任务及异常证据） | 2.5–5 | 同一提交及共用编排、隔离、评分/回写；两任务真实证据；不承诺经验跨业务提升 | G3/G4 | verified |
 | X09 | 加分 | 自动接口文档或部署配置 | reporting | 当前非交付重点 | — | 当前非交付重点 | — | out_of_scope |
 | X10 | 加分 | 性能优化和资源消耗分析 | execution | 仅安全预算与记录，不承诺优化 | — | 仅安全预算与记录，不承诺优化 | — | out_of_scope |
-| D01 | 开发 | Git 清晰提交 | Git | 阶段提交历史 | 6 | 提交可追踪 | G5 | planned |
-| D02 | 开发 | 完整文档 | docs | README、指南、示例 | 6 | 十项内容齐全 | G5 | planned |
+| D01 | 开发 | Git 清晰提交 | Git | 阶段提交历史；docs/phase6.md（待冷启动与发布核验） | 6 | 提交可追踪 | G5 | implemented |
+| D02 | 开发 | 完整文档 | docs | README、指南、示例；docs/phase6.md（待冷启动与发布核验） | 6 | 十项内容齐全 | G5 | implemented |
 | D03 | 开发 | 模块化及注释 | src | 契约、边界、说明 | 1–6 | 静态检查及代码评审 | G5 | implemented |
 | D04 | 开发 | 本地复现 | scripts | 环境与复现记录 | 6 | 冷启动 | G5 | implemented |
-| D05 | 开发 | Python 主语言 | src | Python 包 | 0–6 | 包入口运行 | G5 | planned |
-| D06 | 开发 | 工具选型说明 | docs | 实施计划及架构 | 0 | 每个核心工具有理由 | G5 | planned |
+| D05 | 开发 | Python 主语言 | src | Python 包；docs/phase6.md（待冷启动与发布核验） | 0–6 | 包入口运行 | G5 | implemented |
+| D06 | 开发 | 工具选型说明 | docs | 实施计划及架构；docs/phase6.md（待冷启动与发布核验） | 0 | 每个核心工具有理由 | G5 | implemented |
 | D07 | 开发 | Mock/API 演示 | llm | Provider 与 fixtures；examples/api-phase3/verification.json（真实 Azure API 修复/严格比较/最终测试/回写）；campaign-summary.json（含全部失败与 20 次请求） | 1–2 | 不得静默降级 | G5 | verified |
-| R01 | README | 项目背景和目标 | docs/README | README 第 1 项 | 6 | 内容及链接、命令逐项核对 | G1/G5 | planned |
-| R02 | README | 系统架构和模块设计 | docs/README | README 第 2 项 | 6 | 内容及链接、命令逐项核对 | G1/G5 | planned |
-| R03 | README | 知识图谱 schema 和示例 | docs/README | README 第 3 项 | 6 | 内容及链接、命令逐项核对 | G1/G5 | planned |
-| R04 | README | Agent 工作流设计 | docs/README | README 第 4 项 | 6 | 内容及链接、命令逐项核对 | G1/G5 | planned |
-| R05 | README | 环境配置和运行方法 | docs/README | README 第 5 项 | 6 | 内容及链接、命令逐项核对 | G1/G5 | planned |
-| R06 | README | 示例数据和测试任务说明 | docs/README | README 第 6 项 | 6 | 内容及链接、命令逐项核对 | G1/G5 | planned |
-| R07 | README | 生成算法代码示例 | docs/README | README 第 7 项 | 6 | 内容及链接、命令逐项核对 | G1/G5 | planned |
-| R08 | README | 验证结果和报告样例 | docs/README | README 第 8 项 | 6 | 内容及链接、命令逐项核对 | G1/G5 | planned |
-| R09 | README | 挑战和解决方案 | docs/README | README 第 9 项 | 6 | 内容及链接、命令逐项核对 | G1/G5 | planned |
-| R10 | README | 后续可扩展方向 | docs/README | README 第 10 项 | 6 | 内容及链接、命令逐项核对 | G1/G5 | planned |
+| R01 | README | 项目背景和目标 | docs/README | README 第 1 项；docs/phase6.md（待冷启动与发布核验） | 6 | 内容及链接、命令逐项核对 | G1/G5 | implemented |
+| R02 | README | 系统架构和模块设计 | docs/README | README 第 2 项；docs/phase6.md（待冷启动与发布核验） | 6 | 内容及链接、命令逐项核对 | G1/G5 | implemented |
+| R03 | README | 知识图谱 schema 和示例 | docs/README | README 第 3 项；docs/phase6.md（待冷启动与发布核验） | 6 | 内容及链接、命令逐项核对 | G1/G5 | implemented |
+| R04 | README | Agent 工作流设计 | docs/README | README 第 4 项；docs/phase6.md（待冷启动与发布核验） | 6 | 内容及链接、命令逐项核对 | G1/G5 | implemented |
+| R05 | README | 环境配置和运行方法 | docs/README | README 第 5 项；docs/phase6.md（待冷启动与发布核验） | 6 | 内容及链接、命令逐项核对 | G1/G5 | implemented |
+| R06 | README | 示例数据和测试任务说明 | docs/README | README 第 6 项；docs/phase6.md（待冷启动与发布核验） | 6 | 内容及链接、命令逐项核对 | G1/G5 | implemented |
+| R07 | README | 生成算法代码示例 | docs/README | README 第 7 项；docs/phase6.md（待冷启动与发布核验） | 6 | 内容及链接、命令逐项核对 | G1/G5 | implemented |
+| R08 | README | 验证结果和报告样例 | docs/README | README 第 8 项；docs/phase6.md（待冷启动与发布核验） | 6 | 内容及链接、命令逐项核对 | G1/G5 | implemented |
+| R09 | README | 挑战和解决方案 | docs/README | README 第 9 项；docs/phase6.md（待冷启动与发布核验） | 6 | 内容及链接、命令逐项核对 | G1/G5 | implemented |
+| R10 | README | 后续可扩展方向 | docs/README | README 第 10 项；docs/phase6.md（待冷启动与发布核验） | 6 | 内容及链接、命令逐项核对 | G1/G5 | implemented |
 | S1 | 评分 | 技术能力 40% | 全模块 | G1/G2/G3：闭环、知识模型、验证、修复与比较 | 6 | 对应 Gate 证据审查 | G1/G2/G3 | planned |
 | S2 | 评分 | 代码质量 30% | 全模块 | G5：模块、契约、日志、错误处理、测试、复现 | 6 | 对应 Gate 证据审查 | G5 | planned |
 | S3 | 评分 | 创新性 15% | 全模块 | G4：角色协作、图谱增强、反馈决策、经验复用 | 6 | 对应 Gate 证据审查 | G4 | planned |
