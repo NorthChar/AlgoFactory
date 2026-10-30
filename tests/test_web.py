@@ -130,3 +130,59 @@ def test_app_submit_only_on_click_and_refresh_no_replay(tmp_path, monkeypatch):
     assert popen.call_count == 1
     state = json.loads(next((tmp_path / "runtime/web-jobs").glob("*/settings.json")).read_text())
     assert state["mode"] == "mock" and state["call_budget"] == 24
+
+
+@pytest.mark.parametrize(
+    "compare,experiences,budget,submitted",
+    [
+        (True, False, 4, False),
+        (True, False, 7, True),
+        (True, True, 5, False),
+        (True, True, 6, True),
+        (False, False, 3, False),
+        (False, False, 4, True),
+    ],
+)
+def test_api_budget_preflight_without_paid_calls(
+    tmp_path, monkeypatch, compare, experiences, budget, submitted
+):
+    monkeypatch.setenv("ALGOFACTORY_PROJECT_ROOT", str(tmp_path))
+    popen = Mock()
+    monkeypatch.setattr("algofactory.web.service.subprocess.Popen", popen)
+    app = AppTest.from_file(str(ROOT / "src/algofactory/web/app.py"), default_timeout=30).run()
+    app.radio[0].set_value("api").run()
+    assert app.number_input[0].value == 10
+    assert popen.call_count == 0
+    app.checkbox[0].set_value(compare)
+    app.checkbox[2].set_value(experiences)
+    app.number_input[0].set_value(budget)
+    next(b for b in app.button if b.label == "开始 API 验证（产生费用）").click().run()
+    assert not app.exception
+    assert popen.call_count == int(submitted)
+    assert app.number_input[0].value == budget  # Never silently enlarge an explicit limit.
+    if submitted:
+        path = next((tmp_path / "runtime/web-jobs").glob("*/settings.json"))
+        assert json.loads(path.read_text())["call_budget"] == budget
+    else:
+        assert any("尚未提交" in e.value for e in app.error)
+        assert not list((tmp_path / "runtime/web-jobs").glob("*/settings.json"))
+    app.run()
+    assert popen.call_count == int(submitted)
+
+
+def test_budget_stop_explained_without_replay(tmp_path, monkeypatch):
+    monkeypatch.setenv("ALGOFACTORY_PROJECT_ROOT", str(tmp_path))
+    popen = Mock()
+    monkeypatch.setattr("algofactory.web.service.subprocess.Popen", popen)
+    identifier = "c" * 32
+    write_json(
+        tmp_path / "runtime/web-jobs" / identifier / "state.json",
+        {
+            "status": "stopped",
+            "error_category": "call_budget_exhausted",
+        },
+    )
+    app = AppTest.from_file(str(ROOT / "src/algofactory/web/app.py"), default_timeout=30).run()
+    assert not app.exception
+    assert any("已达到本次模型请求次数上限" in e.value for e in app.error)
+    assert popen.call_count == 0

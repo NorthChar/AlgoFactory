@@ -1,0 +1,18 @@
+{
+  "job_id": "f593a81b0a994f599f845724b5c6ce7f",
+  "mode": "mock",
+  "paid_api_calls": 0,
+  "report": "runtime/web-jobs/f593a81b0a994f599f845724b5c6ce7f/run/report.json",
+  "source_sha256": {
+    "src/algofactory/web/__init__.py": "f70ba9124e3dec6f342b5946ce503170c1ca786d34a2600e727035c54b2ff443",
+    "src/algofactory/web/app.py": "2febca12f1102663208e4ea142b118b4ac6de7d022a3cfde878ad828b7df8e65",
+    "src/algofactory/web/evidence.py": "b669ff39384227d0272d4e86e6acf67073ac18245aa6ae64c9f2a88f65d72421",
+    "src/algofactory/web/runner.py": "9ed6baf1961220a6ba4583d391172ece7fbd95542164f7adf3531838a2191564",
+    "src/algofactory/web/service.py": "fed35d7669499f203b2609220c83914d8584a5f67b9cd2ca7e9f39687f3a0330",
+    "src/algofactory/web/workflow_view.py": "e797a5bea46f322f387e42cd23e2239b0cdf9d8cee520fb256eca7f8012c8b3d"
+  },
+  "status": "passed",
+  "steps_browsed": 7,
+  "test_attempted": false,
+  "workflow_status": "validated"
+}

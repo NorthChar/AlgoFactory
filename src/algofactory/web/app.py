@@ -8,6 +8,7 @@ from pathlib import Path
 import streamlit as st
 
 from algofactory.tasks import PROFILES
+from algofactory.web.evidence import STEPS, stage_rows, workflow_evidence
 from algofactory.web.service import (
     Jobs,
     RunSettings,
@@ -18,6 +19,7 @@ from algofactory.web.service import (
     read_json,
     report_catalog,
 )
+from algofactory.web.workflow_view import show_workflow, version_label
 
 ROOT = Path(
     os.environ.get("ALGOFACTORY_PROJECT_ROOT", Path(__file__).resolve().parents[3])
@@ -32,23 +34,63 @@ STATUS = {
     "interrupted": "运行中断",
 }
 
+
+def stop_reason(category):
+    if category == "call_budget_exhausted":
+        return (
+            "已达到本次模型请求次数上限，任务已停止。已完成的候选和报告已保留。"
+            "请查看 API 请求与用量，再调整上限并手动提交新任务；系统不会自动扩额或续跑。"
+            "（call_budget_exhausted）"
+        )
+    return category
+
+
 st.set_page_config(page_title="AlgoFactory · 算法工作台", page_icon="◈", layout="wide")
 st.title("AlgoFactory")
-st.caption("从能力描述到可验证算法 · BANKING77 客服意图分类")
+st.caption("把算法需求变成经过测试的 Python 代码")
 jobs = Jobs(ROOT)
 with st.sidebar:
-    st.subheader("本地算法工作台")
-    st.write("77 类英文客服意图 · TF-IDF + 轻量分类器")
-    st.caption("生成 → 隔离训练 → 独立验证 → 知识沉淀")
-    st.info("Mock 使用固定模型响应；训练、预测和评分仍真实执行。")
-    st.caption("当前为本机演示。客户流失保留 CLI 兼容验证；回归任务用于扩展验证。")
+    st.subheader("算法开发助手")
+    st.write("帮助开发人员编写算法，并检查它能否运行、效果是否达标。")
+    st.caption("先看例子 → 尝试生成 → 检查结果")
+    st.info("当前是本机运行的案例原型，主案例为银行客服意图分类。")
+    with st.expander("演示模式说明"):
+        st.caption("Mock 使用固定模型响应；训练、预测和评分真实执行。真实 API 模式会产生费用。")
 
-launch, reports, knowledge = st.tabs(["新建任务", "运行与报告", "知识与来源"])
+
+def navigate(destination, report=None):
+    st.session_state["workspace_tab"] = destination
+    if report:
+        st.session_state["report_choice"] = report
+        st.session_state.pop("pending_report", None)
+
+
+intro, launch, reports, knowledge = st.tabs(
+    ["从这里开始", "新建任务", "运行与报告", "知识与来源"],
+    key="workspace_tab",
+    on_change="rerun",
+)
+
+
+def report_label(relative):
+    titles = {
+        "examples/api-phase3/comparison": "历史案例 · 真实 API 失败修复与最终测试",
+        "examples/phase4/api-2-on": "历史案例 · 真实 API 经验复用（仅验证集）",
+        "examples/phase3/repair": "历史案例 · Mock 注入故障后的修复",
+        "examples/phase3/unsafe-code": "历史案例 · 危险代码被拒绝",
+    }
+    return titles.get(
+        relative, "本地任务 · " + relative.removeprefix("runtime/web-jobs/").removesuffix("/run")
+    )
 
 
 def show_report(relative):
     paths = artifacts(ROOT, relative)
     report = read_json(paths["report.json"])
+    if relative.startswith("examples/"):
+        st.info("正在查看历史归档案例。这里只读取已有证据，不会调用 API，也不是你刚提交的任务。")
+    else:
+        st.caption("证据来源：" + report_label(relative))
     validation = report.get("validation", {})
     status = STATUS.get(report["status"], report["status"])
     st.subheader(status)
@@ -56,7 +98,7 @@ def show_report(relative):
         f"{report.get('task_profile', '未识别')} · {report.get('provider_mode', '未知')} · {report['workflow_id']}"
     )
     if report.get("error_category"):
-        st.error("停止原因：" + report["error_category"])
+        st.error("停止原因：" + stop_reason(report["error_category"]))
     if not report.get("persisted"):
         st.warning("知识库回写未完成；报告已保留，此运行不能视为完整成功。")
     if not report.get("test_attempted"):
@@ -88,6 +130,24 @@ def show_report(relative):
             hide_index=True,
             width="stretch",
         )
+    st.subheader("本次生成的文件")
+    st.caption(
+        "先查看或下载交付物，再通过下方七步流程了解它们怎样产生。失败任务的文件也会保留，请结合运行状态判断。"
+    )
+    for name in ("report.md", "report.json", "candidate.py"):
+        if name in paths:
+            st.download_button(
+                "下载 "
+                + {
+                    "report.md": "中文报告",
+                    "report.json": "结构化证据",
+                    "candidate.py": "生成代码",
+                }[name],
+                paths[name].read_bytes(),
+                file_name=name,
+                key=relative + name,
+            )
+    show_workflow(ROOT, relative)
     if report.get("design_explanation"):
         with st.expander("算法设计依据"):
             explanation = report["design_explanation"]
@@ -114,23 +174,65 @@ def show_report(relative):
     if "candidate.py" in paths:
         with st.expander("生成代码（只读）"):
             st.code(paths["candidate.py"].read_text(), language="python")
-    for name in ("report.md", "report.json", "candidate.py"):
-        if name in paths:
-            st.download_button(
-                "下载 "
-                + {
-                    "report.md": "中文报告",
-                    "report.json": "结构化证据",
-                    "candidate.py": "生成代码",
-                }[name],
-                paths[name].read_bytes(),
-                file_name=name,
-                key=relative + name,
+
+
+with intro:
+    st.subheader("想做一个算法，先让系统写出来、测一遍")
+    st.write(
+        "这个工作台面向需要开发算法的人。你描述要做什么，系统在支持的案例范围内生成代码，"
+        "用数据训练和测试，遇到可修复的错误再尝试修改。最后交付代码和验证报告。"
+    )
+    with st.container(border=True):
+        st.markdown("### 举个例子：给银行客服做一个咨询分类算法")
+        st.write(
+            "银行收到很多英文咨询，需要判断客户在问银行卡、转账、退款等哪类问题，方便后续分流。"
+        )
+        left, right = st.columns(2)
+        with left:
+            st.markdown("**你提出的开发需求**")
+            st.write("“帮我生成一个算法，根据英文客服咨询判断它属于哪类业务，并验证分类效果。”")
+        with right:
+            st.markdown("**做出来的算法要能做什么**")
+            st.write("接收一段英文咨询，输出对应的意图类别及概率。")
+            st.caption(
+                "用途示意：‘I lost my card’ → 银行卡遗失/被盗。此处是说明示例，不是本次预测结果。"
             )
+        st.caption("本案例的数据已经准备好：BANKING77，13,083 条英文咨询、77 类意图。")
+    st.markdown("### 用完以后，你能拿到什么？")
+    code_col, report_col, process_col = st.columns(3)
+    code_col.markdown(
+        "**① 算法代码**\n\n生成的 Python 文件，可交给开发人员在配套环境中使用和继续集成。"
+    )
+    report_col.markdown("**② 验证报告**\n\n说明代码能否运行、分类效果怎样、是否达到预定标准。")
+    process_col.markdown(
+        "**③ 开发过程记录**\n\n可以追查用了哪些知识、哪里出错、如何修复，以及各版本的结果。"
+    )
+    history = "examples/api-phase3/comparison"
+    if history in report_catalog(ROOT):
+        st.button(
+            "看一个已经完成的例子", type="primary", on_click=navigate, args=("运行与报告", history)
+        )
+        st.caption(
+            "打开已完成的真实 API 案例，查看生成的代码、报告与修复过程；只读查看，不产生费用。"
+        )
+    st.button("我想试着生成一次", on_click=navigate, args=("新建任务",))
+    st.info(
+        "目前可体验预设的银行客服分类和合成回归案例。自有数据上传、任意新业务和单条咨询在线预测，尚未接入。"
+    )
+    with st.expander("“七步流程”和这个用途有什么关系？"):
+        st.write(
+            "七步流程展示系统怎样完成一次开发任务：理解需求 → 查找相关知识 → 规划方案 → "
+            "生成代码 → 测试效果 → 必要时修复 → 保存结果。你可以先看代码和报告，再展开过程检查依据。"
+        )
 
 
 with launch:
     st.subheader("生成并验证算法")
+    st.write("描述你希望生成的算法能力，系统会生成代码并运行测试，保存整个过程的证据。")
+    st.info(
+        "当前支持预设案例及固定输入输出协议。这里填写算法开发需求；"
+        "暂不支持上传自有数据、任意业务任务或输入单条咨询直接预测。"
+    )
     task = st.selectbox(
         "任务",
         ["banking77", "regression"],
@@ -139,6 +241,53 @@ with launch:
             "regression": "扩展验证 · 合成回归",
         }[x],
     )
+    st.write("**本次案例的输入与输出（预设范围，尚未调用模型）**")
+    data_column, input_column, output_column = st.columns(3)
+    if task == "banking77":
+        data_column.markdown(
+            "**数据**\n\nBANKING77 · 77 类英文客服意图\n\n官方训练集 10,003 条，测试集 3,080 条；训练集再划分验证集。"
+        )
+        input_column.markdown("**算法接收**\n\n含 `text` 列的英文咨询文本；标签字段为 `intent`。")
+        output_column.markdown(
+            "**算法输出**\n\n已知意图类别和各类别概率。\n\n工作台交付代码、评估报告与知识记录。"
+        )
+    else:
+        data_column.markdown("**数据**\n\n预设合成回归数据，用于验证跨任务扩展。")
+        input_column.markdown("**算法接收**\n\n数值特征 `x1`、`x2`、`x3`；目标字段为 `value`。")
+        output_column.markdown(
+            "**算法输出**\n\n连续数值；以 MAE、RMSE 评估。\n\n工作台交付代码、评估报告与知识记录。"
+        )
+    with st.expander("第一次使用：这七步会发生什么？"):
+        st.dataframe(
+            [
+                {"步骤": title, "你将看到": detail}
+                for title, detail in zip(
+                    STEPS,
+                    (
+                        "解析后的输入字段、目标与评价规则",
+                        "检索到的能力知识及原始文档引用",
+                        "预设候选范围内的方案、依赖和知识依据",
+                        "可查看和下载的 Python 代码",
+                        "功能、指标、稳定性、接口检查与候选比较",
+                        "若触发修复，查看错误反馈、代码差异与复测结果",
+                        "实现与验证记录回写，可在知识图谱追踪来源",
+                    ),
+                    strict=True,
+                )
+            ],
+            hide_index=True,
+            width="stretch",
+        )
+        st.caption(
+            "Mock 用固定模型响应演示流程；API 在既定任务协议内解析需求和生成代码。算法候选和关键参数仍由案例约束。"
+        )
+    historical = "examples/api-phase3/comparison"
+    if historical in report_catalog(ROOT):
+        st.button(
+            "先看真实 API 完整历史案例（不产生费用）",
+            on_click=navigate,
+            args=("运行与报告", historical),
+        )
     mode = st.radio(
         "模型模式",
         ["mock", "api"],
@@ -156,6 +305,7 @@ with launch:
         disabled=mode == "mock",
         help="Mock 仅支持固定示例需求；真实 API 可理解同一输入协议下的需求。",
     )
+    st.caption("示例描述的是需要生成的算法能力；仅修改文字不会改变预设的数据字段、类别或验证门槛。")
     with st.form("new_task"):
         compare = st.checkbox(
             "比较两个候选并允许修复", value=task == "banking77", disabled=task != "banking77"
@@ -176,10 +326,17 @@ with launch:
             "本次模型请求上限",
             min_value=1,
             max_value=12 if mode == "api" else 32,
-            value=4 if mode == "api" else 24,
+            value=10 if mode == "api" else 24,
             step=1,
             key="budget_" + mode,
         )
+        if mode == "api":
+            st.caption(
+                "无重试、无修复时：单候选需要 4 次请求；双候选通常需要 7 次，"
+                "成功复用知识时为 6 次。每次代码修复另需 3 次，接口重试也计入上限。"
+                "10 次可为普通双候选预留一次修复；12 次上限不保证覆盖全部修复。"
+                "上限不是固定消耗，训练和最终测试不调用模型。"
+            )
         submitted = st.form_submit_button(
             "开始验证" if mode == "mock" else "开始 API 验证（产生费用）", type="primary"
         )
@@ -195,10 +352,19 @@ with launch:
                 call_budget=budget,
                 request=request,
             )
-            token = st.session_state.setdefault("submission_token", uuid.uuid4().hex)
-            st.session_state["current_job"] = jobs.submit(settings, token)
-            st.session_state["submission_token"] = uuid.uuid4().hex
-            st.success("任务已提交。刷新页面不会重新提交；进度与报告在下方更新。")
+            minimum = (6 if experiences else 7) if compare else 4
+            if mode == "api" and budget < minimum:
+                st.error(
+                    f"尚未提交：当前配置即使无重试、无修复也至少需要 {minimum} 次请求，"
+                    f"你设置了 {budget} 次。请调整请求上限，或关闭候选比较后重新提交。"
+                    "本次未启动任务、未调用 API。"
+                )
+            else:
+                token = st.session_state.setdefault("submission_token", uuid.uuid4().hex)
+                st.session_state["current_job"] = jobs.submit(settings, token)
+                st.session_state["pending_report"] = f"runtime/web-jobs/{token}/run"
+                st.session_state["submission_token"] = uuid.uuid4().hex
+                st.success("任务已提交。刷新页面不会重新提交；进度与报告在下方更新。")
         except (ValueError, OSError):
             st.error("无法提交：请检查配置。回归只支持单候选；经验复用需要候选比较。")
 
@@ -212,12 +378,28 @@ with launch:
             st.write("当前任务：" + STATUS.get(state["status"], state["status"]))
             st.caption(identifier)
             if state.get("error_category"):
-                st.error(state["error_category"])
+                st.error(stop_reason(state["error_category"]))
             trace_path = jobs.path(identifier) / "run/trace.json"
             if trace_path.is_file():
                 trace = read_json(trace_path)
                 if trace:
                     st.caption("最近进度：" + trace[-1]["reason"])
+            with st.expander("查看当前七步进度", expanded=True):
+                evidence = workflow_evidence(ROOT, f"runtime/web-jobs/{identifier}/run")
+                versions = evidence["versions"]
+                latest = next(reversed(versions))
+                st.caption(
+                    "当前展示："
+                    + version_label(latest)
+                    + "；状态根据已保存产物更新。完整证据见“运行与报告”。"
+                )
+                st.dataframe(
+                    stage_rows(
+                        versions[latest], terminal=state["status"] not in {"running", "queued"}
+                    ),
+                    hide_index=True,
+                    width="stretch",
+                )
             if state["status"] in {"running", "queued"}:
                 if st.button("停止当前任务"):
                     jobs.cancel(identifier)
@@ -237,21 +419,36 @@ with reports:
         st.rerun()
     identifiers = jobs.list()
     if identifiers:
-        selected_job = st.selectbox("本地任务", identifiers)
-        try:
-            state = jobs.state(selected_job)
-            st.write(STATUS.get(state["status"], state["status"]))
-            if state.get("error_category"):
-                st.error(state["error_category"])
-            if st.button("恢复查看此任务"):
-                st.session_state["current_job"] = selected_job
-                st.success("已恢复进度查看；没有重新调用模型或测试。")
-        except (ValueError, OSError):
-            st.warning("此任务记录不可读取，已保留原始文件。")
+        with st.expander("本地任务管理 · 恢复进度查看"):
+            st.caption("这里管理本地任务的进度；下方“查看报告”独立选择本次结果或历史案例。")
+            selected_job = st.selectbox("本地任务", identifiers)
+            try:
+                state = jobs.state(selected_job)
+                st.write(STATUS.get(state["status"], state["status"]))
+                if state.get("error_category"):
+                    st.error(stop_reason(state["error_category"]))
+                if st.button("恢复查看此任务"):
+                    st.session_state["current_job"] = selected_job
+                    st.session_state["pending_report"] = f"runtime/web-jobs/{selected_job}/run"
+                    st.success("已恢复进度查看；没有重新调用模型或测试。")
+            except (ValueError, OSError):
+                st.warning("此任务记录不可读取，已保留原始文件。")
     catalog = report_catalog(ROOT)
     if catalog:
+        pending = st.session_state.get("pending_report")
+        if pending in catalog:
+            st.session_state["report_choice"] = pending
+            del st.session_state["pending_report"]
+        if st.session_state.get("report_choice") not in catalog:
+            st.session_state["report_choice"] = max(
+                catalog, key=lambda p: confined(ROOT, p + "/report.json").stat().st_mtime
+            )
         relative = st.selectbox(
-            "查看报告", list(reversed(catalog)), help="历史档案与本次运行明确分开，不会重写归档。"
+            "查看报告",
+            list(reversed(catalog)),
+            format_func=report_label,
+            key="report_choice",
+            help="历史档案与本次运行明确分开，不会重写归档。",
         )
         try:
             show_report(relative)
@@ -270,7 +467,18 @@ with knowledge:
     ]
     choices = [p for p in choices if confined(ROOT, p).is_file()]
     if choices:
-        choice = st.selectbox("知识库", choices)
+        current_db = f"runtime/web-jobs/{st.session_state.get('current_job', '')}/knowledge.sqlite"
+        choice = st.selectbox(
+            "知识库",
+            choices,
+            index=choices.index(current_db) if current_db in choices else 0,
+            format_func=lambda p: (
+                "历史经验库 · Phase 4"
+                if p.startswith("examples/")
+                else "本地任务 · " + p.split("/")[2]
+            ),
+        )
+        st.caption("历史经验库与本次任务的回写记录分开保存，请核对所选任务。")
         try:
             snapshot = graph_snapshot(confined(ROOT, choice))
             types = sorted({e["type"] for e in snapshot["entities"]})
