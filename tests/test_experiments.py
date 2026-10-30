@@ -65,7 +65,9 @@ def test_cli_conflict_rejected_before_provider(tmp_path, monkeypatch):
     import algofactory.llm.providers as providers
 
     monkeypatch.setattr(
-        providers, "APIProvider", lambda *a, **k: pytest.fail("must not call provider")
+        providers.APIConfig,
+        "from_env",
+        classmethod(lambda *a, **k: pytest.fail("must not configure provider")),
     )
     path = tmp_path / "experiment.json"
     path.write_text(ExperimentConfig().model_dump_json())
