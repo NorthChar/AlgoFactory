@@ -113,7 +113,7 @@ BANKING77 来源 PolyAI，作者 Iñigo Casanueva、Tadas Temcinas、Daniela Ger
 
 ## 10. 后续可扩展方向
 
-当前下一阶段是 [Phase 7 可操作工作台](docs/phase7.md)：先增加数据与验证错误浏览，再补齐模型保存及输入文本预测，之后开放既有候选和受限参数配置。以上均为 planned，目标版本 0.7.0，不能在 0.6.1 当作现成功能使用。范围决定见 [ADR-002](docs/decisions/0002-interactive-workbench.md)。
+当前下一阶段是 [Phase 7 可操作工作台](docs/phase7.md)：先增加数据与验证错误浏览，再补齐模型保存及输入文本预测，之后开放既有候选和受限参数配置。7A 已在开发分支通过数据与工作台测试；7B–7D 进行中，完整发布目标为 0.7.0。范围决定见 [ADR-002](docs/decisions/0002-interactive-workbench.md)。
 
 Phase 7 完成后再评估题目中的自动接口文档或资源消耗分析；任意数据上传、自然语言自动适配新任务、自动回复机器人、生产部署、Beam/MCTS 及跨业务效果保证不在当前增量范围内。
 

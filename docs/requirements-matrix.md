@@ -94,7 +94,7 @@ Phase 6 本地冷启动已通过 233 项测试、零跳过，README 十项、依
 | BK07 | 主线调整 | BANKING77 有界修复与候选比较 | planning/generation/validation | Demo B、多候选排名、代码父子版本与停止记录；docs/phase3.md；examples/phase3/verification.json（Mock 范围）；examples/api-phase3/verification.json（真实 Azure API 修复/严格比较/最终测试/回写）；campaign-summary.json（含全部失败与 20 次请求） | 3 | 至少两候选同协议；最多两次修复；客户流失兼容检查通过 | G2/G3 | verified |
 | BK08 | 主线调整 | BANKING77 已验证经验复用 | experience/knowledge | Demo C、检索引用及启用/关闭经验对照；docs/phase4.md；examples/phase4/verification.json（Mock/API 各两组；机制通过，未观察到次数/指标收益） | 4 | 同输入/划分/预算对照；不声称客户流失效果改善 | G4 | verified |
 | UX01 | 产品增量 | 工作台用途说明与七步证据浏览 | web/docs | docs/phase5.md；examples/workbench-061/verification.json；tests/test_web_workflow.py | 6后增量 | 只读导航不提交任务；候选证据与历史记录一致 | U0 | verified |
-| UX02 | 产品增量 | 数据浏览与验证错误查看 | web/datasets/reporting | docs/phase7.md（计划）；ADR-002 | 7A | 样本与划分可核对；错误按 row_id 对齐；不访问逐条测试标签 | U1 | planned |
+| UX02 | 产品增量 | 数据浏览与验证错误查看 | web/datasets/reporting | docs/phase7.md；tests/test_data_view.py | 7A | 样本与划分可核对；错误按 row_id 对齐；不访问逐条测试标签 | U1 | verified |
 | UX03 | 产品增量 | 可信模型保存与隔离预测体验 | execution/schemas/web | docs/phase7.md（计划）；ADR-002 | 7B | 模型与代码数据配置绑定；真实预测；缺失和错配拒绝；无宿主执行 | U2 | planned |
 | UX04 | 产品增量 | 受限可配置算法实验 | schemas/planning/generation/web | docs/phase7.md（计划）；ADR-002 | 7C | 配置贯穿真实执行与报告；冻结规则；拒绝冲突；旧默认兼容 | U3 | planned |
 | UX05 | 产品增量 | 可操作工作台集成验收与版本交付 | tests/scripts/docs | docs/phase7.md（计划）；目标版本 0.7.0 | 7D | U1–U3 通过；当前回归和独立复现；代码文档及远端一致 | U4 | planned |

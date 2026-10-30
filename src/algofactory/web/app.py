@@ -8,6 +8,7 @@ from pathlib import Path
 import streamlit as st
 
 from algofactory.tasks import PROFILES
+from algofactory.web.data_view import show_data, show_errors
 from algofactory.web.evidence import STEPS, stage_rows, workflow_evidence
 from algofactory.web.service import (
     Jobs,
@@ -65,8 +66,8 @@ def navigate(destination, report=None):
         st.session_state.pop("pending_report", None)
 
 
-intro, launch, reports, knowledge = st.tabs(
-    ["从这里开始", "新建任务", "运行与报告", "知识与来源"],
+intro, data_tab, launch, reports, knowledge = st.tabs(
+    ["从这里开始", "了解数据", "新建任务", "运行与报告", "知识与来源"],
     key="workspace_tab",
     on_change="rerun",
 )
@@ -147,6 +148,7 @@ def show_report(relative):
                 file_name=name,
                 key=relative + name,
             )
+    show_errors(ROOT, relative)
     show_workflow(ROOT, relative)
     if report.get("design_explanation"):
         with st.expander("算法设计依据"):
@@ -225,6 +227,9 @@ with intro:
             "生成代码 → 测试效果 → 必要时修复 → 保存结果。你可以先看代码和报告，再展开过程检查依据。"
         )
 
+
+with data_tab:
+    show_data(ROOT)
 
 with launch:
     st.subheader("生成并验证算法")
