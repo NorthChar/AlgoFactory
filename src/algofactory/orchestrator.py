@@ -246,7 +246,7 @@ def run_workflow(
                     "algorithm": algorithm_name,
                     "required_dependencies": ["scikit-learn"],
                     "experiment": report.get("experiment"),
-                    "required_configuration": required,
+                    "required_configuration": required if profile.name != "churn" else None,
                     "plan_id": workflow_id + ":plan",
                     "task_id": task.task_id,
                     "evidence": [entry["record"] for entry in evidence],

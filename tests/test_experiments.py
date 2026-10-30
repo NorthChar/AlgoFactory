@@ -117,3 +117,39 @@ def test_web_config_is_frozen_and_invalid_selection_does_not_submit(tmp_path, mo
     next(b for b in app.button if b.label == "开始验证").click().run()
     assert len(observed) == 1
     assert not app.exception
+
+
+def test_churn_planner_does_not_receive_text_experiment_parameters(tmp_path, monkeypatch):
+    import algofactory.orchestrator as workflow
+    from algofactory.datasets import generate_dataset
+    from algofactory.orchestrator import run_workflow
+    from algofactory.tasks import CHURN
+
+    requests = []
+
+    class RecordingMock(MockWorkflowProvider):
+        def _raw(self, request, schema):
+            requests.append(request)
+            return super()._raw(request, schema)
+
+    def stop_before_docker(*args, **kwargs):
+        raise WorkflowFailure("test_stop_before_execution")
+
+    monkeypatch.setattr(workflow, "DockerExecutor", stop_before_docker)
+    data = tmp_path / "data"
+    generate_dataset(data, rows=200)
+    root = Path(__file__).resolve().parents[1]
+    run_workflow(
+        directory=tmp_path / "run",
+        dataset_dir=data,
+        db_path=tmp_path / "knowledge.sqlite",
+        approval_path=tmp_path / "unused",
+        requirements_path=root / "requirements.txt",
+        knowledge_document=root / "data/customer_churn.txt",
+        request=CHURN.request,
+        provider=RecordingMock(),
+        validation_only=True,
+    )
+    planning = next(r for r in requests if r.operation == "plan_algorithm")
+    assert planning.source["required_configuration"] is None
+    assert planning.source["algorithm"] == CHURN.algorithm
