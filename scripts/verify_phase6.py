@@ -104,7 +104,6 @@ def main():
                 python,
                 "--require-hashes",
                 "--no-cache",
-                "-r",
                 snapshot / "requirements-dev.txt",
             ]
         )
