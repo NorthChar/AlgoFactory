@@ -58,16 +58,17 @@ def main():
     env.update(PYTHONNOUSERSITE="1", PIP_DISABLE_PIP_VERSION_CHECK="1")
 
     def command(arguments, *, cwd=snapshot, timeout=1200):
-        result = subprocess.run(
-            list(map(str, arguments)),
-            cwd=cwd,
-            env=env,
-            capture_output=True,
-            text=True,
-            timeout=timeout,
-        )
         log = f"check-{len(summary['checks']) + 1}.log"
-        (evidence / log).write_text(result.stdout + result.stderr)
+        with (evidence / log).open("w") as stream:
+            result = subprocess.run(
+                list(map(str, arguments)),
+                cwd=cwd,
+                env=env,
+                stdout=stream,
+                stderr=subprocess.STDOUT,
+                text=True,
+                timeout=timeout,
+            )
         summary["checks"].append(
             {
                 "command": list(map(str, arguments)),
@@ -79,7 +80,7 @@ def main():
         write_json(report_path, summary)
         if result.returncode:
             raise RuntimeError("Check failed: " + log)
-        return result.stdout
+        return (evidence / log).read_text()
 
     try:
         assert not subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT).strip(), (
@@ -224,7 +225,17 @@ def main():
                 server.terminate()
                 server.wait(timeout=20)
         command([python, "-m", "algofactory.cli", "schemas", "--output-dir", evidence / "schemas"])
-        command(["git", "archive", "--format=zip", f"--output={evidence / 'source.zip'}", "HEAD"])
+        # Keep the complete historical dataset bundle outside the Git evidence archive.
+        # Individual source/evidence files remain versioned; the ZIP can exceed GitHub's limit.
+        source_bundle = out / "dist/source.zip"
+        command(["git", "archive", "--format=zip", f"--output={source_bundle}", "HEAD"])
+        summary["source_bundle"] = {
+            "path": str(source_bundle),
+            "sha256": sha256_file(source_bundle),
+            "bytes": source_bundle.stat().st_size,
+            "recreate": "git archive --format=zip --output=source.zip " + summary["source_commit"],
+            "distribution": "local download; not duplicated inside the Git evidence archive",
+        }
         assert not subprocess.check_output(
             ["git", "status", "--porcelain"], cwd=snapshot
         ).strip(), "Snapshot changed during verification"
