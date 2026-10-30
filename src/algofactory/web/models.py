@@ -4,6 +4,7 @@ import hashlib
 import re
 import tempfile
 import uuid
+from datetime import datetime
 from pathlib import Path
 
 import numpy as np
@@ -221,8 +222,19 @@ def show_trial(root, catalog):
     if not choices:
         st.info("还没有通过验证的 BANKING77 算法。先到新建任务完成一次实验。")
         return
-    relative = st.selectbox("选择算法来源", list(reversed(choices)))
-    version = st.selectbox("选择通过验证的版本", list(choices[relative]))
+    from algofactory.web.workflow_view import version_label
+
+    def source_label(relative):
+        if relative.startswith("examples/"):
+            return "历史归档 · " + relative.removeprefix("examples/")
+        saved = datetime.fromtimestamp(safe_file(root, relative + "/report.json").stat().st_mtime)
+        return "本地任务 · " + saved.strftime("%m-%d %H:%M") + " · " + relative.split("/")[2][:8]
+
+    recent = sorted(
+        choices, key=lambda p: safe_file(root, p + "/report.json").stat().st_mtime, reverse=True
+    )
+    relative = st.selectbox("选择算法来源", recent, format_func=source_label)
+    version = st.selectbox("选择通过验证的版本", list(choices[relative]), format_func=version_label)
     try:
         location, origin = model_location(root, relative, version)
         ready = all(
@@ -238,7 +250,7 @@ def show_trial(root, catalog):
                     prepare_model(root, relative, version)
                 st.rerun()
         else:
-            st.caption(origin + " · " + version)
+            st.caption(origin + " · " + version_label(version))
             with st.expander("模型环境更新或产物损坏时"):
                 st.caption(
                     "重新准备会保留已有产物，并使用此版本代码和冻结训练集产生新模型。不会运行最终测试。"

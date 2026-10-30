@@ -98,3 +98,25 @@ def test_predict_fail_closed_on_worker_or_invalid_probabilities(model_root, monk
     )
     with pytest.raises(ValueError, match="probabilities"):
         models.predict_text(model_root, RELATIVE, VERSION, "My newly written banking question.")
+
+
+def test_trial_picker_defaults_to_latest_validated_run(model_root, monkeypatch):
+    import os
+
+    from streamlit.testing.v1 import AppTest
+
+    for identifier, timestamp in [("a" * 32, 1000), ("b" * 32, 2000)]:
+        destination = model_root / "runtime/web-jobs" / identifier
+        shutil.copytree(model_root / RELATIVE, destination / "run")
+        write_json(destination / "state.json", {"status": "validated"})
+        os.utime(destination / "run/report.json", (timestamp, timestamp))
+    # Historical archive must be older to make the deterministic fixture explicit.
+    os.utime(model_root / RELATIVE / "report.json", (500, 500))
+    monkeypatch.setenv("ALGOFACTORY_PROJECT_ROOT", str(model_root))
+    app = AppTest.from_file(ROOT / "src/algofactory/web/app.py", default_timeout=30).run()
+    assert not app.exception
+    choice = next(s for s in app.selectbox if s.label == "选择算法来源")
+    assert choice.value == "runtime/web-jobs/" + "b" * 32 + "/run"
+    assert any("本地任务" in label for label in choice.options)
+    versions = next(s for s in app.selectbox if s.label == "选择通过验证的版本")
+    assert "逻辑回归 · 修复版 1" in versions.options
