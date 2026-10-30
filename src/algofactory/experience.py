@@ -29,6 +29,8 @@ def persist_execution(store: KnowledgeStore, report: dict, manifest: dict, task,
         "evaluation_scope": report.get("evaluation_scope", "validation_and_final_test"),
         "search_summary": report.get("search_summary"),
         "experience_usage": report.get("experience_usage"),
+        "experiment": report.get("experiment"),
+        "experiment_hash": report.get("experiment_hash"),
     }
     source = SourceDocument.from_text(report["workflow_id"] + ".json", canonical(evidence))
     span = SourceSpan(start=0, end=len(source.content), quote=source.content)
@@ -120,6 +122,8 @@ def persist_execution(store: KnowledgeStore, report: dict, manifest: dict, task,
         "search_summary": report.get("search_summary"),
         "evaluation_scope": report.get("evaluation_scope", "validation_and_final_test"),
         "experience_usage": report.get("experience_usage"),
+        "experiment": report.get("experiment"),
+        "experiment_hash": report.get("experiment_hash"),
     }
     store.put_batch(
         KnowledgeBatch(

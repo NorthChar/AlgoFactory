@@ -111,6 +111,26 @@ class MockWorkflowProvider(Provider):
             ):
                 alpha = {1: "0.05", 2: "0.01"}[repair["attempt"]]
                 code = code.replace("alpha=0.1", "alpha=" + alpha)
+            if data.get("experiment_hash"):
+                required = data["required_configuration"]
+                tfidf = required["TfidfVectorizer"]
+                code = code.replace(
+                    "ngram_range=(1, 2)", "ngram_range=" + repr(tuple(tfidf["ngram_range"]))
+                )
+                code = code.replace(
+                    "max_features=30000", "max_features=" + str(tfidf["max_features"])
+                )
+                code = code.replace(
+                    "C=4.0", "C=" + str(required["classifier_parameters"].get("C", 4.0))
+                )
+                if data.get("algorithm_key") == "text_nb":
+                    import re
+
+                    code = re.sub(
+                        r"alpha=[0-9.]+",
+                        "alpha=" + str(required["classifier_parameters"]["alpha"]),
+                        code,
+                    )
             broken = self.fault in {
                 "missing_predict_proba",
                 "persistent_interface",

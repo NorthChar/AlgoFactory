@@ -1,5 +1,6 @@
 """Construct and run a fixed Docker sandbox; mount only a fresh, minimal input directory."""
 
+import base64
 import json
 import os
 import shutil
@@ -138,11 +139,12 @@ class DockerExecutor:
     def execute(
         self,
         code_path: Path,
-        train_path: Path,
+        train_path: Path | None,
         features_path: Path,
         config: dict,
         stage_dir: Path,
         budget: ExecutionBudget,
+        model_path: Path | None = None,
     ) -> WorkerResult:
         check_code(code_path.read_text())
         stage_dir.mkdir(parents=True, exist_ok=False)
@@ -152,7 +154,10 @@ class DockerExecutor:
             inputs = Path(temporary)
             inputs.chmod(0o755)
             shutil.copyfile(code_path, inputs / "candidate.py")
-            shutil.copyfile(train_path, inputs / "train.csv")
+            if train_path is not None:
+                shutil.copyfile(train_path, inputs / "train.csv")
+            if model_path is not None:
+                shutil.copyfile(model_path, inputs / "model.pkl.gz")
             shutil.copyfile(features_path, inputs / "evaluation_features.csv")
             write_json(inputs / "config.json", config)
             for path in inputs.iterdir():
@@ -207,7 +212,33 @@ class DockerExecutor:
                 if len(run.stdout.encode()) > 32_000_000:
                     raise WorkflowFailure("worker_output_too_large")
                 try:
-                    worker = WorkerResult.model_validate_json(run.stdout)
+                    payload = json.loads(run.stdout)
+                    model_payload = payload.pop("model_payload", None)
+                    worker = WorkerResult.model_validate(payload)
+                    if model_payload is not None:
+                        if (
+                            not (config.get("persist_model") or config["stage"] == "prepare")
+                            or worker.status != "ok"
+                        ):
+                            raise ValueError("unexpected_model_artifact")
+                        model_bytes = base64.b64decode(model_payload, validate=True)
+                        if len(model_bytes) > 24_000_000:
+                            raise ValueError("model_too_large")
+                        (stage_dir / "model.pkl.gz").write_bytes(model_bytes)
+                        write_json(
+                            stage_dir / "model-provenance.json",
+                            {
+                                "schema_version": 1,
+                                "model_sha256": sha256_file(stage_dir / "model.pkl.gz"),
+                                "code_hash": sha256_file(code_path),
+                                "train_sha256": sha256_file(train_path),
+                                "config": config,
+                                "image_id": self.approval["image_id"],
+                                "environment": worker.model_environment,
+                                "classes": worker.classes,
+                                "training_rows": worker.training_rows,
+                            },
+                        )
                 except ValueError:
                     raise WorkflowFailure("invalid_worker_response") from None
                 write_json(stage_dir / "predictions.json", worker.model_dump(mode="json"))

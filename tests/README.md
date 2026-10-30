@@ -18,3 +18,5 @@ Phase 2 的 test_phase2.py 覆盖数据/协议完整性、安全语法、独立�
 
 
 Phase 5 测试需要 web extra（`uv sync --extra web --locked` 或带散列安装 `requirements-dev.txt`）。`tests/test_web.py` 使用 Streamlit AppTest，普通单元测试不启动付费模型；`scripts/verify_phase5.py` 的页面验收实际启动 Mock 后台进程和 Docker，检查提交、刷新、恢复、下载入口、真实超时和三任务兼容。
+
+Phase 7：`test_data_view.py` 验证只读数据与压缩历史预测；`test_model_trials.py` 验证模型来源、输入和测试集守卫及失败停止；`test_experiments.py` 验证配置贯穿生成、参数检查、CLI 和页面。使用 `python -m pytest` 保证项目 scripts 可导入。实际容器保存、重复预测、历史显式准备和真实表单提交由 `scripts/verify_phase7.py` 复现；不会调用付费 API。

@@ -1,8 +1,13 @@
 """Trusted image entrypoint. Never import generated code on the host."""
 
+import base64
+import gzip
+import importlib.metadata
 import importlib.util
 import json
 import os
+import pickle
+import platform
 import resource
 import time
 from pathlib import Path
@@ -122,7 +127,7 @@ def evaluate(factory, train, evaluation, config):
                 pass
     if not multiclass and not regression:
         probabilities, repeat_probabilities = probabilities[:, 1], repeat_probabilities[:, 1]
-    return {
+    result = {
         "status": "ok",
         "classes": classes,
         "row_ids": evaluation.row_id.astype(int).tolist(),
@@ -139,6 +144,43 @@ def evaluate(factory, train, evaluation, config):
         "training_rows": len(train),
     }
 
+    if config.get("persist_model") or config["stage"] == "prepare":
+        result["model_payload"] = base64.b64encode(
+            gzip.compress(pickle.dumps(pipeline, protocol=5), mtime=0)
+        ).decode("ascii")
+        result["model_environment"] = model_environment()
+    return result
+
+
+def model_environment():
+    return {
+        "python": platform.python_version(),
+        "packages": {
+            name: importlib.metadata.version(name)
+            for name in ("numpy", "pandas", "scikit-learn", "scipy", "joblib")
+        },
+    }
+
+
+def predict_saved(config):
+    # Only the approved container deserializes models; host verifies provenance and bytes.
+    if config["model_environment"] != model_environment():
+        raise ValueError("model_environment_mismatch")
+    with gzip.open("/input/model.pkl.gz", "rb") as file:
+        pipeline = pickle.load(file)
+    frame = pd.read_csv("/input/evaluation_features.csv", keep_default_na=False)
+    predicted, probabilities = outputs(
+        pipeline, checked_features(frame, ["text"], ["text"]), config["class_labels"]
+    )
+    return {
+        "status": "ok",
+        "classes": config["class_labels"],
+        "row_ids": frame.row_id.tolist(),
+        "predictions": predicted.astype(int).tolist(),
+        "probabilities": probabilities.tolist(),
+        "model_environment": model_environment(),
+    }
+
 
 def main():
     started = time.monotonic()
@@ -150,20 +192,10 @@ def main():
         raise SystemExit("This entrypoint requires the approved non-root Linux sandbox")
     try:
         config = json.loads(Path("/input/config.json").read_text())
-        specification = importlib.util.spec_from_file_location("candidate", "/input/candidate.py")
-        module = importlib.util.module_from_spec(specification)
-        specification.loader.exec_module(module)
-        factory = getattr(module, "build_pipeline", None)
-        if not callable(factory):
-            result = {"status": "failed", "error_category": "interface_missing_build_pipeline"}
+        if config["stage"] == "predict":
+            result = predict_saved(config)
         else:
-            # Preserve literal strings such as 'NA'; the text boundary rejects actual empty values.
-            text_task = bool(config.get("text_features"))
-            train = pd.read_csv("/input/train.csv", keep_default_na=not text_task)
-            evaluation = pd.read_csv(
-                "/input/evaluation_features.csv", keep_default_na=not text_task
-            )
-            result = evaluate(factory, train, evaluation, config)
+            result = execute_candidate(config)
     except Exception as exc:
         result = {"status": "failed", "error_category": "worker_" + type(exc).__name__}
     result.update(
@@ -172,6 +204,22 @@ def main():
         peak_memory_mib=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024,
     )
     print(json.dumps(result, allow_nan=False, separators=(",", ":")))
+
+
+def execute_candidate(config):
+    specification = importlib.util.spec_from_file_location("candidate", "/input/candidate.py")
+    module = importlib.util.module_from_spec(specification)
+    specification.loader.exec_module(module)
+    factory = getattr(module, "build_pipeline", None)
+    if not callable(factory):
+        result = {"status": "failed", "error_category": "interface_missing_build_pipeline"}
+    else:
+        # Preserve literal strings such as 'NA'; the text boundary rejects actual empty values.
+        text_task = bool(config.get("text_features"))
+        train = pd.read_csv("/input/train.csv", keep_default_na=not text_task)
+        evaluation = pd.read_csv("/input/evaluation_features.csv", keep_default_na=not text_task)
+        result = evaluate(factory, train, evaluation, config)
+    return result
 
 
 if __name__ == "__main__":

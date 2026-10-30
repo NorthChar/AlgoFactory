@@ -40,6 +40,9 @@ def parser():
     demo.add_argument("--mode", choices=["mock", "api"], default="mock")
     demo.add_argument("--task", choices=["churn", "banking77", "regression"], default="churn")
     demo.add_argument("--request")
+    demo.add_argument(
+        "--experiment", type=Path, help="冻结的 BANKING77 实验 JSON；候选及参数使用有限白名单"
+    )
     demo.add_argument("--output-dir", type=Path)
     demo.add_argument("--dataset-dir", type=Path)
     demo.add_argument("--db", type=Path, default=Path("runtime/phase2.sqlite"))
@@ -141,9 +144,9 @@ def parser():
 def run(args):
     if args.command == "status":
         return {
-            "phase": 6,
+            "phase": 7,
             "tasks": ["banking77", "churn", "regression"],
-            "status": "single_candidate_workflow",
+            "status": "interactive_experiment_workbench",
             "core_workflow": "implemented_docker_required",
             "live_api": "phase3_evidence_available; current credentials and environment required",
             "experience_reuse": "scoped_repair_evidence_and_opt_in_retrieval",
@@ -208,6 +211,18 @@ def run(args):
         from algofactory.datasets import verify_dataset
         from algofactory.tasks import PROFILES, profile_for
 
+        experiment = None
+        if args.experiment:
+            from algofactory.experiments import ExperimentConfig
+
+            experiment = ExperimentConfig.model_validate_json(args.experiment.read_text())
+            if args.task != "banking77":
+                raise ValueError("experiment_requires_banking77")
+            experiment.validate_request(args.request or "")
+            if args.learn_experiences:
+                raise ValueError("configured_experiment_synthesis_not_supported")
+            # A one-candidate search still uses the bounded repair machinery.
+            args.compare = True
         profile = PROFILES[args.task]
         args.dataset_dir = args.dataset_dir or Path(
             "runtime/"
@@ -261,14 +276,20 @@ def run(args):
         if args.llm_call_budget is not None:
             provider.max_calls = args.llm_call_budget
         workflow = run_workflow
-        extra = {"use_experiences": args.experiences, "validation_only": args.validation_only}
+        extra = {
+            "use_experiences": args.experiences,
+            "validation_only": args.validation_only,
+            "experiment": experiment,
+        }
         if args.compare:
             from algofactory.planning import SearchPolicy
             from algofactory.search import run_search
 
             workflow = run_search
             extra["policy"] = SearchPolicy(
-                max_repairs=args.max_repairs, attempt_budget=args.attempt_budget
+                algorithms=experiment.algorithms if experiment else ["text_logistic", "text_nb"],
+                max_repairs=args.max_repairs,
+                attempt_budget=args.attempt_budget,
             )
             extra.update(
                 learn_experiences=args.learn_experiences, reuse_knowledge=args.reuse_knowledge

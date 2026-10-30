@@ -31,6 +31,7 @@ class GeneratedCode(Contract):
 class WorkerResult(Contract):
     status: Literal["ok", "failed"]
     error_category: Text | None = None
+    model_environment: dict = Field(default_factory=dict)
     row_ids: list[int] = Field(default_factory=list)
     predictions: list[int | float] = Field(default_factory=list)
     probabilities: list[float] | list[list[float]] = Field(default_factory=list)

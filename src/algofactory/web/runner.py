@@ -85,13 +85,19 @@ def execute(root, identifier):
                 "--llm-call-budget",
                 str(settings.call_budget),
             ]
-            if settings.compare:
+            if settings.experiment:
+                write_json(job / "experiment.json", settings.experiment.model_dump(mode="json"))
+                arguments += ["--experiment", str(job / "experiment.json")]
+            if settings.compare or settings.experiment:
                 arguments += [
                     "--compare",
                     "--max-repairs",
                     str(settings.max_repairs),
                     "--attempt-budget",
-                    str(2 * (settings.max_repairs + 1)),
+                    str(
+                        (len(settings.experiment.algorithms) if settings.experiment else 2)
+                        * (settings.max_repairs + 1)
+                    ),
                 ]
             if settings.experiences:
                 arguments += ["--experiences", "--reuse-knowledge"]

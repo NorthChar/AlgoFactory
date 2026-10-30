@@ -13,11 +13,13 @@ from typing import Literal
 from pydantic import Field, model_validator
 
 from algofactory.datasets import write_json
+from algofactory.experiments import ExperimentConfig
 from algofactory.schemas.contracts import Contract
 from algofactory.tasks import PROFILES
 
 
 class RunSettings(Contract):
+    experiment: ExperimentConfig | None = None
     task: Literal["banking77", "regression"] = "banking77"
     mode: Literal["mock", "api"] = "mock"
     compare: bool = True
@@ -29,9 +31,15 @@ class RunSettings(Contract):
 
     @model_validator(mode="after")
     def supported(self):
+        if self.experiment:
+            if self.task != "banking77":
+                raise ValueError("experiment_requires_banking77")
+            self.experiment.validate_request(self.request)
+            if self.compare != (len(self.experiment.algorithms) == 2):
+                raise ValueError("experiment_comparison_mismatch")
         if self.task == "regression" and (self.compare or self.experiences):
             raise ValueError("regression_single_candidate_only")
-        if self.experiences and not self.compare:
+        if self.experiences and not (self.compare or self.experiment):
             raise ValueError("experience_search_required")
         if self.mode == "api" and self.call_budget > 12:
             raise ValueError("web_api_budget_maximum_12")

@@ -7,9 +7,11 @@ from pathlib import Path
 
 import streamlit as st
 
+from algofactory.experiments import ExperimentConfig
 from algofactory.tasks import PROFILES
 from algofactory.web.data_view import show_data, show_errors
 from algofactory.web.evidence import STEPS, stage_rows, workflow_evidence
+from algofactory.web.models import show_trial
 from algofactory.web.service import (
     Jobs,
     RunSettings,
@@ -66,8 +68,8 @@ def navigate(destination, report=None):
         st.session_state.pop("pending_report", None)
 
 
-intro, data_tab, launch, reports, knowledge = st.tabs(
-    ["从这里开始", "了解数据", "新建任务", "运行与报告", "知识与来源"],
+intro, data_tab, launch, reports, trial_tab, knowledge = st.tabs(
+    ["从这里开始", "了解数据", "新建任务", "运行与报告", "试用算法", "知识与来源"],
     key="workspace_tab",
     on_change="rerun",
 )
@@ -92,6 +94,18 @@ def show_report(relative):
         st.info("正在查看历史归档案例。这里只读取已有证据，不会调用 API，也不是你刚提交的任务。")
     else:
         st.caption("证据来源：" + report_label(relative))
+    if report.get("experiment"):
+        st.write("本次冻结的实验配置")
+        st.json(report["experiment"], expanded=False)
+        st.caption(
+            "配置编号："
+            + report["experiment_hash"]
+            + (
+                " · 单候选实验，不表示比较获胜"
+                if report.get("candidate_mode") == "single"
+                else " · 同一配置内比较"
+            )
+        )
     validation = report.get("validation", {})
     status = STATUS.get(report["status"], report["status"])
     st.subheader(status)
@@ -219,7 +233,7 @@ with intro:
         )
     st.button("我想试着生成一次", on_click=navigate, args=("新建任务",))
     st.info(
-        "目前可体验预设的银行客服分类和合成回归案例。自有数据上传、任意新业务和单条咨询在线预测，尚未接入。"
+        "目前可体验预设的银行客服分类和合成回归案例。可以在“了解数据”查看样本，再去“试用算法”输入英文咨询。自有数据上传和任意新业务尚未接入。"
     )
     with st.expander("“七步流程”和这个用途有什么关系？"):
         st.write(
@@ -236,7 +250,7 @@ with launch:
     st.write("描述你希望生成的算法能力，系统会生成代码并运行测试，保存整个过程的证据。")
     st.info(
         "当前支持预设案例及固定输入输出协议。这里填写算法开发需求；"
-        "暂不支持上传自有数据、任意业务任务或输入单条咨询直接预测。"
+        "暂不支持上传自有数据或任意业务任务。单条咨询预测请到“试用算法”。"
     )
     task = st.selectbox(
         "任务",
@@ -284,7 +298,7 @@ with launch:
             width="stretch",
         )
         st.caption(
-            "Mock 用固定模型响应演示流程；API 在既定任务协议内解析需求和生成代码。算法候选和关键参数仍由案例约束。"
+            "Mock 用固定模型响应演示流程；API 在既定任务协议内解析需求和生成代码。可通过“自主选择算法与参数”在已支持的候选范围内配置实验。"
         )
     historical = "examples/api-phase3/comparison"
     if historical in report_catalog(ROOT):
@@ -303,17 +317,74 @@ with launch:
         st.info(
             "密钥仅从本机 .env 或环境变量读取，不在页面输入或显示。每次任务最多 12 次请求，具体费用以 Azure 账单为准。"
         )
+    custom = False
+    experiment = None
+    if task == "banking77":
+        custom = st.toggle("自主选择算法与参数", value=False)
+        if custom:
+            st.write(
+                "先选方案，再生成代码。以下选择会固定到本次实验，验证后不会自动改选另一套参数。"
+            )
+            algorithms = st.multiselect(
+                "参与实验的算法",
+                ["text_logistic", "text_nb"],
+                default=["text_logistic", "text_nb"],
+                format_func=lambda x: {
+                    "text_logistic": "逻辑回归（Logistic Regression）",
+                    "text_nb": "朴素贝叶斯（MultinomialNB）",
+                }[x],
+            )
+            c1, c2 = st.columns(2)
+            with c1:
+                ngram = st.selectbox(
+                    "文本特征",
+                    [2, 1],
+                    format_func=lambda x: "单词 + 相邻双词" if x == 2 else "仅单词",
+                )
+                max_features = st.selectbox("词表上限", [30000, 10000])
+            with c2:
+                logistic_c = st.selectbox(
+                    "逻辑回归 C", [4.0, 1.0], help="数值越小，正则化越强。仅对逻辑回归生效。"
+                )
+                nb_alpha = st.selectbox(
+                    "朴素贝叶斯平滑系数",
+                    [0.1, 0.5],
+                    help="控制少见词的平滑程度。若触发指标优化，最多按初始值、1/2、1/10 的预定顺序尝试。",
+                )
+            if algorithms:
+                experiment = ExperimentConfig(
+                    algorithms=algorithms,
+                    ngram_max=ngram,
+                    max_features=max_features,
+                    logistic_c=logistic_c,
+                    nb_alpha=nb_alpha,
+                )
+                st.caption(
+                    "配置编号："
+                    + experiment.digest[:16]
+                    + "。不同实验的结果分别呈现，不合并成跨配置排行榜。"
+                )
+            else:
+                st.warning("至少选择一个算法才能提交。")
+            st.caption(
+                "配置实验使用固定的 BANKING77 业务描述；算法与参数通过以上控件设置。首版不解释任意文字中的额外参数约束。"
+            )
     request = st.text_area(
         "开发需求",
         value=PROFILES[task].request,
-        key="request_" + task + mode,
-        disabled=mode == "mock",
+        key="request_" + task + mode + ("_configured" if custom else ""),
+        disabled=mode == "mock" or custom,
         help="Mock 仅支持固定示例需求；真实 API 可理解同一输入协议下的需求。",
     )
     st.caption("示例描述的是需要生成的算法能力；仅修改文字不会改变预设的数据字段、类别或验证门槛。")
     with st.form("new_task"):
         compare = st.checkbox(
-            "比较两个候选并允许修复", value=task == "banking77", disabled=task != "banking77"
+            "比较两个候选并允许修复",
+            value=(len(algorithms) == 2 if custom else task == "banking77"),
+            disabled=task != "banking77" or custom,
+            key=("compare_custom_" + str(len(algorithms)))
+            if custom
+            else "compare_baseline_" + task,
         )
         validation_only = st.checkbox(
             "仅验证集评估",
@@ -347,7 +418,10 @@ with launch:
         )
     if submitted:
         try:
+            if custom and experiment is None:
+                raise ValueError("select_at_least_one_algorithm")
             settings = RunSettings(
+                experiment=experiment,
                 task=task,
                 mode=mode,
                 compare=compare,
@@ -371,7 +445,9 @@ with launch:
                 st.session_state["submission_token"] = uuid.uuid4().hex
                 st.success("任务已提交。刷新页面不会重新提交；进度与报告在下方更新。")
         except (ValueError, OSError):
-            st.error("无法提交：请检查配置。回归只支持单候选；经验复用需要候选比较。")
+            st.error(
+                "无法提交：请检查候选与参数。配置实验使用固定业务描述；回归只支持单候选；经验复用需要比较流程。"
+            )
 
     @st.fragment(run_every="2s")
     def progress():
@@ -461,6 +537,9 @@ with reports:
             st.error("报告不完整或无法读取，不能据此确认验收。")
     else:
         st.info("尚无报告。完成首个任务后可在此查看与下载。")
+
+with trial_tab:
+    show_trial(ROOT, report_catalog(ROOT))
 
 with knowledge:
     st.subheader("知识图谱与来源")

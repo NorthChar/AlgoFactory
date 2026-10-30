@@ -22,7 +22,7 @@ def design_explanation(directory: Path, report: dict):
             "workflow_id": report["workflow_id"],
             "validation_run_id": validation.get("run_id"),
             "selection_basis": "同一协议下按验证集排名选定版本"
-            if report.get("selected_algorithm")
+            if report.get("selected_algorithm") and report.get("candidate_mode") != "single"
             else "预先指定的单候选；不声称是所有算法中最优",
             "final_test_evaluated": validation.get("final_test_evaluated", False),
         }
@@ -55,6 +55,18 @@ def save_report(directory: Path, report: dict):
         "| 维度 | 状态 | 说明 |",
         "| --- | --- | --- |",
     ]
+    if report.get("experiment"):
+        lines[12:12] = [
+            "",
+            "## 冻结实验配置",
+            "",
+            "配置编号：" + report["experiment_hash"],
+            "",
+            "```json",
+            json.dumps(report["experiment"], ensure_ascii=False, indent=2),
+            "```",
+            "",
+        ]
     for key, name in (
         ("functional", "功能"),
         ("metrics", "指标"),

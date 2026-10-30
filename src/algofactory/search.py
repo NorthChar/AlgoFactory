@@ -50,8 +50,13 @@ def run_search(
     learn_experiences: bool = False,
     validation_only: bool = False,
     reuse_knowledge: bool = False,
+    experiment=None,
 ):
     policy = policy or SearchPolicy()
+    if experiment is not None:
+        experiment.validate_request(request)
+        if policy.algorithms != experiment.algorithms or resume_failures or learn_experiences:
+            raise ValueError("experiment_policy_or_resume_mismatch")
     if directory.exists() and any(directory.iterdir()):
         raise WorkflowFailure("run_directory_must_be_new")
     directory.mkdir(parents=True, exist_ok=True)
@@ -77,6 +82,16 @@ def run_search(
         "policy": policy.model_dump(mode="json"),
         "ranking": [],
     }
+    if experiment is not None:
+        report.update(
+            experiment=experiment.frozen(),
+            experiment_hash=experiment.digest,
+            candidate_mode="comparison" if len(policy.algorithms) > 1 else "single",
+        )
+        write_json(
+            directory / "experiment.json",
+            {"configuration": experiment.frozen(), "experiment_hash": experiment.digest},
+        )
     calls_at_start = provider.calls
     decisions = []
     knowledge_cache: set[str] = set()
@@ -143,6 +158,7 @@ def run_search(
             class_names=manifest["class_names"],
         )
         frozen = {
+            "experiment_hash": report.get("experiment_hash"),
             "policy": policy.model_dump(mode="json"),
             "config_hash": protocol["config_hash"],
             "data_fingerprint": manifest["data_fingerprint"],
@@ -220,10 +236,12 @@ def run_search(
                         knowledge_cache=knowledge_cache,
                         use_experiences=use_experiences,
                         experience_ids=experience_ids,
+                        experiment=experiment,
                     )
                 result = child.get("validation", {})
                 entry = {
                     "algorithm": algorithm,
+                    "experiment_hash": child.get("experiment_hash"),
                     "attempt": attempt,
                     "workflow_id": child["workflow_id"],
                     "status": child["status"],

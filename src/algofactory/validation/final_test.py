@@ -25,6 +25,7 @@ def evaluate_final(
     selection = {
         "code_hash": candidate.code_hash,
         "config_hash": protocol["config_hash"],
+        "experiment_hash": report.get("experiment_hash"),
         "split_id": manifest["split_id"],
         "validation_metrics": validation_metrics,
         "reason": "All validation checks passed before any test evaluation",
@@ -43,7 +44,7 @@ def evaluate_final(
         code_path,
         dataset_dir / "train.csv",
         dataset_dir / "test_features.csv",
-        config | {"stage": "test"},
+        config | {"stage": "test", "persist_model": False},
         directory / "test-execution",
         task.constraints.execution,
     )
