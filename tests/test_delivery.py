@@ -11,7 +11,8 @@ from algofactory.delivery import contains_secret, safe_file, scan_history
 def test_secret_detection_and_safe_reference_paths(tmp_path):
     assert contains_secret(b"prefix private-test-key suffix", (b"private-test-key",))
     assert contains_secret(b"ghp_" + b"Z" * 36)
-    assert contains_secret(b"-----BEGIN OPENSSH PRIVATE KEY-----")
+    assert contains_secret(b"-----BEGIN OPENSSH PRIVATE KEY-----\n" + b"A" * 64)
+    assert not contains_secret(b"-----BEGIN OPENSSH PRIVATE KEY-----")
     assert not contains_secret(b"ALGOFACTORY_API_KEY=\n")
     with pytest.raises(ValueError):
         safe_file(tmp_path, "../hidden")

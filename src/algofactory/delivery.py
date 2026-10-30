@@ -11,7 +11,7 @@ TOKEN_PATTERNS = (
     rb"gh[pousr]_[A-Za-z0-9]{36,}",
     rb"github_pat_[A-Za-z0-9_]{70,}",
     rb"sk-(?:proj-)?[A-Za-z0-9_-]{40,}",
-    rb"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----",
+    rb"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----\s+[A-Za-z0-9+/=]{32,}",
 )
 
 
