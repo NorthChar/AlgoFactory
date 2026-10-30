@@ -1,0 +1,64 @@
+{
+  "checks": [
+    {
+      "command": [
+        "git",
+        "clone",
+        "--no-local",
+        "--quiet",
+        "/Users/northchar/Documents/Codex/AlgoFactory",
+        "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-2/checkout"
+      ],
+      "cwd": "/Users/northchar/Documents/Codex/AlgoFactory",
+      "exit_code": 0,
+      "log": "check-1.log"
+    },
+    {
+      "command": [
+        "git",
+        "remote",
+        "remove",
+        "origin"
+      ],
+      "cwd": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-2/checkout",
+      "exit_code": 0,
+      "log": "check-2.log"
+    },
+    {
+      "command": [
+        "/Users/northchar/.local/bin/uv",
+        "--version"
+      ],
+      "cwd": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-2/checkout",
+      "exit_code": 0,
+      "log": "check-3.log"
+    },
+    {
+      "command": [
+        "/Users/northchar/.local/bin/uv",
+        "venv",
+        "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-2/environment",
+        "--python",
+        "/Users/northchar/Documents/Codex/AlgoFactory/.venv/bin/python"
+      ],
+      "cwd": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-2/checkout",
+      "exit_code": 0,
+      "log": "check-4.log"
+    }
+  ],
+  "command": [
+    "/Users/northchar/Documents/Codex/AlgoFactory/.venv/bin/python",
+    "scripts/verify_phase6.py",
+    "--output-dir",
+    "runtime/phase6-cold-start-2"
+  ],
+  "error": "",
+  "error_type": "KeyboardInterrupt",
+  "finished_at": "2026-10-30T10:35:29.891435+08:00",
+  "live_api": "prior_phase3_and_phase4_evidence_only",
+  "paid_api_calls": 0,
+  "phase": 6,
+  "source_commit": "a2d9fe61c1818090edd5e436da2abea3eec831b5",
+  "started_at": "2026-10-30T10:29:51.638684+08:00",
+  "status": "failed"
+}

@@ -1,0 +1,13 @@
+{
+  "schemas": [
+    "TaskSpec",
+    "AlgorithmPlan",
+    "Candidate",
+    "ValidationResult",
+    "AgentDecision",
+    "ExperienceRecord",
+    "Extraction",
+    "KnowledgeBatch"
+  ],
+  "schema_version": 1
+}

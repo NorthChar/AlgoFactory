@@ -1,0 +1,72 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "plan_id": {
+      "maxLength": 240,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9_.:-]+$",
+      "title": "Plan Id",
+      "type": "string"
+    },
+    "task_id": {
+      "maxLength": 240,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9_.:-]+$",
+      "title": "Task Id",
+      "type": "string"
+    },
+    "algorithm_id": {
+      "maxLength": 240,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9_.:-]+$",
+      "title": "Algorithm Id",
+      "type": "string"
+    },
+    "preprocessing": {
+      "items": {
+        "minLength": 1,
+        "pattern": "\\S",
+        "type": "string"
+      },
+      "title": "Preprocessing",
+      "type": "array"
+    },
+    "dependencies": {
+      "items": {
+        "minLength": 1,
+        "pattern": "\\S",
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Dependencies",
+      "type": "array"
+    },
+    "evidence_ids": {
+      "items": {
+        "maxLength": 240,
+        "minLength": 1,
+        "pattern": "^[a-zA-Z0-9_.:-]+$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Evidence Ids",
+      "type": "array"
+    }
+  },
+  "required": [
+    "plan_id",
+    "task_id",
+    "algorithm_id",
+    "preprocessing",
+    "dependencies",
+    "evidence_ids"
+  ],
+  "title": "AlgorithmPlan",
+  "type": "object"
+}

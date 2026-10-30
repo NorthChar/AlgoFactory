@@ -1,0 +1,58 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "implementation_id": {
+      "maxLength": 240,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9_.:-]+$",
+      "title": "Implementation Id",
+      "type": "string"
+    },
+    "parent_id": {
+      "anyOf": [
+        {
+          "maxLength": 240,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9_.:-]+$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Parent Id"
+    },
+    "code_hash": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Code Hash",
+      "type": "string"
+    },
+    "plan_id": {
+      "maxLength": 240,
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9_.:-]+$",
+      "title": "Plan Id",
+      "type": "string"
+    },
+    "attempt": {
+      "minimum": 0,
+      "title": "Attempt",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "implementation_id",
+    "code_hash",
+    "plan_id",
+    "attempt"
+  ],
+  "title": "Candidate",
+  "type": "object"
+}

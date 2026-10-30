@@ -1,0 +1,8 @@
+{
+  "enabled": false,
+  "excluded": [],
+  "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+  "matches": [],
+  "model_decisions": [],
+  "observed_rule_satisfied": false
+}

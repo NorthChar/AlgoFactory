@@ -1,0 +1,30 @@
+{
+  "baseline": {
+    "algorithm": "Ridge(alpha=1.0)",
+    "calibrator_sha256": "7fb3581b344eec1c145ff300ff63b985a8b66a856f752f7249f5b9ce79c22f4a",
+    "fit_split": "train",
+    "validation_metrics": {
+      "mae": 0.3964432263731119,
+      "rmse": 0.5041327352254483
+    }
+  },
+  "config_hash": "d4a07b9d931ce325705ea1740caeaacea445e727cdcc0e39e6ad75221725b517",
+  "data_fingerprint": "3802b4615716526b64b4737bca9a026bf2def5c06984d4511a4b07d2852a7af8",
+  "directions": {
+    "mae": "minimize",
+    "rmse": "minimize"
+  },
+  "repeat_tolerance": 1e-12,
+  "schema_version": 1,
+  "seed": 42,
+  "split_id": "split:990515a8aa69db63e4e5778c769537cfbcab45a3ca2dfdc773865fa395381e81",
+  "target": "value",
+  "task_profile": "regression",
+  "task_type": "regression",
+  "test_used_for_calibration": false,
+  "threshold_rule": "predeclared MAE <= 1.0 and RMSE <= 1.5 (synthetic noise std 0.5)",
+  "thresholds": {
+    "mae": 1.0,
+    "rmse": 1.5
+  }
+}

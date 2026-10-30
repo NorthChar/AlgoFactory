@@ -1,0 +1,5 @@
+Using Python 3.11.16 environment at: /Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-3/environment
+Resolved 1 package in 1ms
+Prepared 1 package in 4ms
+Installed 1 package in 2ms
+ + algofactory==0.6.0 (from file:///Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-3/dist/algofactory-0.6.0-py3-none-any.whl)

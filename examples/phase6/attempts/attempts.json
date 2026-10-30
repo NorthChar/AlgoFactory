@@ -1,0 +1,26 @@
+{
+  "paid_api_calls": 0,
+  "attempts": [
+    {
+      "attempt": 1,
+      "source_commit": "cc25527820669f6f481529492fb74af35e9156df",
+      "status": "failed",
+      "reason": "uv pip sync parameter corrected",
+      "report": "attempt-1/verification.json"
+    },
+    {
+      "attempt": 2,
+      "source_commit": "a2d9fe61c1818090edd5e436da2abea3eec831b5",
+      "status": "failed",
+      "reason": "Stopped to separate oversized source ZIP from Git evidence",
+      "report": "attempt-2/verification.json"
+    },
+    {
+      "attempt": 3,
+      "source_commit": "679017365a6eb8c67085161a9fed23e6377124fb",
+      "status": "failed",
+      "reason": "Private-key header-only test fixture caused a false positive; detector now requires key material",
+      "report": "attempt-3/verification.json"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "call_budget": 24,
+  "compare": true,
+  "experiences": false,
+  "max_repairs": 1,
+  "mode": "mock",
+  "request": "基于 BANKING77 的英文客服文本生成并验证意图分类算法，输出 77 类已知意图及概率。",
+  "schema_version": 1,
+  "task": "banking77",
+  "validation_only": true
+}

@@ -1,0 +1,115 @@
+{
+  "artifacts_sha256": {
+    "builder-input.json": "bd54d4a8771245fb5c5c6c9f5a659a198351ba9a8912e104f42e49c53833e6bc",
+    "candidate.json": "c459a25b32d823d3092da7c993f444972acfbb0f66baa11a30866378cf55c794",
+    "candidate.py": "02fdc4c55d40ecb2f018daa6f152eaf7faaa4ff29acc5df329e7e394df3ff068",
+    "data-manifest.json": "f7b15dca3f8ff5859b7839feece72b703fd5745f5d8870825d77402d1628745f",
+    "decisions.json": "f3a4aa29619a748e9cb75711a10879c8edf2931c6a66ff8f2014d518524ac565",
+    "experience-retrieval.json": "af3f6c94524807e74ea3a6cee452b9da96cd7e15127c5996fbcbcbf6e176662a",
+    "experience-use.json": "af3f6c94524807e74ea3a6cee452b9da96cd7e15127c5996fbcbcbf6e176662a",
+    "knowledge-input.json": "9e3d9476acbb5320c62035f4ab482be18122a12133652321c900c582e1b3aaa3",
+    "plan-proposal.json": "b7e89fd10bcef953a9d5bc48748fc3a574acc7fd17b7eea1caa5dae9c1d6cb6b",
+    "plan.json": "b7e89fd10bcef953a9d5bc48748fc3a574acc7fd17b7eea1caa5dae9c1d6cb6b",
+    "protocol.json": "7a66982ff7e5a9506b621353d708e846c253cb131708f353732d35f0c3b34986",
+    "provider-audit.json": "d1defd4d518c1ac3a6fca3a43a6e930d847d5cb9d72c5e0a68a7b77cf1ee621d",
+    "retrieval.json": "346930bf21b14c5c8822851da175b107a07ca664ce8ffdbd2960404dd2224f1f",
+    "task.json": "656ce570346c2e11dc059bf69209ca1e6b941e084f25b872ec1914ce68780411",
+    "trace.json": "1c345d8a0691afeadc1507693b0237f22b93bad600c1b5f3d71030df454bb55e"
+  },
+  "candidate": {
+    "attempt": 0,
+    "code_hash": "02fdc4c55d40ecb2f018daa6f152eaf7faaa4ff29acc5df329e7e394df3ff068",
+    "implementation_id": "workflow:048943f906d74592ac96d80406802e7d:candidate",
+    "parent_id": null,
+    "plan_id": "workflow:048943f906d74592ac96d80406802e7d:plan",
+    "schema_version": 1
+  },
+  "class_names": [
+    "not_churn",
+    "churn"
+  ],
+  "code_hash": "02fdc4c55d40ecb2f018daa6f152eaf7faaa4ff29acc5df329e7e394df3ff068",
+  "data_fingerprint": "3802b4615716526b64b4737bca9a026bf2def5c06984d4511a4b07d2852a7af8",
+  "design_explanation": {
+    "algorithm_id": "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f:algorithm:logistic_regression",
+    "evidence_ids": [
+      "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f:algorithm:logistic_regression",
+      "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f:capability:regression"
+    ],
+    "final_test_evaluated": false,
+    "selection_basis": "预先指定的单候选；不声称是所有算法中最优",
+    "text": "任务要求预测 value，类型为 regression。方案依据适用知识选择算法实体 source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f:algorithm:logistic_regression，并要求预处理只在训练集拟合。候选是否通过由独立验证器依据冻结门槛决定，不由模型自行评分。此次运行状态为 failed。",
+    "validation_run_id": "source:53ae2e4792e001749c3e729f0b2f2992e29805816ba7dfe1362ccfe8a20c5611:validation",
+    "workflow_id": "workflow:048943f906d74592ac96d80406802e7d"
+  },
+  "error_category": "unapproved_import",
+  "evaluation_scope": "validation_and_final_test",
+  "execution_evidence": [],
+  "experience_usage": {
+    "enabled": false,
+    "excluded": [],
+    "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+    "matches": [],
+    "model_decisions": [],
+    "observed_rule_satisfied": false
+  },
+  "knowledge_ids": {
+    "dataset_id": "source:53ae2e4792e001749c3e729f0b2f2992e29805816ba7dfe1362ccfe8a20c5611:dataset",
+    "implementation_id": "source:53ae2e4792e001749c3e729f0b2f2992e29805816ba7dfe1362ccfe8a20c5611:implementation",
+    "task_id": "source:53ae2e4792e001749c3e729f0b2f2992e29805816ba7dfe1362ccfe8a20c5611:task",
+    "validation_run_id": "source:53ae2e4792e001749c3e729f0b2f2992e29805816ba7dfe1362ccfe8a20c5611:validation"
+  },
+  "persisted": true,
+  "provider_mode": "mock",
+  "split_id": "split:990515a8aa69db63e4e5778c769537cfbcab45a3ca2dfdc773865fa395381e81",
+  "status": "failed",
+  "task_profile": "regression",
+  "test_attempted": false,
+  "thresholds": {
+    "mae": 1.0,
+    "rmse": 1.5
+  },
+  "validation": {
+    "code_hash": "02fdc4c55d40ecb2f018daa6f152eaf7faaa4ff29acc5df329e7e394df3ff068",
+    "config_hash": "d4a07b9d931ce325705ea1740caeaacea445e727cdcc0e39e6ad75221725b517",
+    "error_category": "unapproved_import",
+    "final_test_evaluated": false,
+    "functional": {
+      "details": "尚未执行",
+      "schema_version": 1,
+      "status": "not_run"
+    },
+    "implementation_id": "source:53ae2e4792e001749c3e729f0b2f2992e29805816ba7dfe1362ccfe8a20c5611:implementation",
+    "interface": {
+      "details": "尚未执行",
+      "schema_version": 1,
+      "status": "not_run"
+    },
+    "metrics": {
+      "details": "尚未执行",
+      "schema_version": 1,
+      "status": "not_run"
+    },
+    "report_paths": [
+      "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-4/checkout/runtime/phase6-acceptance/unsafe/report.json",
+      "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-4/checkout/runtime/phase6-acceptance/unsafe/report.md"
+    ],
+    "resources": {
+      "elapsed_seconds": 0.0,
+      "peak_memory_mib": 0.0,
+      "schema_version": 1
+    },
+    "run_id": "source:53ae2e4792e001749c3e729f0b2f2992e29805816ba7dfe1362ccfe8a20c5611:validation",
+    "schema_version": 1,
+    "split_id": "split:990515a8aa69db63e4e5778c769537cfbcab45a3ca2dfdc773865fa395381e81",
+    "stability": {
+      "details": "尚未执行",
+      "schema_version": 1,
+      "status": "not_run"
+    },
+    "status": "failed",
+    "test_metrics": {},
+    "validation_metrics": {}
+  },
+  "workflow_id": "workflow:048943f906d74592ac96d80406802e7d"
+}

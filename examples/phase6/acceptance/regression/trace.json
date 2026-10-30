@@ -1,0 +1,128 @@
+[
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "收到显式任务，开始单候选流程",
+    "sequence": 0,
+    "source_ids": [],
+    "state": "received",
+    "timestamp": "2026-10-30T11:06:26.655116+08:00",
+    "workflow_id": "workflow:11c684a1b89243b8976ffec86c78492a"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": "d4a07b9d931ce325705ea1740caeaacea445e727cdcc0e39e6ad75221725b517",
+    "reason": "需求契约已校验，并绑定数据指纹与冻结规则",
+    "sequence": 1,
+    "source_ids": [],
+    "state": "parsed",
+    "timestamp": "2026-10-30T11:06:26.669030+08:00",
+    "workflow_id": "workflow:11c684a1b89243b8976ffec86c78492a"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": "d4a07b9d931ce325705ea1740caeaacea445e727cdcc0e39e6ad75221725b517",
+    "reason": "检索到有原文依据的能力与候选算法",
+    "sequence": 2,
+    "source_ids": [
+      "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f"
+    ],
+    "state": "retrieved",
+    "timestamp": "2026-10-30T11:06:26.678628+08:00",
+    "workflow_id": "workflow:11c684a1b89243b8976ffec86c78492a"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": "d4a07b9d931ce325705ea1740caeaacea445e727cdcc0e39e6ad75221725b517",
+    "reason": "选择适用的单候选并保存证据引用",
+    "sequence": 3,
+    "source_ids": [
+      "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f"
+    ],
+    "state": "planned",
+    "timestamp": "2026-10-30T11:06:26.679270+08:00",
+    "workflow_id": "workflow:11c684a1b89243b8976ffec86c78492a"
+  },
+  {
+    "candidate_id": "workflow:11c684a1b89243b8976ffec86c78492a:candidate",
+    "code_hash": "89f8e5686986c46bd0f0d329019f9829537644c0ed8e93fbfc0184d5948bfebc",
+    "config_hash": "d4a07b9d931ce325705ea1740caeaacea445e727cdcc0e39e6ad75221725b517",
+    "reason": "已生成独立 Python 文件并记录代码散列",
+    "sequence": 4,
+    "source_ids": [
+      "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f"
+    ],
+    "state": "generated",
+    "timestamp": "2026-10-30T11:06:26.680359+08:00",
+    "workflow_id": "workflow:11c684a1b89243b8976ffec86c78492a"
+  },
+  {
+    "candidate_id": "workflow:11c684a1b89243b8976ffec86c78492a:candidate",
+    "code_hash": "89f8e5686986c46bd0f0d329019f9829537644c0ed8e93fbfc0184d5948bfebc",
+    "config_hash": "d4a07b9d931ce325705ea1740caeaacea445e727cdcc0e39e6ad75221725b517",
+    "reason": "代码符合受限工厂语法；接下来使用 Docker 隔离执行",
+    "sequence": 5,
+    "source_ids": [
+      "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f"
+    ],
+    "state": "checked",
+    "timestamp": "2026-10-30T11:06:26.680699+08:00",
+    "workflow_id": "workflow:11c684a1b89243b8976ffec86c78492a"
+  },
+  {
+    "candidate_id": "workflow:11c684a1b89243b8976ffec86c78492a:candidate",
+    "code_hash": "89f8e5686986c46bd0f0d329019f9829537644c0ed8e93fbfc0184d5948bfebc",
+    "config_hash": "d4a07b9d931ce325705ea1740caeaacea445e727cdcc0e39e6ad75221725b517",
+    "reason": "候选在隔离容器中完成训练与验证集预测",
+    "sequence": 6,
+    "source_ids": [
+      "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f"
+    ],
+    "state": "executed",
+    "timestamp": "2026-10-30T11:06:27.450529+08:00",
+    "workflow_id": "workflow:11c684a1b89243b8976ffec86c78492a"
+  },
+  {
+    "candidate_id": "workflow:11c684a1b89243b8976ffec86c78492a:candidate",
+    "code_hash": "89f8e5686986c46bd0f0d329019f9829537644c0ed8e93fbfc0184d5948bfebc",
+    "config_hash": "d4a07b9d931ce325705ea1740caeaacea445e727cdcc0e39e6ad75221725b517",
+    "reason": "四维验证通过；锁定候选后开放一次最终测试",
+    "sequence": 7,
+    "source_ids": [
+      "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f"
+    ],
+    "state": "validated",
+    "timestamp": "2026-10-30T11:06:27.453813+08:00",
+    "workflow_id": "workflow:11c684a1b89243b8976ffec86c78492a"
+  },
+  {
+    "candidate_id": "workflow:11c684a1b89243b8976ffec86c78492a:candidate",
+    "code_hash": "89f8e5686986c46bd0f0d329019f9829537644c0ed8e93fbfc0184d5948bfebc",
+    "config_hash": "d4a07b9d931ce325705ea1740caeaacea445e727cdcc0e39e6ad75221725b517",
+    "reason": "结果已通过事务写入知识库；失败记录保留失败状态",
+    "sequence": 8,
+    "source_ids": [
+      "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f"
+    ],
+    "state": "persisted",
+    "timestamp": "2026-10-30T11:06:28.125670+08:00",
+    "workflow_id": "workflow:11c684a1b89243b8976ffec86c78492a"
+  },
+  {
+    "candidate_id": "workflow:11c684a1b89243b8976ffec86c78492a:candidate",
+    "code_hash": "89f8e5686986c46bd0f0d329019f9829537644c0ed8e93fbfc0184d5948bfebc",
+    "config_hash": "d4a07b9d931ce325705ea1740caeaacea445e727cdcc0e39e6ad75221725b517",
+    "reason": "算法通过独立评分并完成知识回写",
+    "sequence": 9,
+    "source_ids": [
+      "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f"
+    ],
+    "state": "accepted",
+    "timestamp": "2026-10-30T11:06:28.126335+08:00",
+    "workflow_id": "workflow:11c684a1b89243b8976ffec86c78492a"
+  }
+]

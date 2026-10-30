@@ -1,0 +1,134 @@
+{
+  "checks": [
+    {
+      "command": [
+        "git",
+        "clone",
+        "--no-local",
+        "--quiet",
+        "/Users/northchar/Documents/Codex/AlgoFactory",
+        "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-3/checkout"
+      ],
+      "cwd": "/Users/northchar/Documents/Codex/AlgoFactory",
+      "exit_code": 0,
+      "log": "check-1.log"
+    },
+    {
+      "command": [
+        "git",
+        "remote",
+        "remove",
+        "origin"
+      ],
+      "cwd": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-3/checkout",
+      "exit_code": 0,
+      "log": "check-2.log"
+    },
+    {
+      "command": [
+        "/Users/northchar/.local/bin/uv",
+        "--version"
+      ],
+      "cwd": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-3/checkout",
+      "exit_code": 0,
+      "log": "check-3.log"
+    },
+    {
+      "command": [
+        "/Users/northchar/.local/bin/uv",
+        "venv",
+        "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-3/environment",
+        "--python",
+        "/Users/northchar/Documents/Codex/AlgoFactory/.venv/bin/python"
+      ],
+      "cwd": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-3/checkout",
+      "exit_code": 0,
+      "log": "check-4.log"
+    },
+    {
+      "command": [
+        "/Users/northchar/.local/bin/uv",
+        "pip",
+        "sync",
+        "--python",
+        "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-3/environment/bin/python",
+        "--require-hashes",
+        "--no-cache",
+        "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-3/checkout/requirements-dev.txt"
+      ],
+      "cwd": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-3/checkout",
+      "exit_code": 0,
+      "log": "check-5.log"
+    },
+    {
+      "command": [
+        "/Users/northchar/.local/bin/uv",
+        "build",
+        "--wheel",
+        "--no-build-isolation",
+        "--python",
+        "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-3/environment/bin/python",
+        "--out-dir",
+        "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-3/dist",
+        "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-3/checkout"
+      ],
+      "cwd": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-3/checkout",
+      "exit_code": 0,
+      "log": "check-6.log"
+    },
+    {
+      "command": [
+        "/Users/northchar/.local/bin/uv",
+        "pip",
+        "install",
+        "--python",
+        "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-3/environment/bin/python",
+        "--no-deps",
+        "--no-cache",
+        "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-3/dist/algofactory-0.6.0-py3-none-any.whl"
+      ],
+      "cwd": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-3/checkout",
+      "exit_code": 0,
+      "log": "check-7.log"
+    },
+    {
+      "command": [
+        "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-3/environment/bin/python",
+        "-I",
+        "-c",
+        "import algofactory,importlib.metadata,json,sys; d=importlib.metadata.distribution('algofactory'); print(json.dumps({'module':algofactory.__file__,'prefix':sys.prefix,'version':d.version,'direct_url':json.loads(d.read_text('direct_url.json')),'packages':{x.metadata['Name']:x.version for x in importlib.metadata.distributions()}}))"
+      ],
+      "cwd": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-3/checkout",
+      "exit_code": 0,
+      "log": "check-8.log"
+    },
+    {
+      "command": [
+        "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-3/environment/bin/python",
+        "scripts/audit_release.py",
+        "--history",
+        "--output",
+        "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-3/evidence/release-audit.json"
+      ],
+      "cwd": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-3/checkout",
+      "exit_code": 1,
+      "log": "check-9.log"
+    }
+  ],
+  "command": [
+    "/Users/northchar/Documents/Codex/AlgoFactory/.venv/bin/python",
+    "scripts/verify_phase6.py",
+    "--output-dir",
+    "runtime/phase6-cold-start-3"
+  ],
+  "error": "Check failed: check-9.log",
+  "error_type": "RuntimeError",
+  "finished_at": "2026-10-30T10:44:41.723985+08:00",
+  "live_api": "prior_phase3_and_phase4_evidence_only",
+  "paid_api_calls": 0,
+  "phase": 6,
+  "source_commit": "679017365a6eb8c67085161a9fed23e6377124fb",
+  "started_at": "2026-10-30T10:36:09.179613+08:00",
+  "status": "failed",
+  "wheel_sha256": "4787ba9eef56df4ceb4f856203d5faf866a21de8203dad88a7058ab4be83e6a0"
+}

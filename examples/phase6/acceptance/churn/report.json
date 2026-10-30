@@ -1,0 +1,142 @@
+{
+  "artifacts_sha256": {
+    "builder-input.json": "35101e4dc657f478fdd2b3375b7e1231ad6ce42568555490a778c0c4ba4f3240",
+    "candidate.json": "0bb061f2f74d9264cee6b0a7f786b6d4c7336b61581545204da17b129d93c23b",
+    "candidate.py": "55e841b65763c76114bafc9c69b302bbe4d407f4030b10214407a283078bdd3f",
+    "data-manifest.json": "007f580533c1da2607aa2e3af660d08c7314e5a5288b2787399a5b28959f208e",
+    "decisions.json": "7190b2aefd3176a0a9b19d6c21f9535c2c3b89e38a6d5ccb1b81f1f3a45ee2d8",
+    "experience-retrieval.json": "af3f6c94524807e74ea3a6cee452b9da96cd7e15127c5996fbcbcbf6e176662a",
+    "experience-use.json": "af3f6c94524807e74ea3a6cee452b9da96cd7e15127c5996fbcbcbf6e176662a",
+    "knowledge-input.json": "b7dfbb36f2897f8efee85d73e79c8beab0a997e0b35aaf334c6ad81541c889bf",
+    "plan-proposal.json": "3a2524a602cae25944b92ba59c5887e01ec2ee530615d11346c69cc7e07738b7",
+    "plan.json": "3a2524a602cae25944b92ba59c5887e01ec2ee530615d11346c69cc7e07738b7",
+    "protocol.json": "bde8de31b0cc3d872ad614a15cbc442b5dfa27f57458c057cd18643e909c645a",
+    "provider-audit.json": "d1defd4d518c1ac3a6fca3a43a6e930d847d5cb9d72c5e0a68a7b77cf1ee621d",
+    "retrieval.json": "52fc7a9fd73b44ac279a06dbb4cb199ebee705ddd444fae1a432df4d2c9372b3",
+    "selection.json": "a24f43c2add0f103ae4c9862c11794b230a0f5c1427040828abccc6e9e3dc795",
+    "task.json": "946e8289071e6712c17d1a881010cd4de2132068a4c24b1f3b65e4e0c880504c",
+    "test-access.json": "6af67492cb9d73641f5c2aa2bb76ae2328fc527b1b5aa8d25984e38eac105bd9",
+    "test-execution/cleanup.json": "933494d815fb9fd6fa97add730bb4be57b0a02fb73381cee34ae06c873f2b090",
+    "test-execution/container-state.json": "e138a79d9dc7c9404f7f0373a663360eca7f2b72ae62d9fa705ca9f663279423",
+    "test-execution/execution.json": "3d4d2054eca7336d340a5c1d45f1a65b552d77722c1b35c2af589a8916d4e221",
+    "test-execution/predictions.json": "df73bc184d2e246b0e2b9eb80bd60ab2118f1b07e69c2eb6a6db04a145733fcc",
+    "test-execution/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "trace.json": "4e98741f1c90bb2547778ba7ea0364165b2324132353a3f458eda27776af5a44",
+    "validation-execution/cleanup.json": "6110c966bd6521af32d33c3e33decb090f7c630bee0826f3c92600c0b27f9c56",
+    "validation-execution/container-state.json": "4c846c277694a04893a5e5481fac34225fe3f8115885143475eee8239e61826b",
+    "validation-execution/execution.json": "e03147ed26b90b9beece91d0d9be67782c416422bbf2fbc90bc37311343c024c",
+    "validation-execution/predictions.json": "ad27e07893df56364629c9337958936695a3c288f30110773e24cdf4d9ca7f12",
+    "validation-execution/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "candidate": {
+    "attempt": 0,
+    "code_hash": "55e841b65763c76114bafc9c69b302bbe4d407f4030b10214407a283078bdd3f",
+    "implementation_id": "workflow:aabc5f7f4c354488a0fab998ab28aaa6:candidate",
+    "parent_id": null,
+    "plan_id": "workflow:aabc5f7f4c354488a0fab998ab28aaa6:plan",
+    "schema_version": 1
+  },
+  "class_names": [
+    "not_churn",
+    "churn"
+  ],
+  "code_hash": "55e841b65763c76114bafc9c69b302bbe4d407f4030b10214407a283078bdd3f",
+  "data_fingerprint": "3c6161603386e4e7921699b51a06caff3ef1bcf9fa4a14806ef006b0f721caff",
+  "design_explanation": {
+    "algorithm_id": "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a:algorithm:logistic_regression",
+    "evidence_ids": [
+      "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a:algorithm:logistic_regression",
+      "source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a:capability:churn"
+    ],
+    "final_test_evaluated": true,
+    "selection_basis": "预先指定的单候选；不声称是所有算法中最优",
+    "text": "任务要求预测 churn，类型为 binary_classification。方案依据适用知识选择算法实体 source:ae8aa246325a083652ad97b25b61c4797ec4e5d66e7e1393c17e68a3ef63136a:algorithm:logistic_regression，并要求预处理只在训练集拟合。候选是否通过由独立验证器依据冻结门槛决定，不由模型自行评分。此次运行状态为 accepted。",
+    "validation_run_id": "source:eb4e68d8b2f3b75cb7205834ffa6950902bc051240789eb58d860a699c6fb0a8:validation",
+    "workflow_id": "workflow:aabc5f7f4c354488a0fab998ab28aaa6"
+  },
+  "error_category": null,
+  "evaluation_scope": "validation_and_final_test",
+  "execution_evidence": [
+    "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-4/checkout/runtime/phase6-acceptance/churn/validation-execution/execution.json",
+    "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-4/checkout/runtime/phase6-acceptance/churn/test-execution/execution.json"
+  ],
+  "experience_usage": {
+    "enabled": false,
+    "excluded": [],
+    "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+    "matches": [],
+    "model_decisions": [],
+    "observed_rule_satisfied": false
+  },
+  "knowledge_ids": {
+    "dataset_id": "source:eb4e68d8b2f3b75cb7205834ffa6950902bc051240789eb58d860a699c6fb0a8:dataset",
+    "implementation_id": "source:eb4e68d8b2f3b75cb7205834ffa6950902bc051240789eb58d860a699c6fb0a8:implementation",
+    "task_id": "source:eb4e68d8b2f3b75cb7205834ffa6950902bc051240789eb58d860a699c6fb0a8:task",
+    "validation_run_id": "source:eb4e68d8b2f3b75cb7205834ffa6950902bc051240789eb58d860a699c6fb0a8:validation"
+  },
+  "persisted": true,
+  "provider_mode": "mock",
+  "split_id": "split:bcadf9303a79e6ed36975d7f6e0044e5c0d93386438b1430a7cdf1709f78b48b",
+  "status": "accepted",
+  "task_profile": "churn",
+  "test_attempted": true,
+  "thresholds": {
+    "f1": 0.59,
+    "precision": 0.64,
+    "recall": 0.55,
+    "roc_auc": 0.75
+  },
+  "validation": {
+    "code_hash": "55e841b65763c76114bafc9c69b302bbe4d407f4030b10214407a283078bdd3f",
+    "config_hash": "dac9c9fc6f8821be4b2cab039f0aff13eab27114f265e36abd7e2b71d687c0a1",
+    "error_category": null,
+    "final_test_evaluated": true,
+    "functional": {
+      "details": "真实 fit/predict，长度、顺序和有限数值校验通过",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "implementation_id": "source:eb4e68d8b2f3b75cb7205834ffa6950902bc051240789eb58d860a699c6fb0a8:implementation",
+    "interface": {
+      "details": "build_pipeline / fit / predict / predict_proba",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "metrics": {
+      "details": "验证集及一次性独立测试均达到冻结门槛",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "report_paths": [
+      "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-4/checkout/runtime/phase6-acceptance/churn/report.json",
+      "/Users/northchar/Documents/Codex/AlgoFactory/runtime/phase6-cold-start-4/checkout/runtime/phase6-acceptance/churn/report.md"
+    ],
+    "resources": {
+      "elapsed_seconds": 0.6477537919998895,
+      "peak_memory_mib": 158.73046875,
+      "schema_version": 1
+    },
+    "run_id": "source:eb4e68d8b2f3b75cb7205834ffa6950902bc051240789eb58d860a699c6fb0a8:validation",
+    "schema_version": 1,
+    "split_id": "split:bcadf9303a79e6ed36975d7f6e0044e5c0d93386438b1430a7cdf1709f78b48b",
+    "stability": {
+      "details": "{\"seed_repeat\": true, \"missing_column_rejected\": true, \"invalid_numeric_rejected\": true, \"unseen_category_handled\": true}",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "status": "passed",
+    "test_metrics": {
+      "f1": 0.6666666666666666,
+      "precision": 0.7608695652173914,
+      "recall": 0.5932203389830508,
+      "roc_auc": 0.8162600111752655
+    },
+    "validation_metrics": {
+      "f1": 0.6457399103139013,
+      "precision": 0.6923076923076923,
+      "recall": 0.6050420168067226,
+      "roc_auc": 0.8004549886252843
+    }
+  },
+  "workflow_id": "workflow:aabc5f7f4c354488a0fab998ab28aaa6"
+}

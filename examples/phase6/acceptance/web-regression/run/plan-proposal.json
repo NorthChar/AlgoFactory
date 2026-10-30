@@ -1,0 +1,19 @@
+{
+  "algorithm_id": "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f:algorithm:logistic_regression",
+  "dependencies": [
+    "scikit-learn"
+  ],
+  "evidence_ids": [
+    "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f:algorithm:logistic_regression",
+    "source:b07ff4609755bb9dc34b0e3dfd8d088c0fd579f5b4f8e0900e9f989af6a3a59f:capability:regression"
+  ],
+  "plan_id": "workflow:f681876a5d124c01875d88f5969c2c71:plan",
+  "preprocessing": [
+    "median_imputation",
+    "most_frequent_imputation",
+    "one_hot_encoding",
+    "standard_scaling"
+  ],
+  "schema_version": 1,
+  "task_id": "workflow:f681876a5d124c01875d88f5969c2c71:task"
+}

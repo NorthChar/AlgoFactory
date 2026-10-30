@@ -1,0 +1,11 @@
+{
+  "call_budget": 24,
+  "compare": false,
+  "experiences": false,
+  "max_repairs": 1,
+  "mode": "mock",
+  "request": "根据合成数值特征预测连续值，使用 MAE 和 RMSE 验证回归算法。",
+  "schema_version": 1,
+  "task": "regression",
+  "validation_only": true
+}

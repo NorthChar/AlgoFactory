@@ -1,0 +1,11 @@
+{
+  "call_budget": 24,
+  "compare": true,
+  "experiences": false,
+  "max_repairs": 1,
+  "mode": "mock",
+  "request": "",
+  "schema_version": 1,
+  "task": "banking77",
+  "validation_only": true
+}
