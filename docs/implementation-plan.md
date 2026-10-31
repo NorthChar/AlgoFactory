@@ -4,6 +4,9 @@
 
 当前已实现 Phase 1 知识基础、Phase 2 客户流失闭环及 Phase 2.5 BANKING77 文本多分类/共享框架改造；Phase 2.5 的 G2.5 已通过（124 项测试、零跳过），见 [指南](phase25.md) 与 [证据](../examples/phase25/verification.json)。Phase 3 的比较、有界修复和版本关系已通过 Mock 阶段验收（141 项测试、零跳过），见 [指南](phase3.md) 与 [证据](../examples/phase3/verification.json)。Azure GPT-4o 已完成真实自动修复、两候选严格比较、一次选定版本最终测试与回写，见 [真实验收](../examples/api-phase3/verification.json) 及 [20 次请求总账](../examples/api-phase3/campaign-summary.json)。Phase 4 现已完成经验提炼、条件检索、生成/修复消费和 Mock/API 各两组对照，210 项回归全部通过，见 [阶段指南](phase4.md) 与 [统一证据](../examples/phase4/verification.json)。本次对照未观察到减少修复次数或提升指标，开启组多用 token；不声称普遍收益。Phase 5 已完成本地界面、图谱、报告、模板/指标插件、合成回归和异常恢复，231 项测试通过；见 [阶段指南](phase5.md) 和 [统一证据](../examples/phase5/verification.json)。Phase 6 本地冷启动现已通过 233 项测试，零跳过；GitHub 私有仓库发布也已完成，G1–G5 在声明范围内已验收，见 [交付记录](phase6.md)。docs/source 保持原始资料，当前计划通过 ADR 与原始要求、阶段证据关联。
 
+
+2026-11-01 后续界面整理（0.7.2）：根据用户反馈，将银行咨询分类明确为当前唯一完整落地的业务任务，以此演示算法开发闭环，避免“示例”暗示任意业务已支持。数据说明移到训练验收材料，区分需求输入与咨询试用，突出代码交付。公共生成、训练、评分、修复与回写逻辑保持不变；不新增业务能力或付费 API 验证。
+
 ## 问题定义与目标
 
 2026-10-30 增量：原 Phase 1–6 保持已验收基线。当前将工作台首页、七步证据与预算修正整理为 **0.6.1**；基于用户实际操作反馈新增 **Phase 7：数据浏览 → 分类体验 → 可配置实验 → 集成验收**，已完成并交付 0.7.0。当前与独立安装均通过 262 项测试，零跳过；完整边界和退出条件见 [ADR-002](decisions/0002-interactive-workbench.md) 与 [Phase 7 计划](phase7.md)。版本差异见 [CHANGELOG](../CHANGELOG.md)。

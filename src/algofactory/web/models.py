@@ -234,7 +234,7 @@ def show_trial(root, relative):
     version = selected_trial_version(root, relative)
     if version is None:
         st.info(
-            "本任务尚无可试用的已选定 BANKING77 通过版本。请先查看开发过程和评估结果；"
+            "本任务尚无可试用的已选定银行咨询分类通过版本。请先查看开发过程和评估结果；"
             "这里不会改用其他任务或候选的模型。合成回归案例仅提供代码与评估报告。"
         )
         return
@@ -269,7 +269,8 @@ def show_trial(root, relative):
             with st.form("trial_" + widget_key):
                 text = st.text_area(
                     "新的英文咨询",
-                    placeholder="Describe a banking issue in English…",
+                    placeholder="例如：I lost my bank card.",
+                    help="这里输入一条待分类的英文咨询，不是要求系统开发代码。示意句不保证被正确分类。",
                     max_chars=1000,
                     key="trial_text_" + widget_key,
                 )

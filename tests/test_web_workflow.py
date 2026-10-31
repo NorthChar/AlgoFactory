@@ -110,11 +110,11 @@ def test_introduction_explains_deliverables_and_navigates_without_submission(tmp
     assert app.session_state["workspace_tab"] == "从这里开始"
     assert any("① 算法代码" in m.value for m in app.markdown)
     assert any("② 验证报告" in m.value for m in app.markdown)
-    next(b for b in app.button if b.label == "看一个已经完成的例子").click().run()
+    next(b for b in app.button if b.label == "查看已完成的银行分类开发任务").click().run()
     assert not app.exception
     assert app.session_state["workspace_tab"] == "我的开发任务"
     assert next(s for s in app.selectbox if s.label == "选择开发任务").value == ARCHIVE
-    next(b for b in app.button if b.label == "体验银行客服分类示例").click().run()
+    next(b for b in app.button if b.label == "开始开发银行分类算法").click().run()
     assert not app.exception
     assert app.session_state["workspace_tab"] == "创建算法开发任务"
     assert popen.call_count == 0

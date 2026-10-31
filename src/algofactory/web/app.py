@@ -49,15 +49,17 @@ def stop_reason(category):
     return category
 
 
-st.set_page_config(page_title="AlgoFactory · 算法工作台", page_icon="◈", layout="wide")
+st.set_page_config(page_title="AlgoFactory · 银行咨询分类算法开发", page_icon="◈", layout="wide")
 st.title("AlgoFactory")
-st.caption("提出算法需求 → 生成并验证 → 查看交付成果 → 试用本次算法")
+st.caption("银行咨询分类算法开发 · 生成代码 → 训练与验证 → 修复与交付")
 jobs = Jobs(ROOT)
 with st.sidebar:
-    st.subheader("算法开发助手")
-    st.write("帮助开发人员编写算法，并检查它能否运行、效果是否达标。")
+    st.subheader("银行咨询分类算法开发")
+    st.write("开发一个识别英文银行咨询意图的分类器，交付代码、模型与验证报告。")
     st.caption("一次开发任务，一条完整流程")
-    st.info("当前是本机运行的案例原型，主案例为银行客服意图分类。")
+    st.info(
+        "当前完整落地的是银行咨询分类这一固定任务。其他任务仅作兼容性检查，不支持任意业务代码生成。"
+    )
     with st.expander("演示模式说明"):
         st.caption("Mock 使用固定模型响应；训练、预测和评分真实执行。真实 API 模式会产生费用。")
 
@@ -167,11 +169,15 @@ def show_result(relative):
             hide_index=True,
             width="stretch",
         )
-    st.subheader("本次生成的文件")
+    st.subheader("代码与交付物")
     st.caption(
         "下载代码和报告；在“开发过程”查看生成与修复依据，在“试用本次算法”检查交付模型。失败任务的文件也会保留，请结合状态判断。"
     )
-    for name in ("report.md", "report.json", "candidate.py"):
+    if "candidate.py" in paths:
+        with st.expander("查看本次生成的 Python 代码", expanded=True):
+            st.code(paths["candidate.py"].read_text(), language="python")
+        st.caption("代码定义分类流水线，需在项目配套环境中训练和运行；它不是独立的客服网站。")
+    for name in ("candidate.py", "report.md", "report.json"):
         if name in paths:
             st.download_button(
                 "下载 "
@@ -208,9 +214,6 @@ def show_result(relative):
     if "provider-usage.json" in paths:
         with st.expander("API 请求与用量"):
             st.json(read_json(paths["provider-usage.json"]))
-    if "candidate.py" in paths:
-        with st.expander("生成代码（只读）"):
-            st.code(paths["candidate.py"].read_text(), language="python")
 
 
 def show_report(relative):
@@ -229,92 +232,106 @@ def show_report(relative):
 
 
 with intro:
-    st.subheader("你想开发什么算法？")
+    st.subheader("开发银行咨询分类算法，获得经过验证的代码")
     st.write(
-        "描述你需要的算法，系统帮你生成代码、运行验证，并交付可试用的结果。"
-        "当前可通过 BANKING77 银行客服分类案例体验完整开发流程。"
+        "这个工作台围绕一个固定任务：生成能识别英文银行咨询意图的分类算法。"
+        "系统检索算法知识、生成代码，实际训练和评估，必要时修复，最后保存代码、报告和开发记录。"
     )
-    st.button("体验银行客服分类示例", type="primary", on_click=navigate, args=("创建算法开发任务",))
+    st.caption(
+        "这是项目完整落地的业务案例，用于展示算法开发闭环；当前不支持任意业务需求或自有数据上传。"
+    )
+    st.button("开始开发银行分类算法", type="primary", on_click=navigate, args=("创建算法开发任务",))
     history = "examples/api-phase3/comparison"
     if history in report_catalog(ROOT):
-        st.button("看一个已经完成的例子", on_click=navigate, args=("我的开发任务", history))
-        st.caption(
-            "打开已完成的真实 API 案例，查看生成的代码、报告与修复过程；只读查看，不产生费用。"
-        )
+        st.button("查看已完成的银行分类开发任务", on_click=navigate, args=("我的开发任务", history))
+        st.caption("查看历史真实 API 生成代码、错误修复与最终测试证据；只读浏览，不产生费用。")
     with st.container(border=True):
-        st.markdown("### 举个例子：给银行客服做一个咨询分类算法")
-        st.write(
-            "银行收到很多英文咨询，需要判断客户在问银行卡、转账、退款等哪类问题，方便后续分流。"
-        )
+        st.markdown("### 你提出开发需求，系统交付分类算法")
         left, right = st.columns(2)
         with left:
-            st.markdown("**你提出的开发需求**")
-            st.write("“帮我生成一个算法，根据英文客服咨询判断它属于哪类业务，并验证分类效果。”")
+            st.markdown("**第一步：告诉系统要开发什么**")
+            st.write("“请开发一个英文银行咨询分类算法，输出问题类别及概率，并验证分类效果。”")
+            st.caption("这是开发需求。当前任务的语言、类别和数据协议已经固定。")
         with right:
-            st.markdown("**做出来的算法要能做什么**")
-            st.write("接收一段英文咨询，输出对应的意图类别及概率。")
+            st.markdown("**完成后：用一条咨询试用成果**")
+            st.write("例如输入：I lost my bank card.")
             st.caption(
-                "用途示意：‘I lost my card’ → 银行卡遗失/被盗。此处是说明示例，不是本次预测结果。"
+                "用途示意：希望识别为银行卡丢失或被盗；这不是实际预测结果，也不是新的开发需求。"
             )
-        st.caption("本案例的数据已经准备好：BANKING77，13,083 条英文咨询、77 类意图。")
-    st.markdown("### 用完以后，你能拿到什么？")
+    st.markdown("### 交付什么？")
     code_col, report_col, process_col = st.columns(3)
     code_col.markdown(
-        "**① 算法代码**\n\n生成的 Python 文件，可交给开发人员在配套环境中使用和继续集成。"
+        "**① 算法代码**\n\n可查看和下载的 Python 分类流水线，在配套环境中训练、运行和继续集成。"
     )
-    report_col.markdown("**② 验证报告**\n\n说明代码能否运行、分类效果怎样、是否达到预定标准。")
+    report_col.markdown(
+        "**② 验证报告**\n\n说明代码能否运行、分类效果怎样、是否达到预定标准。通过版本的模型可在任务内试用。"
+    )
     process_col.markdown(
-        "**③ 开发过程记录**\n\n可以追查用了哪些知识、哪里出错、如何修复，以及各版本的结果。"
+        "**③ 开发过程记录**\n\n追查知识来源、方案、错误与修复、各版本结果，以及知识回写。"
     )
-    st.info(
-        "银行客服分类是本次算法开发的示例：先创建任务，完成后在该任务中查看代码和报告、输入英文咨询试用成果。自有数据上传和任意新业务尚未接入。"
+    st.markdown("### 为什么还需要数据？")
+    st.write(
+        "代码生成后必须实际运行，才能判断是否可用。我们已准备带正确类别的咨询："
+        "一部分用于训练分类器，一部分用于检查预测是否正确。你无需先了解数据集或自行准备数据。"
     )
-    with st.expander("“七步流程”和这个用途有什么关系？"):
+    st.caption(
+        "GPT 负责生成或修复代码；生成的分类器从咨询数据中学习，再处理新咨询。两者不是同一个模型。"
+    )
+    with st.expander("了解数据来源和当前支持范围"):
         st.write(
-            "七步流程展示系统怎样完成一次开发任务：理解需求 → 查找相关知识 → 规划方案 → "
-            "生成代码 → 测试效果 → 必要时修复 → 保存结果。你可以先看代码和报告，再展开过程检查依据。"
+            "数据来源为 BANKING77，原始共 13,083 条英文咨询、77 类已知意图。"
+            "它提供咨询和正确类别，不是客服回答库；本任务不自动回复、办理银行业务或识别未知意图。"
+        )
+        st.write(
+            "API 模式可在固定协议内修改开发需求；算法与有限参数可通过控件设置。Mock 使用固定需求验证流程。"
+        )
+        st.caption("合成回归和客户流失用于公共框架兼容性检查，不代表已完成同等范围的业务产品。")
+    with st.expander("系统怎样完成一次算法开发？"):
+        st.write(
+            "理解需求 → 检索相关知识 → 规划方案 → 生成代码 → 训练与评估 → 必要时修复 → 保存并回写结果。"
+            "完成后先查看代码与报告，再试用本次生成的分类器。"
         )
 
 with launch:
-    st.subheader("创建算法开发任务")
-    st.caption("① 确认需求与数据 → ② 选择开发设置 → ③ 提交后查看任务")
-    st.write("描述你希望生成的算法能力，系统会生成代码并运行测试，保存整个过程的证据。")
+    st.subheader("创建银行咨询分类开发任务")
+    st.caption("① 明确要开发什么 → ② 选择模式与设置 → ③ 生成代码并验证 → ④ 查看交付")
     st.info(
-        "当前支持预设案例及固定输入输出协议。这里填写算法开发需求；"
-        "暂不支持上传自有数据或任意业务任务。提交后，生成过程、评估和试用会集中在同一个任务里。"
+        "当前完整支持银行咨询分类这一固定任务。修改需求文字不会自动更换数据、语言、类别或评价门槛。"
     )
-    task = st.selectbox(
-        "开发案例",
-        ["banking77", "regression"],
-        format_func=lambda x: {
-            "banking77": "客服意图分类 · BANKING77",
-            "regression": "扩展验证 · 合成回归",
-        }[x],
-    )
-    st.write("**本次案例的输入与输出（预设范围，尚未调用模型）**")
-    data_column, input_column, output_column = st.columns(3)
+    with st.expander("开发范围与兼容性检查入口"):
+        task = st.selectbox(
+            "开发案例",
+            ["banking77", "regression"],
+            format_func=lambda x: {
+                "banking77": "银行咨询分类 · 当前完整业务任务",
+                "regression": "合成回归 · 仅兼容性检查",
+            }[x],
+        )
+        st.caption("日常操作保留银行咨询分类。合成回归用于检查公共流程，不能替代新的业务接入。")
     if task == "banking77":
-        data_column.markdown(
-            "**数据**\n\nBANKING77 · 77 类英文客服意图\n\n官方训练集 10,003 条，测试集 3,080 条；训练集再划分验证集。"
+        st.markdown("#### ① 要开发什么")
+        left, right = st.columns(2)
+        left.markdown("**算法输入**\n\n一条英文银行咨询，例如 `I lost my bank card.`。")
+        right.markdown(
+            "**算法输出**\n\n77 类已知问题中的预测类别及概率。用于问题分流，不生成客服回复。"
         )
-        input_column.markdown("**算法接收**\n\n含 `text` 列的英文咨询文本；标签字段为 `intent`。")
-        output_column.markdown(
-            "**算法输出**\n\n已知意图类别和各类别概率。\n\n工作台交付代码、评估报告与知识记录。"
-        )
-    else:
-        data_column.markdown("**数据**\n\n预设合成回归数据，用于验证跨任务扩展。")
-        input_column.markdown("**算法接收**\n\n数值特征 `x1`、`x2`、`x3`；目标字段为 `value`。")
-        output_column.markdown(
-            "**算法输出**\n\n连续数值；以 MAE、RMSE 评估。\n\n工作台交付代码、评估报告与知识记录。"
-        )
-    if task == "banking77":
-        st.markdown("#### 本次使用的数据")
-        st.write(
-            "7,993 条训练咨询教算法识别意图；1,999 条验证咨询用于检查效果、比较和修复；"
-            "3,080 条冻结测试咨询仅用于最终评估。这些数据训练的是生成的分类算法，不是 GPT。"
-        )
-        with st.expander("查看本次数据的真实样本与来源"):
+        st.caption("你得到的是分类代码、验证报告和通过版本的模型；完成后可以输入新咨询试用。")
+        with st.expander("训练与验证材料：为什么需要数据？查看真实样本与来源"):
+            st.write(
+                "数据接口约定代码要处理哪些字段；带标签的样本用于训练和检查代码的实际效果。"
+                "不是把全部咨询交给 GPT 写代码，也没有用这些咨询微调 GPT。"
+            )
+            st.write(
+                "BANKING77 清洗后：7,993 条训练咨询用于学习；1,999 条验证咨询用于比较和修复；"
+                "3,080 条冻结测试咨询仅用于选定版本的最终评估。"
+            )
+            st.caption("程序输入字段为 text，标签字段为 intent；本次使用已导入的固定数据。")
             show_data(ROOT)
+    else:
+        st.warning("当前选择的是合成回归兼容性检查，不是银行咨询分类开发。")
+        st.write(
+            "使用预设数值特征 x1、x2、x3 预测 value，以 MAE、RMSE 评估；交付代码与报告，不提供银行咨询试用。"
+        )
     with st.expander("第一次使用：这七步会发生什么？"):
         st.dataframe(
             [
@@ -346,7 +363,7 @@ with launch:
             on_click=navigate,
             args=("我的开发任务", historical),
         )
-    st.markdown("#### 开发设置")
+    st.markdown("#### ② 选择模式与开发需求")
     mode = st.radio(
         "模型模式",
         ["mock", "api"],
@@ -416,7 +433,16 @@ with launch:
         disabled=mode == "mock" or custom,
         help="Mock 仅支持固定示例需求；真实 API 可理解同一输入协议下的需求。",
     )
-    st.caption("示例描述的是需要生成的算法能力；仅修改文字不会改变预设的数据字段、类别或验证门槛。")
+    if mode == "mock":
+        st.caption("当前是 Mock：开发需求使用固定文本，不能自由修改；后续训练和评分真实执行。")
+    elif custom:
+        st.caption("当前按控件配置实验：需求文字固定，算法和参数由上面的选择决定。")
+    else:
+        st.caption("可以改写当前任务范围内的开发需求；任意新业务、数据字段及额外参数约束尚不支持。")
+    st.caption(
+        "这里填写“开发一个怎样的分类算法”；完成后的试用框才填写“I lost my bank card.”这样的咨询。"
+    )
+    st.markdown("#### ③ 生成与验证设置")
     with st.form("new_task"):
         compare = st.checkbox(
             "比较两个候选并允许修复",
@@ -431,28 +457,29 @@ with launch:
             value=True,
             help="关闭后，只有选定版本可进行一次最终测试；失败后不重选。",
         )
-        experiences = st.checkbox(
-            "使用适用的已验证经验",
-            value=False,
-            disabled=task != "banking77",
-            help="使用 Phase 4 归档经验库；必须开启候选比较。适用范围严格匹配，未承诺性能收益。",
-        )
-        max_repairs = st.slider("每候选最多修复次数", 0, 2, 1)
-        budget = st.number_input(
-            "本次模型请求上限",
-            min_value=1,
-            max_value=12 if mode == "api" else 32,
-            value=10 if mode == "api" else 24,
-            step=1,
-            key="budget_" + mode,
-        )
-        if mode == "api":
-            st.caption(
-                "无重试、无修复时：单候选需要 4 次请求；双候选通常需要 7 次，"
-                "成功复用知识时为 6 次。每次代码修复另需 3 次，接口重试也计入上限。"
-                "10 次可为普通双候选预留一次修复；12 次上限不保证覆盖全部修复。"
-                "上限不是固定消耗，训练和最终测试不调用模型。"
+        with st.expander("高级设置：经验、修复次数和请求预算"):
+            experiences = st.checkbox(
+                "使用适用的已验证经验",
+                value=False,
+                disabled=task != "banking77",
+                help="使用 Phase 4 归档经验库；必须开启候选比较。适用范围严格匹配，未承诺性能收益。",
             )
+            max_repairs = st.slider("每候选最多修复次数", 0, 2, 1)
+            budget = st.number_input(
+                "本次模型请求上限",
+                min_value=1,
+                max_value=12 if mode == "api" else 32,
+                value=10 if mode == "api" else 24,
+                step=1,
+                key="budget_" + mode,
+            )
+            if mode == "api":
+                st.caption(
+                    "无重试、无修复时：单候选需要 4 次请求；双候选通常需要 7 次，"
+                    "成功复用知识时为 6 次。每次代码修复另需 3 次，接口重试也计入上限。"
+                    "10 次可为普通双候选预留一次修复；12 次上限不保证覆盖全部修复。"
+                    "上限不是固定消耗，训练和最终测试不调用模型。"
+                )
         submitted = st.form_submit_button(
             "开始生成并验证" if mode == "mock" else "开始 API 生成并验证（产生费用）",
             type="primary",
