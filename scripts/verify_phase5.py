@@ -178,11 +178,11 @@ def main():
                 str(ROOT / "src/algofactory/web/app.py"), default_timeout=30
             ).run()
             assert not app.exception
-            next(s for s in app.selectbox if s.label == "任务").select(task).run()
+            next(s for s in app.selectbox if s.label == "开发案例").select(task).run()
             if use_experiences:
                 next(c for c in app.checkbox if c.label == "使用适用的已验证经验").check().run()
             before = set(jobs.list())
-            next(b for b in app.button if b.label == "开始验证").click().run()
+            next(b for b in app.button if b.label == "开始生成并验证").click().run()
             assert not app.exception
             added = set(jobs.list()) - before
             assert len(added) == 1
@@ -202,9 +202,7 @@ def main():
             restored = AppTest.from_file(
                 str(ROOT / "src/algofactory/web/app.py"), default_timeout=30
             ).run()
-            next(s for s in restored.selectbox if s.label == "本地任务").select(identifier).run()
-            next(b for b in restored.button if b.label == "恢复查看此任务").click().run()
-            next(s for s in restored.selectbox if s.label == "查看报告").select(
+            next(s for s in restored.selectbox if s.label == "选择开发任务").select(
                 str((jobs.path(identifier) / "run").relative_to(ROOT))
             ).run()
             assert not restored.exception and len(restored.get("download_button")) >= 3

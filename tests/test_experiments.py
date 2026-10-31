@@ -113,10 +113,10 @@ def test_web_config_is_frozen_and_invalid_selection_does_not_submit(tmp_path, mo
     app = AppTest.from_file(root / "src/algofactory/web/app.py", default_timeout=30).run()
     next(t for t in app.toggle if t.label == "自主选择算法与参数").set_value(True).run()
     next(s for s in app.selectbox if s.label == "逻辑回归 C").set_value(1.0).run()
-    next(b for b in app.button if b.label == "开始验证").click().run()
+    next(b for b in app.button if b.label == "开始生成并验证").click().run()
     assert observed[0].experiment.logistic_c == 1.0
     next(s for s in app.multiselect if s.label == "参与实验的算法").set_value([]).run()
-    next(b for b in app.button if b.label == "开始验证").click().run()
+    next(b for b in app.button if b.label == "开始生成并验证").click().run()
     assert len(observed) == 1
     assert not app.exception
 

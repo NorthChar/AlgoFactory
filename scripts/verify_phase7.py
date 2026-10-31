@@ -108,7 +108,7 @@ def main():
             ["text_logistic"]
         ).run()
         next(s for s in app.selectbox if s.label == "逻辑回归 C").set_value(1.0).run()
-        next(b for b in app.button if b.label == "开始验证").click().run()
+        next(b for b in app.button if b.label == "开始生成并验证").click().run()
         assert not app.exception
         identifier = app.session_state["current_job"]
         jobs = Jobs(ROOT)
@@ -126,7 +126,7 @@ def main():
         errors, accuracy = validation_errors(ROOT, relative, version)
         report = read_json(ROOT / relative / "report.json")
         assert accuracy == report["validation"]["validation_metrics"]["accuracy"]
-        next(s for s in app.selectbox if s.label == "选择算法来源").select(relative).run()
+        assert next(s for s in app.selectbox if s.label == "选择开发任务").value == relative
         next(t for t in app.text_area if t.label == "新的英文咨询").set_value(
             "Yesterday a cash machine kept my bank card inside the machine and never gave it back."
         )

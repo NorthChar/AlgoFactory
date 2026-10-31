@@ -18,7 +18,7 @@ Phase 5 已验证 T06/A01/A04/A07/A08/X02/X07，并补齐 F06 的既有修复证
 
 Phase 6 本地冷启动已通过 233 项测试、零跳过，README 十项、依赖/构建锁、独立 wheel、三任务及 CLI/Web 见 [交付记录](phase6.md)和[统一证据](../examples/phase6/verification.json)。B01 的本地代码库及私有远端交付均已验收；[发布证据](../examples/phase6-publication/publication.json)核对仓库、提交和文件树，G1–G5 在声明范围内全部关闭。上文未验收/待下一阶段的描述保留各历史时点，当前状态以本段和下表为准。
 
-2026-10-30 工作台增量单独记录为 UX01–UX05：0.6.1 的用途首页、七步证据和预算预检已有针对性验证；Phase 7 的数据浏览、模型预测、实验配置及新版本交付仍为 planned。新验收使用 U0–U4，不覆盖原 G1–G5 或原题资料，详见 [Phase 7](phase7.md)。
+2026-10-30 工作台增量单独记录为 UX01–UX05：0.6.1 的用途首页、七步证据和预算预检已有针对性验证；Phase 7 的数据浏览、模型预测、实验配置及新版本交付已验收（0.7.0）。2026-11-01 增加 UX06，将这些能力串成同一开发任务（0.7.1）。新验收使用 U0–U4，不覆盖原 G1–G5 或原题资料，详见 [Phase 7](phase7.md)。
 
 | ID | 类别 | 要求 | 责任模块 | 交付或证据 | Phase | 验收方法 | Gate | 状态 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -98,3 +98,4 @@ Phase 6 本地冷启动已通过 233 项测试、零跳过，README 十项、依
 | UX03 | 产品增量 | 可信模型保存与隔离预测体验 | execution/schemas/web | docs/phase7.md；examples/phase7/verification.json；scripts/verify_phase7.py | 7B | 模型与代码数据配置绑定；真实预测；缺失和错配拒绝；无宿主执行 | U2 | verified |
 | UX04 | 产品增量 | 受限可配置算法实验 | schemas/planning/generation/web | docs/phase7.md；examples/phase7/verification.json；scripts/verify_phase7.py | 7C | 配置贯穿真实执行与报告；冻结规则；拒绝冲突；旧默认兼容 | U3 | verified |
 | UX05 | 产品增量 | 可操作工作台集成验收与版本交付 | tests/scripts/docs | docs/phase7.md；examples/phase7/verification.json；0.7.0 | 7D | U1–U3 通过；当前回归和独立复现；代码文档及远端一致 | U4 | verified |
+| UX06 | 产品增量 | 围绕同一开发任务组织需求、进度、报告和算法试用 | web/tests/docs | docs/workbench-guide.md；tests/test_web_workflow.py；tests/test_model_trials.py；examples/workbench-071/verification.json | 7后整理 | 提交自动进入本任务；任务切换同步试用版本；失败不借用其他模型；浏览不执行 | U4 | verified |

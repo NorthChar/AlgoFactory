@@ -100,7 +100,7 @@ def test_predict_fail_closed_on_worker_or_invalid_probabilities(model_root, monk
         models.predict_text(model_root, RELATIVE, VERSION, "My newly written banking question.")
 
 
-def test_trial_picker_defaults_to_latest_validated_run(model_root, monkeypatch):
+def test_trial_is_bound_to_selected_task_and_delivered_version(model_root, monkeypatch):
     import os
 
     from streamlit.testing.v1 import AppTest
@@ -115,8 +115,63 @@ def test_trial_picker_defaults_to_latest_validated_run(model_root, monkeypatch):
     monkeypatch.setenv("ALGOFACTORY_PROJECT_ROOT", str(model_root))
     app = AppTest.from_file(ROOT / "src/algofactory/web/app.py", default_timeout=30).run()
     assert not app.exception
-    choice = next(s for s in app.selectbox if s.label == "选择算法来源")
+    choice = next(s for s in app.selectbox if s.label == "选择开发任务")
     assert choice.value == "runtime/web-jobs/" + "b" * 32 + "/run"
     assert any("本地任务" in label for label in choice.options)
-    versions = next(s for s in app.selectbox if s.label == "选择通过验证的版本")
-    assert "逻辑回归 · 修复版 1" in versions.options
+    assert not any(s.label == "选择算法来源" for s in app.selectbox)
+    assert any("已绑定当前任务的交付版本：逻辑回归 · 修复版 1" in c.value for c in app.caption)
+    # Changing the task must also change the trial, without a second model picker.
+    choice.select(RELATIVE).run()
+    assert not app.exception
+    assert models.selected_trial_version(model_root, RELATIVE) == VERSION
+    assert any("正在查看历史归档案例" in i.value for i in app.info)
+
+
+def test_delivered_version_cannot_fall_back_to_other_valid_candidate(model_root):
+    report_path = model_root / RELATIVE / "report.json"
+    report = models.read_json(report_path)
+    assert models.selected_trial_version(model_root, RELATIVE) == VERSION
+    for override in ({"status": "failed"}, {"code_hash": "missing"}, {"code_hash": None}):
+        write_json(report_path, report | override)
+        assert models.selected_trial_version(model_root, RELATIVE) is None
+
+
+def test_prediction_submission_follows_task_and_resets_input(model_root, monkeypatch):
+    from unittest.mock import Mock
+
+    from streamlit.testing.v1 import AppTest
+
+    other = "runtime/web-jobs/" + "f" * 32 + "/run"
+    shutil.copytree(model_root / RELATIVE, model_root / other)
+    write_json(model_root / other / "../state.json", {"status": "validated"})
+    location = model_root / "trial-fixture"
+    location.mkdir()
+    for name in ("model-provenance.json", "model.pkl.gz"):
+        (location / name).write_text("opaque fixture")
+    monkeypatch.setattr(models, "model_location", lambda *a: (location, "test model"))
+    predict = Mock(
+        return_value={
+            "top3": [{"意图": "test", "概率": 0.9}],
+            "model_sha256": "a" * 64,
+            "code_hash": "b" * 64,
+        }
+    )
+    monkeypatch.setattr(models, "predict_text", predict)
+    monkeypatch.setenv("ALGOFACTORY_PROJECT_ROOT", str(model_root))
+    app = AppTest.from_file(ROOT / "src/algofactory/web/app.py", default_timeout=30).run()
+    assert not app.exception and predict.call_count == 0
+    for relative in (other, RELATIVE):
+        next(s for s in app.selectbox if s.label == "选择开发任务").select(relative).run()
+        assert not app.exception
+        text = next(t for t in app.text_area if t.label == "新的英文咨询")
+        assert text.value == ""
+        text.set_value("My newly written banking question.")
+        next(b for b in app.button if b.label == "预测这条咨询").click().run()
+        assert not app.exception
+        assert predict.call_args.args == (
+            model_root,
+            relative,
+            VERSION,
+            "My newly written banking question.",
+        )
+    assert predict.call_count == 2

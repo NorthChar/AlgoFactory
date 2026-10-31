@@ -4,7 +4,6 @@ import hashlib
 import re
 import tempfile
 import uuid
-from datetime import datetime
 from pathlib import Path
 
 import numpy as np
@@ -210,31 +209,39 @@ def predict_text(root, relative, version, text):
     }
 
 
-def show_trial(root, catalog):
+def selected_trial_version(root, relative):
+    """Bind trials to the delivered version; never substitute another successful candidate."""
+    summary = workflow_evidence(root, relative)["summary"].get("report.json", {})
+    if summary.get("status") not in {"validated", "accepted"} or not summary.get("code_hash"):
+        return None
+    return next(
+        (
+            name
+            for name, bundle in eligible_versions(root, relative).items()
+            if bundle["report.json"].get("code_hash") == summary["code_hash"]
+        ),
+        None,
+    )
+
+
+def show_trial(root, relative):
     import streamlit as st
 
-    st.subheader("试用已经生成的分类算法")
+    st.subheader("试用本次生成的算法")
     st.write(
         "输入一句新的英文咨询，让已训练的算法给出最可能的三个意图。此处不调用 GPT，也不重新训练；模型尚未保存时，需要先明确点击准备。"
     )
-    choices = {relative: eligible_versions(root, relative) for relative in catalog}
-    choices = {k: v for k, v in choices.items() if v}
-    if not choices:
-        st.info("还没有通过验证的 BANKING77 算法。先到新建任务完成一次实验。")
+    version = selected_trial_version(root, relative)
+    if version is None:
+        st.info(
+            "本任务尚无可试用的已选定 BANKING77 通过版本。请先查看开发过程和评估结果；"
+            "这里不会改用其他任务或候选的模型。合成回归案例仅提供代码与评估报告。"
+        )
         return
     from algofactory.web.workflow_view import version_label
 
-    def source_label(relative):
-        if relative.startswith("examples/"):
-            return "历史归档 · " + relative.removeprefix("examples/")
-        saved = datetime.fromtimestamp(safe_file(root, relative + "/report.json").stat().st_mtime)
-        return "本地任务 · " + saved.strftime("%m-%d %H:%M") + " · " + relative.split("/")[2][:8]
-
-    recent = sorted(
-        choices, key=lambda p: safe_file(root, p + "/report.json").stat().st_mtime, reverse=True
-    )
-    relative = st.selectbox("选择算法来源", recent, format_func=source_label)
-    version = st.selectbox("选择通过验证的版本", list(choices[relative]), format_func=version_label)
+    st.caption("已绑定当前任务的交付版本：" + version_label(version))
+    widget_key = relative + "/" + version
     try:
         location, origin = model_location(root, relative, version)
         ready = all(
@@ -245,7 +252,7 @@ def show_trial(root, catalog):
             st.info(
                 "此历史记录尚未保存训练模型。准备时会用该版本代码重新拟合训练集，单独保存，不代表原次训练权重。"
             )
-            if st.button("准备此版本模型（不调用 API）"):
+            if st.button("准备此版本模型（不调用 API）", key="prepare_" + widget_key):
                 with st.spinner("正在隔离环境中训练并保存模型…"):
                     prepare_model(root, relative, version)
                 st.rerun()
@@ -255,15 +262,16 @@ def show_trial(root, catalog):
                 st.caption(
                     "重新准备会保留已有产物，并使用此版本代码和冻结训练集产生新模型。不会运行最终测试。"
                 )
-                if st.button("重新准备此版本模型（不调用 API）"):
+                if st.button("重新准备此版本模型（不调用 API）", key="reprepare_" + widget_key):
                     with st.spinner("正在隔离环境中重新准备模型…"):
                         prepare_model(root, relative, version)
                     st.rerun()
-            with st.form("trial"):
+            with st.form("trial_" + widget_key):
                 text = st.text_area(
                     "新的英文咨询",
                     placeholder="Describe a banking issue in English…",
                     max_chars=1000,
+                    key="trial_text_" + widget_key,
                 )
                 submitted = st.form_submit_button("预测这条咨询")
             if submitted:

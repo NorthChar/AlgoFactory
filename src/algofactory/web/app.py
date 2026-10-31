@@ -3,6 +3,7 @@
 import json
 import os
 import uuid
+from datetime import datetime
 from pathlib import Path
 
 import streamlit as st
@@ -50,12 +51,12 @@ def stop_reason(category):
 
 st.set_page_config(page_title="AlgoFactory · 算法工作台", page_icon="◈", layout="wide")
 st.title("AlgoFactory")
-st.caption("把算法需求变成经过测试的 Python 代码")
+st.caption("提出算法需求 → 生成并验证 → 查看交付成果 → 试用本次算法")
 jobs = Jobs(ROOT)
 with st.sidebar:
     st.subheader("算法开发助手")
     st.write("帮助开发人员编写算法，并检查它能否运行、效果是否达标。")
-    st.caption("先看例子 → 尝试生成 → 检查结果")
+    st.caption("一次开发任务，一条完整流程")
     st.info("当前是本机运行的案例原型，主案例为银行客服意图分类。")
     with st.expander("演示模式说明"):
         st.caption("Mock 使用固定模型响应；训练、预测和评分真实执行。真实 API 模式会产生费用。")
@@ -68,8 +69,19 @@ def navigate(destination, report=None):
         st.session_state.pop("pending_report", None)
 
 
-intro, data_tab, launch, reports, trial_tab, knowledge = st.tabs(
-    ["从这里开始", "了解数据", "新建任务", "运行与报告", "试用算法", "知识与来源"],
+# Submission occurs after tabs are instantiated. Apply its navigation on the next rerun.
+if destination := st.session_state.pop("pending_navigation", None):
+    st.session_state["workspace_tab"] = destination
+if st.session_state.get("workspace_tab") not in {
+    None,
+    "从这里开始",
+    "创建算法开发任务",
+    "我的开发任务",
+}:
+    st.session_state["workspace_tab"] = "从这里开始"
+
+intro, launch, reports = st.tabs(
+    ["从这里开始", "创建算法开发任务", "我的开发任务"],
     key="workspace_tab",
     on_change="rerun",
 )
@@ -82,12 +94,22 @@ def report_label(relative):
         "examples/phase3/repair": "历史案例 · Mock 注入故障后的修复",
         "examples/phase3/unsafe-code": "历史案例 · 危险代码被拒绝",
     }
-    return titles.get(
-        relative, "本地任务 · " + relative.removeprefix("runtime/web-jobs/").removesuffix("/run")
-    )
+    if relative in titles:
+        return titles[relative]
+    identifier = relative.split("/")[2]
+    try:
+        job = jobs.path(identifier)
+        saved_path = job / "settings.json"
+        if not saved_path.is_file():
+            saved_path = job / "state.json"
+        saved = datetime.fromtimestamp(saved_path.stat().st_mtime)
+        # Keep option labels stable while the task is running; live status is in its detail.
+        return f"本地任务 · {saved:%m-%d %H:%M} · {identifier[:8]}"
+    except (OSError, ValueError, KeyError):
+        return "本地任务 · " + identifier[:8]
 
 
-def show_report(relative):
+def show_result(relative):
     paths = artifacts(ROOT, relative)
     report = read_json(paths["report.json"])
     if relative.startswith("examples/"):
@@ -147,7 +169,7 @@ def show_report(relative):
         )
     st.subheader("本次生成的文件")
     st.caption(
-        "先查看或下载交付物，再通过下方七步流程了解它们怎样产生。失败任务的文件也会保留，请结合运行状态判断。"
+        "下载代码和报告；在“开发过程”查看生成与修复依据，在“试用本次算法”检查交付模型。失败任务的文件也会保留，请结合状态判断。"
     )
     for name in ("report.md", "report.json", "candidate.py"):
         if name in paths:
@@ -163,7 +185,6 @@ def show_report(relative):
                 key=relative + name,
             )
     show_errors(ROOT, relative)
-    show_workflow(ROOT, relative)
     if report.get("design_explanation"):
         with st.expander("算法设计依据"):
             explanation = report["design_explanation"]
@@ -192,12 +213,34 @@ def show_report(relative):
             st.code(paths["candidate.py"].read_text(), language="python")
 
 
-with intro:
-    st.subheader("想做一个算法，先让系统写出来、测一遍")
-    st.write(
-        "这个工作台面向需要开发算法的人。你描述要做什么，系统在支持的案例范围内生成代码，"
-        "用数据训练和测试，遇到可修复的错误再尝试修改。最后交付代码和验证报告。"
+def show_report(relative):
+    st.caption("下面的评估、代码、开发过程和试用模型均属于当前所选任务。")
+    result_tab, process_tab, trial_tab = st.tabs(
+        ["结果与交付", "开发过程", "试用本次算法"],
+        key="task_section_" + relative,
+        on_change="rerun",
     )
+    with result_tab:
+        show_result(relative)
+    with process_tab:
+        show_workflow(ROOT, relative)
+    with trial_tab:
+        show_trial(ROOT, relative)
+
+
+with intro:
+    st.subheader("你想开发什么算法？")
+    st.write(
+        "描述你需要的算法，系统帮你生成代码、运行验证，并交付可试用的结果。"
+        "当前可通过 BANKING77 银行客服分类案例体验完整开发流程。"
+    )
+    st.button("体验银行客服分类示例", type="primary", on_click=navigate, args=("创建算法开发任务",))
+    history = "examples/api-phase3/comparison"
+    if history in report_catalog(ROOT):
+        st.button("看一个已经完成的例子", on_click=navigate, args=("我的开发任务", history))
+        st.caption(
+            "打开已完成的真实 API 案例，查看生成的代码、报告与修复过程；只读查看，不产生费用。"
+        )
     with st.container(border=True):
         st.markdown("### 举个例子：给银行客服做一个咨询分类算法")
         st.write(
@@ -223,17 +266,8 @@ with intro:
     process_col.markdown(
         "**③ 开发过程记录**\n\n可以追查用了哪些知识、哪里出错、如何修复，以及各版本的结果。"
     )
-    history = "examples/api-phase3/comparison"
-    if history in report_catalog(ROOT):
-        st.button(
-            "看一个已经完成的例子", type="primary", on_click=navigate, args=("运行与报告", history)
-        )
-        st.caption(
-            "打开已完成的真实 API 案例，查看生成的代码、报告与修复过程；只读查看，不产生费用。"
-        )
-    st.button("我想试着生成一次", on_click=navigate, args=("新建任务",))
     st.info(
-        "目前可体验预设的银行客服分类和合成回归案例。可以在“了解数据”查看样本，再去“试用算法”输入英文咨询。自有数据上传和任意新业务尚未接入。"
+        "银行客服分类是本次算法开发的示例：先创建任务，完成后在该任务中查看代码和报告、输入英文咨询试用成果。自有数据上传和任意新业务尚未接入。"
     )
     with st.expander("“七步流程”和这个用途有什么关系？"):
         st.write(
@@ -241,19 +275,16 @@ with intro:
             "生成代码 → 测试效果 → 必要时修复 → 保存结果。你可以先看代码和报告，再展开过程检查依据。"
         )
 
-
-with data_tab:
-    show_data(ROOT)
-
 with launch:
-    st.subheader("生成并验证算法")
+    st.subheader("创建算法开发任务")
+    st.caption("① 确认需求与数据 → ② 选择开发设置 → ③ 提交后查看任务")
     st.write("描述你希望生成的算法能力，系统会生成代码并运行测试，保存整个过程的证据。")
     st.info(
         "当前支持预设案例及固定输入输出协议。这里填写算法开发需求；"
-        "暂不支持上传自有数据或任意业务任务。单条咨询预测请到“试用算法”。"
+        "暂不支持上传自有数据或任意业务任务。提交后，生成过程、评估和试用会集中在同一个任务里。"
     )
     task = st.selectbox(
-        "任务",
+        "开发案例",
         ["banking77", "regression"],
         format_func=lambda x: {
             "banking77": "客服意图分类 · BANKING77",
@@ -276,6 +307,14 @@ with launch:
         output_column.markdown(
             "**算法输出**\n\n连续数值；以 MAE、RMSE 评估。\n\n工作台交付代码、评估报告与知识记录。"
         )
+    if task == "banking77":
+        st.markdown("#### 本次使用的数据")
+        st.write(
+            "7,993 条训练咨询教算法识别意图；1,999 条验证咨询用于检查效果、比较和修复；"
+            "3,080 条冻结测试咨询仅用于最终评估。这些数据训练的是生成的分类算法，不是 GPT。"
+        )
+        with st.expander("查看本次数据的真实样本与来源"):
+            show_data(ROOT)
     with st.expander("第一次使用：这七步会发生什么？"):
         st.dataframe(
             [
@@ -305,8 +344,9 @@ with launch:
         st.button(
             "先看真实 API 完整历史案例（不产生费用）",
             on_click=navigate,
-            args=("运行与报告", historical),
+            args=("我的开发任务", historical),
         )
+    st.markdown("#### 开发设置")
     mode = st.radio(
         "模型模式",
         ["mock", "api"],
@@ -414,7 +454,8 @@ with launch:
                 "上限不是固定消耗，训练和最终测试不调用模型。"
             )
         submitted = st.form_submit_button(
-            "开始验证" if mode == "mock" else "开始 API 验证（产生费用）", type="primary"
+            "开始生成并验证" if mode == "mock" else "开始 API 生成并验证（产生费用）",
+            type="primary",
         )
     if submitted:
         try:
@@ -443,37 +484,65 @@ with launch:
                 st.session_state["current_job"] = jobs.submit(settings, token)
                 st.session_state["pending_report"] = f"runtime/web-jobs/{token}/run"
                 st.session_state["submission_token"] = uuid.uuid4().hex
-                st.success("任务已提交。刷新页面不会重新提交；进度与报告在下方更新。")
+                st.session_state["pending_navigation"] = "我的开发任务"
+                st.session_state["submission_notice"] = token
+                st.rerun()
         except (ValueError, OSError):
             st.error(
                 "无法提交：请检查候选与参数。配置实验使用固定业务描述；回归只支持单候选；经验复用需要比较流程。"
             )
 
-    @st.fragment(run_every="2s")
-    def progress():
-        identifier = st.session_state.get("current_job")
-        if not identifier:
-            return
-        try:
+
+def show_requirement(relative):
+    """Show the original request alongside the selected task, including before a report exists."""
+    request = None
+    if relative.startswith("runtime/web-jobs/"):
+        settings_path = jobs.path(relative.split("/")[2]) / "settings.json"
+        if settings_path.is_file():
+            settings = read_json(settings_path)
+            request = settings.get("request") or PROFILES[settings["task"]].request
+    else:
+        evidence = workflow_evidence(ROOT, relative)
+        request = next(
+            (
+                b["task.json"].get("description")
+                for b in evidence["versions"].values()
+                if b.get("task.json")
+            ),
+            None,
+        )
+    if request:
+        st.markdown("**本次开发需求**")
+        st.write(request)
+
+
+def task_detail(relative, was_active=False):
+    try:
+        if relative.startswith("runtime/web-jobs/"):
+            identifier = relative.split("/")[2]
             state = jobs.state(identifier)
-            st.write("当前任务：" + STATUS.get(state["status"], state["status"]))
-            st.caption(identifier)
+            if was_active and state["status"] not in {"running", "queued"}:
+                st.rerun()  # Stop polling once the task ends; keep trial results visible.
+            st.subheader("当前任务：" + STATUS.get(state["status"], state["status"]))
+            st.caption("任务编号：" + identifier)
             if state.get("error_category"):
                 st.error(stop_reason(state["error_category"]))
-            trace_path = jobs.path(identifier) / "run/trace.json"
-            if trace_path.is_file():
-                trace = read_json(trace_path)
-                if trace:
-                    st.caption("最近进度：" + trace[-1]["reason"])
-            with st.expander("查看当前七步进度", expanded=True):
-                evidence = workflow_evidence(ROOT, f"runtime/web-jobs/{identifier}/run")
-                versions = evidence["versions"]
+            if state["status"] in {"running", "queued"}:
+                st.info("系统正在完成这次开发。进度会自动更新；刷新页面不会重新提交。")
+                if st.button("停止当前任务", key="stop_" + identifier):
+                    jobs.cancel(identifier)
+                    st.warning("已请求停止，正在等待当前操作结束并保存状态。")
+            elif relative not in report_catalog(ROOT):
+                st.warning("任务已结束但尚无完整报告。已保存产物保留在下方，不能据此确认验收。")
+        show_requirement(relative)
+        if relative in report_catalog(ROOT):
+            show_report(relative)
+        else:
+            evidence = workflow_evidence(ROOT, relative)
+            versions = evidence["versions"]
+            if versions:
                 latest = next(reversed(versions))
-                st.caption(
-                    "当前展示："
-                    + version_label(latest)
-                    + "；状态根据已保存产物更新。完整证据见“运行与报告”。"
-                )
+                st.caption("当前版本：" + version_label(latest))
                 st.dataframe(
                     stage_rows(
                         versions[latest], terminal=state["status"] not in {"running", "queued"}
@@ -481,67 +550,49 @@ with launch:
                     hide_index=True,
                     width="stretch",
                 )
-            if state["status"] in {"running", "queued"}:
-                if st.button("停止当前任务"):
-                    jobs.cancel(identifier)
-                    st.warning("已请求停止，正在等待当前操作结束并保存状态。")
-            else:
-                st.caption(
-                    "可在“运行与报告”查看结果。失败或中断的产物会保留；重新提交将创建独立运行，不续跑已预约的最终测试。"
-                )
-        except (ValueError, OSError):
-            st.warning("暂时无法读取进度，请在运行列表中重新加载。")
+            st.caption(
+                "完成后，结果、交付文件和试用入口会在本任务中出现。无需到另一个页面寻找模型。"
+            )
+    except (ValueError, OSError, KeyError):
+        st.error("此任务的部分记录不完整或无法读取，不能据此确认验收。原始文件已保留。")
 
-    progress()
 
 with reports:
-    st.subheader("运行记录")
-    if st.button("刷新运行列表"):
+    st.subheader("我的开发任务")
+    st.write("选择一次开发，查看它的需求、进度、交付结果，再试用这次生成的算法。")
+    if st.button("刷新任务列表"):
         st.rerun()
-    identifiers = jobs.list()
-    if identifiers:
-        with st.expander("本地任务管理 · 恢复进度查看"):
-            st.caption("这里管理本地任务的进度；下方“查看报告”独立选择本次结果或历史案例。")
-            selected_job = st.selectbox("本地任务", identifiers)
-            try:
-                state = jobs.state(selected_job)
-                st.write(STATUS.get(state["status"], state["status"]))
-                if state.get("error_category"):
-                    st.error(stop_reason(state["error_category"]))
-                if st.button("恢复查看此任务"):
-                    st.session_state["current_job"] = selected_job
-                    st.session_state["pending_report"] = f"runtime/web-jobs/{selected_job}/run"
-                    st.success("已恢复进度查看；没有重新调用模型或测试。")
-            except (ValueError, OSError):
-                st.warning("此任务记录不可读取，已保留原始文件。")
-    catalog = report_catalog(ROOT)
+    local = [f"runtime/web-jobs/{identifier}/run" for identifier in jobs.list()]
+    local.sort(
+        key=lambda p: (jobs.path(p.split("/")[2]) / "state.json").stat().st_mtime, reverse=True
+    )
+    catalog = local + [p for p in report_catalog(ROOT) if p not in local]
+    pending = st.session_state.pop("pending_report", None)
+    if pending in catalog:
+        st.session_state["report_choice"] = pending
     if catalog:
-        pending = st.session_state.get("pending_report")
-        if pending in catalog:
-            st.session_state["report_choice"] = pending
-            del st.session_state["pending_report"]
         if st.session_state.get("report_choice") not in catalog:
-            st.session_state["report_choice"] = max(
-                catalog, key=lambda p: confined(ROOT, p + "/report.json").stat().st_mtime
-            )
+            st.session_state["report_choice"] = catalog[0]
+        labels = {path: report_label(path) for path in catalog}
         relative = st.selectbox(
-            "查看报告",
-            list(reversed(catalog)),
-            format_func=report_label,
+            "选择开发任务",
+            catalog,
+            format_func=labels.__getitem__,
             key="report_choice",
-            help="历史档案与本次运行明确分开，不会重写归档。",
+            help="进度、报告和试用均绑定此任务。历史案例只读浏览，不会重新运行。",
         )
-        try:
-            show_report(relative)
-        except (ValueError, OSError, KeyError):
-            st.error("报告不完整或无法读取，不能据此确认验收。")
+        if st.session_state.pop("submission_notice", None):
+            st.success("开发任务已提交，已打开本次任务。刷新不会重复提交。")
+        active = relative in local and jobs.state(relative.split("/")[2])["status"] in {
+            "running",
+            "queued",
+        }
+        st.fragment(task_detail, run_every="2s" if active else None)(relative, active)
     else:
-        st.info("尚无报告。完成首个任务后可在此查看与下载。")
+        st.info("还没有开发任务。先创建一个任务，完成后这里会显示代码、报告和算法试用入口。")
+        st.button("创建第一个开发任务", on_click=navigate, args=("创建算法开发任务",))
 
-with trial_tab:
-    show_trial(ROOT, report_catalog(ROOT))
-
-with knowledge:
+with st.sidebar.expander("辅助工具 · 知识与来源"):
     st.subheader("知识图谱与来源")
     choices = ["examples/phase4/library.sqlite"]
     choices += [
@@ -551,7 +602,8 @@ with knowledge:
     ]
     choices = [p for p in choices if confined(ROOT, p).is_file()]
     if choices:
-        current_db = f"runtime/web-jobs/{st.session_state.get('current_job', '')}/knowledge.sqlite"
+        selected_report = st.session_state.get("report_choice", "")
+        current_db = selected_report.removesuffix("/run") + "/knowledge.sqlite"
         choice = st.selectbox(
             "知识库",
             choices,

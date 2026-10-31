@@ -110,7 +110,7 @@ def test_app_default_and_reports_and_graph(tmp_path, monkeypatch):
     app = AppTest.from_file(str(ROOT / "src/algofactory/web/app.py"), default_timeout=30).run()
     assert not app.exception
     assert app.radio[0].value == "mock" and app.selectbox[0].value == "banking77"
-    report = next(s for s in app.selectbox if s.label == "查看报告")
+    report = next(s for s in app.selectbox if s.label == "选择开发任务")
     report.select("examples/api-phase3/comparison").run()
     assert not app.exception and any(e.value == "最终测试通过" for e in app.subheader)
     app.selectbox[0].select("regression").run()
@@ -124,7 +124,7 @@ def test_app_submit_only_on_click_and_refresh_no_replay(tmp_path, monkeypatch):
     monkeypatch.setattr("algofactory.web.service.subprocess.Popen", popen)
     app = AppTest.from_file(str(ROOT / "src/algofactory/web/app.py"), default_timeout=30).run()
     assert popen.call_count == 0
-    next(b for b in app.button if b.label == "开始验证").click().run()
+    next(b for b in app.button if b.label == "开始生成并验证").click().run()
     assert not app.exception and popen.call_count == 1
     app.run()
     assert popen.call_count == 1
@@ -156,7 +156,7 @@ def test_api_budget_preflight_without_paid_calls(
     app.checkbox[0].set_value(compare)
     app.checkbox[2].set_value(experiences)
     app.number_input[0].set_value(budget)
-    next(b for b in app.button if b.label == "开始 API 验证（产生费用）").click().run()
+    next(b for b in app.button if b.label == "开始 API 生成并验证（产生费用）").click().run()
     assert not app.exception
     assert popen.call_count == int(submitted)
     assert app.number_input[0].value == budget  # Never silently enlarge an explicit limit.

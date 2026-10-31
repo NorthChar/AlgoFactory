@@ -112,11 +112,11 @@ def test_introduction_explains_deliverables_and_navigates_without_submission(tmp
     assert any("② 验证报告" in m.value for m in app.markdown)
     next(b for b in app.button if b.label == "看一个已经完成的例子").click().run()
     assert not app.exception
-    assert app.session_state["workspace_tab"] == "运行与报告"
-    assert next(s for s in app.selectbox if s.label == "查看报告").value == ARCHIVE
-    next(b for b in app.button if b.label == "我想试着生成一次").click().run()
+    assert app.session_state["workspace_tab"] == "我的开发任务"
+    assert next(s for s in app.selectbox if s.label == "选择开发任务").value == ARCHIVE
+    next(b for b in app.button if b.label == "体验银行客服分类示例").click().run()
     assert not app.exception
-    assert app.session_state["workspace_tab"] == "新建任务"
+    assert app.session_state["workspace_tab"] == "创建算法开发任务"
     assert popen.call_count == 0
 
 
@@ -141,3 +141,35 @@ def test_single_validation_only_has_no_repair_or_final_test(tmp_path, monkeypatc
         assert not app.exception
     assert any("本次尚无修复反馈记录" in i.value for i in app.info)
     assert any("未运行最终测试" in i.value for i in app.info)
+
+
+def test_submission_opens_same_task_before_report_and_refresh_does_not_replay(
+    tmp_path, monkeypatch
+):
+    copy_archive(tmp_path)
+    monkeypatch.setenv("ALGOFACTORY_PROJECT_ROOT", str(tmp_path))
+    popen = Mock()
+    monkeypatch.setattr("algofactory.web.service.subprocess.Popen", popen)
+    app = AppTest.from_file(ROOT / "src/algofactory/web/app.py", default_timeout=30).run()
+    next(b for b in app.button if b.label == "开始生成并验证").click().run()
+    assert not app.exception and popen.call_count == 1
+    identifier = app.session_state["current_job"]
+    relative = f"runtime/web-jobs/{identifier}/run"
+    assert app.session_state["workspace_tab"] == "我的开发任务"
+    assert next(s for s in app.selectbox if s.label == "选择开发任务").value == relative
+    assert not any(b.label == "预测这条咨询" for b in app.button)
+    assert any("等待启动" in s.value for s in app.subheader)
+    assert not any("正在查看历史归档案例" in s.value for s in app.info)
+    # Simulate the durable runner completing; refresh reveals this exact job's result.
+    shutil.copytree(tmp_path / ARCHIVE, tmp_path / relative)
+    write_json(tmp_path / relative / "../state.json", {"status": "accepted"})
+    app.run()
+    assert not app.exception and popen.call_count == 1
+    assert next(s for s in app.selectbox if s.label == "选择开发任务").value == relative
+    assert any("已绑定当前任务的交付版本" in c.value for c in app.caption)
+    assert any(t.label == "试用本次算法" for t in app.tabs)
+    # Browsing history must not leave this job's progress attached to the archived report.
+    next(s for s in app.selectbox if s.label == "选择开发任务").select(ARCHIVE).run()
+    assert not app.exception and popen.call_count == 1
+    assert not any(s.value.startswith("当前任务：") for s in app.subheader)
+    assert any("正在查看历史归档案例" in s.value for s in app.info)
