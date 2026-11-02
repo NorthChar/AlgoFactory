@@ -60,7 +60,7 @@ def test_live_lock_and_interrupted_recovery_without_restart(tmp_path, monkeypatc
 @pytest.mark.parametrize(
     "settings",
     [
-        {"mode": "api", "call_budget": 13},
+        {"mode": "api", "call_budget": 25},
         {"task": "regression", "compare": True},
         {"experiences": True, "compare": False},
         {"request": "unknown mock input"},
@@ -159,7 +159,7 @@ def test_api_budget_preflight_without_paid_calls(
     app = AppTest.from_file(str(ROOT / "src/algofactory/web/app.py"), default_timeout=30).run()
     next(r for r in app.radio if r.label == "需求理解方式").set_value("rules").run()
     next(r for r in app.radio if r.label == "代码生成方式").set_value("api").run()
-    assert app.number_input[0].value == 10
+    assert app.number_input[0].value == 7
     assert popen.call_count == 0
     request = "开发英文银行咨询分类算法；" + (
         "比较逻辑回归和朴素贝叶斯" if compare else "只使用逻辑回归"
@@ -167,6 +167,7 @@ def test_api_budget_preflight_without_paid_calls(
     next(t for t in app.text_area if t.label == "开发需求").set_value(request).run()
     next(b for b in app.button if b.label == "解析并检查需求").click().run()
     next(c for c in app.checkbox if c.label == "使用适用的已验证经验").set_value(experiences).run()
+    next(c for c in app.checkbox if c.label == "手动设置请求上限").check().run()
     app.number_input[0].set_value(budget).run()
     next(c for c in app.checkbox if c.label.startswith("我已核对")).check().run()
     next(b for b in app.button if b.label == "开始 API 生成并验证（产生费用）").click().run()
@@ -181,6 +182,62 @@ def test_api_budget_preflight_without_paid_calls(
         assert not list((tmp_path / "runtime/web-jobs").glob("*/settings.json"))
     app.run()
     assert popen.call_count == int(submitted)
+
+
+def test_adaptive_budget_and_manual_override_are_confirmed_before_submission(tmp_path, monkeypatch):
+    monkeypatch.setenv("ALGOFACTORY_PROJECT_ROOT", str(tmp_path))
+    popen = Mock()
+    monkeypatch.setattr("algofactory.web.service.subprocess.Popen", popen)
+    app = AppTest.from_file(str(ROOT / "src/algofactory/web/app.py"), default_timeout=30).run()
+    next(r for r in app.radio if r.label == "需求理解方式").set_value("rules").run()
+    next(r for r in app.radio if r.label == "代码生成方式").set_value("api").run()
+    next(t for t in app.text_area if t.label == "开发需求").set_value(
+        "开发英文银行咨询分类算法；比较逻辑回归和朴素贝叶斯"
+    ).run()
+    next(b for b in app.button if b.label == "解析并检查需求").click().run()
+    assert app.number_input[0].value == 13 and app.number_input[0].disabled
+    next(c for c in app.checkbox if c.label.startswith("我已核对")).check().run()
+    next(s for s in app.slider if s.label == "每候选最多修复次数").set_value(2).run()
+    assert app.number_input[0].value == 19
+    assert not next(c for c in app.checkbox if c.label.startswith("我已核对")).value
+    next(c for c in app.checkbox if c.label == "手动设置请求上限").check().run()
+    app.number_input[0].set_value(10).run()
+    assert any("可能在完成所选修复前停止" in w.value for w in app.warning)
+    next(s for s in app.slider if s.label == "每候选最多修复次数").set_value(1).run()
+    assert app.number_input[0].value == 10  # Editing other settings preserves the explicit cap.
+    next(c for c in app.checkbox if c.label == "手动设置请求上限").uncheck().run()
+    assert app.number_input[0].value == 13
+    next(s for s in app.slider if s.label == "每候选最多修复次数").set_value(0).run()
+    assert app.number_input[0].value == 7
+    next(c for c in app.checkbox if c.label == "手动设置请求上限").check().run()
+    app.number_input[0].set_value(24).run()
+    next(c for c in app.checkbox if c.label.startswith("我已核对")).check().run()
+    next(b for b in app.button if b.label == "开始 API 生成并验证（产生费用）").click().run()
+    assert not app.exception and popen.call_count == 1
+    path = next((tmp_path / "runtime/web-jobs").glob("*/settings.json"))
+    assert RunSettings.model_validate_json(path.read_text()).call_budget == 24
+    app.run()
+    assert popen.call_count == 1
+
+
+def test_single_and_regression_budget_without_api_calls(tmp_path, monkeypatch):
+    monkeypatch.setenv("ALGOFACTORY_PROJECT_ROOT", str(tmp_path))
+    app = AppTest.from_file(str(ROOT / "src/algofactory/web/app.py"), default_timeout=30).run()
+    next(r for r in app.radio if r.label == "需求理解方式").set_value("rules").run()
+    next(r for r in app.radio if r.label == "代码生成方式").set_value("api").run()
+    next(t for t in app.text_area if t.label == "开发需求").set_value(
+        "开发英文银行咨询分类算法；只使用逻辑回归"
+    ).run()
+    next(b for b in app.button if b.label == "解析并检查需求").click().run()
+    assert app.number_input[0].value == 7
+    next(s for s in app.slider if s.label == "每候选最多修复次数").set_value(2).run()
+    assert app.number_input[0].value == 10
+    next(s for s in app.slider if s.label == "每候选最多修复次数").set_value(0).run()
+    assert app.number_input[0].value == 4
+    app.selectbox[0].select("regression").run()
+    assert app.number_input[0].value == 4
+    assert next(s for s in app.slider if s.label == "每候选最多修复次数").disabled
+    assert not app.exception
 
 
 def test_budget_stop_explained_without_replay(tmp_path, monkeypatch):

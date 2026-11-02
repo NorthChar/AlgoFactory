@@ -9,7 +9,7 @@ ALGOFACTORY_DOCKER_TESTS=1 .venv/bin/python -m pytest -q
 完整验收要求零失败、零错误、零跳过。未启用 Docker 的普通测试会跳过真实容器用例。HTTP 测试只在 127.0.0.1 临时启动模拟服务，不调用外部模型；环境需允许本地端口和 Docker。
 
 - contracts / knowledge / providers：契约、来源、知识存储、检索、图重载、API 预算与错误边界。
-- phase2 / phase25 / phase3 / phase5：共享执行、文本与表格任务、有限修复比较、插件与合成回归。文件名保留既有历史编号，不是测试执行顺序。
+- 共享执行与任务兼容：文本与表格任务、有限修复比较、插件与合成回归。
 - requirements / requirement_understanding / intent_goals：需求解析、语义复核与澄清、确认绑定、目标数据和评估协议。
 - web / web_workflow / data_view / model_trials：页面、只读证据、任务版本和隔离模型试用。
 - delivery：凭据检测及可达 Git 历史扫描的边界。

@@ -19,6 +19,20 @@ from algofactory.requirement_understanding import Understanding
 from algofactory.schemas.contracts import Contract
 from algofactory.tasks import PROFILES
 
+WEB_API_CALL_LIMIT = 24
+
+
+def generation_budget(compare: bool, max_repairs: int, task: str = "banking77"):
+    """Reserve for all configured attempts, without assuming a knowledge-cache hit.
+
+    The first attempt costs four calls; subsequent candidates and repairs cost
+    three with within-run knowledge caching. Transport retries are additional.
+    """
+    candidates = 2 if compare and task == "banking77" else 1
+    base = 1 + 3 * candidates
+    repairs = 3 * candidates * max_repairs if task == "banking77" else 0
+    return base, repairs
+
 
 class RunSettings(Contract):
     understanding: Understanding | None = None
@@ -58,8 +72,8 @@ class RunSettings(Contract):
             raise ValueError("derived_task_experience_reuse_not_validated")
         if self.experiences and not (self.compare or self.experiment):
             raise ValueError("experience_search_required")
-        if self.mode == "api" and self.call_budget > 12:
-            raise ValueError("web_api_budget_maximum_12")
+        if self.mode == "api" and self.call_budget > WEB_API_CALL_LIMIT:
+            raise ValueError(f"web_api_budget_maximum_{WEB_API_CALL_LIMIT}")
         if self.task == "banking77" and self.request not in {"", PROFILES[self.task].request}:
             if self.experiment is None:
                 raise ValueError("requirement_needs_bound_configuration")

@@ -1,6 +1,6 @@
 # 交付与复现
 
-交付版本为 0.8.0。主入口是 [README](../README.md#quickstart)，无需公网服务器。私有仓库必须给接收者访问权限；源码内含同一套 Streamlit 工作台，运行结果在接收者自己的 runtime/ 中生成。
+交付版本为 0.8.1。主入口是 [README](../README.md#quickstart)，无需公网服务器。私有仓库必须给接收者访问权限；源码内含同一套 Streamlit 工作台，运行结果在接收者自己的 runtime/ 中生成。
 
 ## 提交目录
 
@@ -10,7 +10,7 @@
 - docs/：当前架构、使用说明、验收口径、原题及要求对照。
 - scripts/、docker/、锁文件：环境准备、隔离执行与可重复检查。
 
-内部讨论计划、旧阶段日志和重复实验已经移出当前目录；保留于 [整理前固定提交](https://github.com/NorthChar/AlgoFactory/tree/2758572d4167b9f66420b79ffd415f51819cb60e)。本机也保存了原目录备份。没有重写 Git 历史，因此普通完整克隆仍包含历史大文件；首次只需当前版本可使用 `git clone --depth 1 --branch v0.8.0 https://github.com/NorthChar/AlgoFactory.git`（标签发布后）。
+内部讨论计划、旧阶段日志和重复实验已经移出当前目录；保留于 [整理前固定提交](https://github.com/NorthChar/AlgoFactory/tree/2758572d4167b9f66420b79ffd415f51819cb60e)。本机也保存了原目录备份。没有重写 Git 历史，因此普通完整克隆仍包含历史大文件；首次只需当前版本可使用 `git clone --depth 1 --branch v0.8.1 https://github.com/NorthChar/AlgoFactory.git`。
 
 ## 独立复现方法
 
@@ -24,9 +24,13 @@
 
 该协议复用同机依赖缓存和已经批准的 Docker 镜像，不是第二台机器验证或无缓存镜像重建。接收者首次仍需按 README 在自己机器构建镜像。完整初装历史可在旧版本追溯，不能代替当前复现。
 
-## 当前验证记录
+## v0.8.1 检查范围
 
-[本次复现记录](evidence/release-080/README.md) 已通过，代码基线 `3dec1409ec5c6ac6de994e7c5bcfadb46f7afd0a`：
+预算配置与说明更新通过本地 309 项完整回归，包含真实 Docker，零失败、零错误、零跳过；代码规范和仓库审计通过。未新增付费 API 请求。本次没有重复独立安装复现；安装复现基线仍为下述 v0.8.0 记录，不能将其视作对新版本的独立安装验证。
+
+## 已发布 v0.8.0 的验证记录
+
+[v0.8.0 复现记录](evidence/release-080/README.md) 已通过，代码基线 `3dec1409ec5c6ac6de994e7c5bcfadb46f7afd0a`：
 
 - 独立浅克隆、新 Python 环境、锁定依赖与 wheel 安装成功，确认加载的是新环境中的安装包。
 - 307 项完整回归通过，零失败、零错误、零跳过，包含真实 Docker 与页面检查。
@@ -34,7 +38,7 @@
 - 两条离线需求完成真实执行；逻辑回归案例通过显式注入故障验证修复。
 - 本次新增付费 API 请求为 0。目标与需求复验仅使用验证集；完整回归中的测试用例包含最终测试路径。
 
-当前源码、测试、依赖与复现基线一致，后续发布提交增加文档和证据。整理前真实 API 新目标记录另见 [目标验证](../examples/intent-goals/README.md)。
+v0.8.0 发布源码、测试、依赖与上述复现基线一致，发布提交补充文档和证据。后续变更及检查范围见 [版本变更](../CHANGELOG.md)。整理前真实 API 新目标记录另见 [目标验证](../examples/intent-goals/README.md)。
 
 ## 审计与提交
 

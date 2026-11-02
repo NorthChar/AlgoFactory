@@ -15,10 +15,12 @@ from algofactory.web.evidence import stage_rows, workflow_evidence
 from algofactory.web.models import show_trial
 from algofactory.web.requirement_intake import NATURAL_EXAMPLE, show_semantic_intake
 from algofactory.web.service import (
+    WEB_API_CALL_LIMIT,
     Jobs,
     RunSettings,
     artifacts,
     confined,
+    generation_budget,
     graph_snapshot,
     graph_view,
     read_json,
@@ -42,7 +44,7 @@ STATUS = {
 
 def stop_reason(category):
     messages = {
-        "call_budget_exhausted": "本次大模型请求已达到设置上限，任务已停止，已有成果已保留。请让配置人员查看用量后决定是否调整预算；系统不会自动续费或重试。",
+        "call_budget_exhausted": "本次大模型请求已达到设置上限，任务已停止，已有成果已保留。请查看用量和已保留成果，再决定是否调整预算并创建新任务；系统不会自动加额或续跑。",
         "docker_missing": "电脑上尚未找到 Docker。请让环境配置人员安装并启动 Docker Desktop 后，再创建新任务。",
         "docker_unavailable": "训练环境暂时无法连接。请先启动 Docker Desktop，等待就绪后再创建新任务。",
         "sandbox_image_missing": "本机缺少执行镜像。请让环境配置人员按 README 的镜像准备步骤处理后重试。",
@@ -432,7 +434,7 @@ with launch:
     else:
         with st.expander("目前能理解的需求表达（用分号或换行分隔）"):
             st.write(
-                "第一版使用本地规则逐句检查，不是通用自然语言理解。可以按下列表达组合；任何未识别的句子都会阻止提交，不会被忽略。"
+                "离线入口使用本地规则逐句检查，不是通用自然语言理解。可以按下列表达组合；任何未识别的句子都会阻止提交，不会被忽略。"
             )
             st.code(
                 "开发英文银行咨询分类算法；输出预测类别及概率\n只区分这些意图：card_arrival、lost_or_stolen_card / 识别单个意图：lost_or_stolen_card\n单个意图可加：优先减少漏判 / 兼顾各类效果\n只使用逻辑回归 / 只使用朴素贝叶斯 / 比较逻辑回归和朴素贝叶斯\n仅使用单词特征 / 使用单词和相邻双词特征\n词表上限10000 / 词表上限30000\n逻辑回归C=1 / 逻辑回归C=4\n朴素贝叶斯平滑系数=0.1 / 朴素贝叶斯平滑系数=0.5",
@@ -535,18 +537,33 @@ with launch:
             value=False,
             disabled=task != "banking77" or selection["goal"] != "full",
         )
-        max_repairs = st.slider("每候选最多修复次数", 0, 2, 1)
+        max_repairs = st.slider("每候选最多修复次数", 0, 2, 1, disabled=task != "banking77")
+        base_calls, repair_calls = generation_budget(compare, max_repairs, task)
+        recommended = base_calls + repair_calls
+        manual_budget = st.checkbox("手动设置请求上限", value=False, key="manual_budget_" + mode)
+        budget_key = "budget_" + mode
+        if not manual_budget or budget_key not in st.session_state:
+            st.session_state[budget_key] = recommended if mode == "api" else 24
         budget = st.number_input(
             "本次模型请求上限",
             min_value=1,
-            max_value=12 if mode == "api" else 32,
-            value=10 if mode == "api" else 24,
+            max_value=WEB_API_CALL_LIMIT if mode == "api" else 32,
             step=1,
-            key="budget_" + mode,
+            key=budget_key,
+            disabled=not manual_budget,
         )
         st.caption(
-            "单候选无修复通常需 4 次请求；双候选通常 7 次，复用知识时 6 次。每次修复另需 3 次，接口重试也占用预算；修复次数不是成功保证。"
+            f"建议额度 {recommended} 次 = 首次生成 {base_calls} 次 + 修复预留 {repair_calls} 次。"
+            "按所有候选用完所选修复次数估算；命中已有知识可少 1 次，接口重试另占额度。"
+            "成功后无需用完预留次数，修复次数不是成功保证。训练、评分和试用不调用大模型。"
         )
+        if mode == "api" and budget < recommended:
+            st.warning(
+                f"当前上限 {budget} 次低于建议的 {recommended} 次，可能在完成所选修复前停止。"
+                "你可以保留较低上限；系统不会在运行中自动加额。"
+            )
+        if mode == "api":
+            st.caption("生成流程最多允许 24 次请求；需求理解另计，最多 6 次。建议额度不含接口重试余量。")
     st.markdown("### 3. 确认并开始生成")
     st.write(
         f"本次：{'真实 API（付费）' if mode == 'api' else 'Mock 模板生成（无 API 费用）'}；{'仅验证集评估' if validation_only else '选定版本追加一次最终测试'}；每候选最多修复 {max_repairs if task == 'banking77' else 0} 次；请求上限 {budget} 次；{'使用已验证经验' if experiences else '不复用历史经验'}。"

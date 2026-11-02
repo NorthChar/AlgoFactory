@@ -155,6 +155,7 @@ def test_web_requires_parse_confirmation_and_invalidates_edits(tmp_path, monkeyp
     assert start().disabled and not observed
     confirm().check().run()
     assert not start().disabled
+    next(c for c in app.checkbox if c.label == "手动设置请求上限").check().run()
     app.number_input[0].set_value(20).run()
     assert start().disabled and not confirm().value
     confirm().check().run()
