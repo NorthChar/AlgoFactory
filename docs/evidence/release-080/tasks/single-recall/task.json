@@ -1,0 +1,51 @@
+{
+  "class_labels": [
+    0,
+    1
+  ],
+  "constraints": {
+    "allowed_algorithms": [],
+    "candidate_limit": 2,
+    "execution": {
+      "backend": "docker",
+      "cpus": 2,
+      "fail_closed": true,
+      "memory_mib": 4096,
+      "network": false,
+      "schema_version": 1,
+      "timeout_seconds": 120
+    },
+    "max_repairs_per_candidate": 1,
+    "schema_version": 1
+  },
+  "data_fingerprint": "db9b0e9b45bf2d23aefc3bdd74371c69abaa7b1419e5d54d9de264a6bdb46a59",
+  "description": "开发英文银行咨询分类算法；输出预测类别及概率；比较逻辑回归和朴素贝叶斯；使用单词和相邻双词特征；词表上限30000；识别单个意图：lost_or_stolen_card；优先减少漏判；逻辑回归C=4；朴素贝叶斯平滑系数=0.1",
+  "feature_schema": [
+    {
+      "dtype": "text",
+      "name": "text",
+      "nullable": false,
+      "schema_version": 1
+    }
+  ],
+  "metrics": [
+    {
+      "direction": "maximize",
+      "name": "macro_f1",
+      "schema_version": 1,
+      "threshold": 0.68
+    },
+    {
+      "direction": "maximize",
+      "name": "recall",
+      "schema_version": 1,
+      "threshold": 0.26
+    }
+  ],
+  "schema_version": 1,
+  "seed": 42,
+  "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+  "target": "intent",
+  "task_id": "workflow:b9c275036ba24a5fb4430d82bd056e02:task",
+  "task_type": "binary_classification"
+}

@@ -1,0 +1,60 @@
+[
+  {
+    "algorithm": "text_logistic",
+    "attempt": 0,
+    "code_hash": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+    "config_hash": "73a074803e1b5254553fa46e6f852464e5cecab325167764d95564584c75e8ff",
+    "error_category": null,
+    "experience_usage": {
+      "enabled": false,
+      "excluded": [],
+      "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+      "matches": [],
+      "model_decisions": [],
+      "observed_rule_satisfied": false
+    },
+    "experiment_hash": "4a02b62a6e43c133db0b5501516276f37572dd77cba98367e0c9cd36d9e81083",
+    "historical_failure": false,
+    "implementation_id": "source:533dbaf2f0c58dc5bac45a0460924a84e216b7ffc52b726909ccb145613600c5:implementation",
+    "parent_id": null,
+    "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/checkout/runtime/web-jobs/107fd806edb344b9b6202bcec6464fc8/run/candidates/text_logistic/attempt-0/report.json",
+    "split_id": "split:14e57d9566efe01ae68edf6aac6a608c8a271b87b5eaa3561c33d74b798deea0",
+    "status": "validated",
+    "test_attempted": false,
+    "validation_metrics": {
+      "accuracy": 0.961038961038961,
+      "macro_f1": 0.9573087431693988
+    },
+    "validation_run_id": "source:533dbaf2f0c58dc5bac45a0460924a84e216b7ffc52b726909ccb145613600c5:validation",
+    "workflow_id": "workflow:6cedc0154fb2476eaa42504c1fc2f9b9"
+  },
+  {
+    "algorithm": "text_nb",
+    "attempt": 0,
+    "code_hash": "f2019deef87f93b84159808e3d83a2b7e1a1a1c8161c81adc94377d4e4e75178",
+    "config_hash": "73a074803e1b5254553fa46e6f852464e5cecab325167764d95564584c75e8ff",
+    "error_category": null,
+    "experience_usage": {
+      "enabled": false,
+      "excluded": [],
+      "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+      "matches": [],
+      "model_decisions": [],
+      "observed_rule_satisfied": false
+    },
+    "experiment_hash": "4a02b62a6e43c133db0b5501516276f37572dd77cba98367e0c9cd36d9e81083",
+    "historical_failure": false,
+    "implementation_id": "source:d3ad7737010608f84f0f4e0f0f3361e7d6ec042c8f428275bdbbbf8c0d32cb73:implementation",
+    "parent_id": null,
+    "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/checkout/runtime/web-jobs/107fd806edb344b9b6202bcec6464fc8/run/candidates/text_nb/attempt-0/report.json",
+    "split_id": "split:14e57d9566efe01ae68edf6aac6a608c8a271b87b5eaa3561c33d74b798deea0",
+    "status": "validated",
+    "test_attempted": false,
+    "validation_metrics": {
+      "accuracy": 0.961038961038961,
+      "macro_f1": 0.9573087431693988
+    },
+    "validation_run_id": "source:d3ad7737010608f84f0f4e0f0f3361e7d6ec042c8f428275bdbbbf8c0d32cb73:validation",
+    "workflow_id": "workflow:7eecf7ab30284eb6a646542ebc10f73c"
+  }
+]

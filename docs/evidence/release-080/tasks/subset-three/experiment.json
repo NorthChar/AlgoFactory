@@ -1,0 +1,27 @@
+{
+  "configuration": {
+    "algorithms": [
+      "text_logistic",
+      "text_nb"
+    ],
+    "goal": "subset",
+    "intents": [
+      "card_arrival",
+      "lost_or_stolen_card",
+      "pending_transfer"
+    ],
+    "logistic_c": 4.0,
+    "max_features": 30000,
+    "nb_alpha": 0.1,
+    "nb_alpha_schedule": [
+      0.1,
+      0.05,
+      0.01
+    ],
+    "ngram_max": 2,
+    "objective": "macro_f1",
+    "optimization": "frozen_nb_schedule",
+    "schema_version": 1
+  },
+  "experiment_hash": "4a02b62a6e43c133db0b5501516276f37572dd77cba98367e0c9cd36d9e81083"
+}

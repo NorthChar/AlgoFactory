@@ -1,0 +1,137 @@
+{
+  "checks": [
+    {
+      "command": [
+        "git",
+        "clone",
+        "--depth",
+        "1",
+        "--quiet",
+        "file:///Users/northchar/Documents/Codex/AlgoFactory",
+        "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/checkout"
+      ],
+      "exit_code": 0,
+      "log": "check-1.log"
+    },
+    {
+      "command": [
+        "/Users/northchar/.local/bin/uv",
+        "venv",
+        "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/environment",
+        "--python",
+        "/Users/northchar/Documents/Codex/AlgoFactory/.venv/bin/python"
+      ],
+      "exit_code": 0,
+      "log": "check-2.log"
+    },
+    {
+      "command": [
+        "/Users/northchar/.local/bin/uv",
+        "pip",
+        "sync",
+        "--python",
+        "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/environment/bin/python",
+        "--require-hashes",
+        "requirements-dev.txt"
+      ],
+      "exit_code": 0,
+      "log": "check-3.log"
+    },
+    {
+      "command": [
+        "/Users/northchar/.local/bin/uv",
+        "build",
+        "--wheel",
+        "--no-build-isolation",
+        "--python",
+        "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/environment/bin/python",
+        "--out-dir",
+        "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/dist",
+        "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/checkout"
+      ],
+      "exit_code": 0,
+      "log": "check-4.log"
+    },
+    {
+      "command": [
+        "/Users/northchar/.local/bin/uv",
+        "pip",
+        "install",
+        "--python",
+        "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/environment/bin/python",
+        "--no-deps",
+        "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/dist/algofactory-0.8.0-py3-none-any.whl"
+      ],
+      "exit_code": 0,
+      "log": "check-5.log"
+    },
+    {
+      "command": [
+        "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/environment/bin/python",
+        "-I",
+        "-c",
+        "import algofactory,json;print(json.dumps({'module':algofactory.__file__,'version':algofactory.__version__}))"
+      ],
+      "exit_code": 0,
+      "log": "check-6.log"
+    },
+    {
+      "command": [
+        "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/environment/bin/python",
+        "-m",
+        "algofactory.cli",
+        "prepare-banking77",
+        "--raw-dir",
+        "data/banking77/raw"
+      ],
+      "exit_code": 0,
+      "log": "check-7.log"
+    },
+    {
+      "command": [
+        "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/environment/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "--junitxml=/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/tests.xml"
+      ],
+      "exit_code": 0,
+      "log": "check-8.log"
+    },
+    {
+      "command": [
+        "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/environment/bin/python",
+        "scripts/verify_intent_goals.py",
+        "--output-dir",
+        "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/acceptance"
+      ],
+      "exit_code": 0,
+      "log": "check-9.log"
+    },
+    {
+      "command": [
+        "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/environment/bin/python",
+        "scripts/verify_requirements.py",
+        "--output-dir",
+        "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/requirements"
+      ],
+      "exit_code": 0,
+      "log": "check-10.log"
+    }
+  ],
+  "installation": {
+    "module": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/environment/lib/python3.11/site-packages/algofactory/__init__.py",
+    "version": "0.8.0"
+  },
+  "paid_api_calls": 0,
+  "scope": "same host, independent clone, fresh venv and noneditable wheel; dependency caches and approved Docker image reused",
+  "source_commit": "3dec1409ec5c6ac6de994e7c5bcfadb46f7afd0a",
+  "status": "passed",
+  "tests": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 307
+  },
+  "wheel_sha256": "53d37d80b161f9424ff926018ce6d59756541003ee483bab749ffbfe4019e457"
+}

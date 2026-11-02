@@ -1,0 +1,31 @@
+[
+  {
+    "algorithm": "text_nb",
+    "attempt": 0,
+    "code_hash": "f2019deef87f93b84159808e3d83a2b7e1a1a1c8161c81adc94377d4e4e75178",
+    "config_hash": "de50440632f60481cf150afcfa305400ad58eb224ac03e10548f9d17bddbb2fd",
+    "error_category": null,
+    "experience_usage": {
+      "enabled": false,
+      "excluded": [],
+      "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+      "matches": [],
+      "model_decisions": [],
+      "observed_rule_satisfied": false
+    },
+    "experiment_hash": "395e9cb40701e3600c527195fc307a6fc6687aea6ece2d65a31729254c277687",
+    "historical_failure": false,
+    "implementation_id": "source:e0dbe610d90d821adba2a85e8206eed954389d9fc02b4c3de72800d5cb22b393:implementation",
+    "parent_id": null,
+    "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/requirements/nb/run/candidates/text_nb/attempt-0/report.json",
+    "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+    "status": "validated",
+    "test_attempted": false,
+    "validation_metrics": {
+      "accuracy": 0.8359179589794897,
+      "macro_f1": 0.8269238046747743
+    },
+    "validation_run_id": "source:e0dbe610d90d821adba2a85e8206eed954389d9fc02b4c3de72800d5cb22b393:validation",
+    "workflow_id": "workflow:7bc22205244f40c78c3e869c95235f20"
+  }
+]

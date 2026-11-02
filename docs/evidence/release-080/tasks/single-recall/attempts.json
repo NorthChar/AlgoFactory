@@ -1,0 +1,68 @@
+[
+  {
+    "algorithm": "text_logistic",
+    "attempt": 0,
+    "code_hash": "c4fb4fae3028e4589cf9eae8537e7000914068a96cc7dee8c42b694d79b1aff3",
+    "config_hash": "cf2490e22c6c8536f56d65138a5b4e8e118f20feb8fcc98ea6bf77e434d6870f",
+    "error_category": null,
+    "experience_usage": {
+      "enabled": false,
+      "excluded": [],
+      "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+      "matches": [],
+      "model_decisions": [],
+      "observed_rule_satisfied": false
+    },
+    "experiment_hash": "fbba975782233315868e4dae54f37631eccbfec59c1f8b12068ea1d2c89413ca",
+    "historical_failure": false,
+    "implementation_id": "source:0af663126ca819e33acece843be57b371ce74ef0ae24c8cddbdfdcc4f39529b4:implementation",
+    "parent_id": null,
+    "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/checkout/runtime/web-jobs/510de6e3d4664550aa33baefa0169edd/run/candidates/text_logistic/attempt-0/report.json",
+    "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+    "status": "validated",
+    "test_attempted": false,
+    "validation_metrics": {
+      "accuracy": 0.9954977488744372,
+      "f1": 0.7428571428571429,
+      "macro_f1": 0.8702930680220613,
+      "precision": 0.6842105263157895,
+      "recall": 0.8125,
+      "roc_auc": 0.9957766011094301
+    },
+    "validation_run_id": "source:0af663126ca819e33acece843be57b371ce74ef0ae24c8cddbdfdcc4f39529b4:validation",
+    "workflow_id": "workflow:b9c275036ba24a5fb4430d82bd056e02"
+  },
+  {
+    "algorithm": "text_nb",
+    "attempt": 0,
+    "code_hash": "0ca808fa0be2ad4deb9775a027b967b0c9352822aeeedccacbc7d9aff394ec64",
+    "config_hash": "cf2490e22c6c8536f56d65138a5b4e8e118f20feb8fcc98ea6bf77e434d6870f",
+    "error_category": null,
+    "experience_usage": {
+      "enabled": false,
+      "excluded": [],
+      "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+      "matches": [],
+      "model_decisions": [],
+      "observed_rule_satisfied": false
+    },
+    "experiment_hash": "fbba975782233315868e4dae54f37631eccbfec59c1f8b12068ea1d2c89413ca",
+    "historical_failure": false,
+    "implementation_id": "source:5c4f84dd893192441538cddd085261bf6d46f07f8719b56105dd21896b883e44:implementation",
+    "parent_id": null,
+    "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/checkout/runtime/web-jobs/510de6e3d4664550aa33baefa0169edd/run/candidates/text_nb/attempt-0/report.json",
+    "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+    "status": "validated",
+    "test_attempted": false,
+    "validation_metrics": {
+      "accuracy": 0.9939969984992496,
+      "f1": 0.6470588235294118,
+      "macro_f1": 0.822015789161275,
+      "precision": 0.6111111111111112,
+      "recall": 0.6875,
+      "roc_auc": 0.9848398890569843
+    },
+    "validation_run_id": "source:5c4f84dd893192441538cddd085261bf6d46f07f8719b56105dd21896b883e44:validation",
+    "workflow_id": "workflow:049f217278534549ad219174c8333a19"
+  }
+]

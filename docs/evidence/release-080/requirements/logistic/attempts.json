@@ -1,0 +1,57 @@
+[
+  {
+    "algorithm": "text_logistic",
+    "attempt": 0,
+    "code_hash": "45af332c35893fad0e019a1eca22121f2039dd9da15fe9e0780c7852774735d6",
+    "config_hash": "de50440632f60481cf150afcfa305400ad58eb224ac03e10548f9d17bddbb2fd",
+    "error_category": "algorithm_configuration_mismatch",
+    "experience_usage": {
+      "enabled": false,
+      "excluded": [],
+      "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+      "matches": [],
+      "model_decisions": [],
+      "observed_rule_satisfied": false
+    },
+    "experiment_hash": "2031c0a072dbefdb647b880fbecca6e74fdbca306523f64ca645222a60d7fef3",
+    "historical_failure": false,
+    "implementation_id": "source:572767e70faf6bd2900b54252cc18f922ea73991f6a9aea555910c5acac56a1b:implementation",
+    "parent_id": null,
+    "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/requirements/logistic/run/candidates/text_logistic/attempt-0/report.json",
+    "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+    "status": "failed",
+    "test_attempted": false,
+    "validation_metrics": {},
+    "validation_run_id": "source:572767e70faf6bd2900b54252cc18f922ea73991f6a9aea555910c5acac56a1b:validation",
+    "workflow_id": "workflow:07c660b5586a44609a4e64cbcf30cab5"
+  },
+  {
+    "algorithm": "text_logistic",
+    "attempt": 1,
+    "code_hash": "ec421867614513cabdc5686e23ff4f4ab38b093e68b9b4d99dd415ed226141e5",
+    "config_hash": "de50440632f60481cf150afcfa305400ad58eb224ac03e10548f9d17bddbb2fd",
+    "error_category": null,
+    "experience_usage": {
+      "enabled": false,
+      "excluded": [],
+      "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+      "matches": [],
+      "model_decisions": [],
+      "observed_rule_satisfied": false
+    },
+    "experiment_hash": "2031c0a072dbefdb647b880fbecca6e74fdbca306523f64ca645222a60d7fef3",
+    "historical_failure": false,
+    "implementation_id": "source:b3fbec9aa5be937437da1eb305c7e6df10676f9a5486280dd6d06271b3d59a1a:implementation",
+    "parent_id": "source:572767e70faf6bd2900b54252cc18f922ea73991f6a9aea555910c5acac56a1b:implementation",
+    "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/requirements/logistic/run/candidates/text_logistic/attempt-1/report.json",
+    "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+    "status": "validated",
+    "test_attempted": false,
+    "validation_metrics": {
+      "accuracy": 0.8584292146073037,
+      "macro_f1": 0.8541916054420526
+    },
+    "validation_run_id": "source:b3fbec9aa5be937437da1eb305c7e6df10676f9a5486280dd6d06271b3d59a1a:validation",
+    "workflow_id": "workflow:82c6da9105b04fb1beb65d21417ee545"
+  }
+]

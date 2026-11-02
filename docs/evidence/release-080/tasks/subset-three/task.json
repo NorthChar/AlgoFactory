@@ -1,0 +1,46 @@
+{
+  "class_labels": [
+    0,
+    1,
+    2
+  ],
+  "constraints": {
+    "allowed_algorithms": [],
+    "candidate_limit": 2,
+    "execution": {
+      "backend": "docker",
+      "cpus": 2,
+      "fail_closed": true,
+      "memory_mib": 4096,
+      "network": false,
+      "schema_version": 1,
+      "timeout_seconds": 120
+    },
+    "max_repairs_per_candidate": 1,
+    "schema_version": 1
+  },
+  "data_fingerprint": "7e6749190a667ff25f41c057dffaf9f43ae11edc6611a9b2a8d00292def3ba44",
+  "description": "开发英文银行咨询分类算法；输出预测类别及概率；比较逻辑回归和朴素贝叶斯；使用单词和相邻双词特征；词表上限30000；只区分这些意图：card_arrival、lost_or_stolen_card、pending_transfer；兼顾各类效果；逻辑回归C=4；朴素贝叶斯平滑系数=0.1",
+  "feature_schema": [
+    {
+      "dtype": "text",
+      "name": "text",
+      "nullable": false,
+      "schema_version": 1
+    }
+  ],
+  "metrics": [
+    {
+      "direction": "maximize",
+      "name": "macro_f1",
+      "schema_version": 1,
+      "threshold": 0.9
+    }
+  ],
+  "schema_version": 1,
+  "seed": 42,
+  "split_id": "split:14e57d9566efe01ae68edf6aac6a608c8a271b87b5eaa3561c33d74b798deea0",
+  "target": "intent",
+  "task_id": "workflow:6cedc0154fb2476eaa42504c1fc2f9b9:task",
+  "task_type": "multiclass_classification"
+}

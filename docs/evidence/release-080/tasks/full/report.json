@@ -1,0 +1,393 @@
+{
+  "artifacts_sha256": {
+    "attempts.json": "dc08f3a71b1110a9f7658e3149204756f4e261adf4064c57f2af1a0e8c1259c3",
+    "candidate.json": "63b330dc5345f888fb6e7797d77f5ce1dde5a518acd6c5707296c706dbc12a02",
+    "candidate.py": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+    "candidates/text_logistic/attempt-0/builder-input.json": "c6f83fb36595c67afa8e873d41b2d8ffa5dd3891a31f391664a8e9dc3ca4375a",
+    "candidates/text_logistic/attempt-0/candidate.json": "63b330dc5345f888fb6e7797d77f5ce1dde5a518acd6c5707296c706dbc12a02",
+    "candidates/text_logistic/attempt-0/candidate.py": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+    "candidates/text_logistic/attempt-0/configuration-check.json": "77c14ee37cf7b4ae4ccb7aa0853bf4b99c9171d7f640ad8fea668ee2387c4c3a",
+    "candidates/text_logistic/attempt-0/data-manifest.json": "90dcead9bf8883f009eeb84f2a605b60b212f9fd85a2ded15e5bad0b1ecf748e",
+    "candidates/text_logistic/attempt-0/decisions.json": "92ee52014163adf01174bf3df01816844af933e6237ab72067fdf882c42cadef",
+    "candidates/text_logistic/attempt-0/experience-retrieval.json": "af3f6c94524807e74ea3a6cee452b9da96cd7e15127c5996fbcbcbf6e176662a",
+    "candidates/text_logistic/attempt-0/experience-use.json": "af3f6c94524807e74ea3a6cee452b9da96cd7e15127c5996fbcbcbf6e176662a",
+    "candidates/text_logistic/attempt-0/experiment.json": "a5787b5b196ed6f3e2c956b1f69047ec0d28016e116e5c19e6759cad37ff1e71",
+    "candidates/text_logistic/attempt-0/knowledge-input.json": "ac5e2b5d64d8062a132aba825c5bd5ee7c7e6aa892a0c1df6b88fabfc402a320",
+    "candidates/text_logistic/attempt-0/plan-proposal.json": "522624a705a84e36df414015c7af7a1a44510c72be2a93ad4979dfd7555f0600",
+    "candidates/text_logistic/attempt-0/plan.json": "522624a705a84e36df414015c7af7a1a44510c72be2a93ad4979dfd7555f0600",
+    "candidates/text_logistic/attempt-0/protocol.json": "ea6a6272c8cda496937884eaafd6559f90993e1ce408e734183e9c84f29a04b0",
+    "candidates/text_logistic/attempt-0/provider-audit.json": "d1defd4d518c1ac3a6fca3a43a6e930d847d5cb9d72c5e0a68a7b77cf1ee621d",
+    "candidates/text_logistic/attempt-0/report.json": "20e6d586d70fb2dae74cac3cdfc13c4cba27b6780f372bf75220fbd7ed3bfe0d",
+    "candidates/text_logistic/attempt-0/report.md": "bf4a9babc5b22175cebefa7257b9ac6d86ec635f75731f82cbf916f5a8591259",
+    "candidates/text_logistic/attempt-0/retrieval.json": "9e9b49a6f6bef1d939ba0a0bb91b2ebd6025d00e7bf86048634d3847dafe814f",
+    "candidates/text_logistic/attempt-0/task.json": "1d493a639887c3149945cbeadac9b19f92100c01c0c64578bc8da5c20e4085a7",
+    "candidates/text_logistic/attempt-0/trace.json": "4c9a2c57ad2169de0ec81e016475540dcf635807c404d41cc6d79d91c5584544",
+    "candidates/text_logistic/attempt-0/validation-class-details.json": "7867b5c516dc2a30c0da8f4193288e8303847d00933f1519f76401e21fe5296f",
+    "candidates/text_logistic/attempt-0/validation-execution/cleanup.json": "eeda5e1179ee4644f7b78cf4424b928e94b21b2a0bed892760b0c17cc8c227b5",
+    "candidates/text_logistic/attempt-0/validation-execution/container-state.json": "d02177beb6ea2359fda9b15de9425ae521d231129037b34f2c1692d509fa145d",
+    "candidates/text_logistic/attempt-0/validation-execution/execution.json": "b5912392c296daae402160790f9b01e4012074690ba1c4f17c55f39d64ad53f1",
+    "candidates/text_logistic/attempt-0/validation-execution/model-provenance.json": "46965e99eb058254a3bd1254a0f0b832f841b426a5224d934fd32188bf1a3409",
+    "candidates/text_logistic/attempt-0/validation-execution/model.pkl.gz": "ab4bbe69e7000330dc9da199cb072c1eb8b77503eb339a5e2c5522f99749841d",
+    "candidates/text_logistic/attempt-0/validation-execution/predictions.json": "bd78ac3012228968c6839df14ee8d89fb78538406cd5e67e6641ed17df202cb6",
+    "candidates/text_logistic/attempt-0/validation-execution/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "data-manifest.json": "90dcead9bf8883f009eeb84f2a605b60b212f9fd85a2ded15e5bad0b1ecf748e",
+    "decisions.json": "34af001905d21a6917c5d5a2bd954556a7c4692130211739c8431fe4a8594129",
+    "experience-library.json": "435855bc0a9041a577fbb5cb8185810b5d6e83d7adddbf526ef694d3a3b21bc5",
+    "experiment.json": "a5787b5b196ed6f3e2c956b1f69047ec0d28016e116e5c19e6759cad37ff1e71",
+    "plan.json": "522624a705a84e36df414015c7af7a1a44510c72be2a93ad4979dfd7555f0600",
+    "protocol.json": "ea6a6272c8cda496937884eaafd6559f90993e1ce408e734183e9c84f29a04b0",
+    "provider-audit.json": "d1defd4d518c1ac3a6fca3a43a6e930d847d5cb9d72c5e0a68a7b77cf1ee621d",
+    "ranking.json": "d139249ce21f7ff8f5c2cb53020a574f3393b2776d17b5002247615a37f3a14f",
+    "search-config.json": "1cd869ebc2b0ca5be029ca1022870936ca83223af2dfbe43cebcd4e8f04c0cf2",
+    "task.json": "1d493a639887c3149945cbeadac9b19f92100c01c0c64578bc8da5c20e4085a7",
+    "trace.json": "b428b252864cc912224bda68289d78892ed42442c3ee439ae53444a66adea2af",
+    "validation-class-details.json": "7867b5c516dc2a30c0da8f4193288e8303847d00933f1519f76401e21fe5296f"
+  },
+  "attempts": [
+    {
+      "algorithm": "text_logistic",
+      "attempt": 0,
+      "code_hash": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+      "config_hash": "de50440632f60481cf150afcfa305400ad58eb224ac03e10548f9d17bddbb2fd",
+      "error_category": null,
+      "experience_usage": {
+        "enabled": false,
+        "excluded": [],
+        "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+        "matches": [],
+        "model_decisions": [],
+        "observed_rule_satisfied": false
+      },
+      "experiment_hash": "0ccf9544d4bf3aa24301a711e5f56b733acf6e5e1498c1a49bdbb3aaa2d590cf",
+      "historical_failure": false,
+      "implementation_id": "source:a2628b6caf8f1156322f3f0ae561978913068c3e9ea6c64b758234cc635b8b4d:implementation",
+      "parent_id": null,
+      "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/checkout/runtime/web-jobs/c8c87ccd8b68456a8ae3e9d526c54582/run/candidates/text_logistic/attempt-0/report.json",
+      "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+      "status": "validated",
+      "test_attempted": false,
+      "validation_metrics": {
+        "accuracy": 0.8734367183591796,
+        "macro_f1": 0.8729749094121176
+      },
+      "validation_run_id": "source:a2628b6caf8f1156322f3f0ae561978913068c3e9ea6c64b758234cc635b8b4d:validation",
+      "workflow_id": "workflow:692217c4fdb54814b7e1c7eba544dcd7"
+    }
+  ],
+  "budget_usage": {
+    "attempt_limit": 2,
+    "attempts": 1,
+    "provider_call_limit": 24,
+    "provider_calls": 4
+  },
+  "candidate": {
+    "attempt": 0,
+    "code_hash": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+    "implementation_id": "workflow:692217c4fdb54814b7e1c7eba544dcd7:candidate",
+    "parent_id": null,
+    "plan_id": "workflow:692217c4fdb54814b7e1c7eba544dcd7:plan",
+    "schema_version": 1
+  },
+  "candidate_mode": "single",
+  "candidate_stops": [],
+  "class_names": [
+    "Refund_not_showing_up",
+    "activate_my_card",
+    "age_limit",
+    "apple_pay_or_google_pay",
+    "atm_support",
+    "automatic_top_up",
+    "balance_not_updated_after_bank_transfer",
+    "balance_not_updated_after_cheque_or_cash_deposit",
+    "beneficiary_not_allowed",
+    "cancel_transfer",
+    "card_about_to_expire",
+    "card_acceptance",
+    "card_arrival",
+    "card_delivery_estimate",
+    "card_linking",
+    "card_not_working",
+    "card_payment_fee_charged",
+    "card_payment_not_recognised",
+    "card_payment_wrong_exchange_rate",
+    "card_swallowed",
+    "cash_withdrawal_charge",
+    "cash_withdrawal_not_recognised",
+    "change_pin",
+    "compromised_card",
+    "contactless_not_working",
+    "country_support",
+    "declined_card_payment",
+    "declined_cash_withdrawal",
+    "declined_transfer",
+    "direct_debit_payment_not_recognised",
+    "disposable_card_limits",
+    "edit_personal_details",
+    "exchange_charge",
+    "exchange_rate",
+    "exchange_via_app",
+    "extra_charge_on_statement",
+    "failed_transfer",
+    "fiat_currency_support",
+    "get_disposable_virtual_card",
+    "get_physical_card",
+    "getting_spare_card",
+    "getting_virtual_card",
+    "lost_or_stolen_card",
+    "lost_or_stolen_phone",
+    "order_physical_card",
+    "passcode_forgotten",
+    "pending_card_payment",
+    "pending_cash_withdrawal",
+    "pending_top_up",
+    "pending_transfer",
+    "pin_blocked",
+    "receiving_money",
+    "request_refund",
+    "reverted_card_payment?",
+    "supported_cards_and_currencies",
+    "terminate_account",
+    "top_up_by_bank_transfer_charge",
+    "top_up_by_card_charge",
+    "top_up_by_cash_or_cheque",
+    "top_up_failed",
+    "top_up_limits",
+    "top_up_reverted",
+    "topping_up_by_card",
+    "transaction_charged_twice",
+    "transfer_fee_charged",
+    "transfer_into_account",
+    "transfer_not_received_by_recipient",
+    "transfer_timing",
+    "unable_to_verify_identity",
+    "verify_my_identity",
+    "verify_source_of_funds",
+    "verify_top_up",
+    "virtual_card_not_working",
+    "visa_or_mastercard",
+    "why_verify_identity",
+    "wrong_amount_of_cash_received",
+    "wrong_exchange_rate_for_cash_withdrawal"
+  ],
+  "code_hash": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+  "data_fingerprint": "e394adeb965f707d2f3036f95999165ed3d0d43c15a879341c912cbdbb953c79",
+  "design_explanation": {
+    "algorithm_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:text_logistic",
+    "evidence_ids": [
+      "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:text_logistic",
+      "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:capability:intent"
+    ],
+    "final_test_evaluated": false,
+    "selection_basis": "预先指定的单候选；不声称是所有算法中最优",
+    "text": "任务要求预测 intent，类型为 multiclass_classification。方案依据适用知识选择算法实体 source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:text_logistic，并要求预处理只在训练集拟合。候选是否通过由独立验证器依据冻结门槛决定，不由模型自行评分。此次运行状态为 validated。",
+    "validation_run_id": "source:42d3eb8a4f433c16b25fb879372d98601034e6d3b2fa71902185c1b47aee6cc1:validation",
+    "workflow_id": "search:f414c0d1be8346229d1a6ce1ddc58c89"
+  },
+  "error_category": null,
+  "evaluation_scope": "comparison_validation_only",
+  "execution_evidence": [],
+  "experience_enabled": false,
+  "experiment": {
+    "algorithms": [
+      "text_logistic"
+    ],
+    "logistic_c": 4.0,
+    "max_features": 30000,
+    "nb_alpha": 0.1,
+    "nb_alpha_schedule": [
+      0.1,
+      0.05,
+      0.01
+    ],
+    "ngram_max": 2,
+    "optimization": "frozen_nb_schedule",
+    "schema_version": 1
+  },
+  "experiment_hash": "0ccf9544d4bf3aa24301a711e5f56b733acf6e5e1498c1a49bdbb3aaa2d590cf",
+  "fault_fixture": null,
+  "knowledge_ids": {
+    "dataset_id": "source:42d3eb8a4f433c16b25fb879372d98601034e6d3b2fa71902185c1b47aee6cc1:dataset",
+    "implementation_id": "source:a2628b6caf8f1156322f3f0ae561978913068c3e9ea6c64b758234cc635b8b4d:implementation",
+    "task_id": "source:42d3eb8a4f433c16b25fb879372d98601034e6d3b2fa71902185c1b47aee6cc1:task",
+    "validation_run_id": "source:42d3eb8a4f433c16b25fb879372d98601034e6d3b2fa71902185c1b47aee6cc1:validation"
+  },
+  "learned_experiences": [],
+  "persisted": true,
+  "policy": {
+    "algorithms": [
+      "text_logistic"
+    ],
+    "attempt_budget": 2,
+    "max_repairs": 1,
+    "ranking": "macro_f1_desc_accuracy_desc_algorithm_order",
+    "schema_version": 1
+  },
+  "provider_mode": "mock",
+  "ranking": [
+    {
+      "algorithm": "text_logistic",
+      "attempt": 0,
+      "code_hash": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+      "config_hash": "de50440632f60481cf150afcfa305400ad58eb224ac03e10548f9d17bddbb2fd",
+      "error_category": null,
+      "experience_usage": {
+        "enabled": false,
+        "excluded": [],
+        "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+        "matches": [],
+        "model_decisions": [],
+        "observed_rule_satisfied": false
+      },
+      "experiment_hash": "0ccf9544d4bf3aa24301a711e5f56b733acf6e5e1498c1a49bdbb3aaa2d590cf",
+      "historical_failure": false,
+      "implementation_id": "source:a2628b6caf8f1156322f3f0ae561978913068c3e9ea6c64b758234cc635b8b4d:implementation",
+      "parent_id": null,
+      "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/checkout/runtime/web-jobs/c8c87ccd8b68456a8ae3e9d526c54582/run/candidates/text_logistic/attempt-0/report.json",
+      "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+      "status": "validated",
+      "test_attempted": false,
+      "validation_metrics": {
+        "accuracy": 0.8734367183591796,
+        "macro_f1": 0.8729749094121176
+      },
+      "validation_run_id": "source:a2628b6caf8f1156322f3f0ae561978913068c3e9ea6c64b758234cc635b8b4d:validation",
+      "workflow_id": "workflow:692217c4fdb54814b7e1c7eba544dcd7"
+    }
+  ],
+  "search_config_hash": "71b04df7ce8df9760e12af496840fc019ec761053bfcb38eee626b6b3b2ac369",
+  "search_summary": {
+    "attempts": [
+      {
+        "algorithm": "text_logistic",
+        "attempt": 0,
+        "code_hash": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+        "config_hash": "de50440632f60481cf150afcfa305400ad58eb224ac03e10548f9d17bddbb2fd",
+        "error_category": null,
+        "experience_usage": {
+          "enabled": false,
+          "excluded": [],
+          "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+          "matches": [],
+          "model_decisions": [],
+          "observed_rule_satisfied": false
+        },
+        "experiment_hash": "0ccf9544d4bf3aa24301a711e5f56b733acf6e5e1498c1a49bdbb3aaa2d590cf",
+        "historical_failure": false,
+        "implementation_id": "source:a2628b6caf8f1156322f3f0ae561978913068c3e9ea6c64b758234cc635b8b4d:implementation",
+        "parent_id": null,
+        "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/checkout/runtime/web-jobs/c8c87ccd8b68456a8ae3e9d526c54582/run/candidates/text_logistic/attempt-0/report.json",
+        "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+        "status": "validated",
+        "test_attempted": false,
+        "validation_metrics": {
+          "accuracy": 0.8734367183591796,
+          "macro_f1": 0.8729749094121176
+        },
+        "validation_run_id": "source:a2628b6caf8f1156322f3f0ae561978913068c3e9ea6c64b758234cc635b8b4d:validation",
+        "workflow_id": "workflow:692217c4fdb54814b7e1c7eba544dcd7"
+      }
+    ],
+    "budget_usage": {
+      "attempt_limit": 2,
+      "attempts": 1,
+      "provider_call_limit": 24,
+      "provider_calls": 4
+    },
+    "candidate_stops": [],
+    "policy": {
+      "algorithms": [
+        "text_logistic"
+      ],
+      "attempt_budget": 2,
+      "max_repairs": 1,
+      "ranking": "macro_f1_desc_accuracy_desc_algorithm_order",
+      "schema_version": 1
+    },
+    "ranking": [
+      {
+        "algorithm": "text_logistic",
+        "attempt": 0,
+        "code_hash": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+        "config_hash": "de50440632f60481cf150afcfa305400ad58eb224ac03e10548f9d17bddbb2fd",
+        "error_category": null,
+        "experience_usage": {
+          "enabled": false,
+          "excluded": [],
+          "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+          "matches": [],
+          "model_decisions": [],
+          "observed_rule_satisfied": false
+        },
+        "experiment_hash": "0ccf9544d4bf3aa24301a711e5f56b733acf6e5e1498c1a49bdbb3aaa2d590cf",
+        "historical_failure": false,
+        "implementation_id": "source:a2628b6caf8f1156322f3f0ae561978913068c3e9ea6c64b758234cc635b8b4d:implementation",
+        "parent_id": null,
+        "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/checkout/runtime/web-jobs/c8c87ccd8b68456a8ae3e9d526c54582/run/candidates/text_logistic/attempt-0/report.json",
+        "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+        "status": "validated",
+        "test_attempted": false,
+        "validation_metrics": {
+          "accuracy": 0.8734367183591796,
+          "macro_f1": 0.8729749094121176
+        },
+        "validation_run_id": "source:a2628b6caf8f1156322f3f0ae561978913068c3e9ea6c64b758234cc635b8b4d:validation",
+        "workflow_id": "workflow:692217c4fdb54814b7e1c7eba544dcd7"
+      }
+    ]
+  },
+  "selected_algorithm": "text_logistic",
+  "selected_implementation_id": "source:a2628b6caf8f1156322f3f0ae561978913068c3e9ea6c64b758234cc635b8b4d:implementation",
+  "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+  "status": "validated",
+  "task_profile": "banking77",
+  "test_attempted": false,
+  "thresholds": {
+    "macro_f1": 0.82
+  },
+  "validation": {
+    "code_hash": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+    "config_hash": "de50440632f60481cf150afcfa305400ad58eb224ac03e10548f9d17bddbb2fd",
+    "error_category": null,
+    "final_test_evaluated": false,
+    "functional": {
+      "details": "真实 fit/predict，长度、顺序和有限数值校验通过",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "implementation_id": "source:a2628b6caf8f1156322f3f0ae561978913068c3e9ea6c64b758234cc635b8b4d:implementation",
+    "interface": {
+      "details": "build_pipeline / fit / predict / predict_proba",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "metrics": {
+      "details": "验证集对照预先冻结门槛",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "report_paths": [
+      "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/checkout/runtime/web-jobs/c8c87ccd8b68456a8ae3e9d526c54582/run/report.json",
+      "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/checkout/runtime/web-jobs/c8c87ccd8b68456a8ae3e9d526c54582/run/report.md"
+    ],
+    "resources": {
+      "elapsed_seconds": 7.552642419999984,
+      "peak_memory_mib": 686.09375,
+      "schema_version": 1
+    },
+    "run_id": "source:42d3eb8a4f433c16b25fb879372d98601034e6d3b2fa71902185c1b47aee6cc1:validation",
+    "schema_version": 1,
+    "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+    "stability": {
+      "details": "{\"seed_repeat\": true, \"missing_column_rejected\": true, \"invalid_text_rejected\": true, \"unseen_text_handled\": true}",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "status": "passed",
+    "test_metrics": {},
+    "validation_metrics": {
+      "accuracy": 0.8734367183591796,
+      "macro_f1": 0.8729749094121176
+    }
+  },
+  "workflow_id": "search:f414c0d1be8346229d1a6ce1ddc58c89"
+}

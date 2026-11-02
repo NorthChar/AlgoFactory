@@ -1,0 +1,465 @@
+{
+  "artifacts_sha256": {
+    "attempts.json": "71ae7de92c31668a722a145b2e30dee9cc206ef63c222a6f131330878c28d3b2",
+    "candidate.json": "0ef0b6fa3dc317f1172f73725e9fdd8f36e3542a4008256bd46ebfccae24b101",
+    "candidate.py": "ec421867614513cabdc5686e23ff4f4ab38b093e68b9b4d99dd415ed226141e5",
+    "candidates/text_logistic/attempt-0/builder-input.json": "1eb0bd646cfa7387af0c8efa6c6edbf443a64526e4d155983635e15a26d65f7f",
+    "candidates/text_logistic/attempt-0/candidate.json": "12f56f0daef46dcf9ff4e5fcfde54d781a64f6b6c561f37fed4117ac498cc5ce",
+    "candidates/text_logistic/attempt-0/candidate.py": "45af332c35893fad0e019a1eca22121f2039dd9da15fe9e0780c7852774735d6",
+    "candidates/text_logistic/attempt-0/data-manifest.json": "90dcead9bf8883f009eeb84f2a605b60b212f9fd85a2ded15e5bad0b1ecf748e",
+    "candidates/text_logistic/attempt-0/decisions.json": "a91b7ce1a930d0f2af4ee7840053301f48c76d2c10ca50d2900a318ae4332165",
+    "candidates/text_logistic/attempt-0/diagnosis.json": "103571a17b85fcdfdbf6caf10c6661fd8c7ad9a6ba2ed66431e9f70d132466eb",
+    "candidates/text_logistic/attempt-0/experience-retrieval.json": "af3f6c94524807e74ea3a6cee452b9da96cd7e15127c5996fbcbcbf6e176662a",
+    "candidates/text_logistic/attempt-0/experience-use.json": "af3f6c94524807e74ea3a6cee452b9da96cd7e15127c5996fbcbcbf6e176662a",
+    "candidates/text_logistic/attempt-0/experiment.json": "440c6be7da1e40d6b1b8fb7e5fbfe98ceb6541beab233cf212bc4b640c513d0f",
+    "candidates/text_logistic/attempt-0/knowledge-input.json": "ac5e2b5d64d8062a132aba825c5bd5ee7c7e6aa892a0c1df6b88fabfc402a320",
+    "candidates/text_logistic/attempt-0/plan-proposal.json": "d4fb3261b9f57ceba41cecf82521937e1f96be4dbd10cf317e626cc43e680a50",
+    "candidates/text_logistic/attempt-0/plan.json": "d4fb3261b9f57ceba41cecf82521937e1f96be4dbd10cf317e626cc43e680a50",
+    "candidates/text_logistic/attempt-0/protocol.json": "ea6a6272c8cda496937884eaafd6559f90993e1ce408e734183e9c84f29a04b0",
+    "candidates/text_logistic/attempt-0/provider-audit.json": "d1defd4d518c1ac3a6fca3a43a6e930d847d5cb9d72c5e0a68a7b77cf1ee621d",
+    "candidates/text_logistic/attempt-0/report.json": "2115d7ff89e2c8afff6045da9c7e9c65de0f568e4647c7cd7d3b981fa5e1a677",
+    "candidates/text_logistic/attempt-0/report.md": "3ac2d038bf84620eed1d2eb677486be265e058b2b69516cfd9febbbc1b8a38a7",
+    "candidates/text_logistic/attempt-0/retrieval.json": "9e9b49a6f6bef1d939ba0a0bb91b2ebd6025d00e7bf86048634d3847dafe814f",
+    "candidates/text_logistic/attempt-0/task.json": "e29d18463ee04aa6e7e3d6bc1f933d9c3e9168d0c75f689fda35bd2af9e21d17",
+    "candidates/text_logistic/attempt-0/trace.json": "4fcdecd09202e8b0aed424db8d678a64b3e7fab67527c790f4b45b8cf0e96880",
+    "candidates/text_logistic/attempt-1/builder-input.json": "8f4f63fe57e40c1bf51668445ba1cf5e6440113e6af8708cad2c10f9dfb91ca8",
+    "candidates/text_logistic/attempt-1/candidate.json": "0ef0b6fa3dc317f1172f73725e9fdd8f36e3542a4008256bd46ebfccae24b101",
+    "candidates/text_logistic/attempt-1/candidate.py": "ec421867614513cabdc5686e23ff4f4ab38b093e68b9b4d99dd415ed226141e5",
+    "candidates/text_logistic/attempt-1/configuration-check.json": "2df692cdb6ad3afdaf509739618da7c01f8b7d5d8771bbe2b69bb06e8cab788d",
+    "candidates/text_logistic/attempt-1/data-manifest.json": "90dcead9bf8883f009eeb84f2a605b60b212f9fd85a2ded15e5bad0b1ecf748e",
+    "candidates/text_logistic/attempt-1/decisions.json": "c7b7ca6cc07879239615d785b9d607b0add794437a9c6a02dba2e5ad67119deb",
+    "candidates/text_logistic/attempt-1/experience-retrieval.json": "af3f6c94524807e74ea3a6cee452b9da96cd7e15127c5996fbcbcbf6e176662a",
+    "candidates/text_logistic/attempt-1/experience-use.json": "af3f6c94524807e74ea3a6cee452b9da96cd7e15127c5996fbcbcbf6e176662a",
+    "candidates/text_logistic/attempt-1/experiment.json": "440c6be7da1e40d6b1b8fb7e5fbfe98ceb6541beab233cf212bc4b640c513d0f",
+    "candidates/text_logistic/attempt-1/knowledge-input.json": "282851d5338831b02872d63d61ba65c2a1ba337ad87cf3eff7ffbbce8cf9e2d3",
+    "candidates/text_logistic/attempt-1/plan-proposal.json": "b35faa0722bf7f4aae33dbf24744c08b13637a765a686f1e06d7a7afefba8192",
+    "candidates/text_logistic/attempt-1/plan.json": "b35faa0722bf7f4aae33dbf24744c08b13637a765a686f1e06d7a7afefba8192",
+    "candidates/text_logistic/attempt-1/protocol.json": "ea6a6272c8cda496937884eaafd6559f90993e1ce408e734183e9c84f29a04b0",
+    "candidates/text_logistic/attempt-1/provider-audit.json": "978a527d1ce2d527f16ec363afb15a9e5f94a846cecda9bc44e5bae593d8901f",
+    "candidates/text_logistic/attempt-1/repair-input.json": "957e875f5ead2ba219508db728055684922a9726f7e8002c8afeb726dcbf0d7b",
+    "candidates/text_logistic/attempt-1/report.json": "e4f1b99196660df8496d65d7e47ff2462ba08c6191ff8c6c52a29817d19f4273",
+    "candidates/text_logistic/attempt-1/report.md": "7280fab7c14f57d8336c54d32fe05fb9f6fad3656cbe4a7848ddcaadccd4b3f4",
+    "candidates/text_logistic/attempt-1/retrieval.json": "6b165b81ea5b1f0bdf5d4972d69f45be6d369cc96569d7ecd89e915768e1d364",
+    "candidates/text_logistic/attempt-1/task.json": "0974a0fa93de074c8d97ebab8865855c2b8e35259768b7a8c843dec0861ca977",
+    "candidates/text_logistic/attempt-1/trace.json": "93508562f15d8c1669f96e00fa9595803cd353750bb2a31d74be767b0bd73254",
+    "candidates/text_logistic/attempt-1/validation-class-details.json": "f93ca3afcfae79f5d927a713d5eafa8fe27a6bd4149883de94ebd9634aafa95d",
+    "candidates/text_logistic/attempt-1/validation-execution/cleanup.json": "b17a8ae83d2b7c1019b5c69dfd563bf6413f3baf314be06236443042bb615b92",
+    "candidates/text_logistic/attempt-1/validation-execution/container-state.json": "f112db481e69c24072c1e14b4d0f1b816fd64370b485a99e02a01ef4baabd187",
+    "candidates/text_logistic/attempt-1/validation-execution/execution.json": "c8b3762d4917c8e0373e23864b4be0c469a96bee02c5f15e1c880cacdf2e1646",
+    "candidates/text_logistic/attempt-1/validation-execution/model-provenance.json": "3769e294bc8291952f4da7a9697327a10607572e57b8f7650aa738e93b59ef29",
+    "candidates/text_logistic/attempt-1/validation-execution/model.pkl.gz": "e553cd6288dc73f13f372555c4300c29673681285c7925277cab9029f0edc8c1",
+    "candidates/text_logistic/attempt-1/validation-execution/predictions.json": "06d0d5bc69f9e807d6635e3e5880bd166757e5719199d1e1919e231ad594e1e2",
+    "candidates/text_logistic/attempt-1/validation-execution/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "data-manifest.json": "90dcead9bf8883f009eeb84f2a605b60b212f9fd85a2ded15e5bad0b1ecf748e",
+    "decisions.json": "418ce3330f15784e622176bc23315473964c79eab3c50e431642a80e2c733b3f",
+    "experience-library.json": "435855bc0a9041a577fbb5cb8185810b5d6e83d7adddbf526ef694d3a3b21bc5",
+    "experiment.json": "440c6be7da1e40d6b1b8fb7e5fbfe98ceb6541beab233cf212bc4b640c513d0f",
+    "plan.json": "b35faa0722bf7f4aae33dbf24744c08b13637a765a686f1e06d7a7afefba8192",
+    "protocol.json": "ea6a6272c8cda496937884eaafd6559f90993e1ce408e734183e9c84f29a04b0",
+    "provider-audit.json": "978a527d1ce2d527f16ec363afb15a9e5f94a846cecda9bc44e5bae593d8901f",
+    "ranking.json": "b2ded3c069b9845943db2167d3d914caa3e5c55a5b01edea070f619d5ba121ef",
+    "search-config.json": "e520e27401af0481604559473388154dc966af100ed9024780e6df35c84c4b6e",
+    "task.json": "0974a0fa93de074c8d97ebab8865855c2b8e35259768b7a8c843dec0861ca977",
+    "trace.json": "137b31ccd4ff8da1acab1a258a672a64f7000e883f56604bb2a226524836eba5",
+    "validation-class-details.json": "f93ca3afcfae79f5d927a713d5eafa8fe27a6bd4149883de94ebd9634aafa95d"
+  },
+  "attempts": [
+    {
+      "algorithm": "text_logistic",
+      "attempt": 0,
+      "code_hash": "45af332c35893fad0e019a1eca22121f2039dd9da15fe9e0780c7852774735d6",
+      "config_hash": "de50440632f60481cf150afcfa305400ad58eb224ac03e10548f9d17bddbb2fd",
+      "error_category": "algorithm_configuration_mismatch",
+      "experience_usage": {
+        "enabled": false,
+        "excluded": [],
+        "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+        "matches": [],
+        "model_decisions": [],
+        "observed_rule_satisfied": false
+      },
+      "experiment_hash": "2031c0a072dbefdb647b880fbecca6e74fdbca306523f64ca645222a60d7fef3",
+      "historical_failure": false,
+      "implementation_id": "source:572767e70faf6bd2900b54252cc18f922ea73991f6a9aea555910c5acac56a1b:implementation",
+      "parent_id": null,
+      "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/requirements/logistic/run/candidates/text_logistic/attempt-0/report.json",
+      "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+      "status": "failed",
+      "test_attempted": false,
+      "validation_metrics": {},
+      "validation_run_id": "source:572767e70faf6bd2900b54252cc18f922ea73991f6a9aea555910c5acac56a1b:validation",
+      "workflow_id": "workflow:07c660b5586a44609a4e64cbcf30cab5"
+    },
+    {
+      "algorithm": "text_logistic",
+      "attempt": 1,
+      "code_hash": "ec421867614513cabdc5686e23ff4f4ab38b093e68b9b4d99dd415ed226141e5",
+      "config_hash": "de50440632f60481cf150afcfa305400ad58eb224ac03e10548f9d17bddbb2fd",
+      "error_category": null,
+      "experience_usage": {
+        "enabled": false,
+        "excluded": [],
+        "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+        "matches": [],
+        "model_decisions": [],
+        "observed_rule_satisfied": false
+      },
+      "experiment_hash": "2031c0a072dbefdb647b880fbecca6e74fdbca306523f64ca645222a60d7fef3",
+      "historical_failure": false,
+      "implementation_id": "source:b3fbec9aa5be937437da1eb305c7e6df10676f9a5486280dd6d06271b3d59a1a:implementation",
+      "parent_id": "source:572767e70faf6bd2900b54252cc18f922ea73991f6a9aea555910c5acac56a1b:implementation",
+      "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/requirements/logistic/run/candidates/text_logistic/attempt-1/report.json",
+      "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+      "status": "validated",
+      "test_attempted": false,
+      "validation_metrics": {
+        "accuracy": 0.8584292146073037,
+        "macro_f1": 0.8541916054420526
+      },
+      "validation_run_id": "source:b3fbec9aa5be937437da1eb305c7e6df10676f9a5486280dd6d06271b3d59a1a:validation",
+      "workflow_id": "workflow:82c6da9105b04fb1beb65d21417ee545"
+    }
+  ],
+  "budget_usage": {
+    "attempt_limit": 6,
+    "attempts": 2,
+    "provider_call_limit": 24,
+    "provider_calls": 7
+  },
+  "candidate": {
+    "attempt": 1,
+    "code_hash": "ec421867614513cabdc5686e23ff4f4ab38b093e68b9b4d99dd415ed226141e5",
+    "implementation_id": "workflow:82c6da9105b04fb1beb65d21417ee545:candidate",
+    "parent_id": "source:572767e70faf6bd2900b54252cc18f922ea73991f6a9aea555910c5acac56a1b:implementation",
+    "plan_id": "workflow:82c6da9105b04fb1beb65d21417ee545:plan",
+    "schema_version": 1
+  },
+  "candidate_mode": "single",
+  "candidate_stops": [],
+  "class_names": [
+    "Refund_not_showing_up",
+    "activate_my_card",
+    "age_limit",
+    "apple_pay_or_google_pay",
+    "atm_support",
+    "automatic_top_up",
+    "balance_not_updated_after_bank_transfer",
+    "balance_not_updated_after_cheque_or_cash_deposit",
+    "beneficiary_not_allowed",
+    "cancel_transfer",
+    "card_about_to_expire",
+    "card_acceptance",
+    "card_arrival",
+    "card_delivery_estimate",
+    "card_linking",
+    "card_not_working",
+    "card_payment_fee_charged",
+    "card_payment_not_recognised",
+    "card_payment_wrong_exchange_rate",
+    "card_swallowed",
+    "cash_withdrawal_charge",
+    "cash_withdrawal_not_recognised",
+    "change_pin",
+    "compromised_card",
+    "contactless_not_working",
+    "country_support",
+    "declined_card_payment",
+    "declined_cash_withdrawal",
+    "declined_transfer",
+    "direct_debit_payment_not_recognised",
+    "disposable_card_limits",
+    "edit_personal_details",
+    "exchange_charge",
+    "exchange_rate",
+    "exchange_via_app",
+    "extra_charge_on_statement",
+    "failed_transfer",
+    "fiat_currency_support",
+    "get_disposable_virtual_card",
+    "get_physical_card",
+    "getting_spare_card",
+    "getting_virtual_card",
+    "lost_or_stolen_card",
+    "lost_or_stolen_phone",
+    "order_physical_card",
+    "passcode_forgotten",
+    "pending_card_payment",
+    "pending_cash_withdrawal",
+    "pending_top_up",
+    "pending_transfer",
+    "pin_blocked",
+    "receiving_money",
+    "request_refund",
+    "reverted_card_payment?",
+    "supported_cards_and_currencies",
+    "terminate_account",
+    "top_up_by_bank_transfer_charge",
+    "top_up_by_card_charge",
+    "top_up_by_cash_or_cheque",
+    "top_up_failed",
+    "top_up_limits",
+    "top_up_reverted",
+    "topping_up_by_card",
+    "transaction_charged_twice",
+    "transfer_fee_charged",
+    "transfer_into_account",
+    "transfer_not_received_by_recipient",
+    "transfer_timing",
+    "unable_to_verify_identity",
+    "verify_my_identity",
+    "verify_source_of_funds",
+    "verify_top_up",
+    "virtual_card_not_working",
+    "visa_or_mastercard",
+    "why_verify_identity",
+    "wrong_amount_of_cash_received",
+    "wrong_exchange_rate_for_cash_withdrawal"
+  ],
+  "code_hash": "ec421867614513cabdc5686e23ff4f4ab38b093e68b9b4d99dd415ed226141e5",
+  "data_fingerprint": "e394adeb965f707d2f3036f95999165ed3d0d43c15a879341c912cbdbb953c79",
+  "design_explanation": {
+    "algorithm_id": "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:text_logistic",
+    "evidence_ids": [
+      "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:text_logistic",
+      "source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:capability:intent"
+    ],
+    "final_test_evaluated": false,
+    "selection_basis": "预先指定的单候选；不声称是所有算法中最优",
+    "text": "任务要求预测 intent，类型为 multiclass_classification。方案依据适用知识选择算法实体 source:60afe9a659918ddfb1b5faecb7ed146c9c52d0e9b7ab18f808dd84424dc977b1:algorithm:text_logistic，并要求预处理只在训练集拟合。候选是否通过由独立验证器依据冻结门槛决定，不由模型自行评分。此次运行状态为 validated。",
+    "validation_run_id": "source:affac0d5e5f719445a606358b2757d8307a8357a2aa0597ea897f36ff8eb8f6d:validation",
+    "workflow_id": "search:a57ef25c7aaa43e5b101fd0a9d838e39"
+  },
+  "error_category": null,
+  "evaluation_scope": "comparison_validation_only",
+  "execution_evidence": [],
+  "experience_enabled": false,
+  "experiment": {
+    "algorithms": [
+      "text_logistic"
+    ],
+    "logistic_c": 1.0,
+    "max_features": 10000,
+    "nb_alpha": 0.1,
+    "nb_alpha_schedule": [
+      0.1,
+      0.05,
+      0.01
+    ],
+    "ngram_max": 1,
+    "optimization": "frozen_nb_schedule",
+    "schema_version": 1
+  },
+  "experiment_hash": "2031c0a072dbefdb647b880fbecca6e74fdbca306523f64ca645222a60d7fef3",
+  "fault_fixture": "repairable_interface",
+  "knowledge_ids": {
+    "dataset_id": "source:affac0d5e5f719445a606358b2757d8307a8357a2aa0597ea897f36ff8eb8f6d:dataset",
+    "implementation_id": "source:b3fbec9aa5be937437da1eb305c7e6df10676f9a5486280dd6d06271b3d59a1a:implementation",
+    "task_id": "source:affac0d5e5f719445a606358b2757d8307a8357a2aa0597ea897f36ff8eb8f6d:task",
+    "validation_run_id": "source:affac0d5e5f719445a606358b2757d8307a8357a2aa0597ea897f36ff8eb8f6d:validation"
+  },
+  "learned_experiences": [],
+  "persisted": true,
+  "policy": {
+    "algorithms": [
+      "text_logistic"
+    ],
+    "attempt_budget": 6,
+    "max_repairs": 2,
+    "ranking": "macro_f1_desc_accuracy_desc_algorithm_order",
+    "schema_version": 1
+  },
+  "provider_mode": "mock",
+  "ranking": [
+    {
+      "algorithm": "text_logistic",
+      "attempt": 1,
+      "code_hash": "ec421867614513cabdc5686e23ff4f4ab38b093e68b9b4d99dd415ed226141e5",
+      "config_hash": "de50440632f60481cf150afcfa305400ad58eb224ac03e10548f9d17bddbb2fd",
+      "error_category": null,
+      "experience_usage": {
+        "enabled": false,
+        "excluded": [],
+        "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+        "matches": [],
+        "model_decisions": [],
+        "observed_rule_satisfied": false
+      },
+      "experiment_hash": "2031c0a072dbefdb647b880fbecca6e74fdbca306523f64ca645222a60d7fef3",
+      "historical_failure": false,
+      "implementation_id": "source:b3fbec9aa5be937437da1eb305c7e6df10676f9a5486280dd6d06271b3d59a1a:implementation",
+      "parent_id": "source:572767e70faf6bd2900b54252cc18f922ea73991f6a9aea555910c5acac56a1b:implementation",
+      "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/requirements/logistic/run/candidates/text_logistic/attempt-1/report.json",
+      "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+      "status": "validated",
+      "test_attempted": false,
+      "validation_metrics": {
+        "accuracy": 0.8584292146073037,
+        "macro_f1": 0.8541916054420526
+      },
+      "validation_run_id": "source:b3fbec9aa5be937437da1eb305c7e6df10676f9a5486280dd6d06271b3d59a1a:validation",
+      "workflow_id": "workflow:82c6da9105b04fb1beb65d21417ee545"
+    }
+  ],
+  "search_config_hash": "ea56f8b501fb9fcd0dbf155e8bf58da509ed5911388a735ac00262136cc65c51",
+  "search_summary": {
+    "attempts": [
+      {
+        "algorithm": "text_logistic",
+        "attempt": 0,
+        "code_hash": "45af332c35893fad0e019a1eca22121f2039dd9da15fe9e0780c7852774735d6",
+        "config_hash": "de50440632f60481cf150afcfa305400ad58eb224ac03e10548f9d17bddbb2fd",
+        "error_category": "algorithm_configuration_mismatch",
+        "experience_usage": {
+          "enabled": false,
+          "excluded": [],
+          "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+          "matches": [],
+          "model_decisions": [],
+          "observed_rule_satisfied": false
+        },
+        "experiment_hash": "2031c0a072dbefdb647b880fbecca6e74fdbca306523f64ca645222a60d7fef3",
+        "historical_failure": false,
+        "implementation_id": "source:572767e70faf6bd2900b54252cc18f922ea73991f6a9aea555910c5acac56a1b:implementation",
+        "parent_id": null,
+        "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/requirements/logistic/run/candidates/text_logistic/attempt-0/report.json",
+        "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+        "status": "failed",
+        "test_attempted": false,
+        "validation_metrics": {},
+        "validation_run_id": "source:572767e70faf6bd2900b54252cc18f922ea73991f6a9aea555910c5acac56a1b:validation",
+        "workflow_id": "workflow:07c660b5586a44609a4e64cbcf30cab5"
+      },
+      {
+        "algorithm": "text_logistic",
+        "attempt": 1,
+        "code_hash": "ec421867614513cabdc5686e23ff4f4ab38b093e68b9b4d99dd415ed226141e5",
+        "config_hash": "de50440632f60481cf150afcfa305400ad58eb224ac03e10548f9d17bddbb2fd",
+        "error_category": null,
+        "experience_usage": {
+          "enabled": false,
+          "excluded": [],
+          "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+          "matches": [],
+          "model_decisions": [],
+          "observed_rule_satisfied": false
+        },
+        "experiment_hash": "2031c0a072dbefdb647b880fbecca6e74fdbca306523f64ca645222a60d7fef3",
+        "historical_failure": false,
+        "implementation_id": "source:b3fbec9aa5be937437da1eb305c7e6df10676f9a5486280dd6d06271b3d59a1a:implementation",
+        "parent_id": "source:572767e70faf6bd2900b54252cc18f922ea73991f6a9aea555910c5acac56a1b:implementation",
+        "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/requirements/logistic/run/candidates/text_logistic/attempt-1/report.json",
+        "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+        "status": "validated",
+        "test_attempted": false,
+        "validation_metrics": {
+          "accuracy": 0.8584292146073037,
+          "macro_f1": 0.8541916054420526
+        },
+        "validation_run_id": "source:b3fbec9aa5be937437da1eb305c7e6df10676f9a5486280dd6d06271b3d59a1a:validation",
+        "workflow_id": "workflow:82c6da9105b04fb1beb65d21417ee545"
+      }
+    ],
+    "budget_usage": {
+      "attempt_limit": 6,
+      "attempts": 2,
+      "provider_call_limit": 24,
+      "provider_calls": 7
+    },
+    "candidate_stops": [],
+    "policy": {
+      "algorithms": [
+        "text_logistic"
+      ],
+      "attempt_budget": 6,
+      "max_repairs": 2,
+      "ranking": "macro_f1_desc_accuracy_desc_algorithm_order",
+      "schema_version": 1
+    },
+    "ranking": [
+      {
+        "algorithm": "text_logistic",
+        "attempt": 1,
+        "code_hash": "ec421867614513cabdc5686e23ff4f4ab38b093e68b9b4d99dd415ed226141e5",
+        "config_hash": "de50440632f60481cf150afcfa305400ad58eb224ac03e10548f9d17bddbb2fd",
+        "error_category": null,
+        "experience_usage": {
+          "enabled": false,
+          "excluded": [],
+          "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+          "matches": [],
+          "model_decisions": [],
+          "observed_rule_satisfied": false
+        },
+        "experiment_hash": "2031c0a072dbefdb647b880fbecca6e74fdbca306523f64ca645222a60d7fef3",
+        "historical_failure": false,
+        "implementation_id": "source:b3fbec9aa5be937437da1eb305c7e6df10676f9a5486280dd6d06271b3d59a1a:implementation",
+        "parent_id": "source:572767e70faf6bd2900b54252cc18f922ea73991f6a9aea555910c5acac56a1b:implementation",
+        "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/requirements/logistic/run/candidates/text_logistic/attempt-1/report.json",
+        "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+        "status": "validated",
+        "test_attempted": false,
+        "validation_metrics": {
+          "accuracy": 0.8584292146073037,
+          "macro_f1": 0.8541916054420526
+        },
+        "validation_run_id": "source:b3fbec9aa5be937437da1eb305c7e6df10676f9a5486280dd6d06271b3d59a1a:validation",
+        "workflow_id": "workflow:82c6da9105b04fb1beb65d21417ee545"
+      }
+    ]
+  },
+  "selected_algorithm": "text_logistic",
+  "selected_implementation_id": "source:b3fbec9aa5be937437da1eb305c7e6df10676f9a5486280dd6d06271b3d59a1a:implementation",
+  "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+  "status": "validated",
+  "task_profile": "banking77",
+  "test_attempted": false,
+  "thresholds": {
+    "macro_f1": 0.82
+  },
+  "validation": {
+    "code_hash": "ec421867614513cabdc5686e23ff4f4ab38b093e68b9b4d99dd415ed226141e5",
+    "config_hash": "de50440632f60481cf150afcfa305400ad58eb224ac03e10548f9d17bddbb2fd",
+    "error_category": null,
+    "final_test_evaluated": false,
+    "functional": {
+      "details": "真实 fit/predict，长度、顺序和有限数值校验通过",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "implementation_id": "source:b3fbec9aa5be937437da1eb305c7e6df10676f9a5486280dd6d06271b3d59a1a:implementation",
+    "interface": {
+      "details": "build_pipeline / fit / predict / predict_proba",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "metrics": {
+      "details": "验证集对照预先冻结门槛",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "report_paths": [
+      "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/requirements/logistic/run/report.json",
+      "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/requirements/logistic/run/report.md"
+    ],
+    "resources": {
+      "elapsed_seconds": 1.0258883330000117,
+      "peak_memory_mib": 234.3125,
+      "schema_version": 1
+    },
+    "run_id": "source:affac0d5e5f719445a606358b2757d8307a8357a2aa0597ea897f36ff8eb8f6d:validation",
+    "schema_version": 1,
+    "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+    "stability": {
+      "details": "{\"seed_repeat\": true, \"missing_column_rejected\": true, \"invalid_text_rejected\": true, \"unseen_text_handled\": true}",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "status": "passed",
+    "test_metrics": {},
+    "validation_metrics": {
+      "accuracy": 0.8584292146073037,
+      "macro_f1": 0.8541916054420526
+    }
+  },
+  "workflow_id": "search:a57ef25c7aaa43e5b101fd0a9d838e39"
+}

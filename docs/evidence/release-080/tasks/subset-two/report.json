@@ -1,0 +1,352 @@
+{
+  "artifacts_sha256": {
+    "attempts.json": "2bc5fd3517da590cd92ad6bdc0544f14e7f807cfb49bbf439e05eb26274be68f",
+    "candidate.json": "c1ee31bd0a15a0c7d4b74a8ea56b36d48c4b8e3b1b60d0f190a9aae538c19b10",
+    "candidate.py": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+    "candidates/text_logistic/attempt-0/builder-input.json": "3a7915514d7765cfcc1bae1d27a6519059b9a3a2ddb9dbe03c1003a09385110d",
+    "candidates/text_logistic/attempt-0/candidate.json": "c1ee31bd0a15a0c7d4b74a8ea56b36d48c4b8e3b1b60d0f190a9aae538c19b10",
+    "candidates/text_logistic/attempt-0/candidate.py": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+    "candidates/text_logistic/attempt-0/configuration-check.json": "77c14ee37cf7b4ae4ccb7aa0853bf4b99c9171d7f640ad8fea668ee2387c4c3a",
+    "candidates/text_logistic/attempt-0/data-manifest.json": "9295372c147a8ddb171d1af4da7402dfe225fe72e7842918d7a1b96bf040111e",
+    "candidates/text_logistic/attempt-0/decisions.json": "8d55d91262dc88b6095ec85d765a2c59907ca005e83a19e072daaad6feeda0d5",
+    "candidates/text_logistic/attempt-0/experience-retrieval.json": "af3f6c94524807e74ea3a6cee452b9da96cd7e15127c5996fbcbcbf6e176662a",
+    "candidates/text_logistic/attempt-0/experience-use.json": "af3f6c94524807e74ea3a6cee452b9da96cd7e15127c5996fbcbcbf6e176662a",
+    "candidates/text_logistic/attempt-0/experiment.json": "51c3ba33ebd6e95434013261df756e75afd64aaf30d13976194ea046abdb9205",
+    "candidates/text_logistic/attempt-0/knowledge-input.json": "fb4a0a07fadf7035d4bc0e01c511c989e77afde2db26f47779ec003f79959bc2",
+    "candidates/text_logistic/attempt-0/plan-proposal.json": "2a1c0552fd83f1ede9aa9225c95088966252776408907b42c7b9226ce1234048",
+    "candidates/text_logistic/attempt-0/plan.json": "2a1c0552fd83f1ede9aa9225c95088966252776408907b42c7b9226ce1234048",
+    "candidates/text_logistic/attempt-0/protocol.json": "4b7a0ad7c7910666ab7d0003aa9aed2e92a24c6dbad7213202fa33c131504101",
+    "candidates/text_logistic/attempt-0/provider-audit.json": "d1defd4d518c1ac3a6fca3a43a6e930d847d5cb9d72c5e0a68a7b77cf1ee621d",
+    "candidates/text_logistic/attempt-0/report.json": "58861a399ddc3479c6fd4d341fa9f96ab3f229892a154bfc312963aedfd19e68",
+    "candidates/text_logistic/attempt-0/report.md": "ebfbb7eddb8047c15202527e1cb8bfe19e6221d4e877c2bb9a6e96a863163ac4",
+    "candidates/text_logistic/attempt-0/retrieval.json": "96660590611ffcd7d8d998af1e104cdd8a207ddcc6dad61182ddccf1aa11e944",
+    "candidates/text_logistic/attempt-0/task.json": "7817fd4c8ec70e8c9f843c655ed153015436c5e043dbd2cca7914574c1a78fee",
+    "candidates/text_logistic/attempt-0/trace.json": "7019598c37c7fb03b5e255a62ea8eed32c8ad808829c56b7e06c254579dc158b",
+    "candidates/text_logistic/attempt-0/validation-class-details.json": "67d0c714da292f5b517f894aa96239ee0b26a0333a44b94d394aa9bf9572cc83",
+    "candidates/text_logistic/attempt-0/validation-execution/cleanup.json": "5b0f87373eab6227dc2611bdcee1f839ebd62e63fa6eccba652702e8b591f6f1",
+    "candidates/text_logistic/attempt-0/validation-execution/container-state.json": "2f374196db1c762507e2b352bc8b60bdea812c85d6e086f50dc785b07c9ec955",
+    "candidates/text_logistic/attempt-0/validation-execution/execution.json": "37d6cc6e02f23b2abc7a784dc668e7f40894697119c339dce4df559977d1679f",
+    "candidates/text_logistic/attempt-0/validation-execution/model-provenance.json": "c557a9d97242b8263d3ec24a348c345b22239dad75918b5d3cbc066dc34e5a43",
+    "candidates/text_logistic/attempt-0/validation-execution/model.pkl.gz": "e900b96d3d3f0cbebc9f25404c824b3247f8f7bbc9b6f3d1562759fc2671bd8b",
+    "candidates/text_logistic/attempt-0/validation-execution/predictions.json": "c5d1fa3fb9ece09f8f8be83caa22599411f078d9085528fda80cdd58221fc76b",
+    "candidates/text_logistic/attempt-0/validation-execution/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "data-manifest.json": "9295372c147a8ddb171d1af4da7402dfe225fe72e7842918d7a1b96bf040111e",
+    "decisions.json": "0f700e4f0d02871e19907604b6f990f2ab0fb8ec46da7511a48ad69b708c2325",
+    "experience-library.json": "435855bc0a9041a577fbb5cb8185810b5d6e83d7adddbf526ef694d3a3b21bc5",
+    "experiment.json": "51c3ba33ebd6e95434013261df756e75afd64aaf30d13976194ea046abdb9205",
+    "plan.json": "2a1c0552fd83f1ede9aa9225c95088966252776408907b42c7b9226ce1234048",
+    "protocol.json": "4b7a0ad7c7910666ab7d0003aa9aed2e92a24c6dbad7213202fa33c131504101",
+    "provider-audit.json": "d1defd4d518c1ac3a6fca3a43a6e930d847d5cb9d72c5e0a68a7b77cf1ee621d",
+    "ranking.json": "d485cab5b280025b4401609d69dea2b1c38bcaa9588e016b65d27214272428ec",
+    "search-config.json": "78de7bb6c0a163b34ad88786be47427c16127eeb34c2fed6d70c42696a0ba743",
+    "task.json": "7817fd4c8ec70e8c9f843c655ed153015436c5e043dbd2cca7914574c1a78fee",
+    "trace.json": "d22e104977ac3eb12bdfaa8c969e2423980da43cf586896a3f3d978e52f1e5a5",
+    "validation-class-details.json": "67d0c714da292f5b517f894aa96239ee0b26a0333a44b94d394aa9bf9572cc83"
+  },
+  "attempts": [
+    {
+      "algorithm": "text_logistic",
+      "attempt": 0,
+      "code_hash": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+      "config_hash": "dc5e1e76d0119016c28dc1efeab62ebdbed0836da490b51c72a79f88d07c5990",
+      "error_category": null,
+      "experience_usage": {
+        "enabled": false,
+        "excluded": [],
+        "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+        "matches": [],
+        "model_decisions": [],
+        "observed_rule_satisfied": false
+      },
+      "experiment_hash": "962c8889195f095949465a10a2fa86bd870e6724223343268cff7a88ef33b115",
+      "historical_failure": false,
+      "implementation_id": "source:446368398a0e876d3c96e11e6706e24640b0443326a8118fba0062584094dc2b:implementation",
+      "parent_id": null,
+      "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/checkout/runtime/web-jobs/565a425fca41475ebb1d2df9275c656f/run/candidates/text_logistic/attempt-0/report.json",
+      "split_id": "split:0ce05d6feb264f7ee4a68182f58158748752ef5acbef505af105d4a267d20a75",
+      "status": "validated",
+      "test_attempted": false,
+      "validation_metrics": {
+        "accuracy": 0.9574468085106383,
+        "f1": 0.9333333333333333,
+        "macro_f1": 0.9510416666666667,
+        "precision": 1.0,
+        "recall": 0.875,
+        "roc_auc": 0.9959677419354839
+      },
+      "validation_run_id": "source:446368398a0e876d3c96e11e6706e24640b0443326a8118fba0062584094dc2b:validation",
+      "workflow_id": "workflow:9432e96bd9ea47a9af384d672a7d52b2"
+    }
+  ],
+  "budget_usage": {
+    "attempt_limit": 2,
+    "attempts": 1,
+    "provider_call_limit": 24,
+    "provider_calls": 4
+  },
+  "candidate": {
+    "attempt": 0,
+    "code_hash": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+    "implementation_id": "workflow:9432e96bd9ea47a9af384d672a7d52b2:candidate",
+    "parent_id": null,
+    "plan_id": "workflow:9432e96bd9ea47a9af384d672a7d52b2:plan",
+    "schema_version": 1
+  },
+  "candidate_mode": "single",
+  "candidate_stops": [],
+  "class_names": [
+    "card_arrival",
+    "lost_or_stolen_card"
+  ],
+  "code_hash": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+  "data_fingerprint": "37cbedba423ff904df8ae79355bab1ef1a8a623525e25527e36256fdc92fc4a1",
+  "design_explanation": {
+    "algorithm_id": "source:aa640e680af9edaf41b7bf2399cd9fea9baa0ed8be44e73efb30a66d32e180cf:algorithm:text_logistic",
+    "evidence_ids": [
+      "source:aa640e680af9edaf41b7bf2399cd9fea9baa0ed8be44e73efb30a66d32e180cf:algorithm:text_logistic",
+      "source:aa640e680af9edaf41b7bf2399cd9fea9baa0ed8be44e73efb30a66d32e180cf:capability:intent"
+    ],
+    "final_test_evaluated": false,
+    "selection_basis": "预先指定的单候选；不声称是所有算法中最优",
+    "text": "任务要求预测 intent，类型为 binary_classification。方案依据适用知识选择算法实体 source:aa640e680af9edaf41b7bf2399cd9fea9baa0ed8be44e73efb30a66d32e180cf:algorithm:text_logistic，并要求预处理只在训练集拟合。候选是否通过由独立验证器依据冻结门槛决定，不由模型自行评分。此次运行状态为 validated。",
+    "validation_run_id": "source:afad9311429eb2efd254562c3f6af87b58e08c5f2ef37fd8e28a51b79a0ffdb9:validation",
+    "workflow_id": "search:f81b100f8a8c4152aa30a5f89449c49a"
+  },
+  "error_category": null,
+  "evaluation_scope": "comparison_validation_only",
+  "execution_evidence": [],
+  "experience_enabled": false,
+  "experiment": {
+    "algorithms": [
+      "text_logistic"
+    ],
+    "goal": "subset",
+    "intents": [
+      "card_arrival",
+      "lost_or_stolen_card"
+    ],
+    "logistic_c": 4.0,
+    "max_features": 30000,
+    "nb_alpha": 0.1,
+    "nb_alpha_schedule": [
+      0.1,
+      0.05,
+      0.01
+    ],
+    "ngram_max": 2,
+    "objective": "macro_f1",
+    "optimization": "frozen_nb_schedule",
+    "schema_version": 1
+  },
+  "experiment_hash": "962c8889195f095949465a10a2fa86bd870e6724223343268cff7a88ef33b115",
+  "fault_fixture": null,
+  "knowledge_ids": {
+    "dataset_id": "source:afad9311429eb2efd254562c3f6af87b58e08c5f2ef37fd8e28a51b79a0ffdb9:dataset",
+    "implementation_id": "source:446368398a0e876d3c96e11e6706e24640b0443326a8118fba0062584094dc2b:implementation",
+    "task_id": "source:afad9311429eb2efd254562c3f6af87b58e08c5f2ef37fd8e28a51b79a0ffdb9:task",
+    "validation_run_id": "source:afad9311429eb2efd254562c3f6af87b58e08c5f2ef37fd8e28a51b79a0ffdb9:validation"
+  },
+  "learned_experiences": [],
+  "persisted": true,
+  "policy": {
+    "algorithms": [
+      "text_logistic"
+    ],
+    "attempt_budget": 2,
+    "max_repairs": 1,
+    "ranking": "macro_f1_desc_accuracy_desc_algorithm_order",
+    "schema_version": 1
+  },
+  "provider_mode": "mock",
+  "ranking": [
+    {
+      "algorithm": "text_logistic",
+      "attempt": 0,
+      "code_hash": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+      "config_hash": "dc5e1e76d0119016c28dc1efeab62ebdbed0836da490b51c72a79f88d07c5990",
+      "error_category": null,
+      "experience_usage": {
+        "enabled": false,
+        "excluded": [],
+        "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+        "matches": [],
+        "model_decisions": [],
+        "observed_rule_satisfied": false
+      },
+      "experiment_hash": "962c8889195f095949465a10a2fa86bd870e6724223343268cff7a88ef33b115",
+      "historical_failure": false,
+      "implementation_id": "source:446368398a0e876d3c96e11e6706e24640b0443326a8118fba0062584094dc2b:implementation",
+      "parent_id": null,
+      "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/checkout/runtime/web-jobs/565a425fca41475ebb1d2df9275c656f/run/candidates/text_logistic/attempt-0/report.json",
+      "split_id": "split:0ce05d6feb264f7ee4a68182f58158748752ef5acbef505af105d4a267d20a75",
+      "status": "validated",
+      "test_attempted": false,
+      "validation_metrics": {
+        "accuracy": 0.9574468085106383,
+        "f1": 0.9333333333333333,
+        "macro_f1": 0.9510416666666667,
+        "precision": 1.0,
+        "recall": 0.875,
+        "roc_auc": 0.9959677419354839
+      },
+      "validation_run_id": "source:446368398a0e876d3c96e11e6706e24640b0443326a8118fba0062584094dc2b:validation",
+      "workflow_id": "workflow:9432e96bd9ea47a9af384d672a7d52b2"
+    }
+  ],
+  "search_config_hash": "f995eadb71bde78aea7f6c02814af8f41f2ae1f46f71eb0565f97c3bac94b228",
+  "search_summary": {
+    "attempts": [
+      {
+        "algorithm": "text_logistic",
+        "attempt": 0,
+        "code_hash": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+        "config_hash": "dc5e1e76d0119016c28dc1efeab62ebdbed0836da490b51c72a79f88d07c5990",
+        "error_category": null,
+        "experience_usage": {
+          "enabled": false,
+          "excluded": [],
+          "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+          "matches": [],
+          "model_decisions": [],
+          "observed_rule_satisfied": false
+        },
+        "experiment_hash": "962c8889195f095949465a10a2fa86bd870e6724223343268cff7a88ef33b115",
+        "historical_failure": false,
+        "implementation_id": "source:446368398a0e876d3c96e11e6706e24640b0443326a8118fba0062584094dc2b:implementation",
+        "parent_id": null,
+        "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/checkout/runtime/web-jobs/565a425fca41475ebb1d2df9275c656f/run/candidates/text_logistic/attempt-0/report.json",
+        "split_id": "split:0ce05d6feb264f7ee4a68182f58158748752ef5acbef505af105d4a267d20a75",
+        "status": "validated",
+        "test_attempted": false,
+        "validation_metrics": {
+          "accuracy": 0.9574468085106383,
+          "f1": 0.9333333333333333,
+          "macro_f1": 0.9510416666666667,
+          "precision": 1.0,
+          "recall": 0.875,
+          "roc_auc": 0.9959677419354839
+        },
+        "validation_run_id": "source:446368398a0e876d3c96e11e6706e24640b0443326a8118fba0062584094dc2b:validation",
+        "workflow_id": "workflow:9432e96bd9ea47a9af384d672a7d52b2"
+      }
+    ],
+    "budget_usage": {
+      "attempt_limit": 2,
+      "attempts": 1,
+      "provider_call_limit": 24,
+      "provider_calls": 4
+    },
+    "candidate_stops": [],
+    "policy": {
+      "algorithms": [
+        "text_logistic"
+      ],
+      "attempt_budget": 2,
+      "max_repairs": 1,
+      "ranking": "macro_f1_desc_accuracy_desc_algorithm_order",
+      "schema_version": 1
+    },
+    "ranking": [
+      {
+        "algorithm": "text_logistic",
+        "attempt": 0,
+        "code_hash": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+        "config_hash": "dc5e1e76d0119016c28dc1efeab62ebdbed0836da490b51c72a79f88d07c5990",
+        "error_category": null,
+        "experience_usage": {
+          "enabled": false,
+          "excluded": [],
+          "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+          "matches": [],
+          "model_decisions": [],
+          "observed_rule_satisfied": false
+        },
+        "experiment_hash": "962c8889195f095949465a10a2fa86bd870e6724223343268cff7a88ef33b115",
+        "historical_failure": false,
+        "implementation_id": "source:446368398a0e876d3c96e11e6706e24640b0443326a8118fba0062584094dc2b:implementation",
+        "parent_id": null,
+        "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/checkout/runtime/web-jobs/565a425fca41475ebb1d2df9275c656f/run/candidates/text_logistic/attempt-0/report.json",
+        "split_id": "split:0ce05d6feb264f7ee4a68182f58158748752ef5acbef505af105d4a267d20a75",
+        "status": "validated",
+        "test_attempted": false,
+        "validation_metrics": {
+          "accuracy": 0.9574468085106383,
+          "f1": 0.9333333333333333,
+          "macro_f1": 0.9510416666666667,
+          "precision": 1.0,
+          "recall": 0.875,
+          "roc_auc": 0.9959677419354839
+        },
+        "validation_run_id": "source:446368398a0e876d3c96e11e6706e24640b0443326a8118fba0062584094dc2b:validation",
+        "workflow_id": "workflow:9432e96bd9ea47a9af384d672a7d52b2"
+      }
+    ]
+  },
+  "selected_algorithm": "text_logistic",
+  "selected_implementation_id": "source:446368398a0e876d3c96e11e6706e24640b0443326a8118fba0062584094dc2b:implementation",
+  "selection": {
+    "goal": "subset",
+    "intents": [
+      "card_arrival",
+      "lost_or_stolen_card"
+    ],
+    "objective": "macro_f1"
+  },
+  "split_id": "split:0ce05d6feb264f7ee4a68182f58158748752ef5acbef505af105d4a267d20a75",
+  "status": "validated",
+  "task_profile": "banking77",
+  "test_attempted": false,
+  "thresholds": {
+    "macro_f1": 0.9
+  },
+  "validation": {
+    "code_hash": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de",
+    "config_hash": "dc5e1e76d0119016c28dc1efeab62ebdbed0836da490b51c72a79f88d07c5990",
+    "error_category": null,
+    "final_test_evaluated": false,
+    "functional": {
+      "details": "真实 fit/predict，长度、顺序和有限数值校验通过",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "implementation_id": "source:446368398a0e876d3c96e11e6706e24640b0443326a8118fba0062584094dc2b:implementation",
+    "interface": {
+      "details": "build_pipeline / fit / predict / predict_proba",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "metrics": {
+      "details": "验证集对照预先冻结门槛",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "report_paths": [
+      "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/checkout/runtime/web-jobs/565a425fca41475ebb1d2df9275c656f/run/report.json",
+      "/Users/northchar/Documents/Codex/AlgoFactory/runtime/submission-reproduction-080/checkout/runtime/web-jobs/565a425fca41475ebb1d2df9275c656f/run/report.md"
+    ],
+    "resources": {
+      "elapsed_seconds": 0.32451616600002353,
+      "peak_memory_mib": 157.69921875,
+      "schema_version": 1
+    },
+    "run_id": "source:afad9311429eb2efd254562c3f6af87b58e08c5f2ef37fd8e28a51b79a0ffdb9:validation",
+    "schema_version": 1,
+    "split_id": "split:0ce05d6feb264f7ee4a68182f58158748752ef5acbef505af105d4a267d20a75",
+    "stability": {
+      "details": "{\"seed_repeat\": true, \"missing_column_rejected\": true, \"invalid_text_rejected\": true, \"unseen_text_handled\": true}",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "status": "passed",
+    "test_metrics": {},
+    "validation_metrics": {
+      "accuracy": 0.9574468085106383,
+      "f1": 0.9333333333333333,
+      "macro_f1": 0.9510416666666667,
+      "precision": 1.0,
+      "recall": 0.875,
+      "roc_auc": 0.9959677419354839
+    }
+  },
+  "workflow_id": "search:f81b100f8a8c4152aa30a5f89449c49a"
+}

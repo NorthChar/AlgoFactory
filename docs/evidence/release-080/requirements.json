@@ -1,0 +1,118 @@
+{
+  "cases": [
+    {
+      "attempts": 2,
+      "configuration": {
+        "algorithms": [
+          "text_logistic"
+        ],
+        "logistic_c": 1.0,
+        "max_features": 10000,
+        "nb_alpha": 0.1,
+        "nb_alpha_schedule": [
+          0.1,
+          0.05,
+          0.01
+        ],
+        "ngram_max": 1,
+        "optimization": "frozen_nb_schedule",
+        "schema_version": 1
+      },
+      "configuration_hash": "2031c0a072dbefdb647b880fbecca6e74fdbca306523f64ca645222a60d7fef3",
+      "injected_mock_fault": "repairable_interface",
+      "name": "logistic",
+      "persisted": true,
+      "request": "开发英文银行咨询分类算法，输出77类意图及概率。\n只使用逻辑回归；仅使用单词特征；词表上限10000；逻辑回归C=1。",
+      "status": "validated",
+      "validation_metrics": {
+        "accuracy": 0.8584292146073037,
+        "macro_f1": 0.8541916054420526
+      }
+    },
+    {
+      "attempts": 1,
+      "configuration": {
+        "algorithms": [
+          "text_nb"
+        ],
+        "logistic_c": 4.0,
+        "max_features": 30000,
+        "nb_alpha": 0.1,
+        "nb_alpha_schedule": [
+          0.1,
+          0.05,
+          0.01
+        ],
+        "ngram_max": 2,
+        "optimization": "frozen_nb_schedule",
+        "schema_version": 1
+      },
+      "configuration_hash": "395e9cb40701e3600c527195fc307a6fc6687aea6ece2d65a31729254c277687",
+      "injected_mock_fault": null,
+      "name": "nb",
+      "persisted": true,
+      "request": "开发英文银行咨询分类算法；只使用朴素贝叶斯；使用单词和相邻双词特征；词表上限30000；朴素贝叶斯平滑系数=0.1",
+      "status": "validated",
+      "validation_metrics": {
+        "accuracy": 0.8359179589794897,
+        "macro_f1": 0.8269238046747743
+      }
+    }
+  ],
+  "final_test_attempted": false,
+  "paid_api_calls": 0,
+  "source_sha256": {
+    "src/algofactory/__init__.py": "86fa5dd3ab6cdb627e2e97f0b18fd0fe45fd6c83e1195f69a6f793f6d05d0032",
+    "src/algofactory/banking.py": "7a39c8f8e30eb69fb7a2129de9b20a4fcb9030e0f41ffda8422d91dc1bf081db",
+    "src/algofactory/cli.py": "6b2c1694367fc34964ba36566a21d79ec16c94d5dd61d09dc237c238bb3992a1",
+    "src/algofactory/datasets.py": "d3dfa0e61db39c427c0a35556ba7546defd2a012848e95179c492b8f6f537c19",
+    "src/algofactory/delivery.py": "298f3f08e0984bd235054fb0b68d3087e9d6acdf72dea24e6eae7aabf5253e7c",
+    "src/algofactory/execution/__init__.py": "83adc200c7186b8a29ed1fc6279a520a2e9f1136c8b2c816b3eb2d5cc4bed9dd",
+    "src/algofactory/execution/docker.py": "264333d87232b9f06fb1be609e3e10806813ca7acdf69b3c155bd2dd73a45dbd",
+    "src/algofactory/execution/worker.py": "87aa77ac056bb2fdfdf31c5bc36362084f62952af29d2256d238304143a236aa",
+    "src/algofactory/experience.py": "93f93719fcde6c097bd5e9e17b2a40cd178660017193cd83f0cbf41a449b1480",
+    "src/algofactory/experience_reuse.py": "18eca0bf24bb0d803dec63e3a37211fda95976bdb8cf0a12488f2f56a2f6fc1d",
+    "src/algofactory/experiments.py": "9752ba73e7fc16440f31683cab7f4fd66347edfec3c1928ed1645ad1f168c93b",
+    "src/algofactory/generation/__init__.py": "3f67bf06473ef976bbd1ce4ba27b2892de4988b172a97273b2b1d15e141cfd95",
+    "src/algofactory/generation/configuration.py": "99c723c3ce18094b244b59aa411ee2805b820378cf2d124f63150ea62b6fd7de",
+    "src/algofactory/generation/plan.py": "1b9575b4d0bdbc1d209f969091d8ea6074c00f13b755e443b2fb1c52b7883509",
+    "src/algofactory/generation/safety.py": "dffbf287cf27e82fcae528fc3db5a29e165b551cde11ff172a67f90307291419",
+    "src/algofactory/intent_catalog.py": "549275505faa2d4556ceee03f97f53a616e7ddbd39f0fcb8ec20ce3389e139e1",
+    "src/algofactory/knowledge/__init__.py": "92e9684ca09bba34b6a81ec13028cbef12ac41ce97942e593e4552f342c52d2b",
+    "src/algofactory/knowledge/extraction.py": "f1cf4df72c3e27e1e86873dcd0e3f4e3056a85ae22175ae47e3ad6b2f50a37da",
+    "src/algofactory/knowledge/graph.py": "704767859f6c8ec8b0f58278c46ee55211a420d1a6e7d6078fa0dc080cb0f64a",
+    "src/algofactory/knowledge/store.py": "587d3df3cd652c8b699d371f3b1618f93a4d40c6fd7c6f88282daeb407d0375a",
+    "src/algofactory/llm/__init__.py": "9b3e652ebc649b6428d49affded5ec85f963bb59e3b8bc22062509a21d6b39df",
+    "src/algofactory/llm/providers.py": "ab893d0ab024d606d3ec09b570b594103cf33f073363807dbfb728bef3345433",
+    "src/algofactory/llm/workflow_mock.py": "60ba87268b39b51816fe6de0af8f32b4af33121fd8e466c2526c09cc21331181",
+    "src/algofactory/orchestrator.py": "60c954aeaaa88013935afd9732bfd6d1c47a0176d2f3f9e20282e104a5e0b85d",
+    "src/algofactory/planning.py": "bcf893dea06282371cc3a0856872bdaf66bbefc4137b7428f74220880ae84d95",
+    "src/algofactory/plugins.py": "0be4bd7f68120d84c279df3e4146bb9fbd89fd112008bcb1f50deb994a762c95",
+    "src/algofactory/regression.py": "7fb3581b344eec1c145ff300ff63b985a8b66a856f752f7249f5b9ce79c22f4a",
+    "src/algofactory/reporting.py": "a0a8e1d676d65003cfe596e9dfc66990594be9f64cfa798b1a2d4623da42c962",
+    "src/algofactory/requirement_understanding.py": "706ff3bfcfb4f5f3de3904e7f77db4889567cd3efd2edf24a9415c14b0af4bf4",
+    "src/algofactory/requirements.py": "380d11043a74f42ceffd0471ac1301ebe691d1bc72af97f90215ea7ead809c5e",
+    "src/algofactory/resume.py": "547b420b1a768e1ab730f9f2280daf5a43e9a247cb14d1afbaf3863f4dba0435",
+    "src/algofactory/schemas/__init__.py": "688a8305891467112213b6d90cdc01e2abe5e2c5357b89d534a4ddfb94222039",
+    "src/algofactory/schemas/contracts.py": "f7ac758886ddacde65bfb8e23fd81140406bcfdd32dd07b431690c854a04dbc3",
+    "src/algofactory/schemas/knowledge.py": "f984b70d7f78e3589d4e104882c00d1a1b051e48b04d6d920d554d1f559caf27",
+    "src/algofactory/search.py": "ae78f8ab843c0722099f62009f9eb4c9b2a91606a061168610abd4321e0bcf47",
+    "src/algofactory/tasks.py": "4dcead6bd1bfbf1293fa188f678f0ff4192568b2bc385c820d3d86668630cc5f",
+    "src/algofactory/validation/__init__.py": "e2bc9f7d07d5ac3a477b0b79d7900ff6e731bbf6c019b04cbb1dd5c18326f057",
+    "src/algofactory/validation/final_test.py": "cf9bcc2455a5e026877a881a76a8648a7201e8eb9e2320c169d1909fd007ea42",
+    "src/algofactory/validation/protocol.py": "5752ed88da28e4d98ed1ba617c180024777d0eca36275c6b267e6de5251a045c",
+    "src/algofactory/validation/scoring.py": "6c80b92ef358dbd6b4269f26aca2a4f45138fb503c121b6ed9789e47275621bd",
+    "src/algofactory/web/__init__.py": "f70ba9124e3dec6f342b5946ce503170c1ca786d34a2600e727035c54b2ff443",
+    "src/algofactory/web/app.py": "c59759495e9886c30dcb004c5bcff3dee3a97d86392b85b29751c9d4e58d434c",
+    "src/algofactory/web/data_view.py": "06597deb71a10ad47af86d4fc25e422a227d3c1773597813214b99117bacea27",
+    "src/algofactory/web/evidence.py": "b669ff39384227d0272d4e86e6acf67073ac18245aa6ae64c9f2a88f65d72421",
+    "src/algofactory/web/models.py": "913864af045e85e0c69abde8e13500ff327598600ef01bf83e7afaf2ec33e7ea",
+    "src/algofactory/web/requirement_intake.py": "02f579fcc6c71dcb4ef138f92c5b9bc866b0a4d5b76e6c379ea7049a58f886fd",
+    "src/algofactory/web/runner.py": "573812823e28794765bc3a27cfdf925af77ce0c23a2c94e5817dc5d16d91656c",
+    "src/algofactory/web/service.py": "5cb395565304b9f525b10d6f1469b0a08591e244f27e4c6ef247359a91c41bf0",
+    "src/algofactory/web/task_goals.py": "454af7e1c78445545bdec076864b85bf66df2a6037db1a4a4b5cf093a7323ca1",
+    "src/algofactory/web/workflow_view.py": "e797a5bea46f322f387e42cd23e2239b0cdf9d8cee520fb256eca7f8012c8b3d",
+    "src/algofactory/workflow_models.py": "8c73b0b56dbcc11cb6b9dea3fad95ca224f2ef05cd235cc8215c9710f101c0ec"
+  },
+  "status": "passed"
+}
