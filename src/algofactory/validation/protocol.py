@@ -127,8 +127,24 @@ def load_protocol(path: Path, manifest: dict) -> dict:
             raise WorkflowFailure("invalid_validation_protocol")
         return protocol
     text_task = manifest.get("task_profile") == "banking77"
-    expected_type = "multiclass_classification" if text_task else "binary_classification"
-    expected_metrics = {"macro_f1"} if text_task else {"f1", "roc_auc", "precision", "recall"}
+    expected_type = (
+        (
+            "multiclass_classification"
+            if len(manifest.get("class_labels", [])) > 2
+            else "binary_classification"
+        )
+        if text_task
+        else "binary_classification"
+    )
+    expected_metrics = (
+        (
+            {"macro_f1", "recall"}
+            if manifest.get("selection", {}).get("objective") == "recall"
+            else {"macro_f1"}
+        )
+        if text_task
+        else {"f1", "roc_auc", "precision", "recall"}
+    )
     if (
         protocol["task_type"] != expected_type
         or protocol["test_used_for_calibration"] is not False
@@ -140,6 +156,8 @@ def load_protocol(path: Path, manifest: dict) -> dict:
         for key in ("task_profile", "target", "class_labels", "class_names")
     ):
         raise WorkflowFailure("protocol_label_mapping_mismatch")
+    if text_task and protocol.get("selection") != manifest.get("selection"):
+        raise WorkflowFailure("protocol_selection_mismatch")
     tolerance = protocol.get("repeat_tolerance")
     if (
         not isinstance(tolerance, (int, float))
@@ -191,6 +209,13 @@ def multiclass_metrics(labels, predictions, class_labels):
     }
 
 
+def text_metrics(labels, predictions, probabilities, class_labels):
+    scores = multiclass_metrics(labels, predictions, class_labels)
+    if len(class_labels) == 2:
+        scores.update(classification_metrics(labels, predictions, probabilities[:, 1]))
+    return scores
+
+
 def calibrate_text(directory, protocol_path, manifest):
     from threadpoolctl import threadpool_limits
 
@@ -200,14 +225,19 @@ def calibrate_text(directory, protocol_path, manifest):
     reference = text_reference_pipeline(manifest["seed"])
     with threadpool_limits(limits=1):
         reference.fit(train[["text"]], train.intent)
-        scores = multiclass_metrics(
-            labels.intent, reference.predict(validation[["text"]]), manifest["class_labels"]
+        scores = text_metrics(
+            labels.intent,
+            reference.predict(validation[["text"]]),
+            reference.predict_proba(validation[["text"]]),
+            manifest["class_labels"],
         )
     if scores["macro_f1"] < 0.5:
         raise WorkflowFailure("baseline_below_minimum")
     protocol = {
         "schema_version": 1,
-        "task_type": "multiclass_classification",
+        "task_type": "multiclass_classification"
+        if len(manifest["class_labels"]) > 2
+        else "binary_classification",
         "task_profile": "banking77",
         "target": "intent",
         "class_labels": manifest["class_labels"],
@@ -238,6 +268,15 @@ def calibrate_text(directory, protocol_path, manifest):
         "repeat_tolerance": 1e-12,
         "test_used_for_calibration": False,
     }
+    if manifest.get("selection"):
+        protocol["selection"] = manifest["selection"]
+        if manifest["selection"]["objective"] == "recall":
+            protocol["thresholds"]["recall"] = max(
+                0.0, math.floor((scores["recall"] - 0.05) * 100) / 100
+            )
+            protocol["threshold_rule"] += (
+                "; positive recall >= floor((baseline recall - .05)*100)/100, bounded below by zero; rank valid candidates by recall then macro_f1"
+            )
     protocol["config_hash"] = hashlib.sha256(canonical(protocol).encode()).hexdigest()
     write_json(protocol_path, protocol)
     return protocol

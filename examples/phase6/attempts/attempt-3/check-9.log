@@ -1,1 +1,0 @@
-{"status": "failed", "files": 2210, "findings": [{"path": "tests/test_delivery.py", "rule": "potential_secret"}, {"object": "f831ddbd9d11865b21ccce1debee629a836aa581", "rule": "potential_secret"}]}

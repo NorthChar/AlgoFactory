@@ -1,0 +1,95 @@
+{
+  "scope": "Selected original summaries and generated-code artifacts; not a complete runnable archive. Models, full predictions and original local paths are not bundled.",
+  "files": [
+    {
+      "path": "live-generation.json",
+      "original_path": "runtime/intent-goals/live-generation.json",
+      "sha256": "a1eef6453c31ad9fbadb9a5793fd97f86ce8655b9844c2045fd7a643fee46dde"
+    },
+    {
+      "path": "live-understanding.json",
+      "original_path": "runtime/intent-goals/live-understanding.json",
+      "sha256": "989313226a25c3462fcbfe22abc370d0e889959ce05166bd814e335a251efb45"
+    },
+    {
+      "path": "live-understanding-rejected.json",
+      "original_path": "runtime/intent-goals/live-understanding-rejected.json",
+      "sha256": "fa61b112b00e0cb8723482da2ee370a7fe0e5bbf78ed6edda19b4215759c3f46"
+    },
+    {
+      "path": "tests-before-packaging.xml",
+      "original_path": "runtime/intent-goals/tests-final.xml",
+      "sha256": "0e02156eee7e9f1d46e54d3c760384ae8696d54e99f2eee981a8697627c93afa"
+    },
+    {
+      "path": "verification-summary.json",
+      "original_path": "docs/evidence/2026-11-02-intent-goals.json",
+      "sha256": "576723f49ec2e3ea9533ec93c8d6fdfc7f9868b9b212ec0a3812631e790707e6"
+    },
+    {
+      "path": "generated/candidate.py",
+      "original_path": "runtime/web-jobs/09f11cc0d8a94ee1be33a33e9ac5a473/run/candidate.py",
+      "sha256": "26dd72d4476ff8a71036968799d87d0f5d1c3c12d0d0dec6ff6110148120df87"
+    },
+    {
+      "path": "generated/report.json",
+      "original_path": "runtime/web-jobs/09f11cc0d8a94ee1be33a33e9ac5a473/run/report.json",
+      "sha256": "1ed4931d4459d4e5943cd08d866a07ac48725d772442dd67cd6e1411e15b6c72"
+    },
+    {
+      "path": "generated/report.md",
+      "original_path": "runtime/web-jobs/09f11cc0d8a94ee1be33a33e9ac5a473/run/report.md",
+      "sha256": "b408c1cde031cf0267c6001194b7671865f409bc7c55da739ec6553abe83abbd"
+    },
+    {
+      "path": "generated/experiment.json",
+      "original_path": "runtime/web-jobs/09f11cc0d8a94ee1be33a33e9ac5a473/run/experiment.json",
+      "sha256": "bdf05d5a3bdc364520370f7d1be7db2d967f6041688aa647c0ff1bddaa53c1a0"
+    },
+    {
+      "path": "generated/attempts.json",
+      "original_path": "runtime/web-jobs/09f11cc0d8a94ee1be33a33e9ac5a473/run/attempts.json",
+      "sha256": "cb44f1d8f78e0b96301d088f031a64c6ba5cef84567e8f87821f2d874da79002"
+    },
+    {
+      "path": "generated/ranking.json",
+      "original_path": "runtime/web-jobs/09f11cc0d8a94ee1be33a33e9ac5a473/run/ranking.json",
+      "sha256": "c0c4978b5babc6b0dbc8e81f399d071c6529b4f69838b2c35d613b068695d100"
+    },
+    {
+      "path": "generated/plan.json",
+      "original_path": "runtime/web-jobs/09f11cc0d8a94ee1be33a33e9ac5a473/run/plan.json",
+      "sha256": "7f055055f381b212ef84b95edaaf5685766a94d0a3227432e88695f788646502"
+    },
+    {
+      "path": "generated/task.json",
+      "original_path": "runtime/web-jobs/09f11cc0d8a94ee1be33a33e9ac5a473/run/task.json",
+      "sha256": "0943a4fc27cded2234e40ed80a8a812f2a6b8f40f4e6531482b68e4938703986"
+    },
+    {
+      "path": "generated/trace.json",
+      "original_path": "runtime/web-jobs/09f11cc0d8a94ee1be33a33e9ac5a473/run/trace.json",
+      "sha256": "6aad55afcee0dd7751821a968984cb1ca8338a2f6144d062c90a72f92db0a309"
+    },
+    {
+      "path": "generated/protocol.json",
+      "original_path": "runtime/web-jobs/09f11cc0d8a94ee1be33a33e9ac5a473/run/protocol.json",
+      "sha256": "7e3fdbf5ed8cbf7ef15cfbdf50b989fd78216c9f35726e73287cfbd9f35f916d"
+    },
+    {
+      "path": "generated/requirement-origin.json",
+      "original_path": "runtime/web-jobs/09f11cc0d8a94ee1be33a33e9ac5a473/run/requirement-origin.json",
+      "sha256": "b3f5baca4ba3783b13c6ecb81307363cdc5747c4a8969fe7f94baa20aa794380"
+    },
+    {
+      "path": "settings.json",
+      "original_path": "runtime/web-jobs/09f11cc0d8a94ee1be33a33e9ac5a473/settings.json",
+      "sha256": "3536c56d4e0e2b62d87cb29f22bb4a0380e418b81f61a37d0ab52e37af3e3817"
+    },
+    {
+      "path": "confirmed-requirement.json",
+      "original_path": "runtime/web-jobs/09f11cc0d8a94ee1be33a33e9ac5a473/confirmed-requirement.json",
+      "sha256": "0933871de48164e999920e1812a9b65243d4b63d6ff31bc24dd87f087ad1ca65"
+    }
+  ]
+}

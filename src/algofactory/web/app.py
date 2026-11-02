@@ -8,11 +8,12 @@ from pathlib import Path
 
 import streamlit as st
 
-from algofactory.experiments import ExperimentConfig
+from algofactory.requirements import EXAMPLE_REQUEST, LABELS, interpret_requirement
 from algofactory.tasks import PROFILES
 from algofactory.web.data_view import show_data, show_errors
-from algofactory.web.evidence import STEPS, stage_rows, workflow_evidence
+from algofactory.web.evidence import stage_rows, workflow_evidence
 from algofactory.web.models import show_trial
+from algofactory.web.requirement_intake import NATURAL_EXAMPLE, show_semantic_intake
 from algofactory.web.service import (
     Jobs,
     RunSettings,
@@ -40,13 +41,31 @@ STATUS = {
 
 
 def stop_reason(category):
-    if category == "call_budget_exhausted":
-        return (
-            "已达到本次模型请求次数上限，任务已停止。已完成的候选和报告已保留。"
-            "请查看 API 请求与用量，再调整上限并手动提交新任务；系统不会自动扩额或续跑。"
-            "（call_budget_exhausted）"
-        )
-    return category
+    messages = {
+        "call_budget_exhausted": "本次大模型请求已达到设置上限，任务已停止，已有成果已保留。请让配置人员查看用量后决定是否调整预算；系统不会自动续费或重试。",
+        "docker_missing": "电脑上尚未找到 Docker。请让环境配置人员安装并启动 Docker Desktop 后，再创建新任务。",
+        "docker_unavailable": "训练环境暂时无法连接。请先启动 Docker Desktop，等待就绪后再创建新任务。",
+        "sandbox_image_missing": "本机缺少执行镜像。请让环境配置人员按 README 的镜像准备步骤处理后重试。",
+        "sandbox_image_not_prepared": "执行环境尚未准备完成。请让环境配置人员按 README 准备本机镜像。",
+        "sandbox_image_stale": "执行环境与当前代码版本不一致。请让环境配置人员按 README 重新准备镜像。",
+        "dataset_not_prepared": "训练材料尚未导入。请让环境配置人员按 README 导入数据后再开始。",
+        "worker_interrupted": "任务运行中断，已有文件已保留。请查看任务记录；需要继续时手动创建新任务，刷新不会续跑。",
+        "another_job_running": "已有另一个任务正在运行。请等待它完成，再创建新任务。",
+    }
+    return messages.get(
+        category,
+        "本次开发未能完成，已有记录已保留。请在“开发过程”查看原因，或把下方技术信息交给配置人员；不要连续点击重试。",
+    )
+
+
+def show_failure(category):
+    st.error(stop_reason(category))
+    with st.expander("技术信息（供排查使用）"):
+        st.code(category, language=None)
+
+
+def open_trial(relative):
+    st.session_state["task_section_" + relative] = "试用本次算法"
 
 
 st.set_page_config(page_title="AlgoFactory · 银行咨询分类算法开发", page_icon="◈", layout="wide")
@@ -57,9 +76,7 @@ with st.sidebar:
     st.subheader("银行咨询分类算法开发")
     st.write("开发一个识别英文银行咨询意图的分类器，交付代码、模型与验证报告。")
     st.caption("一次开发任务，一条完整流程")
-    st.info(
-        "当前完整落地的是银行咨询分类这一固定任务。其他任务仅作兼容性检查，不支持任意业务代码生成。"
-    )
+    st.info("支持英文银行咨询的全部类别、指定类别及单个意图识别。其他业务任务仅作兼容性检查。")
     with st.expander("演示模式说明"):
         st.caption("Mock 使用固定模型响应；训练、预测和评分真实执行。真实 API 模式会产生费用。")
 
@@ -91,10 +108,10 @@ intro, launch, reports = st.tabs(
 
 def report_label(relative):
     titles = {
-        "examples/api-phase3/comparison": "历史案例 · 真实 API 失败修复与最终测试",
-        "examples/phase4/api-2-on": "历史案例 · 真实 API 经验复用（仅验证集）",
-        "examples/phase3/repair": "历史案例 · Mock 注入故障后的修复",
-        "examples/phase3/unsafe-code": "历史案例 · 危险代码被拒绝",
+        "examples/banking-classification/comparison": "历史案例 · 真实 API 失败修复与最终测试",
+        "examples/experience-reuse/run": "历史案例 · 真实 API 经验复用（仅验证集）",
+        "examples/mock-repair": "历史案例 · Mock 注入故障后的修复",
+        "examples/rejected-code": "历史案例 · 危险代码被拒绝",
     }
     if relative in titles:
         return titles[relative]
@@ -130,54 +147,91 @@ def show_result(relative):
                 else " · 同一配置内比较"
             )
         )
+    if report.get("selection"):
+        from algofactory.intent_catalog import intent_title
+        from algofactory.web.task_goals import GOALS
+
+        scope = report["selection"]
+        st.info(GOALS[scope["goal"]] + "：" + "；".join(intent_title(n) for n in scope["intents"]))
+        if scope["goal"] == "subset":
+            st.warning("仅在选定类别范围内训练和评估；不识别范围外咨询。")
+        else:
+            st.caption("负类仅包含其余 76 类已知咨询；不代表未知意图检测。")
     validation = report.get("validation", {})
+    if (
+        report.get("selection", {}).get("goal") == "one_vs_rest"
+        and "validation-class-details.json" in paths
+    ):
+        matrix = read_json(paths["validation-class-details.json"])["confusion_matrix"]
+        left, right = st.columns(2)
+        left.metric("验证集漏判：本应识别却漏掉", matrix[1][0])
+        right.metric("验证集误报：其他咨询被误判为目标", matrix[0][1])
+        st.caption(
+            f"验证样本：目标意图 {sum(matrix[1])} 条，其他已知意图 {sum(matrix[0])} 条；这些数量不能外推为真实客户比例。"
+        )
     status = STATUS.get(report["status"], report["status"])
     st.subheader(status)
     st.caption(
         f"{report.get('task_profile', '未识别')} · {report.get('provider_mode', '未知')} · {report['workflow_id']}"
     )
     if report.get("error_category"):
-        st.error("停止原因：" + stop_reason(report["error_category"]))
+        show_failure(report["error_category"])
     if not report.get("persisted"):
         st.warning("知识库回写未完成；报告已保留，此运行不能视为完整成功。")
     if not report.get("test_attempted"):
         st.info("本次未运行最终测试。验证集成绩不代表最终测试通过。")
-    columns = st.columns(4)
-    for column, key, label in zip(
-        columns,
-        ("functional", "metrics", "stability", "interface"),
-        ("功能", "指标", "稳定性", "接口"),
-        strict=True,
-    ):
-        value = validation.get(key, {}).get("status", "not_run")
-        column.metric(
-            label, {"passed": "通过", "failed": "未通过", "not_run": "未执行"}.get(value, value)
+    if report["status"] in {"accepted", "validated"} and report.get("persisted"):
+        st.success("本次代码已生成，并通过报告所列的运行与效果检查。")
+        st.write(
+            "你可以下载代码与报告，也可以先输入一条咨询试用成果。通过检查不保证每句话都分类正确。"
         )
-    measured = validation.get("validation_metrics", {})
-    if measured:
-        st.dataframe(
-            [
-                {
-                    "指标": name,
-                    "验证集": score,
-                    "最终测试": validation.get("test_metrics", {}).get(name),
-                    "冻结门槛": report.get("thresholds", {}).get(name),
-                    "方向": "越低越好" if name in {"mae", "rmse"} else "越高越好",
-                }
-                for name, score in measured.items()
-            ],
-            hide_index=True,
-            width="stretch",
-        )
+        if report.get("task_profile") == "banking77":
+            st.button(
+                "输入咨询，试用本次成果",
+                key="open_trial_" + relative,
+                on_click=open_trial,
+                args=(relative,),
+                type="primary",
+            )
+    elif report["status"] not in {"accepted", "validated"}:
+        st.warning("本次尚未交付通过验证的算法。先查看原因与开发过程，不能把已有代码当成合格成果。")
+    with st.expander("查看检查项目与评分（技术详情）"):
+        columns = st.columns(4)
+        for column, key, label in zip(
+            columns,
+            ("functional", "metrics", "stability", "interface"),
+            ("功能", "指标", "稳定性", "接口"),
+            strict=True,
+        ):
+            value = validation.get(key, {}).get("status", "not_run")
+            column.metric(
+                label, {"passed": "通过", "failed": "未通过", "not_run": "未执行"}.get(value, value)
+            )
+        measured = validation.get("validation_metrics", {})
+        if measured:
+            st.dataframe(
+                [
+                    {
+                        "指标": name,
+                        "验证集": score,
+                        "最终测试": validation.get("test_metrics", {}).get(name),
+                        "冻结门槛": report.get("thresholds", {}).get(name),
+                        "方向": "越低越好" if name in {"mae", "rmse"} else "越高越好",
+                    }
+                    for name, score in measured.items()
+                ],
+                hide_index=True,
+                width="stretch",
+            )
     st.subheader("代码与交付物")
     st.caption(
         "下载代码和报告；在“开发过程”查看生成与修复依据，在“试用本次算法”检查交付模型。失败任务的文件也会保留，请结合状态判断。"
     )
     if "candidate.py" in paths:
-        with st.expander("查看本次生成的 Python 代码", expanded=True):
+        with st.expander("查看本次生成的 Python 代码", expanded=False):
             st.code(paths["candidate.py"].read_text(), language="python")
         st.caption("代码定义分类流水线，需在项目配套环境中训练和运行；它不是独立的客服网站。")
-    for name in ("candidate.py", "report.md", "report.json"):
+    for name in ("candidate.py", "report.md", "report.json", "data-manifest.json"):
         if name in paths:
             st.download_button(
                 "下载 "
@@ -185,6 +239,7 @@ def show_result(relative):
                     "report.md": "中文报告",
                     "report.json": "结构化证据",
                     "candidate.py": "生成代码",
+                    "data-manifest.json": "本次标签与数据配置",
                 }[name],
                 paths[name].read_bytes(),
                 file_name=name,
@@ -201,8 +256,8 @@ def show_result(relative):
                 expanded=False,
             )
     if report.get("attempts"):
-        st.write("候选与修复版本")
-        st.dataframe(report["attempts"], hide_index=True, width="stretch")
+        with st.expander("候选与修复版本（技术详情）"):
+            st.dataframe(report["attempts"], hide_index=True, width="stretch")
     usage = report.get("experience_usage")
     if usage:
         with st.expander("经验采用证据"):
@@ -234,14 +289,17 @@ def show_report(relative):
 with intro:
     st.subheader("开发银行咨询分类算法，获得经过验证的代码")
     st.write(
-        "这个工作台围绕一个固定任务：生成能识别英文银行咨询意图的分类算法。"
+        "这个工作台开发英文银行咨询分类算法：可区分全部意图、指定的几个类别，或识别某一种意图。"
         "系统检索算法知识、生成代码，实际训练和评估，必要时修复，最后保存代码、报告和开发记录。"
     )
     st.caption(
         "这是项目完整落地的业务案例，用于展示算法开发闭环；当前不支持任意业务需求或自有数据上传。"
     )
+    st.info(
+        "操作顺序：① 描述支持范围内的开发需求 → ② 核对并确认配置 → ③ 生成、验证和试用成果。无需编写代码。"
+    )
     st.button("开始开发银行分类算法", type="primary", on_click=navigate, args=("创建算法开发任务",))
-    history = "examples/api-phase3/comparison"
+    history = "examples/banking-classification/comparison"
     if history in report_catalog(ROOT):
         st.button("查看已完成的银行分类开发任务", on_click=navigate, args=("我的开发任务", history))
         st.caption("查看历史真实 API 生成代码、错误修复与最终测试证据；只读浏览，不产生费用。")
@@ -250,8 +308,10 @@ with intro:
         left, right = st.columns(2)
         with left:
             st.markdown("**第一步：告诉系统要开发什么**")
-            st.write("“请开发一个英文银行咨询分类算法，输出问题类别及概率，并验证分类效果。”")
-            st.caption("这是开发需求。当前任务的语言、类别和数据协议已经固定。")
+            st.write("“识别英文咨询中银行卡丢失或被盗的问题，优先减少漏判，并告诉我误报情况。”")
+            st.caption(
+                "这是开发需求。可选择全部类别、已有类别的子集，或单个意图识别；输入语言仍为英文。"
+            )
         with right:
             st.markdown("**完成后：用一条咨询试用成果**")
             st.write("例如输入：I lost my bank card.")
@@ -283,7 +343,7 @@ with intro:
             "它提供咨询和正确类别，不是客服回答库；本任务不自动回复、办理银行业务或识别未知意图。"
         )
         st.write(
-            "API 模式可在固定协议内修改开发需求；算法与有限参数可通过控件设置。Mock 使用固定需求验证流程。"
+            "可以用自己的话描述需求，由大模型理解和复核；也可使用免费离线示例。方案需要确认，Mock 或 API 再据此生成代码。"
         )
         st.caption("合成回归和客户流失用于公共框架兼容性检查，不代表已完成同等范围的业务产品。")
     with st.expander("系统怎样完成一次算法开发？"):
@@ -293,218 +353,241 @@ with intro:
         )
 
 with launch:
-    st.subheader("创建银行咨询分类开发任务")
-    st.caption("① 明确要开发什么 → ② 选择模式与设置 → ③ 生成代码并验证 → ④ 查看交付")
-    st.info(
-        "当前完整支持银行咨询分类这一固定任务。修改需求文字不会自动更换数据、语言、类别或评价门槛。"
-    )
-    with st.expander("开发范围与兼容性检查入口"):
+    st.subheader("描述需求 → 核对配置 → 确认后生成")
+    with st.expander("开发者设置：开发案例"):
         task = st.selectbox(
             "开发案例",
             ["banking77", "regression"],
-            format_func=lambda x: {
-                "banking77": "银行咨询分类 · 当前完整业务任务",
-                "regression": "合成回归 · 仅兼容性检查",
-            }[x],
+            format_func=lambda x: (
+                "银行咨询分类 · 当前完整业务任务" if x == "banking77" else "合成回归 · 仅兼容性检查"
+            ),
         )
-        st.caption("日常操作保留银行咨询分类。合成回归用于检查公共流程，不能替代新的业务接入。")
-    if task == "banking77":
-        st.markdown("#### ① 要开发什么")
-        left, right = st.columns(2)
-        left.markdown("**算法输入**\n\n一条英文银行咨询，例如 `I lost my bank card.`。")
-        right.markdown(
-            "**算法输出**\n\n77 类已知问题中的预测类别及概率。用于问题分流，不生成客服回复。"
-        )
-        st.caption("你得到的是分类代码、验证报告和通过版本的模型；完成后可以输入新咨询试用。")
-        with st.expander("训练与验证材料：为什么需要数据？查看真实样本与来源"):
-            st.write(
-                "数据接口约定代码要处理哪些字段；带标签的样本用于训练和检查代码的实际效果。"
-                "不是把全部咨询交给 GPT 写代码，也没有用这些咨询微调 GPT。"
-            )
-            st.write(
-                "BANKING77 清洗后：7,993 条训练咨询用于学习；1,999 条验证咨询用于比较和修复；"
-                "3,080 条冻结测试咨询仅用于选定版本的最终评估。"
-            )
-            st.caption("程序输入字段为 text，标签字段为 intent；本次使用已导入的固定数据。")
-            show_data(ROOT)
-    else:
-        st.warning("当前选择的是合成回归兼容性检查，不是银行咨询分类开发。")
-        st.write(
-            "使用预设数值特征 x1、x2、x3 预测 value，以 MAE、RMSE 评估；交付代码与报告，不提供银行咨询试用。"
-        )
-    with st.expander("第一次使用：这七步会发生什么？"):
-        st.dataframe(
-            [
-                {"步骤": title, "你将看到": detail}
-                for title, detail in zip(
-                    STEPS,
-                    (
-                        "解析后的输入字段、目标与评价规则",
-                        "检索到的能力知识及原始文档引用",
-                        "预设候选范围内的方案、依赖和知识依据",
-                        "可查看和下载的 Python 代码",
-                        "功能、指标、稳定性、接口检查与候选比较",
-                        "若触发修复，查看错误反馈、代码差异与复测结果",
-                        "实现与验证记录回写，可在知识图谱追踪来源",
-                    ),
-                    strict=True,
-                )
-            ],
-            hide_index=True,
-            width="stretch",
-        )
-        st.caption(
-            "Mock 用固定模型响应演示流程；API 在既定任务协议内解析需求和生成代码。可通过“自主选择算法与参数”在已支持的候选范围内配置实验。"
-        )
-    historical = "examples/api-phase3/comparison"
-    if historical in report_catalog(ROOT):
-        st.button(
-            "先看真实 API 完整历史案例（不产生费用）",
-            on_click=navigate,
-            args=("我的开发任务", historical),
-        )
-    st.markdown("#### ② 选择模式与开发需求")
-    mode = st.radio(
-        "模型模式",
-        ["mock", "api"],
-        format_func=lambda x: "Mock · 无 API 费用" if x == "mock" else "Azure API · 使用本机配置",
-        horizontal=True,
+    st.markdown("### 1. 描述你要开发的算法")
+    st.info(
+        "选择要解决的分类问题，再描述需求。系统将据此筛选数据、定义输出、生成并验证代码。仍使用已有英文咨询，不支持中文、自有数据或新增业务标签。"
     )
-    if mode == "api":
-        st.info(
-            "密钥仅从本机 .env 或环境变量读取，不在页面输入或显示。每次任务最多 12 次请求，具体费用以 Azure 账单为准。"
-        )
-    custom = False
-    experiment = None
-    if task == "banking77":
-        custom = st.toggle("自主选择算法与参数", value=False)
-        if custom:
-            st.write(
-                "先选方案，再生成代码。以下选择会固定到本次实验，验证后不会自动改选另一套参数。"
-            )
-            algorithms = st.multiselect(
-                "参与实验的算法",
-                ["text_logistic", "text_nb"],
-                default=["text_logistic", "text_nb"],
-                format_func=lambda x: {
-                    "text_logistic": "逻辑回归（Logistic Regression）",
-                    "text_nb": "朴素贝叶斯（MultinomialNB）",
-                }[x],
-            )
-            c1, c2 = st.columns(2)
-            with c1:
-                ngram = st.selectbox(
-                    "文本特征",
-                    [2, 1],
-                    format_func=lambda x: "单词 + 相邻双词" if x == 2 else "仅单词",
+    from algofactory.experiments import ExperimentConfig
+    from algofactory.requirement_understanding import configuration_request
+    from algofactory.web.task_goals import GOALS, choose_goal, show_scope
+
+    selection = (
+        choose_goal()
+        if task == "banking77"
+        else {"goal": "full", "intents": [], "objective": "macro_f1"}
+    )
+    selection_valid = selection["goal"] != "subset" or 2 <= len(selection["intents"]) <= 76
+    if not selection_valid:
+        st.warning("请先选择 2–76 个类别。")
+    intake = st.radio(
+        "需求理解方式",
+        ["natural", "rules"],
+        format_func=lambda x: (
+            "用自己的话描述（大模型理解，产生费用）"
+            if x == "natural"
+            else "离线示例与固定表达（不产生 API 费用）"
+        ),
+        disabled=task != "banking77",
+    )
+    natural = task == "banking77" and intake == "natural"
+    example = NATURAL_EXAMPLE if natural else EXAMPLE_REQUEST
+    if selection_valid and selection["goal"] != "full":
+        example = configuration_request(ExperimentConfig(**selection))
+        if natural:
+            from algofactory.intent_catalog import INTENTS
+
+            names = "、".join(INTENTS[n] for n in selection["intents"])
+            example = (
+                (
+                    (
+                        "我想将英文银行咨询分为这些已有类别："
+                        + names
+                        + "。只处理这些类别范围内的咨询，输出类别和概率。"
+                    )
+                    if selection["goal"] == "subset"
+                    else ("我想判断英文银行咨询是否涉及" + names + "，输出属于或不属于及概率。")
                 )
-                max_features = st.selectbox("词表上限", [30000, 10000])
-            with c2:
-                logistic_c = st.selectbox(
-                    "逻辑回归 C", [4.0, 1.0], help="数值越小，正则化越强。仅对逻辑回归生效。"
+                + (
+                    "优先减少漏判，并报告误报情况。"
+                    if selection["objective"] == "recall"
+                    else "请兼顾识别效果与误报。"
                 )
-                nb_alpha = st.selectbox(
-                    "朴素贝叶斯平滑系数",
-                    [0.1, 0.5],
-                    help="控制少见词的平滑程度。若触发指标优化，最多按初始值、1/2、1/10 的预定顺序尝试。",
-                )
-            if algorithms:
-                experiment = ExperimentConfig(
-                    algorithms=algorithms,
-                    ngram_max=ngram,
-                    max_features=max_features,
-                    logistic_c=logistic_c,
-                    nb_alpha=nb_alpha,
-                )
-                st.caption(
-                    "配置编号："
-                    + experiment.digest[:16]
-                    + "。不同实验的结果分别呈现，不合并成跨配置排行榜。"
-                )
-            else:
-                st.warning("至少选择一个算法才能提交。")
-            st.caption(
-                "配置实验使用固定的 BANKING77 业务描述；算法与参数通过以上控件设置。首版不解释任意文字中的额外参数约束。"
+                + "我不懂算法，请帮我比较合适的方案。"
             )
     request = st.text_area(
         "开发需求",
-        value=PROFILES[task].request,
-        key="request_" + task + mode + ("_configured" if custom else ""),
-        disabled=mode == "mock" or custom,
-        help="Mock 仅支持固定示例需求；真实 API 可理解同一输入协议下的需求。",
+        value=example if task == "banking77" else PROFILES[task].request,
+        key="requirement_text_" + task + intake + str(selection),
+        disabled=task != "banking77",
+        height=140,
+        help="说明你要解决的问题、输入输出和限制。不需要指定算法，系统会提出方案供你确认。",
+    )
+    understanding = None
+    experiment = None
+    result = None
+    checked = False
+    if natural:
+        result, understanding = show_semantic_intake(ROOT, request)
+        checked = result is not None
+        experiment = result.experiment if result else None
+    else:
+        with st.expander("目前能理解的需求表达（用分号或换行分隔）"):
+            st.write(
+                "第一版使用本地规则逐句检查，不是通用自然语言理解。可以按下列表达组合；任何未识别的句子都会阻止提交，不会被忽略。"
+            )
+            st.code(
+                "开发英文银行咨询分类算法；输出预测类别及概率\n只区分这些意图：card_arrival、lost_or_stolen_card / 识别单个意图：lost_or_stolen_card\n单个意图可加：优先减少漏判 / 兼顾各类效果\n只使用逻辑回归 / 只使用朴素贝叶斯 / 比较逻辑回归和朴素贝叶斯\n仅使用单词特征 / 使用单词和相邻双词特征\n词表上限10000 / 词表上限30000\n逻辑回归C=1 / 逻辑回归C=4\n朴素贝叶斯平滑系数=0.1 / 朴素贝叶斯平滑系数=0.5",
+                language=None,
+            )
+            st.caption(
+                "每行中的 / 表示可选项，不要原样全部粘贴。未指定的选项会在确认页标为默认值。更自由的表述目前需要改写，不会猜测。"
+            )
+        if st.session_state.get("last_requirement_input") != (task, request):
+            st.session_state.pop("checked_requirement", None)
+            st.session_state["last_requirement_input"] = (task, request)
+        if st.button("解析并检查需求", type="primary"):
+            st.session_state["checked_requirement"] = (task, request)
+        checked = st.session_state.get("checked_requirement") == (task, request)
+        experiment = None
+        result = None
+        if checked and task == "banking77":
+            result = interpret_requirement(request)
+            experiment = result.experiment
+    if experiment and experiment.selection() != selection:
+        st.error(
+            "需求理解得到的目标、类别或评估偏好与上方选择不一致。请修改选择或需求并重新理解；不能按默认任务执行。"
+        )
+        experiment = None
+    ready = selection_valid and checked and (task == "regression" or experiment is not None)
+    st.markdown("### 2. 核对系统将执行的配置")
+    if not checked:
+        st.info("请先完成上方的需求理解或离线检查；不会自动开始生成代码。")
+    elif result and result.issues:
+        for issue in result.issues:
+            st.error(issue)
+        st.warning("本次需求尚不能执行。请修改或补充后重新检查；未创建代码生成任务。")
+    elif experiment:
+        rows = []
+        for name, label in LABELS.items():
+            if name == "logistic_c" and "text_logistic" not in experiment.algorithms:
+                continue
+            if name == "nb_alpha" and "text_nb" not in experiment.algorithms:
+                continue
+            value = getattr(experiment, name)
+            if name == "goal":
+                value = GOALS[value]
+            elif name == "intents":
+                from algofactory.intent_catalog import intent_title
+
+                value = "；".join(intent_title(n) for n in value) or "全部 77 类"
+            elif name == "objective":
+                value = "优先减少漏判" if value == "recall" else "兼顾各类效果"
+            elif name == "algorithms":
+                value = "、".join(
+                    "逻辑回归" if a == "text_logistic" else "朴素贝叶斯" for a in value
+                )
+            elif name == "ngram_max":
+                value = "仅单词" if value == 1 else "单词和相邻双词"
+            rows.append(
+                {
+                    "配置": label,
+                    "执行值": str(value),
+                    "来源": ("模型从需求提取，请核对" if natural else "用户明确指定")
+                    if name in result.explicit
+                    else ("系统建议，请确认" if natural else "系统默认，请确认"),
+                }
+            )
+        st.table(rows)
+        show_scope(ROOT, experiment)
+        if "text_nb" in experiment.algorithms:
+            st.caption(
+                "修复规则：若指标不达标且允许修复，朴素贝叶斯平滑系数可按初始值、1/2、1/10 的预定顺序优化；最终测试不参与调参。"
+            )
+    elif ready:
+        st.info("合成回归仅作固定兼容性检查，不提供自由需求解析。")
+
+    mode = st.radio(
+        "代码生成方式",
+        ["mock", "api"],
+        format_func=lambda x: (
+            "使用模板生成代码（此步不产生 API 费用）"
+            if x == "mock"
+            else "使用大模型生成代码（产生费用）"
+        ),
     )
     if mode == "mock":
-        st.caption("当前是 Mock：开发需求使用固定文本，不能自由修改；后续训练和评分真实执行。")
-    elif custom:
-        st.caption("当前按控件配置实验：需求文字固定，算法和参数由上面的选择决定。")
-    else:
-        st.caption("可以改写当前任务范围内的开发需求；任意新业务、数据字段及额外参数约束尚不支持。")
-    st.caption(
-        "这里填写“开发一个怎样的分类算法”；完成后的试用框才填写“I lost my bank card.”这样的咨询。"
-    )
-    st.markdown("#### ③ 生成与验证设置")
-    with st.form("new_task"):
-        compare = st.checkbox(
-            "比较两个候选并允许修复",
-            value=(len(algorithms) == 2 if custom else task == "banking77"),
-            disabled=task != "banking77" or custom,
-            key=("compare_custom_" + str(len(algorithms)))
-            if custom
-            else "compare_baseline_" + task,
+        st.caption(
+            "代码生成选择 Mock：按已确认配置生成模板代码，训练和评分真实执行；自然语言理解步骤的 API 费用仍单独计算。"
         )
+    else:
+        st.warning(
+            "确认并开始后才调用代码生成 API。此处预算只用于代码生成流程，不包含上方自然语言理解请求；不会自动扩大预算。"
+        )
+    with st.expander("开发者设置：评估、修复与预算"):
+        compare = bool(experiment and len(experiment.algorithms) == 2)
+        st.caption("候选比较由已解析的需求决定。单候选也可在预算内自动修复。")
         validation_only = st.checkbox(
             "仅验证集评估",
             value=True,
             help="关闭后，只有选定版本可进行一次最终测试；失败后不重选。",
         )
-        with st.expander("高级设置：经验、修复次数和请求预算"):
-            experiences = st.checkbox(
-                "使用适用的已验证经验",
-                value=False,
-                disabled=task != "banking77",
-                help="使用 Phase 4 归档经验库；必须开启候选比较。适用范围严格匹配，未承诺性能收益。",
-            )
-            max_repairs = st.slider("每候选最多修复次数", 0, 2, 1)
-            budget = st.number_input(
-                "本次模型请求上限",
-                min_value=1,
-                max_value=12 if mode == "api" else 32,
-                value=10 if mode == "api" else 24,
-                step=1,
-                key="budget_" + mode,
-            )
-            if mode == "api":
-                st.caption(
-                    "无重试、无修复时：单候选需要 4 次请求；双候选通常需要 7 次，"
-                    "成功复用知识时为 6 次。每次代码修复另需 3 次，接口重试也计入上限。"
-                    "10 次可为普通双候选预留一次修复；12 次上限不保证覆盖全部修复。"
-                    "上限不是固定消耗，训练和最终测试不调用模型。"
-                )
-        submitted = st.form_submit_button(
-            "开始生成并验证" if mode == "mock" else "开始 API 生成并验证（产生费用）",
-            type="primary",
+        experiences = st.checkbox(
+            "使用适用的已验证经验",
+            value=False,
+            disabled=task != "banking77" or selection["goal"] != "full",
         )
+        max_repairs = st.slider("每候选最多修复次数", 0, 2, 1)
+        budget = st.number_input(
+            "本次模型请求上限",
+            min_value=1,
+            max_value=12 if mode == "api" else 32,
+            value=10 if mode == "api" else 24,
+            step=1,
+            key="budget_" + mode,
+        )
+        st.caption(
+            "单候选无修复通常需 4 次请求；双候选通常 7 次，复用知识时 6 次。每次修复另需 3 次，接口重试也占用预算；修复次数不是成功保证。"
+        )
+    st.markdown("### 3. 确认并开始生成")
+    st.write(
+        f"本次：{'真实 API（付费）' if mode == 'api' else 'Mock 模板生成（无 API 费用）'}；{'仅验证集评估' if validation_only else '选定版本追加一次最终测试'}；每候选最多修复 {max_repairs if task == 'banking77' else 0} 次；请求上限 {budget} 次；{'使用已验证经验' if experiences else '不复用历史经验'}。"
+    )
+    payload = dict(
+        understanding=understanding if natural else None,
+        experiment=experiment,
+        task=task,
+        mode=mode,
+        compare=compare,
+        validation_only=validation_only,
+        experiences=experiences,
+        max_repairs=max_repairs,
+        call_budget=budget,
+        request=request,
+    )
+    # The digest binds confirmation to all current inputs, including spending limits.
+    draft = RunSettings.model_construct(**payload)
+    digest = draft.confirmation_digest()
+    if st.session_state.get("last_confirmation_digest") != digest:
+        st.session_state["confirmed_current_requirement"] = False
+        st.session_state["last_confirmation_digest"] = digest
+    confirmed = st.checkbox(
+        "我已核对需求、默认值和运行设置，确认按以上配置执行",
+        key="confirmed_current_requirement",
+        disabled=not ready,
+    )
+    submitted = st.button(
+        "开始生成并验证" if mode == "mock" else "开始 API 生成并验证（产生费用）",
+        type="primary",
+        disabled=not (ready and confirmed),
+    )
     if submitted:
         try:
-            if custom and experiment is None:
-                raise ValueError("select_at_least_one_algorithm")
-            settings = RunSettings(
-                experiment=experiment,
-                task=task,
-                mode=mode,
-                compare=compare,
-                validation_only=validation_only,
-                experiences=experiences,
-                max_repairs=max_repairs,
-                call_budget=budget,
-                request=request,
-            )
+            if not ready or not confirmed:
+                raise ValueError("requirement_needs_confirmation")
+            settings = RunSettings(**payload, requirement_confirmation=digest)
             minimum = (6 if experiences else 7) if compare else 4
             if mode == "api" and budget < minimum:
                 st.error(
-                    f"尚未提交：当前配置即使无重试、无修复也至少需要 {minimum} 次请求，"
-                    f"你设置了 {budget} 次。请调整请求上限，或关闭候选比较后重新提交。"
-                    "本次未启动任务、未调用 API。"
+                    f"尚未提交：当前配置至少需要 {minimum} 次请求，你设置了 {budget} 次。请调整后重新确认；未调用 API。"
                 )
             else:
                 token = st.session_state.setdefault("submission_token", uuid.uuid4().hex)
@@ -515,8 +598,22 @@ with launch:
                 st.session_state["submission_notice"] = token
                 st.rerun()
         except (ValueError, OSError):
-            st.error(
-                "无法提交：请检查候选与参数。配置实验使用固定业务描述；回归只支持单候选；经验复用需要比较流程。"
+            st.error("无法提交：需求、配置或确认已失效，请重新检查并确认。未自动替换为默认任务。")
+    with st.expander("了解训练材料和系统怎样完成任务"):
+        st.write(
+            "需求和算法知识指导代码生成；带标签的数据用于训练分类器和检查效果，不用于微调 GPT。"
+        )
+        if task == "banking77":
+            show_data(ROOT)
+        st.write(
+            "理解需求 → 检索知识 → 规划方案 → 生成代码 → 训练与检查 → 必要时修复 → 保存并回写结果。"
+        )
+        historical = "examples/banking-classification/comparison"
+        if historical in report_catalog(ROOT):
+            st.button(
+                "先看真实 API 完整历史案例（不产生费用）",
+                on_click=navigate,
+                args=("我的开发任务", historical),
             )
 
 
@@ -528,6 +625,12 @@ def show_requirement(relative):
         if settings_path.is_file():
             settings = read_json(settings_path)
             request = settings.get("request") or PROFILES[settings["task"]].request
+            if settings.get("understanding"):
+                for answer in settings["understanding"].get("answers", []):
+                    st.write("**用户补充：** " + answer)
+                with st.expander("确认后的执行要求与方案"):
+                    st.write(settings["understanding"]["proposal"]["summary"])
+                    st.json(settings["experiment"])
     else:
         evidence = workflow_evidence(ROOT, relative)
         request = next(
@@ -553,7 +656,7 @@ def task_detail(relative, was_active=False):
             st.subheader("当前任务：" + STATUS.get(state["status"], state["status"]))
             st.caption("任务编号：" + identifier)
             if state.get("error_category"):
-                st.error(stop_reason(state["error_category"]))
+                show_failure(state["error_category"])
             if state["status"] in {"running", "queued"}:
                 st.info("系统正在完成这次开发。进度会自动更新；刷新页面不会重新提交。")
                 if st.button("停止当前任务", key="stop_" + identifier):
@@ -570,13 +673,23 @@ def task_detail(relative, was_active=False):
             if versions:
                 latest = next(reversed(versions))
                 st.caption("当前版本：" + version_label(latest))
-                st.dataframe(
-                    stage_rows(
-                        versions[latest], terminal=state["status"] not in {"running", "queued"}
-                    ),
-                    hide_index=True,
-                    width="stretch",
-                )
+                bundle = versions[latest]
+                if state["status"] in {"running", "queued"}:
+                    if bundle.get("candidate.py"):
+                        progress = "代码已生成，正在继续检查与评估；请等待报告。"
+                    elif bundle.get("plan.json"):
+                        progress = "方案已准备，正在继续生成代码。"
+                    elif bundle.get("task.json"):
+                        progress = "需求已整理，正在继续准备算法方案。"
+                    else:
+                        progress = "任务已收到，正在准备开发流程。"
+                    st.info(progress)
+                with st.expander("查看已产生的步骤记录（技术详情）"):
+                    st.dataframe(
+                        stage_rows(bundle, terminal=state["status"] not in {"running", "queued"}),
+                        hide_index=True,
+                        width="stretch",
+                    )
             st.caption(
                 "完成后，结果、交付文件和试用入口会在本任务中出现。无需到另一个页面寻找模型。"
             )
@@ -586,7 +699,7 @@ def task_detail(relative, was_active=False):
 
 with reports:
     st.subheader("我的开发任务")
-    st.write("选择一次开发，查看它的需求、进度、交付结果，再试用这次生成的算法。")
+    st.write("第 3 步：查看成果。任务完成后先看是否通过，再试用或下载代码；运行中请等待进度更新。")
     if st.button("刷新任务列表"):
         st.rerun()
     local = [f"runtime/web-jobs/{identifier}/run" for identifier in jobs.list()]
@@ -621,7 +734,7 @@ with reports:
 
 with st.sidebar.expander("辅助工具 · 知识与来源"):
     st.subheader("知识图谱与来源")
-    choices = ["examples/phase4/library.sqlite"]
+    choices = ["examples/experience-reuse/library.sqlite"]
     choices += [
         str((jobs.path(i) / "knowledge.sqlite").relative_to(ROOT))
         for i in jobs.list()

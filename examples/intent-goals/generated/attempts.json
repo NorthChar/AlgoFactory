@@ -1,0 +1,35 @@
+[
+  {
+    "algorithm": "text_logistic",
+    "attempt": 0,
+    "code_hash": "26dd72d4476ff8a71036968799d87d0f5d1c3c12d0d0dec6ff6110148120df87",
+    "config_hash": "cf2490e22c6c8536f56d65138a5b4e8e118f20feb8fcc98ea6bf77e434d6870f",
+    "error_category": null,
+    "experience_usage": {
+      "enabled": false,
+      "excluded": [],
+      "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+      "matches": [],
+      "model_decisions": [],
+      "observed_rule_satisfied": false
+    },
+    "experiment_hash": "07e6f768b29eb51a79cac5de54268e411878dc8de88d78fc3ffa1733ac8f6c3d",
+    "historical_failure": false,
+    "implementation_id": "source:58bf682855e013cea3ed7aec339544037a226b612eb1816b0c9d13477030696b:implementation",
+    "parent_id": null,
+    "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/web-jobs/09f11cc0d8a94ee1be33a33e9ac5a473/run/candidates/text_logistic/attempt-0/report.json",
+    "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+    "status": "validated",
+    "test_attempted": false,
+    "validation_metrics": {
+      "accuracy": 0.9954977488744372,
+      "f1": 0.7428571428571429,
+      "macro_f1": 0.8702930680220613,
+      "precision": 0.6842105263157895,
+      "recall": 0.8125,
+      "roc_auc": 0.9957766011094301
+    },
+    "validation_run_id": "source:58bf682855e013cea3ed7aec339544037a226b612eb1816b0c9d13477030696b:validation",
+    "workflow_id": "workflow:398eea7cd3ca4d8ea1776b17e8bcf027"
+  }
+]

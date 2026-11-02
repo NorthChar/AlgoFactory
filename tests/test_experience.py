@@ -17,7 +17,7 @@ from algofactory.tasks import BANKING77, CHURN
 from algofactory.workflow_models import WorkflowFailure
 
 ROOT = Path(__file__).resolve().parents[1]
-EVIDENCE = ROOT / "examples/api-phase3"
+EVIDENCE = ROOT / "examples/banking-classification"
 CHAIN = EVIDENCE / "comparison/candidates/text_logistic"
 
 
@@ -160,7 +160,7 @@ def test_nonmatching_scope_cannot_be_marked_verified(memory):
 
 def test_failed_trials_do_not_become_zero_measured_scores(monkeypatch):
     monkeypatch.syspath_prepend(str(ROOT / "scripts"))
-    from verify_phase4 import metrics_by_arm
+    from verify_experience import metrics_by_arm
 
     result = metrics_by_arm(
         [

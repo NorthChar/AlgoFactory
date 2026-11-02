@@ -22,8 +22,17 @@ def safe_file(root, relative):
     return path
 
 
-def dataset_snapshot(root):
-    directory = safe_file(root, "runtime/banking77-data")
+def dataset_snapshot(root, relative=None):
+    # Task-local derivatives must never silently fall back to the 77-class dataset.
+    if relative and relative.startswith("runtime/web-jobs/"):
+        from algofactory.web.service import Jobs
+
+        identifier = relative.split("/")[2]
+        directory = safe_file(
+            root, str((Jobs(root).path(identifier) / "dataset").relative_to(Path(root).resolve()))
+        )
+    else:
+        directory = safe_file(root, "runtime/banking77-data")
     manifest = read_json(safe_file(directory, "manifest.json"))
     if manifest.get("task_profile") != "banking77":
         raise ValueError("banking77_required")
@@ -37,10 +46,10 @@ def dataset_snapshot(root):
     return directory, manifest, audit
 
 
-def samples(root, split="train"):
+def samples(root, split="train", relative=None):
     if split not in {"train", "validation"}:
         raise ValueError("browsing_only_train_and_validation")
-    directory, manifest, _ = dataset_snapshot(root)
+    directory, manifest, _ = dataset_snapshot(root, relative)
     if split == "train":
         frame = pd.read_csv(directory / "train.csv", keep_default_na=False)
     else:
@@ -61,7 +70,7 @@ def validation_errors(root, relative, version):
     if version not in evidence["versions"]:
         raise ValueError("unknown_version")
     report = evidence["versions"][version].get("report.json", {})
-    _, manifest, _ = dataset_snapshot(root)
+    _, manifest, _ = dataset_snapshot(root, relative)
     if any(report.get(k) != manifest[k] for k in ("data_fingerprint", "split_id", "class_names")):
         raise ValueError("report_dataset_mismatch")
     directory = safe_file(root, relative + ("/" + version if version != "single" else ""))
@@ -80,7 +89,7 @@ def validation_errors(root, relative, version):
     if len(raw) > 32_000_000 or hashlib.sha256(raw).hexdigest() != report["artifacts_sha256"][name]:
         raise ValueError("predictions_hash_mismatch")
     stored = json.loads(raw)
-    frame = samples(root, "validation")
+    frame = samples(root, "validation", relative)
     ids, predictions = stored["row_ids"], stored["predictions"]
     if (
         stored["status"] != "ok"

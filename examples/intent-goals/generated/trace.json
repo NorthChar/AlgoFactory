@@ -1,0 +1,46 @@
+[
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "启动有界候选比较，所有候选与修复仅使用验证集",
+    "sequence": 0,
+    "source_ids": [],
+    "state": "received",
+    "timestamp": "2026-11-02T14:07:59.989532+08:00",
+    "workflow_id": "search:0dd278b9a2cc4446bc17057d45e95e3e"
+  },
+  {
+    "candidate_id": null,
+    "code_hash": null,
+    "config_hash": null,
+    "reason": "基于适用知识生成候选：text_logistic",
+    "sequence": 1,
+    "source_ids": [],
+    "state": "generate",
+    "timestamp": "2026-11-02T14:08:00.355714+08:00",
+    "workflow_id": "search:0dd278b9a2cc4446bc17057d45e95e3e"
+  },
+  {
+    "candidate_id": "source:58bf682855e013cea3ed7aec339544037a226b612eb1816b0c9d13477030696b:implementation",
+    "code_hash": "26dd72d4476ff8a71036968799d87d0f5d1c3c12d0d0dec6ff6110148120df87",
+    "config_hash": "cf2490e22c6c8536f56d65138a5b4e8e118f20feb8fcc98ea6bf77e434d6870f",
+    "reason": "按已确认目标和冻结协议的验证集排序选定版本；测试失败不换候选",
+    "sequence": 2,
+    "source_ids": [],
+    "state": "selected",
+    "timestamp": "2026-11-02T14:08:31.723611+08:00",
+    "workflow_id": "search:0dd278b9a2cc4446bc17057d45e95e3e"
+  },
+  {
+    "candidate_id": "source:58bf682855e013cea3ed7aec339544037a226b612eb1816b0c9d13477030696b:implementation",
+    "code_hash": "26dd72d4476ff8a71036968799d87d0f5d1c3c12d0d0dec6ff6110148120df87",
+    "config_hash": "cf2490e22c6c8536f56d65138a5b4e8e118f20feb8fcc98ea6bf77e434d6870f",
+    "reason": "验证集比较通过且已回写，未访问最终测试",
+    "sequence": 3,
+    "source_ids": [],
+    "state": "accept",
+    "timestamp": "2026-11-02T14:08:31.727197+08:00",
+    "workflow_id": "search:0dd278b9a2cc4446bc17057d45e95e3e"
+  }
+]

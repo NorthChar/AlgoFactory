@@ -14,7 +14,7 @@ from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-from verify_phase3 import code_files
+from verify_search import code_files
 
 from algofactory.datasets import sha256_file, verify_dataset, write_json
 from algofactory.execution.docker import DockerExecutor

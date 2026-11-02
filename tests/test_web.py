@@ -83,7 +83,7 @@ def test_paths_and_symlinks_cannot_read_credentials(tmp_path):
 
 
 def test_graph_read_only_hash_and_source_edges():
-    path = ROOT / "examples/phase4/library.sqlite"
+    path = ROOT / "examples/experience-reuse/library.sqlite"
     before = path.read_bytes()
     snapshot = graph_snapshot(path)
     entity = next(e for e in snapshot["entities"] if e["type"] == "Experience")
@@ -99,22 +99,26 @@ def test_app_default_and_reports_and_graph(tmp_path, monkeypatch):
     # A symlink outside the workspace is intentionally excluded; copy only needed evidence instead.
     (tmp_path / "examples").unlink()
     for relative in (
-        "examples/phase4/library.sqlite",
-        "examples/phase3/unsafe-code/report.json",
-        "examples/api-phase3/comparison/report.json",
+        "examples/experience-reuse/library.sqlite",
+        "examples/rejected-code/report.json",
+        "examples/banking-classification/comparison/report.json",
     ):
         dest = tmp_path / relative
         dest.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(ROOT / relative, dest)
     monkeypatch.setenv("ALGOFACTORY_PROJECT_ROOT", str(tmp_path))
     app = AppTest.from_file(str(ROOT / "src/algofactory/web/app.py"), default_timeout=30).run()
+    next(r for r in app.radio if r.label == "需求理解方式").set_value("rules").run()
     assert not app.exception
-    assert app.radio[0].value == "mock" and app.selectbox[0].value == "banking77"
+    assert (
+        next(r for r in app.radio if r.label == "代码生成方式").value == "mock"
+        and app.selectbox[0].value == "banking77"
+    )
     report = next(s for s in app.selectbox if s.label == "选择开发任务")
-    report.select("examples/api-phase3/comparison").run()
+    report.select("examples/banking-classification/comparison").run()
     assert not app.exception and any(e.value == "最终测试通过" for e in app.subheader)
     app.selectbox[0].select("regression").run()
-    assert not app.exception and not app.checkbox[0].value
+    assert not app.exception and next(t for t in app.text_area if t.label == "开发需求").disabled
     assert len(app.get("graphviz_chart")) == 1
 
 
@@ -123,7 +127,10 @@ def test_app_submit_only_on_click_and_refresh_no_replay(tmp_path, monkeypatch):
     popen = Mock()
     monkeypatch.setattr("algofactory.web.service.subprocess.Popen", popen)
     app = AppTest.from_file(str(ROOT / "src/algofactory/web/app.py"), default_timeout=30).run()
+    next(r for r in app.radio if r.label == "需求理解方式").set_value("rules").run()
     assert popen.call_count == 0
+    next(b for b in app.button if b.label == "解析并检查需求").click().run()
+    next(c for c in app.checkbox if c.label.startswith("我已核对")).check().run()
     next(b for b in app.button if b.label == "开始生成并验证").click().run()
     assert not app.exception and popen.call_count == 1
     app.run()
@@ -150,12 +157,18 @@ def test_api_budget_preflight_without_paid_calls(
     popen = Mock()
     monkeypatch.setattr("algofactory.web.service.subprocess.Popen", popen)
     app = AppTest.from_file(str(ROOT / "src/algofactory/web/app.py"), default_timeout=30).run()
-    app.radio[0].set_value("api").run()
+    next(r for r in app.radio if r.label == "需求理解方式").set_value("rules").run()
+    next(r for r in app.radio if r.label == "代码生成方式").set_value("api").run()
     assert app.number_input[0].value == 10
     assert popen.call_count == 0
-    app.checkbox[0].set_value(compare)
-    app.checkbox[2].set_value(experiences)
-    app.number_input[0].set_value(budget)
+    request = "开发英文银行咨询分类算法；" + (
+        "比较逻辑回归和朴素贝叶斯" if compare else "只使用逻辑回归"
+    )
+    next(t for t in app.text_area if t.label == "开发需求").set_value(request).run()
+    next(b for b in app.button if b.label == "解析并检查需求").click().run()
+    next(c for c in app.checkbox if c.label == "使用适用的已验证经验").set_value(experiences).run()
+    app.number_input[0].set_value(budget).run()
+    next(c for c in app.checkbox if c.label.startswith("我已核对")).check().run()
     next(b for b in app.button if b.label == "开始 API 生成并验证（产生费用）").click().run()
     assert not app.exception
     assert popen.call_count == int(submitted)
@@ -183,6 +196,8 @@ def test_budget_stop_explained_without_replay(tmp_path, monkeypatch):
         },
     )
     app = AppTest.from_file(str(ROOT / "src/algofactory/web/app.py"), default_timeout=30).run()
+    next(r for r in app.radio if r.label == "需求理解方式").set_value("rules").run()
     assert not app.exception
-    assert any("已达到本次模型请求次数上限" in e.value for e in app.error)
+    assert any("本次大模型请求已达到设置上限" in e.value for e in app.error)
+    assert any(c.value == "call_budget_exhausted" for c in app.code)
     assert popen.call_count == 0

@@ -1,10 +1,10 @@
 # AlgoFactory：银行咨询分类算法开发工作台
 
-AlgoFactory 是一个基于 LLM 的算法开发原型。它围绕**银行客服英文咨询分类这一固定任务**，检索算法知识、生成 Python 代码，在隔离环境中训练与评估，根据错误进行有限修复，最后交付代码、模型、报告及可追溯的知识记录。
+AlgoFactory 是一个基于 LLM 的算法开发原型。它围绕**银行客服英文咨询分类这一场景**，检索算法知识、生成 Python 代码，在隔离环境中训练与评估，根据错误进行有限修复，最后交付代码、模型、报告及可追溯的知识记录。
 
-当前交付版本：**0.7.2**（Git 标签 `v0.7.2`），见 [版本变更](CHANGELOG.md)。
+当前版本：**0.8.0**，见 [版本变更](CHANGELOG.md) 和 [交付与复现记录](docs/delivery.md)。
 
-你可以在本地 Streamlit 工作台创建开发任务、查看生成过程并试用成果，也可以使用命令行。**不需要购买网页服务器；首次体验使用 Mock，无需 API Key。** Mock 固定的是大模型响应，训练和评分仍真实执行。
+你可以在本地 Streamlit 工作台创建开发任务、查看生成过程并试用成果，也可以使用命令行。**不需要购买网页服务器；首次体验使用 Mock，无需 API Key。** 全程免费请选“离线示例与固定表达”及 Mock 生成；自然语言理解会调用 API，费用与代码生成分别计算。Mock 训练和评分仍真实执行。
 
 **首次接手请从 [从零启动工作台](#quickstart) 开始，再按 [完成一次开发任务](#first-run) 操作。** 查看 [生成代码与报告](#deliverables)、[验证证据](#evidence) 或 [常见问题](#troubleshooting) 无需了解项目开发阶段。
 
@@ -16,7 +16,9 @@ AlgoFactory 是一个基于 LLM 的算法开发原型。它围绕**银行客服�
 - **开发成果**：分类流水线代码、训练模型、四维验证报告、候选与修复记录。
 - **成果试用**：例如输入 `I lost my bank card.`，让已训练模型预测问题类别；它与开发需求是两种不同输入，示意句不保证被模型判对。
 
-当前完整业务任务是 77 类已知意图分类，不提供客服自动回复或银行业务办理。API 模式可在既定协议内理解需求；Mock 使用固定需求。算法和有限参数可以通过控件配置，**不支持仅改一句话就切换到任意新业务、上传自有数据或改变标签空间**。合成客户流失和回归用于公共框架兼容检查，不代表同等完善的业务产品。
+当前支持全部 77 类分类、从已有意图中选 2–76 类分类、指定单个意图的属于/不属于识别，不提供客服自动回复或银行业务办理。用户可用自己的话描述需求，由大模型逐项整理、追问并复核，再经用户确认转成实际配置；也保留免费的离线固定表达。语义理解可能有误，必须核对方案。**不支持任意新业务、自有数据上传或新增业务标签**；允许在已有标签内筛选与重映射；合成客户流失和回归仅用于公共框架兼容检查。详见 [工作台指南](docs/workbench-guide.md)。
+
+三个目标的操作、类别边界和复验方法见 [任务目标说明](docs/intent-goals.md)。单个意图可选“优先减少漏判”：调整训练权重/先验并改变候选排序，同时展示误报；不保证业务效果。
 
 项目对应的 [题目原文](docs/source/exam-original.txt)、[需求与实现对照](docs/requirements-matrix.md) 和 [范围决策](docs/decisions/0001-banking77-main-case.md) 可用于审核。
 
@@ -57,7 +59,7 @@ Algorithm ── APPLICABLE_TO ──→ Task
 
 实体保存稳定 ID、来源原文区间和 Schema 版本；验证记录关联代码散列、数据协议及运行 ID。当前使用结构化条件检索，没有向量检索。知识材料用于指导算法生成，咨询数据用于训练和评估，两者用途不同。
 
-可直接阅读 [Schema 定义](src/algofactory/schemas/knowledge.py)、[知识 JSON 样例](examples/phase1/knowledge.json) 和 [GraphML 样例](examples/phase1/knowledge.graphml)。工作台的“开发过程”展示检索依据与回写证据，侧栏辅助工具提供知识图谱。
+可直接阅读 [Schema 定义](src/algofactory/schemas/knowledge.py)、[知识 JSON 样例](examples/knowledge/knowledge.json) 和 [GraphML 样例](examples/knowledge/knowledge.graphml)。工作台的“开发过程”展示检索依据与回写证据，侧栏辅助工具提供知识图谱。
 
 ## 4. Agent 工作流设计
 
@@ -65,7 +67,7 @@ Algorithm ── APPLICABLE_TO ──→ Task
 
 分类候选为 TF-IDF + Logistic Regression 和 TF-IDF + MultinomialNB。系统只依据验证集比较与修复；最终测试每次工作流仅允许选定版本评估一次，测试成绩不用于继续选择或修复。每候选最多两次修复，工作台默认一次，并进一步受请求预算限制。
 
-通过的实现、失败记录及验证结果均可回写；失败回写不等于算法合格。经验只在有重测证据、适用协议匹配时复用。详细机制见 [候选比较与修复](docs/phase3.md) 和 [经验复用及对照](docs/phase4.md)。
+通过的实现、失败记录及验证结果均可回写；失败回写不等于算法合格。经验只在有重测证据、适用协议匹配时复用。详细机制见 [架构与边界](docs/architecture.md) 和 [验收口径](docs/acceptance-gates.md)。
 
 <a id="quickstart"></a>
 
@@ -114,12 +116,12 @@ uv sync --extra web --locked --python 3.11
 ### 5.4 导入随仓库提供的数据
 
 ```sh
-.venv/bin/python -m algofactory.cli prepare-banking77 --raw-dir examples/phase25/banking77-data/raw
+.venv/bin/python -m algofactory.cli prepare-banking77 --raw-dir data/banking77/raw
 ```
 
-预期：生成 **`runtime/banking77-data/`**，其中包含数据清单 `manifest.json`、质量检查 `audit.json` 和划分后的数据。固定协议下为 7,993 条训练、1,999 条验证、3,080 条最终测试。
+预期：生成 **`runtime/banking77-data/`**，其中包含数据清单 `manifest.json`、质量检查 `audit.json` 和划分后的数据。全量任务为 7,993 条训练、1,999 条验证、3,080 条最终测试。指定类别任务只在各原划分内筛选；单个意图任务保持条数、重新映射标签。
 
-这一步从仓库归档的原始文件导入并校验散列，无需自行搜集数据。路径中的历史编号只是文件位置，不代表你要先完成某个开发阶段。这是首次安装步骤。导入器拒绝覆盖非空目标目录；已经成功导入时，后续启动跳过本步骤即可。若导入中断，先把不完整目录移到备份位置再重试，不要手工修改样本或沿用不匹配的清单。
+这一步从仓库归档的原始文件导入并校验散列，无需自行搜集数据。这是首次安装步骤。导入器拒绝覆盖非空目标目录；已经成功导入时，后续启动跳过本步骤即可。若导入中断，先把不完整目录移到备份位置再重试，不要手工修改样本或沿用不匹配的清单。
 
 ### 5.5 启动同一套工作台
 
@@ -135,12 +137,14 @@ uv sync --extra web --locked --python 3.11
 
 ### 5.6 完成一次不产生 API 费用的开发任务
 
-1. 点击“开始开发银行分类算法”，确认算法输入是英文咨询，输出是已知问题类别及概率。
-2. 保留 **Mock、候选比较、仅验证集评估** 和高级设置默认值，无需配置密钥。
-3. 点击“开始生成并验证”。页面自动进入“我的开发任务”，显示本次任务的进度；刷新不会重复提交。
+1. 点击“开始开发银行分类算法”，先选择开发目标及对应类别，再选择 **离线示例与固定表达（不产生 API 费用）**，填写开发需求。可先用页面示例：“开发英文银行咨询分类算法；输出77类意图及概率；只使用逻辑回归；仅使用单词特征；词表上限10000；逻辑回归C=1”。
+2. 在离线模式点击“解析并检查需求”，核对执行配置及每一项的来源。支持的表达见页面说明；无法识别的句子也会阻止提交，不会猜测或自动回退。改为“比较逻辑回归和朴素贝叶斯”才能启用双候选。
+3. 选择 **使用模板生成代码（此步不产生 API 费用）**（Mock），核对评估方式、修复次数和请求预算，勾选确认后点击“开始生成并验证”。任何需求或运行设置变动都会使确认失效。页面自动进入本次任务，刷新不会重复提交。
 4. 完成后查看“结果与交付”：成功时应显示“验证集通过”，并提供生成代码与报告。未执行最终测试是本次默认设置的预期结果，不是漏跑。
 5. 在“开发过程”查看需求、检索、方案、代码、评估、修复（若发生）及回写依据。
-6. 在“试用本次算法”输入一条自己编写的英文银行咨询，查看本次模型的预测。概率不是正确率保证，分类可能出错；试用不计入标准评估。
+6. 点击“输入咨询，试用本次成果”，在“试用本次算法”输入一条自己编写的英文银行咨询，查看本次模型的预测。概率不是正确率保证，分类可能出错；试用不计入标准评估。
+
+**用日常语言提出需求：** 配置好 API 后选“用自己的话描述”，点击“理解我的需求”才调用。每轮最多两次请求，最多三轮；可以回答追问并重新理解。核对建议及限制后再确认生成。理解请求与代码生成预算分开计算，选 Mock 生成也不会免去已经发生的理解费用。详见 [需求与补充问答](docs/workbench-guide.md)。
 
 也可先在首页点击“查看已完成的银行分类开发任务”，只读浏览历史真实 API 案例。仅浏览不产生费用。历史模型未保存时，需要显式点击“准备此版本模型”后再试用：这是按旧代码重新训练，不是恢复历史权重。
 
@@ -178,7 +182,7 @@ ALGOFACTORY_DOCKER_TESTS=1 .venv/bin/python -m pytest -q
 
 预期：检查无错误、测试无失败；**完整验收还要求没有跳过**。未启用容器测试的普通测试会跳过部分用例，不能据此宣称完整闭环通过。测试使用 Mock 或本机模拟 HTTP 服务，不调用付费 LLM；容器测试会实际运行算法。
 
-需要进一步执行自动化工作台提交与模型推理验证时，可运行 [完整交互验收脚本](scripts/verify_phase7.py)；需要独立副本、新环境和无缓存镜像验证时，参见 [环境复现记录与操作条件](docs/phase6.md#复现协议)。后者基于已提交 Git 内容执行，不能用来验证尚未提交的修改。
+需要执行四种分类目标的后台工作台任务与模型试用检查，可运行 `scripts/verify_intent_goals.py`；需求执行与修复检查使用 `scripts/verify_requirements.py`。独立副本、新 Python 环境和 wheel 安装复现见 [交付验证](docs/delivery.md)。这些检查默认不调用付费 API。
 
 <a id="troubleshooting"></a>
 
@@ -205,16 +209,17 @@ BANKING77 原始有 **13,083 条英文咨询、77 类意图**。每条咨询带�
 | 用途 | 数据协议 | 算法与指标 |
 | --- | --- | --- |
 | 完整业务任务：银行咨询分类 | 固定官方版本；训练侧去重、移除与测试重合项，再分层划分训练/验证；保留官方测试集 | TF-IDF + Logistic Regression / MultinomialNB；Macro-F1、Accuracy |
+| 衍生业务任务：指定类别/单个意图 | 从固定 BANKING77 原划分内筛选或重映射；独立指纹、标签映射与评估协议 | 文本多分类或二分类；Macro-F1、Accuracy，二分类另报告正类 Precision/Recall/F1/ROC-AUC |
 | 公共框架兼容：客户流失 | 固定种子生成 1,500 行；60/20/20 分层划分 | Logistic Regression；F1、ROC-AUC |
 | 公共框架兼容：回归 | 固定种子生成 600 行；60/20/20 划分 | Ridge；MAE、RMSE（越低越好） |
 
-数据来源为 PolyAI，作者 Iñigo Casanueva、Tadas Temcinas、Daniela Gerz、Matthew Henderson、Ivan Vulić（2020），论文 *Efficient Intent Detection with Dual Sentence Encoders*。保留 [原许可 CC BY 4.0](examples/phase25/banking77-data/raw/LICENSE)，固定上游提交为 `57ec275d8078af65b7731c2a98be812d844a6d6b`；去重和划分是本项目处理，详见 [导入协议与审计](docs/phase25.md)。客户流失与回归使用合成数据，不代表真实业务效果。
+数据来源为 PolyAI，作者 Iñigo Casanueva、Tadas Temcinas、Daniela Gerz、Matthew Henderson、Ivan Vulić（2020），论文 *Efficient Intent Detection with Dual Sentence Encoders*。保留 [原许可 CC BY 4.0](data/banking77/raw/LICENSE)，固定上游提交为 `57ec275d8078af65b7731c2a98be812d844a6d6b`；去重和划分是本项目处理，详见 [数据来源与导入](data/README.md)。客户流失与回归使用合成数据，不代表真实业务效果。
 
 <a id="deliverables"></a>
 
 ## 7. 生成算法代码与交付物
 
-直接查看 [真实 API 生成并修复的分类代码](examples/api-phase3/comparison/candidate.py) 和 [对应中文报告](examples/api-phase3/comparison/report.md)。代码使用统一的 `build_pipeline(config)` 接口，在配套环境中构建分类流水线；它不是可以脱离依赖和数据协议运行的完整网站。
+直接查看 [真实 API 生成并修复的分类代码](examples/banking-classification/comparison/candidate.py) 和 [对应中文报告](examples/banking-classification/comparison/report.md)。代码使用统一的 `build_pipeline(config)` 接口，在配套环境中构建分类流水线；它不是可以脱离依赖和数据协议运行的完整网站。
 
 工作台每次提交的主要产物位于 `runtime/web-jobs/<任务编号>/`：
 
@@ -236,14 +241,12 @@ BANKING77 原始有 **13,083 条英文咨询、77 类意图**。每条咨询带�
 
 | 证据 | 证明什么 | 边界 |
 | --- | --- | --- |
-| [当前交付版本验证](examples/delivery-072/verification.json) | 本次业务代码完整回归 265 项通过、零跳过；数据重新导入、页面与交付文件检查通过 | 复用现有本机依赖与 Docker，未重做全新安装；测试后仅将版本元数据更新为 0.7.2 |
-| [真实 API 完整闭环](examples/api-phase3/comparison/report.md) | 生成、真实错误修复、两个候选比较、最终测试和回写；最终测试 Macro-F1 **0.878695**、Accuracy **0.878247** | 属于该次固定协议与实现，不是每条新输入的正确率保证 |
-| [工作台任务整合验收](examples/workbench-071/verification.json) | 0.7.1 基线 265 项测试通过、零跳过；浏览器 Mock 提交、真实训练验证与任务绑定试用 | 该轮未新增付费 API 或最终测试；其中一条手工咨询分类不准确，待进一步分析 |
-| [交互功能与独立安装验收](examples/phase7/verification.json) | 0.7.0 基线工作区和独立安装环境各 262 项测试通过、零跳过 | 同一物理主机，复用缓存与批准镜像 |
-| [独立环境冷启动记录](examples/phase6/verification.json) | 0.6.0 基线在独立副本、新环境、wheel 安装及无缓存重建镜像上通过 233 项测试 | 历史版本；不能当作当前修改已重新冷启动验收，也不是第二台机器验证 |
-| [经验复用对照](examples/phase4/verification.json) | 检索、消费、来源链及检查机制可用 | 小规模对照未观察到修复次数或指标收益；开启组多用 1,067 token |
+| [提交版复现](docs/delivery.md) | 当前版本的独立安装、完整回归和任务流程验证 | 以记录中的提交与执行范围为准 |
+| [真实 API 完整闭环](examples/banking-classification/comparison/report.md) | 真实错误修复、两个候选比较、最终测试和回写；Macro-F1 0.878695、Accuracy 0.878247 | 历史 77 类固定协议，不是每条新咨询的正确率保证 |
+| [可选择分类目标](examples/intent-goals/README.md) | 全量、指定类别、单个意图的验证摘要；真实 API 理解及单意图生成节选 | 未验证所有类别组合，真实 API 新样例未执行最终测试 |
+| [经验复用对照](examples/experience-reuse/historical-summary.json) | 检索、来源链与检查机制可用 | 历史小规模对照未观察到修复次数或指标收益 |
 
-报告按各自提交保存，历史失败也保留；不能把各版本测试数量相加，也不能把历史记录当成本次复验。接收者的实际复现结果应以所用提交、环境和本次日志为准。验证维度与判定规则见 [验收协议](docs/acceptance-gates.md)。
+[示例索引](examples/README.md) 标明完整案例和节选的区别。历史报告内的日期、路径及散列保持原样；不能把不同版本测试数相加或把历史记录说成当前重新执行。验证维度与判定规则见 [验收口径](docs/acceptance-gates.md)。
 
 ## 9. 挑战与解决方案
 
@@ -266,8 +269,8 @@ BANKING77 原始有 **13,083 条英文咨询、77 类意图**。每条咨询带�
 | API 接入与调用记录 | [API 配置说明](docs/api-integration.md#本地配置) |
 | 原题完成情况与证据 | [需求矩阵](docs/requirements-matrix.md) |
 | 版本变更 | [变更记录](CHANGELOG.md) |
-| 开发过程、范围决策与历史验收 | [实施记录](docs/implementation-plan.md)、[冷启动记录](docs/phase6.md) |
+| 交付组织、独立复现与历史归档 | [交付说明](docs/delivery.md)、[示例索引](examples/README.md) |
 
-部分目录、脚本及历史记录保留 `phase` 编号，以保持证据路径和散列可追溯；这些是开发归档标识，**不是首次安装的操作步骤**。按本文第 5 节即可启动工作台，无需依次执行历史阶段。
+开发阶段计划和重复实验已移出当前交付目录，仍可通过 Git 历史追溯。按第 5 节即可启动工作台。
 
 仓库：[NorthChar/AlgoFactory](https://github.com/NorthChar/AlgoFactory)，默认分支 `main`，访问需授权。交付时应记录对应提交号，确保源码、工作台和文档来自同一版本；本地未提交或未推送的修改不会出现在接收者的克隆中。

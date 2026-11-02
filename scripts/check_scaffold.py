@@ -1,4 +1,4 @@
-"""Check source integrity and Phase 0 structure; this is not algorithm acceptance."""
+"""Check original requirements and delivery documents; this is not algorithm acceptance."""
 
 import hashlib
 import json
@@ -11,7 +11,7 @@ for name, expected in json.loads((root / "docs/source/sha256.json").read_text())
     actual = hashlib.sha256((root / "docs/source" / name).read_bytes()).hexdigest()
     if actual != expected:
         raise SystemExit(f"Source archive changed: {name}")
-for name in ["implementation-plan", "requirements-matrix", "architecture", "acceptance-gates"]:
+for name in ["delivery", "requirements-matrix", "architecture", "acceptance-gates"]:
     if not (root / f"docs/{name}.md").is_file():
         raise SystemExit(f"Missing document: {name}")
 result = subprocess.run(

@@ -1,5 +1,5 @@
-# 原始资料存档
+# 题目原文
 
-exam-original.txt 为用户于 2026-10-27 在本聊天提供的题目正文，从“LLM agent笔试”至“10.后续可扩展方向。”，不含聊天引导语“题目原文：”和“方案：”。保留正文字符、标点、行序与段落；UTF-8、LF，无额外末尾换行。discussion-plan-original.txt 为用户附件的逐字节副本。sha256.json 用于检查存档后是否发生变化，不能替代与聊天正文的人工核对。
+exam-original.txt 保留最初提供的题目正文，sha256.json 校验原文未被改写。当前完成情况见 [要求对照](../requirements-matrix.md)。
 
-这些文件为只读来源约定，不追加说明、不纠正文字。后续变更记录在其他文档，禁止用计划替换原题。
+内部讨论计划已移出提交目录；完整旧记录可在 [整理前的 Git 版本](https://github.com/NorthChar/AlgoFactory/tree/2758572d4167b9f66420b79ffd415f51819cb60e/docs/source) 中追溯。删除讨论计划不改变题目正文或验收范围。

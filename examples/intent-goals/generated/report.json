@@ -1,0 +1,352 @@
+{
+  "artifacts_sha256": {
+    "attempts.json": "cb44f1d8f78e0b96301d088f031a64c6ba5cef84567e8f87821f2d874da79002",
+    "candidate.json": "b3e401e1775ccc9063197e28f31b9c597162159ae6bdda4d56ce159e57ed0d46",
+    "candidate.py": "26dd72d4476ff8a71036968799d87d0f5d1c3c12d0d0dec6ff6110148120df87",
+    "candidates/text_logistic/attempt-0/builder-input.json": "ea7643cf3911270eb042e124eda52e49bfe911cba5b839736c99e6e6d6a981f0",
+    "candidates/text_logistic/attempt-0/candidate.json": "b3e401e1775ccc9063197e28f31b9c597162159ae6bdda4d56ce159e57ed0d46",
+    "candidates/text_logistic/attempt-0/candidate.py": "26dd72d4476ff8a71036968799d87d0f5d1c3c12d0d0dec6ff6110148120df87",
+    "candidates/text_logistic/attempt-0/configuration-check.json": "4806ef05bacdbbcd3b89eaf1d9bf8b5e2a179ebaf89f24ca7f3796e47f984e1a",
+    "candidates/text_logistic/attempt-0/data-manifest.json": "dcec9c2f4eb24eceda59ea023af6430199e626536c75b8b441890764773a9332",
+    "candidates/text_logistic/attempt-0/decisions.json": "349d2697673c30ad730e2708285ca4d376a0eb949ceb16a280f56ec2858b37c2",
+    "candidates/text_logistic/attempt-0/experience-retrieval.json": "af3f6c94524807e74ea3a6cee452b9da96cd7e15127c5996fbcbcbf6e176662a",
+    "candidates/text_logistic/attempt-0/experience-use.json": "af3f6c94524807e74ea3a6cee452b9da96cd7e15127c5996fbcbcbf6e176662a",
+    "candidates/text_logistic/attempt-0/experiment.json": "bdf05d5a3bdc364520370f7d1be7db2d967f6041688aa647c0ff1bddaa53c1a0",
+    "candidates/text_logistic/attempt-0/knowledge-input.json": "fb4a0a07fadf7035d4bc0e01c511c989e77afde2db26f47779ec003f79959bc2",
+    "candidates/text_logistic/attempt-0/plan-proposal.json": "7f055055f381b212ef84b95edaaf5685766a94d0a3227432e88695f788646502",
+    "candidates/text_logistic/attempt-0/plan.json": "7f055055f381b212ef84b95edaaf5685766a94d0a3227432e88695f788646502",
+    "candidates/text_logistic/attempt-0/protocol.json": "7e3fdbf5ed8cbf7ef15cfbdf50b989fd78216c9f35726e73287cfbd9f35f916d",
+    "candidates/text_logistic/attempt-0/provider-audit.json": "1f6da492d3c1facbeb3c2dcfb986b725e4bcc0e421093214c3b13ffc96fe2a49",
+    "candidates/text_logistic/attempt-0/provider-usage.json": "0a8d9ddf22f934fd4550fc003490433147eb4e53faea7f8cdf939421d5eed973",
+    "candidates/text_logistic/attempt-0/report.json": "36a22e36bb432c8200bbc163cc81ab6450107a78d16c18982f12363ad1b2607a",
+    "candidates/text_logistic/attempt-0/report.md": "d486b9845e28b07abc569c9a4752ef3e1de0b393528d4f35a9af55767382f59c",
+    "candidates/text_logistic/attempt-0/retrieval.json": "77a98668dfbcd365c57989799aea2fccf6eca5340b9da7076413c2e860006201",
+    "candidates/text_logistic/attempt-0/task.json": "0943a4fc27cded2234e40ed80a8a812f2a6b8f40f4e6531482b68e4938703986",
+    "candidates/text_logistic/attempt-0/trace.json": "7c580298de139cd756ff69c6fa99e249fa10ea641054c025e160ad3ba1985d0a",
+    "candidates/text_logistic/attempt-0/validation-class-details.json": "d134140125ff4886636ce1ccbebb8c247633bff0a6c3a8c7cf4b6086be096f85",
+    "candidates/text_logistic/attempt-0/validation-execution/cleanup.json": "7c15433219d9f30b0afd66679fbd5575220c52a1bc5b67e8ef4f6e19732befce",
+    "candidates/text_logistic/attempt-0/validation-execution/container-state.json": "133c526f5a76ac4b15375ad47352654f7fbe6d2d0b84feeb0d5647924182e56e",
+    "candidates/text_logistic/attempt-0/validation-execution/execution.json": "db28a89dd5b13b706dd20fb0769de0ea07b20a6cf8a4f4d370f4febba8abd0ff",
+    "candidates/text_logistic/attempt-0/validation-execution/model-provenance.json": "c52ecca413d06ab405e91e9c4a6c1be2d41873d6388ba8d42340f1f0c741f173",
+    "candidates/text_logistic/attempt-0/validation-execution/model.pkl.gz": "af609462d25ea0c771fc948706b532baead8e8be881da6618066eb29953b87db",
+    "candidates/text_logistic/attempt-0/validation-execution/predictions.json": "a21077eea0a67024d9f340738c3a16c06b7f8c8cc9cb5709cc9732e8599ba53b",
+    "candidates/text_logistic/attempt-0/validation-execution/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "data-manifest.json": "dcec9c2f4eb24eceda59ea023af6430199e626536c75b8b441890764773a9332",
+    "decisions.json": "0c6de3f7cbeddb40b3a02892e95815195c6d2e4441d740b55d2e56f351a90275",
+    "experience-library.json": "435855bc0a9041a577fbb5cb8185810b5d6e83d7adddbf526ef694d3a3b21bc5",
+    "experiment.json": "bdf05d5a3bdc364520370f7d1be7db2d967f6041688aa647c0ff1bddaa53c1a0",
+    "plan.json": "7f055055f381b212ef84b95edaaf5685766a94d0a3227432e88695f788646502",
+    "protocol.json": "7e3fdbf5ed8cbf7ef15cfbdf50b989fd78216c9f35726e73287cfbd9f35f916d",
+    "provider-audit.json": "1f6da492d3c1facbeb3c2dcfb986b725e4bcc0e421093214c3b13ffc96fe2a49",
+    "provider-usage.json": "0a8d9ddf22f934fd4550fc003490433147eb4e53faea7f8cdf939421d5eed973",
+    "ranking.json": "c0c4978b5babc6b0dbc8e81f399d071c6529b4f69838b2c35d613b068695d100",
+    "search-config.json": "4188807c9e07028bb13e8fcd9e7e91d8b1f104856bc3b09b7f79f3689720cf4e",
+    "task.json": "0943a4fc27cded2234e40ed80a8a812f2a6b8f40f4e6531482b68e4938703986",
+    "trace.json": "6aad55afcee0dd7751821a968984cb1ca8338a2f6144d062c90a72f92db0a309",
+    "validation-class-details.json": "d134140125ff4886636ce1ccbebb8c247633bff0a6c3a8c7cf4b6086be096f85"
+  },
+  "attempts": [
+    {
+      "algorithm": "text_logistic",
+      "attempt": 0,
+      "code_hash": "26dd72d4476ff8a71036968799d87d0f5d1c3c12d0d0dec6ff6110148120df87",
+      "config_hash": "cf2490e22c6c8536f56d65138a5b4e8e118f20feb8fcc98ea6bf77e434d6870f",
+      "error_category": null,
+      "experience_usage": {
+        "enabled": false,
+        "excluded": [],
+        "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+        "matches": [],
+        "model_decisions": [],
+        "observed_rule_satisfied": false
+      },
+      "experiment_hash": "07e6f768b29eb51a79cac5de54268e411878dc8de88d78fc3ffa1733ac8f6c3d",
+      "historical_failure": false,
+      "implementation_id": "source:58bf682855e013cea3ed7aec339544037a226b612eb1816b0c9d13477030696b:implementation",
+      "parent_id": null,
+      "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/web-jobs/09f11cc0d8a94ee1be33a33e9ac5a473/run/candidates/text_logistic/attempt-0/report.json",
+      "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+      "status": "validated",
+      "test_attempted": false,
+      "validation_metrics": {
+        "accuracy": 0.9954977488744372,
+        "f1": 0.7428571428571429,
+        "macro_f1": 0.8702930680220613,
+        "precision": 0.6842105263157895,
+        "recall": 0.8125,
+        "roc_auc": 0.9957766011094301
+      },
+      "validation_run_id": "source:58bf682855e013cea3ed7aec339544037a226b612eb1816b0c9d13477030696b:validation",
+      "workflow_id": "workflow:398eea7cd3ca4d8ea1776b17e8bcf027"
+    }
+  ],
+  "budget_usage": {
+    "attempt_limit": 1,
+    "attempts": 1,
+    "provider_call_limit": 4,
+    "provider_calls": 4
+  },
+  "candidate": {
+    "attempt": 0,
+    "code_hash": "26dd72d4476ff8a71036968799d87d0f5d1c3c12d0d0dec6ff6110148120df87",
+    "implementation_id": "workflow:398eea7cd3ca4d8ea1776b17e8bcf027:candidate",
+    "parent_id": null,
+    "plan_id": "workflow:398eea7cd3ca4d8ea1776b17e8bcf027:plan",
+    "schema_version": 1
+  },
+  "candidate_mode": "single",
+  "candidate_stops": [],
+  "class_names": [
+    "other_known_intents",
+    "lost_or_stolen_card"
+  ],
+  "code_hash": "26dd72d4476ff8a71036968799d87d0f5d1c3c12d0d0dec6ff6110148120df87",
+  "data_fingerprint": "db9b0e9b45bf2d23aefc3bdd74371c69abaa7b1419e5d54d9de264a6bdb46a59",
+  "design_explanation": {
+    "algorithm_id": "source:aa640e680af9edaf41b7bf2399cd9fea9baa0ed8be44e73efb30a66d32e180cf:algorithm:tfidf_logistic_regression",
+    "evidence_ids": [
+      "source:aa640e680af9edaf41b7bf2399cd9fea9baa0ed8be44e73efb30a66d32e180cf:algorithm:tfidf_logistic_regression"
+    ],
+    "final_test_evaluated": false,
+    "selection_basis": "预先指定的单候选；不声称是所有算法中最优",
+    "text": "任务要求预测 intent，类型为 binary_classification。方案依据适用知识选择算法实体 source:aa640e680af9edaf41b7bf2399cd9fea9baa0ed8be44e73efb30a66d32e180cf:algorithm:tfidf_logistic_regression，并要求预处理只在训练集拟合。候选是否通过由独立验证器依据冻结门槛决定，不由模型自行评分。此次运行状态为 validated。",
+    "validation_run_id": "source:1a3e9d25148bf78237e50de25978557caf7e12a863a576fd050ac245ac8ce661:validation",
+    "workflow_id": "search:0dd278b9a2cc4446bc17057d45e95e3e"
+  },
+  "error_category": null,
+  "evaluation_scope": "comparison_validation_only",
+  "execution_evidence": [],
+  "experience_enabled": false,
+  "experiment": {
+    "algorithms": [
+      "text_logistic"
+    ],
+    "goal": "one_vs_rest",
+    "intents": [
+      "lost_or_stolen_card"
+    ],
+    "logistic_c": 4.0,
+    "max_features": 30000,
+    "nb_alpha": 0.1,
+    "nb_alpha_schedule": [
+      0.1,
+      0.05,
+      0.01
+    ],
+    "ngram_max": 2,
+    "objective": "recall",
+    "optimization": "frozen_nb_schedule",
+    "schema_version": 1
+  },
+  "experiment_hash": "07e6f768b29eb51a79cac5de54268e411878dc8de88d78fc3ffa1733ac8f6c3d",
+  "fault_fixture": null,
+  "knowledge_ids": {
+    "dataset_id": "source:1a3e9d25148bf78237e50de25978557caf7e12a863a576fd050ac245ac8ce661:dataset",
+    "implementation_id": "source:58bf682855e013cea3ed7aec339544037a226b612eb1816b0c9d13477030696b:implementation",
+    "task_id": "source:1a3e9d25148bf78237e50de25978557caf7e12a863a576fd050ac245ac8ce661:task",
+    "validation_run_id": "source:1a3e9d25148bf78237e50de25978557caf7e12a863a576fd050ac245ac8ce661:validation"
+  },
+  "learned_experiences": [],
+  "persisted": true,
+  "policy": {
+    "algorithms": [
+      "text_logistic"
+    ],
+    "attempt_budget": 1,
+    "max_repairs": 0,
+    "ranking": "recall_desc_macro_f1_desc_accuracy_desc_algorithm_order",
+    "schema_version": 1
+  },
+  "provider_mode": "api",
+  "ranking": [
+    {
+      "algorithm": "text_logistic",
+      "attempt": 0,
+      "code_hash": "26dd72d4476ff8a71036968799d87d0f5d1c3c12d0d0dec6ff6110148120df87",
+      "config_hash": "cf2490e22c6c8536f56d65138a5b4e8e118f20feb8fcc98ea6bf77e434d6870f",
+      "error_category": null,
+      "experience_usage": {
+        "enabled": false,
+        "excluded": [],
+        "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+        "matches": [],
+        "model_decisions": [],
+        "observed_rule_satisfied": false
+      },
+      "experiment_hash": "07e6f768b29eb51a79cac5de54268e411878dc8de88d78fc3ffa1733ac8f6c3d",
+      "historical_failure": false,
+      "implementation_id": "source:58bf682855e013cea3ed7aec339544037a226b612eb1816b0c9d13477030696b:implementation",
+      "parent_id": null,
+      "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/web-jobs/09f11cc0d8a94ee1be33a33e9ac5a473/run/candidates/text_logistic/attempt-0/report.json",
+      "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+      "status": "validated",
+      "test_attempted": false,
+      "validation_metrics": {
+        "accuracy": 0.9954977488744372,
+        "f1": 0.7428571428571429,
+        "macro_f1": 0.8702930680220613,
+        "precision": 0.6842105263157895,
+        "recall": 0.8125,
+        "roc_auc": 0.9957766011094301
+      },
+      "validation_run_id": "source:58bf682855e013cea3ed7aec339544037a226b612eb1816b0c9d13477030696b:validation",
+      "workflow_id": "workflow:398eea7cd3ca4d8ea1776b17e8bcf027"
+    }
+  ],
+  "search_config_hash": "61f1818e7ec3457a671184fb1b754d26e39a7686bb783d7f27c98075933490db",
+  "search_summary": {
+    "attempts": [
+      {
+        "algorithm": "text_logistic",
+        "attempt": 0,
+        "code_hash": "26dd72d4476ff8a71036968799d87d0f5d1c3c12d0d0dec6ff6110148120df87",
+        "config_hash": "cf2490e22c6c8536f56d65138a5b4e8e118f20feb8fcc98ea6bf77e434d6870f",
+        "error_category": null,
+        "experience_usage": {
+          "enabled": false,
+          "excluded": [],
+          "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+          "matches": [],
+          "model_decisions": [],
+          "observed_rule_satisfied": false
+        },
+        "experiment_hash": "07e6f768b29eb51a79cac5de54268e411878dc8de88d78fc3ffa1733ac8f6c3d",
+        "historical_failure": false,
+        "implementation_id": "source:58bf682855e013cea3ed7aec339544037a226b612eb1816b0c9d13477030696b:implementation",
+        "parent_id": null,
+        "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/web-jobs/09f11cc0d8a94ee1be33a33e9ac5a473/run/candidates/text_logistic/attempt-0/report.json",
+        "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+        "status": "validated",
+        "test_attempted": false,
+        "validation_metrics": {
+          "accuracy": 0.9954977488744372,
+          "f1": 0.7428571428571429,
+          "macro_f1": 0.8702930680220613,
+          "precision": 0.6842105263157895,
+          "recall": 0.8125,
+          "roc_auc": 0.9957766011094301
+        },
+        "validation_run_id": "source:58bf682855e013cea3ed7aec339544037a226b612eb1816b0c9d13477030696b:validation",
+        "workflow_id": "workflow:398eea7cd3ca4d8ea1776b17e8bcf027"
+      }
+    ],
+    "budget_usage": {
+      "attempt_limit": 1,
+      "attempts": 1,
+      "provider_call_limit": 4,
+      "provider_calls": 4
+    },
+    "candidate_stops": [],
+    "policy": {
+      "algorithms": [
+        "text_logistic"
+      ],
+      "attempt_budget": 1,
+      "max_repairs": 0,
+      "ranking": "recall_desc_macro_f1_desc_accuracy_desc_algorithm_order",
+      "schema_version": 1
+    },
+    "ranking": [
+      {
+        "algorithm": "text_logistic",
+        "attempt": 0,
+        "code_hash": "26dd72d4476ff8a71036968799d87d0f5d1c3c12d0d0dec6ff6110148120df87",
+        "config_hash": "cf2490e22c6c8536f56d65138a5b4e8e118f20feb8fcc98ea6bf77e434d6870f",
+        "error_category": null,
+        "experience_usage": {
+          "enabled": false,
+          "excluded": [],
+          "interpretation": "Delivery and model-declared use are traceable; causality requires controlled comparison.",
+          "matches": [],
+          "model_decisions": [],
+          "observed_rule_satisfied": false
+        },
+        "experiment_hash": "07e6f768b29eb51a79cac5de54268e411878dc8de88d78fc3ffa1733ac8f6c3d",
+        "historical_failure": false,
+        "implementation_id": "source:58bf682855e013cea3ed7aec339544037a226b612eb1816b0c9d13477030696b:implementation",
+        "parent_id": null,
+        "report": "/Users/northchar/Documents/Codex/AlgoFactory/runtime/web-jobs/09f11cc0d8a94ee1be33a33e9ac5a473/run/candidates/text_logistic/attempt-0/report.json",
+        "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+        "status": "validated",
+        "test_attempted": false,
+        "validation_metrics": {
+          "accuracy": 0.9954977488744372,
+          "f1": 0.7428571428571429,
+          "macro_f1": 0.8702930680220613,
+          "precision": 0.6842105263157895,
+          "recall": 0.8125,
+          "roc_auc": 0.9957766011094301
+        },
+        "validation_run_id": "source:58bf682855e013cea3ed7aec339544037a226b612eb1816b0c9d13477030696b:validation",
+        "workflow_id": "workflow:398eea7cd3ca4d8ea1776b17e8bcf027"
+      }
+    ]
+  },
+  "selected_algorithm": "text_logistic",
+  "selected_implementation_id": "source:58bf682855e013cea3ed7aec339544037a226b612eb1816b0c9d13477030696b:implementation",
+  "selection": {
+    "goal": "one_vs_rest",
+    "intents": [
+      "lost_or_stolen_card"
+    ],
+    "objective": "recall"
+  },
+  "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+  "status": "validated",
+  "task_profile": "banking77",
+  "test_attempted": false,
+  "thresholds": {
+    "macro_f1": 0.68,
+    "recall": 0.26
+  },
+  "validation": {
+    "code_hash": "26dd72d4476ff8a71036968799d87d0f5d1c3c12d0d0dec6ff6110148120df87",
+    "config_hash": "cf2490e22c6c8536f56d65138a5b4e8e118f20feb8fcc98ea6bf77e434d6870f",
+    "error_category": null,
+    "final_test_evaluated": false,
+    "functional": {
+      "details": "真实 fit/predict，长度、顺序和有限数值校验通过",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "implementation_id": "source:58bf682855e013cea3ed7aec339544037a226b612eb1816b0c9d13477030696b:implementation",
+    "interface": {
+      "details": "build_pipeline / fit / predict / predict_proba",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "metrics": {
+      "details": "验证集对照预先冻结门槛",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "report_paths": [
+      "/Users/northchar/Documents/Codex/AlgoFactory/runtime/web-jobs/09f11cc0d8a94ee1be33a33e9ac5a473/run/report.json",
+      "/Users/northchar/Documents/Codex/AlgoFactory/runtime/web-jobs/09f11cc0d8a94ee1be33a33e9ac5a473/run/report.md"
+    ],
+    "resources": {
+      "elapsed_seconds": 0.7467179170000122,
+      "peak_memory_mib": 174.6171875,
+      "schema_version": 1
+    },
+    "run_id": "source:1a3e9d25148bf78237e50de25978557caf7e12a863a576fd050ac245ac8ce661:validation",
+    "schema_version": 1,
+    "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+    "stability": {
+      "details": "{\"seed_repeat\": true, \"missing_column_rejected\": true, \"invalid_text_rejected\": true, \"unseen_text_handled\": true}",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "status": "passed",
+    "test_metrics": {},
+    "validation_metrics": {
+      "accuracy": 0.9954977488744372,
+      "f1": 0.7428571428571429,
+      "macro_f1": 0.8702930680220613,
+      "precision": 0.6842105263157895,
+      "recall": 0.8125,
+      "roc_auc": 0.9957766011094301
+    }
+  },
+  "workflow_id": "search:0dd278b9a2cc4446bc17057d45e95e3e"
+}

@@ -19,9 +19,10 @@ class SearchPolicy(Contract):
     )
     max_repairs: int = Field(default=2, ge=0, le=2)
     attempt_budget: int = Field(default=6, ge=1, le=6)
-    ranking: Literal["macro_f1_desc_accuracy_desc_algorithm_order"] = (
-        "macro_f1_desc_accuracy_desc_algorithm_order"
-    )
+    ranking: Literal[
+        "macro_f1_desc_accuracy_desc_algorithm_order",
+        "recall_desc_macro_f1_desc_accuracy_desc_algorithm_order",
+    ] = "macro_f1_desc_accuracy_desc_algorithm_order"
 
     @model_validator(mode="after")
     def unique_algorithms(self):
@@ -100,6 +101,9 @@ def rank_candidates(attempts, policy, protocol):
     return sorted(
         eligible,
         key=lambda r: (
+            -r["validation_metrics"].get("recall", 0)
+            if protocol.get("selection", {}).get("objective") == "recall"
+            else 0,
             -r["validation_metrics"]["macro_f1"],
             -r["validation_metrics"]["accuracy"],
             policy.algorithms.index(r["algorithm"]),

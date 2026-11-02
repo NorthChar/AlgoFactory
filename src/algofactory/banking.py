@@ -141,7 +141,69 @@ def prepared(raw):
     return frames, split, classes, audit
 
 
-def import_banking77(directory: Path, raw_dir: Path | None = None):
+def select_frames(frames, split, classes, audit, selection):
+    from algofactory.experiments import ExperimentConfig
+
+    config = ExperimentConfig(**selection)
+    if selection != config.selection():
+        raise ValueError("noncanonical_dataset_selection")
+    if config.goal == "full":
+        raise ValueError("derived_selection_must_change_goal")
+    base = frames["all_rows.csv"].copy()
+    original_ids = {name: i for i, name in enumerate(classes)}
+    if config.goal == "subset":
+        base = base[base.intent.isin([original_ids[n] for n in config.intents])].copy()
+        mapping = {original_ids[n]: i for i, n in enumerate(config.intents)}
+        base["intent"] = base.intent.map(mapping)
+        names = config.intents
+    else:
+        base["intent"] = (base.intent == original_ids[config.intents[0]]).astype(int)
+        names = ["other_known_intents", config.intents[0]]
+    kept = set(base.row_id)
+    selected_split = {stage: [i for i in ids if i in kept] for stage, ids in split.items()}
+    output = {
+        "all_rows.csv": base,
+        "lineage.csv": frames["lineage.csv"][frames["lineage.csv"].row_id.isin(kept)],
+    }
+    for stage, ids in selected_split.items():
+        selected = base[base.row_id.isin(ids)]
+        if set(selected.intent) != set(range(len(names))):
+            raise WorkflowFailure("selected_split_missing_class")
+        if stage == "train":
+            output["train.csv"] = selected
+        else:
+            output[stage + "_features.csv"] = selected[["row_id", "text"]]
+            output[stage + "_labels.csv"] = selected[["row_id", "intent"]]
+    audit = {
+        **audit,
+        "selection": config.selection(),
+        "parent_split_counts": audit["split_counts"],
+        "split_counts": {stage: len(ids) for stage, ids in selected_split.items()},
+        "class_counts": {
+            stage: {
+                str(k): int(v)
+                for k, v in base[base.row_id.isin(ids)].intent.value_counts().sort_index().items()
+            }
+            for stage, ids in selected_split.items()
+        },
+        "split_policy": "preserve parent split membership and row IDs; filter/remap only",
+        "negative_scope": "remaining 76 known BANKING77 intents, not arbitrary unknown text"
+        if config.goal == "one_vs_rest"
+        else None,
+    }
+    return output, selected_split, names, audit
+
+
+def derive_banking77(source, destination, experiment):
+    from algofactory.datasets import verify_dataset
+
+    parent = verify_dataset(source)
+    if parent.get("task_profile") != "banking77" or parent.get("selection"):
+        raise ValueError("derivation_requires_full_banking77")
+    return import_banking77(destination, source / "raw", selection=experiment.selection())
+
+
+def import_banking77(directory: Path, raw_dir: Path | None = None, *, selection=None):
     if directory.exists() and any(directory.iterdir()):
         raise ValueError("Dataset destination must be empty; frozen data is never overwritten")
     raw = directory / "raw"
@@ -157,6 +219,8 @@ def import_banking77(directory: Path, raw_dir: Path | None = None):
             raise WorkflowFailure("banking_raw_fingerprint_mismatch")
         destination.chmod(0o444)
     frames, split, classes, audit = prepared(raw)
+    if selection is not None:
+        frames, split, classes, audit = select_frames(frames, split, classes, audit, selection)
     for name, frame in frames.items():
         frame.to_csv(directory / name, index=False)
     write_json(directory / "audit.json", audit)
@@ -176,7 +240,7 @@ def import_banking77(directory: Path, raw_dir: Path | None = None):
         "categorical_features": [],
         "text_features": ["text"],
         "class_names": classes,
-        "class_labels": list(range(77)),
+        "class_labels": list(range(len(classes))),
         "split_indices": split,
         "split_id": "split:" + hashlib.sha256(canonical(split).encode()).hexdigest(),
         "data_fingerprint": sha256_file(directory / "all_rows.csv"),
@@ -185,6 +249,8 @@ def import_banking77(directory: Path, raw_dir: Path | None = None):
             for name in sorted([*frames, "audit.json", "labels.json"])
         },
     }
+    if selection is not None:
+        manifest["selection"] = selection
     write_json(directory / "manifest.json", manifest)
     return manifest
 
@@ -193,6 +259,10 @@ def verify_banking77(directory, manifest):
     if manifest["source"] != SOURCE or manifest["policy"] != POLICY:
         raise WorkflowFailure("banking_source_or_policy_mismatch")
     frames, split, classes, audit = prepared(directory / "raw")
+    if "selection" in manifest:
+        frames, split, classes, audit = select_frames(
+            frames, split, classes, audit, manifest["selection"]
+        )
     if (
         manifest["task_profile"] != "banking77"
         or manifest["target"] != "intent"
@@ -200,7 +270,7 @@ def verify_banking77(directory, manifest):
         or manifest["categorical_features"] != []
         or manifest["text_features"] != ["text"]
         or manifest["class_names"] != classes
-        or manifest["class_labels"] != list(range(77))
+        or manifest["class_labels"] != list(range(len(classes)))
         or manifest["seed"] != 42
         or manifest["rows"] != len(frames["all_rows.csv"])
         or manifest["split_indices"] != split

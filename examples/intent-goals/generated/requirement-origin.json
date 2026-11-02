@@ -1,0 +1,6 @@
+{
+  "answers": [],
+  "confirmed_settings_digest": "425a74d6b6b55bdcaefddaf4389e93b2189eceada57ea1fa26970b3382bb5d5e",
+  "execution_request": "开发英文银行咨询分类算法；输出预测类别及概率；只使用逻辑回归；使用单词和相邻双词特征；词表上限30000；识别单个意图：lost_or_stolen_card；优先减少漏判；逻辑回归C=4",
+  "original_request": "我想识别英文银行咨询中银行卡丢失或被盗的问题，输出属于或不属于及概率。只使用逻辑回归，优先减少漏判，并报告误报情况。"
+}

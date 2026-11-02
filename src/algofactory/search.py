@@ -24,7 +24,7 @@ from algofactory.schemas.contracts import (
     ValidationResult,
 )
 from algofactory.schemas.knowledge import KnowledgeBatch, SourceDocument
-from algofactory.tasks import BANKING77, profile_for
+from algofactory.tasks import profile_for
 from algofactory.validation.final_test import evaluate_final
 from algofactory.validation.protocol import calibrate
 from algofactory.workflow_models import RepairContext, WorkflowFailure
@@ -53,6 +53,12 @@ def run_search(
     experiment=None,
 ):
     policy = policy or SearchPolicy()
+    ranking = (
+        "recall_desc_macro_f1_desc_accuracy_desc_algorithm_order"
+        if experiment and experiment.objective == "recall"
+        else "macro_f1_desc_accuracy_desc_algorithm_order"
+    )
+    policy = policy.model_copy(update={"ranking": ranking})
     if experiment is not None:
         experiment.validate_request(request)
         if policy.algorithms != experiment.algorithms or resume_failures or learn_experiences:
@@ -114,8 +120,16 @@ def run_search(
     try:
         trace.add("received", "启动有界候选比较，所有候选与修复仅使用验证集")
         manifest = verify_dataset(dataset_dir)
-        if profile_for(manifest) != BANKING77:
+        if profile_for(manifest).name != "banking77":
             raise WorkflowFailure("unsupported_search_task")
+        if experiment:
+            experiment.validate_manifest(manifest)
+        elif manifest.get("selection"):
+            raise WorkflowFailure("derived_task_requires_experiment")
+        if manifest.get("selection"):
+            if use_experiences or learn_experiences:
+                raise WorkflowFailure("derived_task_experience_reuse_not_validated")
+            report["selection"] = manifest["selection"]
         protocol = calibrate(dataset_dir, dataset_dir / "protocol.json")
         with KnowledgeStore(db_path) as store:
             snapshot = store.snapshot()
@@ -373,11 +387,11 @@ def run_search(
             code_hash=selected["code_hash"],
             config_hash=protocol["config_hash"],
         )
-        trace.add("selected", "按验证集 Macro-F1、Accuracy、预设候选顺序选定版本；测试失败不换候选")
+        trace.add("selected", "按已确认目标和冻结协议的验证集排序选定版本；测试失败不换候选")
         if validation_only:
             report["status"] = "validated"
         else:
-            config = BANKING77.intent() | {
+            config = profile_for(manifest).intent() | {
                 "seed": task.seed,
                 "class_labels": task.class_labels,
                 "stage": "test",

@@ -71,7 +71,7 @@ def test_cli_conflict_rejected_before_provider(tmp_path, monkeypatch):
     )
     path = tmp_path / "experiment.json"
     path.write_text(ExperimentConfig().model_dump_json())
-    with pytest.raises(ValueError, match="standard_task"):
+    with pytest.raises(ValueError, match="unsupported_requirement"):
         run(
             parser().parse_args(
                 [
@@ -111,12 +111,14 @@ def test_web_config_is_frozen_and_invalid_selection_does_not_submit(tmp_path, mo
     )
     root = Path(__file__).resolve().parents[1]
     app = AppTest.from_file(root / "src/algofactory/web/app.py", default_timeout=30).run()
-    next(t for t in app.toggle if t.label == "自主选择算法与参数").set_value(True).run()
-    next(s for s in app.selectbox if s.label == "逻辑回归 C").set_value(1.0).run()
+    next(r for r in app.radio if r.label == "需求理解方式").set_value("rules").run()
+    next(b for b in app.button if b.label == "解析并检查需求").click().run()
+    next(c for c in app.checkbox if c.label.startswith("我已核对")).check().run()
     next(b for b in app.button if b.label == "开始生成并验证").click().run()
     assert observed[0].experiment.logistic_c == 1.0
-    next(s for s in app.multiselect if s.label == "参与实验的算法").set_value([]).run()
-    next(b for b in app.button if b.label == "开始生成并验证").click().run()
+    next(t for t in app.text_area if t.label == "开发需求").set_value("使用随机森林").run()
+    next(b for b in app.button if b.label == "解析并检查需求").click().run()
+    assert next(b for b in app.button if b.label == "开始生成并验证").disabled
     assert len(observed) == 1
     assert not app.exception
 

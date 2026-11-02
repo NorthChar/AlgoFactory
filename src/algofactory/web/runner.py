@@ -60,9 +60,14 @@ def execute(root, identifier):
             else:
                 if not source_data.is_dir():
                     raise ValueError("dataset_not_prepared")
-                shutil.copytree(source_data, dataset)
+                if settings.experiment and settings.experiment.goal != "full":
+                    from algofactory.banking import derive_banking77
+
+                    derive_banking77(source_data, dataset, settings.experiment)
+                else:
+                    shutil.copytree(source_data, dataset)
             if settings.experiences:
-                source_db = confined(root, "examples/phase4/library.sqlite")
+                source_db = confined(root, "examples/experience-reuse/library.sqlite")
                 with (
                     sqlite3.connect(source_db.as_uri() + "?mode=ro", uri=True) as src,
                     sqlite3.connect(job / "knowledge.sqlite") as dest,
@@ -104,8 +109,18 @@ def execute(root, identifier):
             if settings.validation_only:
                 arguments += ["--validation-only"]
             if settings.request:
-                arguments += ["--request", settings.request]
+                arguments += ["--request", settings.execution_request()]
             result = run(parser().parse_args(arguments))
+            if settings.understanding:
+                write_json(
+                    job / "run/requirement-origin.json",
+                    {
+                        "original_request": settings.request,
+                        "answers": settings.understanding.answers,
+                        "execution_request": settings.execution_request(),
+                        "confirmed_settings_digest": settings.requirement_confirmation,
+                    },
+                )
             write_json(
                 job / "state.json",
                 {

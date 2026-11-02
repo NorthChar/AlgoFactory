@@ -14,7 +14,7 @@ from algofactory.execution.docker import DockerExecutor
 from algofactory.generation.configuration import required_configuration, validate_configuration
 from algofactory.generation.safety import check_code
 from algofactory.schemas.contracts import ExecutionBudget
-from algofactory.tasks import BANKING77
+from algofactory.tasks import profile_for
 from algofactory.web.data_view import dataset_snapshot, safe_file
 from algofactory.web.evidence import workflow_evidence
 from algofactory.web.service import read_json
@@ -35,7 +35,9 @@ def source_version(root, relative, version):
     if version not in versions:
         raise ValueError("validated_version_required")
     report = versions[version]["report.json"]
-    dataset, manifest, _ = dataset_snapshot(root)
+    dataset, manifest, _ = dataset_snapshot(root, relative)
+    if report.get("selection") != manifest.get("selection"):
+        raise ValueError("model_selection_mismatch")
     if any(report.get(k) != manifest[k] for k in ("data_fingerprint", "split_id", "class_names")):
         raise ValueError("model_dataset_mismatch")
     directory = safe_file(root, relative + ("/" + version if version != "single" else ""))
@@ -110,7 +112,7 @@ def prepare_model(root, relative, version):
             destination.with_name(destination.name + "-previous-" + uuid.uuid4().hex)
         )
     config = {
-        **BANKING77.intent(),
+        **profile_for(manifest).intent(),
         "class_labels": manifest["class_labels"],
         "seed": manifest["seed"],
         "stage": "prepare",
@@ -175,7 +177,7 @@ def predict_text(root, relative, version, text):
             None,
             features,
             {
-                **BANKING77.intent(),
+                **profile_for(manifest).intent(),
                 "stage": "predict",
                 "class_labels": manifest["class_labels"],
                 "model_environment": metadata["environment"],
@@ -229,7 +231,7 @@ def show_trial(root, relative):
 
     st.subheader("试用本次生成的算法")
     st.write(
-        "输入一句新的英文咨询，让已训练的算法给出最可能的三个意图。此处不调用 GPT，也不重新训练；模型尚未保存时，需要先明确点击准备。"
+        "输入一句新的英文咨询，让已训练的算法给出类别及概率（最多展示三类）。此处不调用 GPT，也不重新训练；模型尚未保存时，需要先明确点击准备。"
     )
     version = selected_trial_version(root, relative)
     if version is None:
@@ -241,6 +243,17 @@ def show_trial(root, relative):
     from algofactory.web.workflow_view import version_label
 
     st.caption("已绑定当前任务的交付版本：" + version_label(version))
+    selected_report = eligible_versions(root, relative)[version]["report.json"]
+    scope = selected_report.get("selection")
+    if scope:
+        from algofactory.intent_catalog import intent_title
+
+        st.info("本模型的目标意图：" + "；".join(intent_title(n) for n in scope["intents"]))
+        st.warning(
+            "只在选定类别范围内使用，范围外咨询仍会被分入某个已选类别。"
+            if scope["goal"] == "subset"
+            else "输出属于/不属于所选意图；不属于只由其余 76 类已知咨询训练，不代表未知业务检测。"
+        )
     widget_key = relative + "/" + version
     try:
         location, origin = model_location(root, relative, version)
@@ -278,7 +291,24 @@ def show_trial(root, relative):
             if submitted:
                 with st.spinner("正在隔离环境中预测…"):
                     result = predict_text(root, relative, version, text)
-                st.dataframe(result["top3"], hide_index=True, width="stretch")
+                from algofactory.intent_catalog import INTENTS
+
+                st.dataframe(
+                    [
+                        {
+                            "含义": INTENTS.get(
+                                row["意图"],
+                                "其他已知咨询"
+                                if row["意图"] == "other_known_intents"
+                                else row["意图"],
+                            ),
+                            **row,
+                        }
+                        for row in result["top3"]
+                    ],
+                    hide_index=True,
+                    width="stretch",
+                )
                 st.caption(
                     "模型版本："
                     + result["model_sha256"][:16]
@@ -286,7 +316,7 @@ def show_trial(root, relative):
                     + result["code_hash"][:16]
                 )
         st.caption(
-            "概率表示模型对已知 77 类的相对判断，不是正确率保证。本原型不检测未知意图；试用结果不计入标准评估，也不用于改选最终测试版本。"
+            "概率表示模型对本次所选类别的相对判断，不是正确率保证。本原型不检测未知意图；试用结果不计入标准评估，也不用于改选最终测试版本。"
         )
     except (ValueError, OSError, KeyError, WorkflowFailure) as exc:
         category = getattr(exc, "category", str(exc))

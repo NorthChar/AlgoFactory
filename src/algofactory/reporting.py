@@ -75,6 +75,16 @@ def save_report(directory: Path, report: dict):
     ):
         check = result.get(key, {"status": "not_run", "details": "尚未执行"})
         lines.append(f"| {name} | {check['status']} | {check['details']} |")
+    if report.get("selection"):
+        scope = report["selection"]
+        lines += [
+            "",
+            "任务目标：" + scope["goal"],
+            "选定意图：" + "、".join(scope["intents"]),
+            "选优目标：" + scope["objective"],
+            "仅使用原训练/验证/测试划分内的筛选或标签映射。子集仅适用所选范围；单个意图的负类仅代表其他已知意图。",
+            "",
+        ]
     lines += [
         "",
         "## 实际指标",
@@ -84,7 +94,7 @@ def save_report(directory: Path, report: dict):
     ]
     thresholds = report.get("thresholds", {})
     for name in (
-        ("macro_f1", "accuracy")
+        tuple(result.get("validation_metrics", {})) or ("macro_f1", "accuracy")
         if report.get("task_profile") == "banking77"
         else (
             ("mae", "rmse")
@@ -102,7 +112,7 @@ def save_report(directory: Path, report: dict):
     lines += [
         "",
         (
-            "BANKING77 保留官方测试集；训练侧去重后按 80/20 分层划分训练/验证。词表和 IDF 仅在训练集拟合；Macro-F1 为门槛，Accuracy 仅报告。逐类指标及混淆矩阵见 validation-class-details.json / test-class-details.json。"
+            "BANKING77 全量任务保留官方测试集；训练侧去重后按 80/20 分层划分训练/验证。衍生任务保留原划分归属，只筛选或转换标签。词表和 IDF 仅在训练集拟合；具体门槛和选优目标见冻结协议，Accuracy 不单独作为验收依据。逐类指标及混淆矩阵见 validation-class-details.json / test-class-details.json。"
             if report.get("task_profile") == "banking77"
             else (
                 "合成回归按固定种子 60/20/20 随机划分，预处理只在训练集拟合；MAE/RMSE 越低越好，门槛预先固定。"

@@ -1,8 +1,0 @@
-{
-  "attempt": 1,
-  "code_hash": "0d9f08d7a0fbbae4940581b85c671ce5daf14e3f612b3101bcc239e0e7447472",
-  "implementation_id": "workflow:340b543090c4420ba28d86877e75d656:candidate",
-  "parent_id": "source:87cb29f04c7bac212bafab0289366eca1580bad10298d8206711a219674c4afd:implementation",
-  "plan_id": "workflow:340b543090c4420ba28d86877e75d656:plan",
-  "schema_version": 1
-}

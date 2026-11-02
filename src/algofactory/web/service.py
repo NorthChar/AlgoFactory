@@ -1,6 +1,7 @@
 """Durable local jobs and read-only evidence browsing; no shell or uploaded code."""
 
 import fcntl
+import hashlib
 import json
 import re
 import sqlite3
@@ -14,11 +15,14 @@ from pydantic import Field, model_validator
 
 from algofactory.datasets import write_json
 from algofactory.experiments import ExperimentConfig
+from algofactory.requirement_understanding import Understanding
 from algofactory.schemas.contracts import Contract
 from algofactory.tasks import PROFILES
 
 
 class RunSettings(Contract):
+    understanding: Understanding | None = None
+    requirement_confirmation: str | None = None
     experiment: ExperimentConfig | None = None
     task: Literal["banking77", "regression"] = "banking77"
     mode: Literal["mock", "api"] = "mock"
@@ -31,21 +35,54 @@ class RunSettings(Contract):
 
     @model_validator(mode="after")
     def supported(self):
+        if self.understanding:
+            if self.task != "banking77" or self.understanding.request != self.request:
+                raise ValueError("understanding_request_mismatch")
+            if (
+                self.understanding.problems()
+                or self.understanding.proposal.configuration != self.experiment
+            ):
+                raise ValueError("understanding_not_ready_or_configuration_mismatch")
+            self.understanding.execution_request()
+            if self.requirement_confirmation != self.confirmation_digest():
+                raise ValueError("understanding_needs_current_confirmation")
         if self.experiment:
             if self.task != "banking77":
                 raise ValueError("experiment_requires_banking77")
-            self.experiment.validate_request(self.request)
+            self.experiment.validate_request(self.execution_request())
             if self.compare != (len(self.experiment.algorithms) == 2):
                 raise ValueError("experiment_comparison_mismatch")
         if self.task == "regression" and (self.compare or self.experiences):
             raise ValueError("regression_single_candidate_only")
+        if self.experiences and self.experiment and self.experiment.goal != "full":
+            raise ValueError("derived_task_experience_reuse_not_validated")
         if self.experiences and not (self.compare or self.experiment):
             raise ValueError("experience_search_required")
         if self.mode == "api" and self.call_budget > 12:
             raise ValueError("web_api_budget_maximum_12")
-        if self.mode == "mock" and self.request not in {"", PROFILES[self.task].request}:
+        if self.task == "banking77" and self.request not in {"", PROFILES[self.task].request}:
+            if self.experiment is None:
+                raise ValueError("requirement_needs_bound_configuration")
+            if self.requirement_confirmation != self.confirmation_digest():
+                raise ValueError("requirement_needs_current_confirmation")
+        elif self.mode == "mock" and self.request not in {"", PROFILES[self.task].request}:
             raise ValueError("mock_uses_fixed_request")
+        if (
+            self.requirement_confirmation is not None
+            and self.requirement_confirmation != self.confirmation_digest()
+        ):
+            raise ValueError("requirement_confirmation_stale")
         return self
+
+    def execution_request(self):
+        return self.understanding.execution_request() if self.understanding else self.request
+
+    def confirmation_digest(self):
+        from algofactory.knowledge.store import canonical
+
+        return hashlib.sha256(
+            canonical(self.model_dump(mode="json", exclude={"requirement_confirmation"})).encode()
+        ).hexdigest()
 
 
 def confined(root, relative):
@@ -83,6 +120,41 @@ class Jobs:
                 raise ValueError("job_id_conflict") from None
             return identifier  # Idempotency across browser reruns; never duplicate API calls.
         write_json(job / "settings.json", settings.model_dump(mode="json"))
+        if settings.requirement_confirmation:
+            from algofactory.requirements import interpret_requirement
+
+            parsed = (
+                interpret_requirement(settings.request) if settings.task == "banking77" else None
+            )
+            write_json(
+                job / "confirmed-requirement.json",
+                {
+                    "original_request": settings.request,
+                    "execution_request": settings.execution_request(),
+                    "understanding": settings.understanding.model_dump(mode="json")
+                    if settings.understanding
+                    else None,
+                    "configuration": settings.experiment.model_dump(mode="json")
+                    if settings.experiment
+                    else None,
+                    "explicit_fields": {
+                        field: getattr(settings.experiment, field)
+                        for assessment in settings.understanding.proposal.assessments
+                        if assessment.disposition == "supported"
+                        for field in assessment.fields
+                    }
+                    if settings.understanding
+                    else parsed.explicit
+                    if parsed
+                    else {},
+                    "settings_digest": settings.requirement_confirmation,
+                    "interpreter": "llm-reviewed-v1"
+                    if settings.understanding
+                    else "controlled-language-v1"
+                    if parsed
+                    else "fixed-regression",
+                },
+            )
         write_json(job / "state.json", {"status": "queued", "created": time.time()})
         try:
             with (job / "runner.log").open("wb") as output:
@@ -141,10 +213,10 @@ def report_catalog(root):
     paths = [
         root / p
         for p in (
-            "examples/api-phase3/comparison",
-            "examples/phase4/api-2-on",
-            "examples/phase3/repair",
-            "examples/phase3/unsafe-code",
+            "examples/banking-classification/comparison",
+            "examples/experience-reuse/run",
+            "examples/mock-repair",
+            "examples/rejected-code",
         )
     ]
     jobs = Jobs(root)
@@ -171,6 +243,8 @@ def artifacts(root, relative):
         "provider-usage.json",
         "selection.json",
         "protocol.json",
+        "validation-class-details.json",
+        "data-manifest.json",
     }
     return {
         p.name: p

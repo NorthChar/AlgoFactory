@@ -9,7 +9,7 @@ from algofactory.datasets import write_json
 from algofactory.web import models
 
 ROOT = Path(__file__).resolve().parents[1]
-RELATIVE = "examples/api-phase3/comparison"
+RELATIVE = "examples/banking-classification/comparison"
 VERSION = "candidates/text_logistic/attempt-1"
 
 

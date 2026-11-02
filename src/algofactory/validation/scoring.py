@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import classification_report, confusion_matrix
 
-from algofactory.validation.protocol import classification_metrics, multiclass_metrics
+from algofactory.validation.protocol import classification_metrics, text_metrics
 from algofactory.workflow_models import WorkerResult, WorkflowFailure
 
 
@@ -17,7 +17,10 @@ def score_predictions(
         from algofactory.regression import score_regression
 
         return score_regression(result, labels, protocol, require_stability)
-    text_task = protocol["task_type"] == "multiclass_classification"
+    text_task = (
+        protocol.get("task_profile") == "banking77"
+        or protocol["task_type"] == "multiclass_classification"
+    )
     target = "intent" if text_task else "churn"
     classes = protocol["class_labels"] if text_task else [0, 1]
     if list(labels.columns) != ["row_id", target] or not set(labels[target]) <= set(classes):
@@ -54,7 +57,7 @@ def score_predictions(
         if text_task and not np.allclose(matrix.sum(axis=1), 1, rtol=0, atol=1e-8):
             raise WorkflowFailure("invalid_probability_sums")
     scores = (
-        multiclass_metrics(labels[target], result.predictions, classes)
+        text_metrics(labels[target], result.predictions, probabilities, classes)
         if text_task
         else classification_metrics(labels[target], result.predictions, result.probabilities)
     )

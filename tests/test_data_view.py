@@ -23,7 +23,7 @@ def test_actual_readonly_data_and_archived_errors(monkeypatch):
     assert audit["split_counts"] == {"train": 7993, "validation": 1999, "test": 3080}
     assert len(samples(ROOT)) == 7993
     errors, accuracy = validation_errors(
-        ROOT, "examples/api-phase3/comparison", "candidates/text_logistic/attempt-1"
+        ROOT, "examples/banking-classification/comparison", "candidates/text_logistic/attempt-1"
     )
     assert len(errors) == 253
     assert accuracy == pytest.approx(0.8734367183591796)

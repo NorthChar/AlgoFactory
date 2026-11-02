@@ -86,7 +86,7 @@ class TaskSpec(Contract):
             else (
                 {"macro_f1", "accuracy"}
                 if self.task_type == "multiclass_classification"
-                else {"f1", "roc_auc", "precision", "recall"}
+                else {"f1", "roc_auc", "precision", "recall", "macro_f1", "accuracy"}
             )
         )
         if len(set(metrics)) != len(metrics) or not set(metrics) <= allowed:

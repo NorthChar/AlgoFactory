@@ -209,8 +209,25 @@ def run(args):
         if args.command == "calibrate":
             return calibrate(args.dataset_dir, args.dataset_dir / "protocol.json")
         from algofactory.datasets import verify_dataset
-        from algofactory.tasks import PROFILES, profile_for
 
+        # CLI callers must explicitly bind nonstandard text to a checked experiment.
+        # Legacy canonical examples retain their established behavior.
+        from algofactory.tasks import BANKING77_REUSE_REQUEST, PROFILES, profile_for
+
+        if (
+            args.task == "banking77"
+            and args.request
+            not in {
+                None,
+                "",
+                PROFILES["banking77"].request,
+                BANKING77_REUSE_REQUEST,
+            }
+            and not args.experiment
+        ):
+            raise ValueError(
+                "requirement_needs_bound_configuration: provide a checked --experiment"
+            )
         experiment = None
         if args.experiment:
             from algofactory.experiments import ExperimentConfig
@@ -260,8 +277,25 @@ def run(args):
                 generate_regression(args.dataset_dir)
             else:
                 generate_dataset(args.dataset_dir)
-        if profile_for(verify_dataset(args.dataset_dir)) != profile:
+        manifest = verify_dataset(args.dataset_dir)
+        if profile_for(manifest).name != profile.name:
             raise ValueError("Task selection does not match dataset profile")
+        if experiment and experiment.goal != "full" and not manifest.get("selection"):
+            import uuid
+
+            from algofactory.banking import derive_banking77
+
+            derived = Path("runtime/derived-datasets") / uuid.uuid4().hex
+            manifest = derive_banking77(args.dataset_dir, derived, experiment)
+            args.dataset_dir = derived
+        if experiment:
+            experiment.validate_manifest(manifest)
+        elif manifest.get("selection"):
+            raise ValueError("derived_task_requires_experiment")
+        if manifest.get("selection") and args.knowledge_document == Path(
+            "data/banking77-phase3.txt"
+        ):
+            args.knowledge_document = Path("data/banking-intent-tasks.txt")
         if args.output_dir is None:
             import uuid
 

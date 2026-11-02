@@ -1,5 +1,0 @@
-Using Python 3.11.16 environment at: /Users/northchar/Documents/Codex/AlgoFactory/runtime/phase7-release-verification/environment
-Resolved 1 package in 2ms
-Prepared 1 package in 7ms
-Installed 1 package in 1ms
- + algofactory==0.7.0 (from file:///Users/northchar/Documents/Codex/AlgoFactory/runtime/phase7-release-verification/dist/algofactory-0.7.0-py3-none-any.whl)

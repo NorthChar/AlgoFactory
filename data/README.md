@@ -1,7 +1,7 @@
-# data
+# 数据与能力材料
 
-customer_churn.txt 是本项目编写、可随项目提交的模拟订阅业务材料，不含真实客户数据。UTF-8 原始内容的 SHA-256 用作 source_id；读取时保留原始换行，引用位置按 Unicode 字符计算。
+`banking77/raw/` 是固定上游版本的 BANKING77 原始数据及许可：10,003 条训练咨询、3,080 条测试咨询、77 类英文意图。来源 PolyAI，作者 Iñigo Casanueva、Tadas Temcinas、Daniela Gerz、Matthew Henderson、Ivan Vulić（2020）；上游提交 `57ec275d8078af65b7731c2a98be812d844a6d6b`，许可 [CC BY 4.0](banking77/raw/LICENSE)。见 [官方仓库](https://github.com/PolyAI-LDN/task-specific-datasets)。
 
-Phase 1 提供这份业务资料和对应的固定 Mock 响应（src/algofactory/llm/fixtures/churn.json）。Mock 只匹配相同文件内容的散列；修改文档后应提供新 fixture 或显式使用 API。Mock fixture 是人工编写的测试输入，不代表真实模型调用结果。
+按 README 运行 prepare-banking77，将数据导入 runtime/banking77-data；导入器校验原始散列，移除训练侧重复及与测试重合项，形成 7,993 训练、1,999 验证及 3,080 最终测试记录。训练用于拟合分类器，验证用于比较和修复，测试用于冻结版本的最终评价。派生任务在原划分内筛选或重映射。
 
-Phase 2 的 src/algofactory/datasets.py 提供固定种子 42 的合成 CSV 生成器，默认 1,500 行，训练/验证/测试按 60/20/20 分层划分。运行 prepare-data 或首次 demo 生成 CSV、划分索引及数据指纹；评估特征和标签分文件保存，标签不挂载进执行容器。详见 docs/phase2.md。
+本目录的 `.txt` 是算法能力材料，供抽取与检索使用，不是咨询训练数据。其中历史命名的 banking77-phase3.txt 保持字节内容与 Mock fixture 散列一致；用户不必执行任何历史开发阶段。customer_churn.txt 为合成订阅业务说明，回归材料也用于兼容检查，不含真实客户数据。修改知识材料需要更新对应 Mock fixture，或显式使用 API。

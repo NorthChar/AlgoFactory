@@ -1,0 +1,79 @@
+{
+  "job": "09f11cc0d8a94ee1be33a33e9ac5a473",
+  "maximum_generation_calls": 4,
+  "maximum_total_calls": 8,
+  "persisted": true,
+  "report": "runtime/web-jobs/09f11cc0d8a94ee1be33a33e9ac5a473/run/report.json",
+  "state": {
+    "error_category": null,
+    "finished": 1793599711.7307038,
+    "status": "validated",
+    "workflow_id": "search:0dd278b9a2cc4446bc17057d45e95e3e"
+  },
+  "test_attempted": false,
+  "trial": {
+    "code_hash": "26dd72d4476ff8a71036968799d87d0f5d1c3c12d0d0dec6ff6110148120df87",
+    "model_sha256": "af609462d25ea0c771fc948706b532baead8e8be881da6618066eb29953b87db",
+    "origin": "此版本验证时保存的模型",
+    "top3": [
+      {
+        "意图": "lost_or_stolen_card",
+        "概率": 0.5665972521683987
+      },
+      {
+        "意图": "other_known_intents",
+        "概率": 0.43340274783160126
+      }
+    ]
+  },
+  "understanding_calls_including_rejected": 4,
+  "validation": {
+    "code_hash": "26dd72d4476ff8a71036968799d87d0f5d1c3c12d0d0dec6ff6110148120df87",
+    "config_hash": "cf2490e22c6c8536f56d65138a5b4e8e118f20feb8fcc98ea6bf77e434d6870f",
+    "error_category": null,
+    "final_test_evaluated": false,
+    "functional": {
+      "details": "真实 fit/predict，长度、顺序和有限数值校验通过",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "implementation_id": "source:58bf682855e013cea3ed7aec339544037a226b612eb1816b0c9d13477030696b:implementation",
+    "interface": {
+      "details": "build_pipeline / fit / predict / predict_proba",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "metrics": {
+      "details": "验证集对照预先冻结门槛",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "report_paths": [
+      "/Users/northchar/Documents/Codex/AlgoFactory/runtime/web-jobs/09f11cc0d8a94ee1be33a33e9ac5a473/run/report.json",
+      "/Users/northchar/Documents/Codex/AlgoFactory/runtime/web-jobs/09f11cc0d8a94ee1be33a33e9ac5a473/run/report.md"
+    ],
+    "resources": {
+      "elapsed_seconds": 0.7467179170000122,
+      "peak_memory_mib": 174.6171875,
+      "schema_version": 1
+    },
+    "run_id": "source:1a3e9d25148bf78237e50de25978557caf7e12a863a576fd050ac245ac8ce661:validation",
+    "schema_version": 1,
+    "split_id": "split:00e0798ce80a1c9017d03c06fbbb1c8421ed72b8878388015d45ac7df5c4f51e",
+    "stability": {
+      "details": "{\"seed_repeat\": true, \"missing_column_rejected\": true, \"invalid_text_rejected\": true, \"unseen_text_handled\": true}",
+      "schema_version": 1,
+      "status": "passed"
+    },
+    "status": "passed",
+    "test_metrics": {},
+    "validation_metrics": {
+      "accuracy": 0.9954977488744372,
+      "f1": 0.7428571428571429,
+      "macro_f1": 0.8702930680220613,
+      "precision": 0.6842105263157895,
+      "recall": 0.8125,
+      "roc_auc": 0.9957766011094301
+    }
+  }
+}

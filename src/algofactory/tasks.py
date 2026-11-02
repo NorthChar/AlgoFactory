@@ -1,6 +1,6 @@
 """Host-owned task profiles; candidates cannot choose their fields or evaluation rules."""
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 from algofactory.workflow_models import WorkflowFailure
 
@@ -80,6 +80,8 @@ def profile_for(manifest):
     name = manifest.get("task_profile", "churn")
     if name not in PROFILES:
         raise WorkflowFailure("unsupported_task_profile")
+    if name == "banking77" and len(manifest.get("class_labels", [])) == 2:
+        return replace(BANKING77, task_type="binary_classification")
     return PROFILES[name]
 
 

@@ -379,7 +379,7 @@ def test_recorded_live_algorithm_dependency_failure_replays_offline():
     from algofactory.knowledge.extraction import validate_extraction
     from algofactory.schemas.knowledge import DocumentExtraction, Extraction
 
-    root = Path(__file__).resolve().parents[1] / "examples/api-knowledge-fix/diagnosis"
+    root = Path(__file__).resolve().parents[1] / "tests/fixtures/knowledge-diagnosis"
     source = SourceDocument.model_validate_json((root / "source.json").read_bytes())
     raw = (root / "extraction.json").read_bytes()
     legacy = Extraction.model_validate_json(raw)

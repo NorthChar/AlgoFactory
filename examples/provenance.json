@@ -1,0 +1,1412 @@
+{
+  "source_commit": "2758572d4167b9f66420b79ffd415f51819cb60e",
+  "source_url": "https://github.com/NorthChar/AlgoFactory/tree/2758572d4167b9f66420b79ffd415f51819cb60e",
+  "note": "Selected historical artifacts copied byte-for-byte; embedded original paths and hashes are unchanged. This is not evidence of a new run.",
+  "files": [
+    {
+      "path": "examples/banking-classification/campaign-summary.json",
+      "original_path": "examples/api-phase3/campaign-summary.json",
+      "sha256": "ae9f0924af311a9eca886fc9eb20270f5290cf59d7487be8cda31862b8271464"
+    },
+    {
+      "path": "examples/banking-classification/comparison/attempts.json",
+      "original_path": "examples/api-phase3/comparison/attempts.json",
+      "sha256": "6947ded215687e926c413c8f761c9797673043c368813391455cf013b2b7e823"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidate.json",
+      "original_path": "examples/api-phase3/comparison/candidate.json",
+      "sha256": "3599366299c0bc522ef9d0a1946d0569a722182b85ed5e2266c6f367dfa3ea3c"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidate.py",
+      "original_path": "examples/api-phase3/comparison/candidate.py",
+      "sha256": "082384b24d9380c213650ced5d58d24af0240e597d402bccd4f9fc11654700f9"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-0/candidate.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-0/candidate.json",
+      "sha256": "ebf1bd70f2c7bc2f853d4f6e2c6bab0c235214e66ac4997e93f50b2e29acd0f7"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-0/candidate.py",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-0/candidate.py",
+      "sha256": "ac0dfe38edbd8df9fe67122198adf4e18d5204ac92cfa09b61bd130447cea6ab"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-0/data-manifest.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-0/data-manifest.json",
+      "sha256": "5b520b475f5dc63877c0a03c35c32d42ef4aefe2284bd6f68f48222e4b9c6720"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-0/decisions.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-0/decisions.json",
+      "sha256": "d857c115968fe6eb3938190d34a6f49c20f19d078f14723e8db581101aa34183"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-0/diagnosis.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-0/diagnosis.json",
+      "sha256": "d1ea16d74d29a5fe3c2ef5311c74c8bc1fa6ebd132bcfeb1614447491bf2588a"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-0/plan-proposal.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-0/plan-proposal.json",
+      "sha256": "96c450f8a369685130fb93490566f44c879914e32984d994250dd78b4499bf69"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-0/plan.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-0/plan.json",
+      "sha256": "96c450f8a369685130fb93490566f44c879914e32984d994250dd78b4499bf69"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-0/protocol.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-0/protocol.json",
+      "sha256": "6e305c1f489dbedd152d47a5a751effef7764890b575e7e8c0725661ced70411"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-0/provider-audit.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-0/provider-audit.json",
+      "sha256": "2ef22aa6a1de5e287ca314704ec3be42dc536c9f5e3e7ab1a3cbf13e0a8a326c"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-0/provider-usage.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-0/provider-usage.json",
+      "sha256": "2336951fb7ddbdb2178dac43418b3e80f0e5e465ebe6245d2c75f0c660460110"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-0/report.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-0/report.json",
+      "sha256": "03557bb851222d8f3b0cc2076aa189cb4b0fa0f9a8686169c8fc7e5fe411dc7e"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-0/report.md",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-0/report.md",
+      "sha256": "75fee6cad361757103dfe8c84b9fb3c156ba6c954696f604487753f67e3a16f3"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-0/resume-origin.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-0/resume-origin.json",
+      "sha256": "c415649a479111460f7ab6d340462b58269a780ae4542d985e807e0e1b2052a0"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-0/retrieval.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-0/retrieval.json",
+      "sha256": "027a7fff09a6056e2e701ba1e902aa2e1f1c29f5f8867a4ec2e5a95f3db157ed"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-0/task.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-0/task.json",
+      "sha256": "2d2468c422a935033642fbab2202f3a4507c2c7cf83177ae986f3c5e17e8325c"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-0/trace.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-0/trace.json",
+      "sha256": "b6b6d64b0cb38042d640b61e59948fc5b8dd5393ff8fa3294d8df7a4fa0b68f8"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-0/validation-execution/cleanup.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-0/validation-execution/cleanup.json",
+      "sha256": "ae6c8aa6996f40eb45d3f100c2de6c4fd2d6d29fd99ce9a82d4f19a73a66f7da"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-0/validation-execution/container-state.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-0/validation-execution/container-state.json",
+      "sha256": "88081cd0a072e658c93228fe631a83f659c98e302fee755262d859845be3873d"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-0/validation-execution/execution.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-0/validation-execution/execution.json",
+      "sha256": "a2d1c2c22647a90199371eb539fe632fed3e5942a97468697b705cdf45d8ba11"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-0/validation-execution/predictions.json.gz",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-0/validation-execution/predictions.json.gz",
+      "sha256": "00f69877911f683f33db80748f2cb5a90a15fd676f86b5b3a552f6675348322b"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-0/validation-execution/stderr.log",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-0/validation-execution/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-1/candidate.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-1/candidate.json",
+      "sha256": "3599366299c0bc522ef9d0a1946d0569a722182b85ed5e2266c6f367dfa3ea3c"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-1/candidate.py",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-1/candidate.py",
+      "sha256": "082384b24d9380c213650ced5d58d24af0240e597d402bccd4f9fc11654700f9"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-1/configuration-check.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-1/configuration-check.json",
+      "sha256": "77c14ee37cf7b4ae4ccb7aa0853bf4b99c9171d7f640ad8fea668ee2387c4c3a"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-1/data-manifest.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-1/data-manifest.json",
+      "sha256": "5b520b475f5dc63877c0a03c35c32d42ef4aefe2284bd6f68f48222e4b9c6720"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-1/decisions.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-1/decisions.json",
+      "sha256": "a9f34b9891369737c3c9f2757c27a1fcbb9701a6d00d30b81ca67ddc89387939"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-1/knowledge-input.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-1/knowledge-input.json",
+      "sha256": "ac5e2b5d64d8062a132aba825c5bd5ee7c7e6aa892a0c1df6b88fabfc402a320"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-1/plan-proposal.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-1/plan-proposal.json",
+      "sha256": "159b62c77f6c1b35ef7a0bc6af642e7ecada36b7b32657f1c216279d0736649b"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-1/plan.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-1/plan.json",
+      "sha256": "159b62c77f6c1b35ef7a0bc6af642e7ecada36b7b32657f1c216279d0736649b"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-1/protocol.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-1/protocol.json",
+      "sha256": "6e305c1f489dbedd152d47a5a751effef7764890b575e7e8c0725661ced70411"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-1/provider-audit.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-1/provider-audit.json",
+      "sha256": "d6b432cf03dc9f369f23008da449897d699b1fbe8fe852a3ae84ba55a3cfd664"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-1/provider-usage.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-1/provider-usage.json",
+      "sha256": "276c05309ddf2a613296ac9192edea2968b4cca4697c957838069098761a6a94"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-1/repair-input.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-1/repair-input.json",
+      "sha256": "f7a8912a9b4045ad66cc0c8684e1bfd758f240d4594ab21e79cb0f0843a6c819"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-1/report.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-1/report.json",
+      "sha256": "fc222d83e3d7daffed9a73f1181a11307106352737bdd10de1ba341ea3e1f64a"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-1/report.md",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-1/report.md",
+      "sha256": "33a0e499ab7df0b44125b154730cf5df36e423321ec9414e8cfbda910bcb3963"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-1/retrieval.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-1/retrieval.json",
+      "sha256": "4e4518940c23c8ee8c4a1e666ca19f67a788b298c7158fe1a06bc24f932e0e6d"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-1/task.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-1/task.json",
+      "sha256": "b006d72cfab5a5b36c18393f7abf2f4970ced21545587fef100545eaaba0f8f3"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-1/trace.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-1/trace.json",
+      "sha256": "92e3e1cccc172e2639d211b585f682740f7406dfed81900c8f495f3f62c419ba"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-1/validation-class-details.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-1/validation-class-details.json",
+      "sha256": "7867b5c516dc2a30c0da8f4193288e8303847d00933f1519f76401e21fe5296f"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-1/validation-execution/cleanup.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-1/validation-execution/cleanup.json",
+      "sha256": "b8950608f4677a3e8368ff12e7250d830a7841b2c62b280ddb7e5d2422485475"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-1/validation-execution/container-state.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-1/validation-execution/container-state.json",
+      "sha256": "16aae039ce6d4cebf723c633047b728789b1cfc1d50dcfbc6ededd6a23071a68"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-1/validation-execution/execution.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-1/validation-execution/execution.json",
+      "sha256": "f97e3b5e4b2a362d557b578b8bfca4d72a78b8d5d624196d3be0cbfd1191780d"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-1/validation-execution/predictions.json.gz",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-1/validation-execution/predictions.json.gz",
+      "sha256": "0639ff9c0159449b2bdb41badcd59d68732be89fb603530b68b6ba75f8d56f74"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_logistic/attempt-1/validation-execution/stderr.log",
+      "original_path": "examples/api-phase3/comparison/candidates/text_logistic/attempt-1/validation-execution/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_nb/attempt-0/candidate.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_nb/attempt-0/candidate.json",
+      "sha256": "5ea5a5e30e77415bc3fe3e6b73c6233948aa3ba06f78f1f5d89cd23d53f51052"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_nb/attempt-0/candidate.py",
+      "original_path": "examples/api-phase3/comparison/candidates/text_nb/attempt-0/candidate.py",
+      "sha256": "150e29b06baa8d9621c0effe8af284e1a4f518b6746b04ab9cef9fb6d7c3edfa"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_nb/attempt-0/configuration-check.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_nb/attempt-0/configuration-check.json",
+      "sha256": "15d3995e5205963615218610f8279b75d7de01c1c7bc52116a2c421ae9de965f"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_nb/attempt-0/data-manifest.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_nb/attempt-0/data-manifest.json",
+      "sha256": "5b520b475f5dc63877c0a03c35c32d42ef4aefe2284bd6f68f48222e4b9c6720"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_nb/attempt-0/decisions.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_nb/attempt-0/decisions.json",
+      "sha256": "21d95d5f50af5a9eee2b183c67e901396a6f63adbc8072dd0f4bd51a6b47caf2"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_nb/attempt-0/knowledge-input.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_nb/attempt-0/knowledge-input.json",
+      "sha256": "282851d5338831b02872d63d61ba65c2a1ba337ad87cf3eff7ffbbce8cf9e2d3"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_nb/attempt-0/plan-proposal.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_nb/attempt-0/plan-proposal.json",
+      "sha256": "558b6eb5ac463739ec65d0437810169d8c05373e832b9f3c19ee1d652c4d6214"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_nb/attempt-0/plan.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_nb/attempt-0/plan.json",
+      "sha256": "558b6eb5ac463739ec65d0437810169d8c05373e832b9f3c19ee1d652c4d6214"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_nb/attempt-0/protocol.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_nb/attempt-0/protocol.json",
+      "sha256": "6e305c1f489dbedd152d47a5a751effef7764890b575e7e8c0725661ced70411"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_nb/attempt-0/provider-audit.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_nb/attempt-0/provider-audit.json",
+      "sha256": "fb71b6b93a736dc4efd6472c554b76adf01540c157527a42dada55dbd1d3e19e"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_nb/attempt-0/provider-usage.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_nb/attempt-0/provider-usage.json",
+      "sha256": "a34ecbba829579c0a37b79e13095e20bcc6e5ba13feef24e0c9ab44b58e92756"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_nb/attempt-0/report.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_nb/attempt-0/report.json",
+      "sha256": "c660a3041673d30e477e5335eadb9aa09950b2f5a5158a6290df1b76e4bc084d"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_nb/attempt-0/report.md",
+      "original_path": "examples/api-phase3/comparison/candidates/text_nb/attempt-0/report.md",
+      "sha256": "e9eeb745c870978496deabfc4cf703051e3ed1916f21590f538cef34499adaf5"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_nb/attempt-0/retrieval.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_nb/attempt-0/retrieval.json",
+      "sha256": "e811340a3e51a6967b8c5c92af81eb5ffa1fd422a00746f05aacd8e348f014bd"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_nb/attempt-0/task.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_nb/attempt-0/task.json",
+      "sha256": "5b0bb5372919ede83260eefcba4d3778866cc54fe3ca345efbd10332f7ed94ea"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_nb/attempt-0/trace.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_nb/attempt-0/trace.json",
+      "sha256": "4f89dfc593dd6592ee299f011e07733f62cf8539eeb85ca9f1d1888f7f5a204a"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_nb/attempt-0/validation-class-details.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_nb/attempt-0/validation-class-details.json",
+      "sha256": "6080dca54959c7b46e6ff3dc61841a5a6e6992bcd214458b4972b3d7eca63e81"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_nb/attempt-0/validation-execution/cleanup.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_nb/attempt-0/validation-execution/cleanup.json",
+      "sha256": "7290a33755e521521d611abaa4832c07fc058e0da4b7d35cbdf07c03f64d423f"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_nb/attempt-0/validation-execution/container-state.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_nb/attempt-0/validation-execution/container-state.json",
+      "sha256": "853b1c0880ccc140f76e146a4349873b8aca32f4f00f73cd71f46d0e641e412d"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_nb/attempt-0/validation-execution/execution.json",
+      "original_path": "examples/api-phase3/comparison/candidates/text_nb/attempt-0/validation-execution/execution.json",
+      "sha256": "0facd9f75e7b258e04a4ed45cf26ab4ae551db659d786f82809ccef5fa0f34cf"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_nb/attempt-0/validation-execution/predictions.json.gz",
+      "original_path": "examples/api-phase3/comparison/candidates/text_nb/attempt-0/validation-execution/predictions.json.gz",
+      "sha256": "66d0e3bd50fc618dfc1575ab895b5804843c097f4a5acecc695fcfaa0cdb7083"
+    },
+    {
+      "path": "examples/banking-classification/comparison/candidates/text_nb/attempt-0/validation-execution/stderr.log",
+      "original_path": "examples/api-phase3/comparison/candidates/text_nb/attempt-0/validation-execution/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "examples/banking-classification/comparison/data-manifest.json",
+      "original_path": "examples/api-phase3/comparison/data-manifest.json",
+      "sha256": "5b520b475f5dc63877c0a03c35c32d42ef4aefe2284bd6f68f48222e4b9c6720"
+    },
+    {
+      "path": "examples/banking-classification/comparison/decisions.json",
+      "original_path": "examples/api-phase3/comparison/decisions.json",
+      "sha256": "ae2a1ef43fff822121b2f154135eef888420b57e070431f372d906a094ece9c3"
+    },
+    {
+      "path": "examples/banking-classification/comparison/plan.json",
+      "original_path": "examples/api-phase3/comparison/plan.json",
+      "sha256": "159b62c77f6c1b35ef7a0bc6af642e7ecada36b7b32657f1c216279d0736649b"
+    },
+    {
+      "path": "examples/banking-classification/comparison/protocol.json",
+      "original_path": "examples/api-phase3/comparison/protocol.json",
+      "sha256": "6e305c1f489dbedd152d47a5a751effef7764890b575e7e8c0725661ced70411"
+    },
+    {
+      "path": "examples/banking-classification/comparison/provider-audit.json",
+      "original_path": "examples/api-phase3/comparison/provider-audit.json",
+      "sha256": "fb71b6b93a736dc4efd6472c554b76adf01540c157527a42dada55dbd1d3e19e"
+    },
+    {
+      "path": "examples/banking-classification/comparison/provider-usage.json",
+      "original_path": "examples/api-phase3/comparison/provider-usage.json",
+      "sha256": "a34ecbba829579c0a37b79e13095e20bcc6e5ba13feef24e0c9ab44b58e92756"
+    },
+    {
+      "path": "examples/banking-classification/comparison/ranking.json",
+      "original_path": "examples/api-phase3/comparison/ranking.json",
+      "sha256": "e8c6a9d408676198e02425b778b99383b61652639d99b90b089d4afa0e84e557"
+    },
+    {
+      "path": "examples/banking-classification/comparison/report.json",
+      "original_path": "examples/api-phase3/comparison/report.json",
+      "sha256": "879b3309c5b5ac5039596bce3e78991f1f8cbc5c490923c2f3df27f99bd0f8f6"
+    },
+    {
+      "path": "examples/banking-classification/comparison/report.md",
+      "original_path": "examples/api-phase3/comparison/report.md",
+      "sha256": "13cef99dba56a21273cc161c25fc3070fc57ee6347e0c33071b58d0450e5abd8"
+    },
+    {
+      "path": "examples/banking-classification/comparison/search-config.json",
+      "original_path": "examples/api-phase3/comparison/search-config.json",
+      "sha256": "c7d65584d3ccb8e431bb6df74ced33610b11966314193102245498cf37073c69"
+    },
+    {
+      "path": "examples/banking-classification/comparison/selection.json",
+      "original_path": "examples/api-phase3/comparison/selection.json",
+      "sha256": "45462140247bb49ac951473661d22eb4bf2d60db5f6fe54472f32fc7734d4baf"
+    },
+    {
+      "path": "examples/banking-classification/comparison/task.json",
+      "original_path": "examples/api-phase3/comparison/task.json",
+      "sha256": "464d3e37f91037dceae1e73cf76c33c5a7de76d22ced2255e80161fc1c84c930"
+    },
+    {
+      "path": "examples/banking-classification/comparison/test-access.json",
+      "original_path": "examples/api-phase3/comparison/test-access.json",
+      "sha256": "9d926696085b58622279c48233cb32ef884f03f0cc32b9e2e674dff21a78edf4"
+    },
+    {
+      "path": "examples/banking-classification/comparison/test-class-details.json",
+      "original_path": "examples/api-phase3/comparison/test-class-details.json",
+      "sha256": "0f23d11c8257f5cf30cbb92fc8edf20ac69d3e4684279f65f639b570cb7cf77b"
+    },
+    {
+      "path": "examples/banking-classification/comparison/test-execution/cleanup.json",
+      "original_path": "examples/api-phase3/comparison/test-execution/cleanup.json",
+      "sha256": "4060530cffa04118718160d5bbb5b11e1dd6585b1a1cc9bf330476250665f7aa"
+    },
+    {
+      "path": "examples/banking-classification/comparison/test-execution/container-state.json",
+      "original_path": "examples/api-phase3/comparison/test-execution/container-state.json",
+      "sha256": "608875d9a688c885445f7990411b1dd438457ba8cb151fbc2720dfd970207a1a"
+    },
+    {
+      "path": "examples/banking-classification/comparison/test-execution/execution.json",
+      "original_path": "examples/api-phase3/comparison/test-execution/execution.json",
+      "sha256": "e70f99573c5ab50b446682a563a69f17071882ac3994a069eb90fbab347085d9"
+    },
+    {
+      "path": "examples/banking-classification/comparison/test-execution/predictions.json.gz",
+      "original_path": "examples/api-phase3/comparison/test-execution/predictions.json.gz",
+      "sha256": "218cb117ed1e38f10872289541bd94fd00fb0c0405c6b1729f3e820b95adba29"
+    },
+    {
+      "path": "examples/banking-classification/comparison/test-execution/stderr.log",
+      "original_path": "examples/api-phase3/comparison/test-execution/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "examples/banking-classification/comparison/trace.json",
+      "original_path": "examples/api-phase3/comparison/trace.json",
+      "sha256": "ffe40c6e88529177522dc0983b55b51826eedbc01f558b9daea176ad27ee8799"
+    },
+    {
+      "path": "examples/banking-classification/comparison/validation-class-details.json",
+      "original_path": "examples/api-phase3/comparison/validation-class-details.json",
+      "sha256": "7867b5c516dc2a30c0da8f4193288e8303847d00933f1519f76401e21fe5296f"
+    },
+    {
+      "path": "examples/banking-classification/docker-image.json",
+      "original_path": "examples/api-phase3/docker-image.json",
+      "sha256": "c4b897c5035df0a27ad6ebedda31a8c0d5c216e9b0b10ccd61fffbe08aa2dc05"
+    },
+    {
+      "path": "examples/banking-classification/knowledge.graphml",
+      "original_path": "examples/api-phase3/knowledge.graphml",
+      "sha256": "b438f36ec4dec04ae3179ebaeca8a8ad13480fab01aaa0a4823933672758d17c"
+    },
+    {
+      "path": "examples/banking-classification/knowledge.json",
+      "original_path": "examples/api-phase3/knowledge.json",
+      "sha256": "1a2647de8d6db0ddd2f9a08d85641106299bc917d8c92d8fa42b4c9e5daa5bfe"
+    },
+    {
+      "path": "examples/banking-classification/knowledge.sqlite",
+      "original_path": "examples/api-phase3/knowledge.sqlite",
+      "sha256": "f8387807fbc5e8c2c317c8652aab381dbf7d4eeaf20736b1505bae2d0833b4ce"
+    },
+    {
+      "path": "examples/banking-classification/provider-audit.json",
+      "original_path": "examples/api-phase3/provider-audit.json",
+      "sha256": "fb71b6b93a736dc4efd6472c554b76adf01540c157527a42dada55dbd1d3e19e"
+    },
+    {
+      "path": "examples/banking-classification/review.json",
+      "original_path": "examples/api-phase3/review.json",
+      "sha256": "89d0db7f9a15c77d1ce6cf33f51184f833fa212254af9e120989638bc8de521d"
+    },
+    {
+      "path": "examples/banking-classification/tests.xml",
+      "original_path": "examples/api-phase3/tests.xml",
+      "sha256": "49361c4788c5c8d1223136f0b5b5ab5138b3a26846050ea8c31e0e066e2e59bb"
+    },
+    {
+      "path": "examples/banking-classification/verification.json",
+      "original_path": "examples/api-phase3/verification.json",
+      "sha256": "fa691c7e47127c5726ddd127be3d0ec0c950054ae20b4aa6a41d0024161c1a0e"
+    },
+    {
+      "path": "examples/mock-repair/attempts.json",
+      "original_path": "examples/phase3/repair/attempts.json",
+      "sha256": "dba291d1e9c56e5866b1ef571a329e4369b4e5920c99325c174e370f3c24afd8"
+    },
+    {
+      "path": "examples/mock-repair/candidate.json",
+      "original_path": "examples/phase3/repair/candidate.json",
+      "sha256": "79f0623844261e37416c9e26baeb654820103bfa7828e010d00e0a38682a07ad"
+    },
+    {
+      "path": "examples/mock-repair/candidate.py",
+      "original_path": "examples/phase3/repair/candidate.py",
+      "sha256": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-0/candidate.json",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-0/candidate.json",
+      "sha256": "bc0ecfa4dff6447fc9c9d5b65a291f68895d97f81367e5cda60657cf37948e72"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-0/candidate.py",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-0/candidate.py",
+      "sha256": "0d9f08d7a0fbbae4940581b85c671ce5daf14e3f612b3101bcc239e0e7447472"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-0/data-manifest.json",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-0/data-manifest.json",
+      "sha256": "ff719d7c6507049670b4d67c542a2eaa7e17e197d051325e383c069235038d92"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-0/decisions.json",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-0/decisions.json",
+      "sha256": "15098f0cd7029a37380f3a916ae34f741cdf8c23ac90d65b33be4ceecaff13f5"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-0/diagnosis.json",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-0/diagnosis.json",
+      "sha256": "192a29bb2a86abfcf393a18f28c42159045bd0753b2d110e7f4b9a07611d1e6e"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-0/plan.json",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-0/plan.json",
+      "sha256": "3493dda202f4b012bc9b00bc38e90876ed719ccdfe8604087ca3126f18074b10"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-0/protocol.json",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-0/protocol.json",
+      "sha256": "6e305c1f489dbedd152d47a5a751effef7764890b575e7e8c0725661ced70411"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-0/provider-audit.json",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-0/provider-audit.json",
+      "sha256": "150aea3fa70cdafabf4e6a1bc4950b83dde7ab6ae751485a7557701c39b98028"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-0/report.json",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-0/report.json",
+      "sha256": "38e64cc946509d60b7ca37f4c4b411c1df84b6416d9783bbb48f38bea1066d30"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-0/report.md",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-0/report.md",
+      "sha256": "f901e4d4892bfa5ca146ea788fd19783414e9d2c608b5b260a43dd744765e315"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-0/retrieval.json",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-0/retrieval.json",
+      "sha256": "28d51978646751a206d648fd806505b5976392c840170e157e8451e85e7c620b"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-0/task.json",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-0/task.json",
+      "sha256": "19520311576b4635593534d0ec2cf0326e229a653f4864ad6fabade822221b79"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-0/trace.json",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-0/trace.json",
+      "sha256": "92df5c7e6ebf3fb72c72ef1c984850b3e0ec86a705dce64cf2df8a3304488493"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-0/validation-execution/cleanup.json",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-0/validation-execution/cleanup.json",
+      "sha256": "c553e2cdce29125aee7e12e34e3ef57d81dc22fa051b2e125ca8a8d25037ddde"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-0/validation-execution/container-state.json",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-0/validation-execution/container-state.json",
+      "sha256": "f36630479471cd34454ad7648cc77597cb5a5a5d3e44e519ad0f4cd3e1a35163"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-0/validation-execution/execution.json",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-0/validation-execution/execution.json",
+      "sha256": "f608d8cd1727076de2b4b1c1a929b3d8cad986b670653eaf1971541fecd280f3"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-0/validation-execution/predictions.json.gz",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-0/validation-execution/predictions.json.gz",
+      "sha256": "7ba0d1e9d144206690ac6fbecf809cf6de1c23c40a170f86976745d553fba6c5"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-0/validation-execution/stderr.log",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-0/validation-execution/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-1/candidate.json",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-1/candidate.json",
+      "sha256": "79f0623844261e37416c9e26baeb654820103bfa7828e010d00e0a38682a07ad"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-1/candidate.py",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-1/candidate.py",
+      "sha256": "01e8520b0eddcc619e744203c0f7a8dd55a516457d6cf50eba0b8577ec1ce6de"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-1/data-manifest.json",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-1/data-manifest.json",
+      "sha256": "ff719d7c6507049670b4d67c542a2eaa7e17e197d051325e383c069235038d92"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-1/decisions.json",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-1/decisions.json",
+      "sha256": "f31c2656e78fa820e45cf7e3da416a34d3a120b8f8ebb03a2299d0bba050893e"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-1/plan.json",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-1/plan.json",
+      "sha256": "d186d33706e4599951ec5239a30c90f393c2f22c9441f20d749fa3c66cc0e3cd"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-1/protocol.json",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-1/protocol.json",
+      "sha256": "6e305c1f489dbedd152d47a5a751effef7764890b575e7e8c0725661ced70411"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-1/provider-audit.json",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-1/provider-audit.json",
+      "sha256": "37bdb71f5c8e5dd21735692ffc21a89e96f6db3363aba1b433340f70334d251b"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-1/repair-input.json",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-1/repair-input.json",
+      "sha256": "a758722b0f52b16c9f4d06ff811a463da0c9440325cfca5a62c25b439949b4b1"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-1/report.json",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-1/report.json",
+      "sha256": "377cf4ee9652c4858d9a1716a2e510a0bbe4f6ebdd9b23a39c388f11d9d778b8"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-1/report.md",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-1/report.md",
+      "sha256": "40db0d243201b23499bf3f5c571ab6f4b394c0da621b3b311049c5958e364d6b"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-1/retrieval.json",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-1/retrieval.json",
+      "sha256": "4504606ce3509cfa5fef30e7d8f13122157cecda28ff519c232924b205715850"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-1/task.json",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-1/task.json",
+      "sha256": "c32458724029b8a834b0d1f481c6ed6394f6231b7d4163957a1657c58d1751a9"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-1/trace.json",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-1/trace.json",
+      "sha256": "d8b1f1c6b9babf32a757957f04525135388154e6557113cd4b095a8edebcc814"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-1/validation-class-details.json",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-1/validation-class-details.json",
+      "sha256": "7867b5c516dc2a30c0da8f4193288e8303847d00933f1519f76401e21fe5296f"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-1/validation-execution/cleanup.json",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-1/validation-execution/cleanup.json",
+      "sha256": "600767f84b92d0975b025b05828d155c6595d57b860edfea4739b271d702d0f8"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-1/validation-execution/container-state.json",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-1/validation-execution/container-state.json",
+      "sha256": "efb4a04b1f0a0878edd49c9626487efd7e6b2c1b69329af9fbb070701cd34b97"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-1/validation-execution/execution.json",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-1/validation-execution/execution.json",
+      "sha256": "ab395959edfbea3fb10e925d2f475569b91e1726d74dc2331e7fda382b9bd8b2"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-1/validation-execution/predictions.json.gz",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-1/validation-execution/predictions.json.gz",
+      "sha256": "8748b1cdcd80449100dd92608374745f7e7352a970b2106d17f2438cc45e6464"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_logistic/attempt-1/validation-execution/stderr.log",
+      "original_path": "examples/phase3/repair/candidates/text_logistic/attempt-1/validation-execution/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_nb/attempt-0/candidate.json",
+      "original_path": "examples/phase3/repair/candidates/text_nb/attempt-0/candidate.json",
+      "sha256": "cc85bdb41a3364e425178629bf34f22b9d3085f7a9802450a0c9f405c2b04330"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_nb/attempt-0/candidate.py",
+      "original_path": "examples/phase3/repair/candidates/text_nb/attempt-0/candidate.py",
+      "sha256": "f2019deef87f93b84159808e3d83a2b7e1a1a1c8161c81adc94377d4e4e75178"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_nb/attempt-0/data-manifest.json",
+      "original_path": "examples/phase3/repair/candidates/text_nb/attempt-0/data-manifest.json",
+      "sha256": "ff719d7c6507049670b4d67c542a2eaa7e17e197d051325e383c069235038d92"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_nb/attempt-0/decisions.json",
+      "original_path": "examples/phase3/repair/candidates/text_nb/attempt-0/decisions.json",
+      "sha256": "0057fc1ac94255b60ad17b8500a1098295e613853657e71b7590db68cd367f3c"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_nb/attempt-0/plan.json",
+      "original_path": "examples/phase3/repair/candidates/text_nb/attempt-0/plan.json",
+      "sha256": "28ce7f2957711e9b9bb8ed4c4aa3e24b63e775ee226d5e2f60f5ef051e4b8750"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_nb/attempt-0/protocol.json",
+      "original_path": "examples/phase3/repair/candidates/text_nb/attempt-0/protocol.json",
+      "sha256": "6e305c1f489dbedd152d47a5a751effef7764890b575e7e8c0725661ced70411"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_nb/attempt-0/provider-audit.json",
+      "original_path": "examples/phase3/repair/candidates/text_nb/attempt-0/provider-audit.json",
+      "sha256": "e988d94da0392343fc24ae3618e31345c1844a288752128144995390799aab2e"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_nb/attempt-0/report.json",
+      "original_path": "examples/phase3/repair/candidates/text_nb/attempt-0/report.json",
+      "sha256": "a2b7d091daa59fd106fdb72b4624f8e30508db1283ac39dafaf3f6bf6c3be3c3"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_nb/attempt-0/report.md",
+      "original_path": "examples/phase3/repair/candidates/text_nb/attempt-0/report.md",
+      "sha256": "6f6a2918111887a975a7ea61a33ce27a3231a225fb7cc8ef575a103b7d314a44"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_nb/attempt-0/retrieval.json",
+      "original_path": "examples/phase3/repair/candidates/text_nb/attempt-0/retrieval.json",
+      "sha256": "3f7e83dc2501a59fea85061932ceb78c5c55532338a8c6493f422ee8c0b7231a"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_nb/attempt-0/task.json",
+      "original_path": "examples/phase3/repair/candidates/text_nb/attempt-0/task.json",
+      "sha256": "e81593a05555bc1aebcb4db112baa475743bcb96be09d0a4cb815f530436b121"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_nb/attempt-0/trace.json",
+      "original_path": "examples/phase3/repair/candidates/text_nb/attempt-0/trace.json",
+      "sha256": "54e2a1adf0a6fbc587607906bcf2112043ea27329e6bd75be15cdcbde6655a8c"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_nb/attempt-0/validation-class-details.json",
+      "original_path": "examples/phase3/repair/candidates/text_nb/attempt-0/validation-class-details.json",
+      "sha256": "6080dca54959c7b46e6ff3dc61841a5a6e6992bcd214458b4972b3d7eca63e81"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_nb/attempt-0/validation-execution/cleanup.json",
+      "original_path": "examples/phase3/repair/candidates/text_nb/attempt-0/validation-execution/cleanup.json",
+      "sha256": "f60c50b4cc6863f21536f3ca7164300a5ac7918746cea4b66f257661630349be"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_nb/attempt-0/validation-execution/container-state.json",
+      "original_path": "examples/phase3/repair/candidates/text_nb/attempt-0/validation-execution/container-state.json",
+      "sha256": "3dc5d2f22b7de64590e348e8dbbad1743ac6ead379767ef2373ddcdd5f9379cb"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_nb/attempt-0/validation-execution/execution.json",
+      "original_path": "examples/phase3/repair/candidates/text_nb/attempt-0/validation-execution/execution.json",
+      "sha256": "a2e6b4f0838de4657978086a7a2dc9acfb7a5ee15bdb2a9f44898da59dfda320"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_nb/attempt-0/validation-execution/predictions.json.gz",
+      "original_path": "examples/phase3/repair/candidates/text_nb/attempt-0/validation-execution/predictions.json.gz",
+      "sha256": "2f1ec6dc9a1d77d91f14651c05f6aa79205cbf47ab47eadfa0685cb251f7086c"
+    },
+    {
+      "path": "examples/mock-repair/candidates/text_nb/attempt-0/validation-execution/stderr.log",
+      "original_path": "examples/phase3/repair/candidates/text_nb/attempt-0/validation-execution/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "examples/mock-repair/data-manifest.json",
+      "original_path": "examples/phase3/repair/data-manifest.json",
+      "sha256": "ff719d7c6507049670b4d67c542a2eaa7e17e197d051325e383c069235038d92"
+    },
+    {
+      "path": "examples/mock-repair/decisions.json",
+      "original_path": "examples/phase3/repair/decisions.json",
+      "sha256": "6f30e5fc83c5e0b2dae7bd87f93d8538b3898589d7fb32da5cd731e19bca6a1c"
+    },
+    {
+      "path": "examples/mock-repair/plan.json",
+      "original_path": "examples/phase3/repair/plan.json",
+      "sha256": "d186d33706e4599951ec5239a30c90f393c2f22c9441f20d749fa3c66cc0e3cd"
+    },
+    {
+      "path": "examples/mock-repair/protocol.json",
+      "original_path": "examples/phase3/repair/protocol.json",
+      "sha256": "6e305c1f489dbedd152d47a5a751effef7764890b575e7e8c0725661ced70411"
+    },
+    {
+      "path": "examples/mock-repair/provider-audit.json",
+      "original_path": "examples/phase3/repair/provider-audit.json",
+      "sha256": "e988d94da0392343fc24ae3618e31345c1844a288752128144995390799aab2e"
+    },
+    {
+      "path": "examples/mock-repair/ranking.json",
+      "original_path": "examples/phase3/repair/ranking.json",
+      "sha256": "3b3540280ab7b9f0d32c486d20101e3724f0179a0d042975670d40ba9bdd0c14"
+    },
+    {
+      "path": "examples/mock-repair/report.json",
+      "original_path": "examples/phase3/repair/report.json",
+      "sha256": "fe4c7fd0252d6c59fcd69bd9e1704fa02485c7acdb72489ac2a538ce748b2724"
+    },
+    {
+      "path": "examples/mock-repair/report.md",
+      "original_path": "examples/phase3/repair/report.md",
+      "sha256": "ff6e1d66ea5cbe723f3be2ae3aef026ee70e2515605ba716de9d44f52859147f"
+    },
+    {
+      "path": "examples/mock-repair/search-config.json",
+      "original_path": "examples/phase3/repair/search-config.json",
+      "sha256": "c7d65584d3ccb8e431bb6df74ced33610b11966314193102245498cf37073c69"
+    },
+    {
+      "path": "examples/mock-repair/selection.json",
+      "original_path": "examples/phase3/repair/selection.json",
+      "sha256": "282bc3f5408edb48d135be73ce6ba6f9d35a67e4aa44acfcf2a9bde5ef9072ee"
+    },
+    {
+      "path": "examples/mock-repair/task.json",
+      "original_path": "examples/phase3/repair/task.json",
+      "sha256": "1c8ee7e3f42c2e1f44bcafc642c4fc3b7d919a2607660291a518de5932fc57fd"
+    },
+    {
+      "path": "examples/mock-repair/test-access.json",
+      "original_path": "examples/phase3/repair/test-access.json",
+      "sha256": "8caf7ed623bf1752277fe3e2e0cc09850f6f77e02746325d63211dd7090a7fff"
+    },
+    {
+      "path": "examples/mock-repair/test-class-details.json",
+      "original_path": "examples/phase3/repair/test-class-details.json",
+      "sha256": "0f23d11c8257f5cf30cbb92fc8edf20ac69d3e4684279f65f639b570cb7cf77b"
+    },
+    {
+      "path": "examples/mock-repair/test-execution/cleanup.json",
+      "original_path": "examples/phase3/repair/test-execution/cleanup.json",
+      "sha256": "16dc09d4abc58f3fbc4d01034aec93c6f6888afeebceac81b0033bc95b6f7327"
+    },
+    {
+      "path": "examples/mock-repair/test-execution/container-state.json",
+      "original_path": "examples/phase3/repair/test-execution/container-state.json",
+      "sha256": "dc5544bc4f5a4772548bf1f28a9feff05d5af604274c200e735cb71df02cd990"
+    },
+    {
+      "path": "examples/mock-repair/test-execution/execution.json",
+      "original_path": "examples/phase3/repair/test-execution/execution.json",
+      "sha256": "e68da31532d55271fd8b26fe9303d653e46d0aca465f6cd9cebabeac7e784452"
+    },
+    {
+      "path": "examples/mock-repair/test-execution/predictions.json.gz",
+      "original_path": "examples/phase3/repair/test-execution/predictions.json.gz",
+      "sha256": "d9627f12dbb4bc88f6788b278855b4bb633dd215ef598daac8178e719a76498a"
+    },
+    {
+      "path": "examples/mock-repair/test-execution/stderr.log",
+      "original_path": "examples/phase3/repair/test-execution/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "examples/mock-repair/trace.json",
+      "original_path": "examples/phase3/repair/trace.json",
+      "sha256": "babe16a90a172c48c72ef14b5568182d593316c980a7faa41f92826d37d8d334"
+    },
+    {
+      "path": "examples/mock-repair/validation-class-details.json",
+      "original_path": "examples/phase3/repair/validation-class-details.json",
+      "sha256": "7867b5c516dc2a30c0da8f4193288e8303847d00933f1519f76401e21fe5296f"
+    },
+    {
+      "path": "examples/rejected-code/attempts.json",
+      "original_path": "examples/phase3/unsafe-code/attempts.json",
+      "sha256": "40079a7d6714d9721c1b4dfaaa1131f4e05030376ff7960a655a7535ee7bab7b"
+    },
+    {
+      "path": "examples/rejected-code/candidates/text_logistic/attempt-0/candidate.json",
+      "original_path": "examples/phase3/unsafe-code/candidates/text_logistic/attempt-0/candidate.json",
+      "sha256": "b8666d022ffa993f6e805281185ddb4a09693f866c246bfe7391652bd3eb84cf"
+    },
+    {
+      "path": "examples/rejected-code/candidates/text_logistic/attempt-0/candidate.py",
+      "original_path": "examples/phase3/unsafe-code/candidates/text_logistic/attempt-0/candidate.py",
+      "sha256": "4353f3a8de4a47c0631539b81f2389cac46bc9d175e17fb79095591e345643b2"
+    },
+    {
+      "path": "examples/rejected-code/candidates/text_logistic/attempt-0/data-manifest.json",
+      "original_path": "examples/phase3/unsafe-code/candidates/text_logistic/attempt-0/data-manifest.json",
+      "sha256": "ff719d7c6507049670b4d67c542a2eaa7e17e197d051325e383c069235038d92"
+    },
+    {
+      "path": "examples/rejected-code/candidates/text_logistic/attempt-0/decisions.json",
+      "original_path": "examples/phase3/unsafe-code/candidates/text_logistic/attempt-0/decisions.json",
+      "sha256": "d633c352d9efce074b17497374500275f658d478fe51f2a3123019004774236d"
+    },
+    {
+      "path": "examples/rejected-code/candidates/text_logistic/attempt-0/diagnosis.json",
+      "original_path": "examples/phase3/unsafe-code/candidates/text_logistic/attempt-0/diagnosis.json",
+      "sha256": "98f557a8068e57f4e8b7085ec6c7ee134959b716f6c3c991db6e0cb039a3a955"
+    },
+    {
+      "path": "examples/rejected-code/candidates/text_logistic/attempt-0/plan.json",
+      "original_path": "examples/phase3/unsafe-code/candidates/text_logistic/attempt-0/plan.json",
+      "sha256": "1ce1ce56f256eb4b0f8f52e18eaeb81702f3ce30496eff406e13554f3d77321c"
+    },
+    {
+      "path": "examples/rejected-code/candidates/text_logistic/attempt-0/protocol.json",
+      "original_path": "examples/phase3/unsafe-code/candidates/text_logistic/attempt-0/protocol.json",
+      "sha256": "6e305c1f489dbedd152d47a5a751effef7764890b575e7e8c0725661ced70411"
+    },
+    {
+      "path": "examples/rejected-code/candidates/text_logistic/attempt-0/provider-audit.json",
+      "original_path": "examples/phase3/unsafe-code/candidates/text_logistic/attempt-0/provider-audit.json",
+      "sha256": "150aea3fa70cdafabf4e6a1bc4950b83dde7ab6ae751485a7557701c39b98028"
+    },
+    {
+      "path": "examples/rejected-code/candidates/text_logistic/attempt-0/report.json",
+      "original_path": "examples/phase3/unsafe-code/candidates/text_logistic/attempt-0/report.json",
+      "sha256": "9bc2481a4a7a418a84c8b9f31fd080ef1989da2f3c1c1f54c09ce72c9e25712e"
+    },
+    {
+      "path": "examples/rejected-code/candidates/text_logistic/attempt-0/report.md",
+      "original_path": "examples/phase3/unsafe-code/candidates/text_logistic/attempt-0/report.md",
+      "sha256": "562d8cdda62540d3b10aa67f9ae2c683b3851bf8dc6d425fb87a7c9878b068c1"
+    },
+    {
+      "path": "examples/rejected-code/candidates/text_logistic/attempt-0/retrieval.json",
+      "original_path": "examples/phase3/unsafe-code/candidates/text_logistic/attempt-0/retrieval.json",
+      "sha256": "21858f7fc819dc77ec7f1c8e5f3e979e95ad2ee6366c43f35f99e116280c29f3"
+    },
+    {
+      "path": "examples/rejected-code/candidates/text_logistic/attempt-0/task.json",
+      "original_path": "examples/phase3/unsafe-code/candidates/text_logistic/attempt-0/task.json",
+      "sha256": "012e254824d7f50b6d5b866424d9705e66245e9901ae9f22a7a357bbbef3fd93"
+    },
+    {
+      "path": "examples/rejected-code/candidates/text_logistic/attempt-0/trace.json",
+      "original_path": "examples/phase3/unsafe-code/candidates/text_logistic/attempt-0/trace.json",
+      "sha256": "1a201c2e54fa68b2135a2ec3d89b7afefb68215be6a3666f7a62f61d3245707b"
+    },
+    {
+      "path": "examples/rejected-code/data-manifest.json",
+      "original_path": "examples/phase3/unsafe-code/data-manifest.json",
+      "sha256": "ff719d7c6507049670b4d67c542a2eaa7e17e197d051325e383c069235038d92"
+    },
+    {
+      "path": "examples/rejected-code/decisions.json",
+      "original_path": "examples/phase3/unsafe-code/decisions.json",
+      "sha256": "81909557d6c53abdb565674cc37333f58ba4fd41a5de74b8a763c87d8e852076"
+    },
+    {
+      "path": "examples/rejected-code/protocol.json",
+      "original_path": "examples/phase3/unsafe-code/protocol.json",
+      "sha256": "6e305c1f489dbedd152d47a5a751effef7764890b575e7e8c0725661ced70411"
+    },
+    {
+      "path": "examples/rejected-code/provider-audit.json",
+      "original_path": "examples/phase3/unsafe-code/provider-audit.json",
+      "sha256": "150aea3fa70cdafabf4e6a1bc4950b83dde7ab6ae751485a7557701c39b98028"
+    },
+    {
+      "path": "examples/rejected-code/report.json",
+      "original_path": "examples/phase3/unsafe-code/report.json",
+      "sha256": "2be40a12f07a32ca7935a784feab60071daec8413672081000c4bb61448eb73b"
+    },
+    {
+      "path": "examples/rejected-code/report.md",
+      "original_path": "examples/phase3/unsafe-code/report.md",
+      "sha256": "4602405b728793ef661b1414bc2386253c3c10e2a0cd269b6976326b04d67ef6"
+    },
+    {
+      "path": "examples/rejected-code/search-config.json",
+      "original_path": "examples/phase3/unsafe-code/search-config.json",
+      "sha256": "c7d65584d3ccb8e431bb6df74ced33610b11966314193102245498cf37073c69"
+    },
+    {
+      "path": "examples/rejected-code/trace.json",
+      "original_path": "examples/phase3/unsafe-code/trace.json",
+      "sha256": "4af256816306c6d45ef0272555514f41486ae6f406a0fb5a16bb590e7efbc625"
+    },
+    {
+      "path": "examples/experience-reuse/run/attempts.json",
+      "original_path": "examples/phase4/api-2-on/attempts.json",
+      "sha256": "7bb70642d8d42a4511016d4d3cb918dd0982930ca60396af23f4d96bccc34b82"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidate.json",
+      "original_path": "examples/phase4/api-2-on/candidate.json",
+      "sha256": "c9c487b170cf57ed054987aa1ac5c8087a26b6f5be24fbce864f605d9ac70d53"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidate.py",
+      "original_path": "examples/phase4/api-2-on/candidate.py",
+      "sha256": "68d7c80c9fff0b6c3546e7687395796905f3ac0b9156ed05e81b4b8a726908ed"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-0/candidate.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-0/candidate.json",
+      "sha256": "ebf1bd70f2c7bc2f853d4f6e2c6bab0c235214e66ac4997e93f50b2e29acd0f7"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-0/candidate.py",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-0/candidate.py",
+      "sha256": "ac0dfe38edbd8df9fe67122198adf4e18d5204ac92cfa09b61bd130447cea6ab"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-0/data-manifest.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-0/data-manifest.json",
+      "sha256": "5b520b475f5dc63877c0a03c35c32d42ef4aefe2284bd6f68f48222e4b9c6720"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-0/decisions.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-0/decisions.json",
+      "sha256": "d857c115968fe6eb3938190d34a6f49c20f19d078f14723e8db581101aa34183"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-0/diagnosis.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-0/diagnosis.json",
+      "sha256": "d1ea16d74d29a5fe3c2ef5311c74c8bc1fa6ebd132bcfeb1614447491bf2588a"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-0/plan-proposal.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-0/plan-proposal.json",
+      "sha256": "96c450f8a369685130fb93490566f44c879914e32984d994250dd78b4499bf69"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-0/plan.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-0/plan.json",
+      "sha256": "96c450f8a369685130fb93490566f44c879914e32984d994250dd78b4499bf69"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-0/protocol.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-0/protocol.json",
+      "sha256": "6e305c1f489dbedd152d47a5a751effef7764890b575e7e8c0725661ced70411"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-0/provider-audit.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-0/provider-audit.json",
+      "sha256": "2ef22aa6a1de5e287ca314704ec3be42dc536c9f5e3e7ab1a3cbf13e0a8a326c"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-0/provider-usage.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-0/provider-usage.json",
+      "sha256": "2336951fb7ddbdb2178dac43418b3e80f0e5e465ebe6245d2c75f0c660460110"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-0/report.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-0/report.json",
+      "sha256": "03557bb851222d8f3b0cc2076aa189cb4b0fa0f9a8686169c8fc7e5fe411dc7e"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-0/report.md",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-0/report.md",
+      "sha256": "75fee6cad361757103dfe8c84b9fb3c156ba6c954696f604487753f67e3a16f3"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-0/resume-origin.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-0/resume-origin.json",
+      "sha256": "40b9564fa549356c4703180b2c5b69bdd086c955cc64fc18c43f75bdb1f80e80"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-0/retrieval.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-0/retrieval.json",
+      "sha256": "027a7fff09a6056e2e701ba1e902aa2e1f1c29f5f8867a4ec2e5a95f3db157ed"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-0/task.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-0/task.json",
+      "sha256": "2d2468c422a935033642fbab2202f3a4507c2c7cf83177ae986f3c5e17e8325c"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-0/trace.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-0/trace.json",
+      "sha256": "b6b6d64b0cb38042d640b61e59948fc5b8dd5393ff8fa3294d8df7a4fa0b68f8"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-0/validation-execution/cleanup.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-0/validation-execution/cleanup.json",
+      "sha256": "ae6c8aa6996f40eb45d3f100c2de6c4fd2d6d29fd99ce9a82d4f19a73a66f7da"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-0/validation-execution/container-state.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-0/validation-execution/container-state.json",
+      "sha256": "88081cd0a072e658c93228fe631a83f659c98e302fee755262d859845be3873d"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-0/validation-execution/execution.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-0/validation-execution/execution.json",
+      "sha256": "a2d1c2c22647a90199371eb539fe632fed3e5942a97468697b705cdf45d8ba11"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-0/validation-execution/predictions.json.gz",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-0/validation-execution/predictions.json.gz",
+      "sha256": "00f69877911f683f33db80748f2cb5a90a15fd676f86b5b3a552f6675348322b"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-0/validation-execution/stderr.log",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-0/validation-execution/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-1/builder-input.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-1/builder-input.json",
+      "sha256": "3afb55f796351d283e41f68650cfe967be987dcb58c330ce3acd28ad40e6b945"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-1/candidate.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-1/candidate.json",
+      "sha256": "c9c487b170cf57ed054987aa1ac5c8087a26b6f5be24fbce864f605d9ac70d53"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-1/candidate.py",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-1/candidate.py",
+      "sha256": "68d7c80c9fff0b6c3546e7687395796905f3ac0b9156ed05e81b4b8a726908ed"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-1/configuration-check.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-1/configuration-check.json",
+      "sha256": "77c14ee37cf7b4ae4ccb7aa0853bf4b99c9171d7f640ad8fea668ee2387c4c3a"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-1/data-manifest.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-1/data-manifest.json",
+      "sha256": "5b520b475f5dc63877c0a03c35c32d42ef4aefe2284bd6f68f48222e4b9c6720"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-1/decisions.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-1/decisions.json",
+      "sha256": "9a35d0d661e969f3ea588e91cabd8f40ec8520e4a642f84992b51e40c13255a8"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-1/experience-retrieval.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-1/experience-retrieval.json",
+      "sha256": "4b19a898e521f6aad4acc5edb9b88e59cbb104553a19cfffc2968f5d368fc0fc"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-1/experience-use.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-1/experience-use.json",
+      "sha256": "45407ffe38917338469adda6a983587412113683b705947f37208aa378674c11"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-1/knowledge-input.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-1/knowledge-input.json",
+      "sha256": "282851d5338831b02872d63d61ba65c2a1ba337ad87cf3eff7ffbbce8cf9e2d3"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-1/plan-proposal.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-1/plan-proposal.json",
+      "sha256": "f2bacb67b554f4f83581ae8e6196979a85e84ef3a36053e96232f59e9c9a367e"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-1/plan.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-1/plan.json",
+      "sha256": "f2bacb67b554f4f83581ae8e6196979a85e84ef3a36053e96232f59e9c9a367e"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-1/protocol.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-1/protocol.json",
+      "sha256": "6e305c1f489dbedd152d47a5a751effef7764890b575e7e8c0725661ced70411"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-1/provider-audit.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-1/provider-audit.json",
+      "sha256": "2ec1359998563ce89043113495688e42b6c78a610cb03878a0c6e67ac22c75a3"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-1/provider-usage.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-1/provider-usage.json",
+      "sha256": "9a1b3770eac078f1abf4ba936ba91a54ca098ad8b6e86b920f923ca0cba8a83c"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-1/repair-input.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-1/repair-input.json",
+      "sha256": "f7a8912a9b4045ad66cc0c8684e1bfd758f240d4594ab21e79cb0f0843a6c819"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-1/report.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-1/report.json",
+      "sha256": "6bbc84def0d7fc1715a8db824cb21599d946bd332475c18bfe719b58f64ee2a1"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-1/report.md",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-1/report.md",
+      "sha256": "ac2cf2a2f88ee5af73d9af61d16a7dee9f41607866d5d8c75510a8991147584b"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-1/retrieval.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-1/retrieval.json",
+      "sha256": "ec6e4919628243a8c4c57b82e07a271de78467c4eeb576862ba5b5ff9873adc5"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-1/task.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-1/task.json",
+      "sha256": "340220c54b9975c080df5cfbf7716a5343161395e1ea064866335361180c300c"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-1/trace.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-1/trace.json",
+      "sha256": "660e37d5cd9d93554562bf47295154ae76af6619a95fe66d70683a568b3945c9"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-1/validation-class-details.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-1/validation-class-details.json",
+      "sha256": "7867b5c516dc2a30c0da8f4193288e8303847d00933f1519f76401e21fe5296f"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-1/validation-execution/cleanup.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-1/validation-execution/cleanup.json",
+      "sha256": "356ecae198dea641626cd822dc159715f9b7eebb35ca993ecc64e5937e7d7dff"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-1/validation-execution/container-state.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-1/validation-execution/container-state.json",
+      "sha256": "39e7a743eed8cff52b0dfc514755afa6e9990959ae6b6103ada6afa42a67f880"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-1/validation-execution/execution.json",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-1/validation-execution/execution.json",
+      "sha256": "f2fc4597d503817216d409929b0e4dad1afb5f51ddc30c790b9e516cf2344f0f"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-1/validation-execution/predictions.json.gz",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-1/validation-execution/predictions.json.gz",
+      "sha256": "62f5ec741fd7b395b81f342e276f66acd3b1011116ffbce1ff99a203c2cc08f4"
+    },
+    {
+      "path": "examples/experience-reuse/run/candidates/text_logistic/attempt-1/validation-execution/stderr.log",
+      "original_path": "examples/phase4/api-2-on/candidates/text_logistic/attempt-1/validation-execution/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "examples/experience-reuse/run/data-manifest.json",
+      "original_path": "examples/phase4/api-2-on/data-manifest.json",
+      "sha256": "5b520b475f5dc63877c0a03c35c32d42ef4aefe2284bd6f68f48222e4b9c6720"
+    },
+    {
+      "path": "examples/experience-reuse/run/decisions.json",
+      "original_path": "examples/phase4/api-2-on/decisions.json",
+      "sha256": "a1f651f06ea4cce5477702ce440869ffae2049847813196812f458529ef1441e"
+    },
+    {
+      "path": "examples/experience-reuse/run/experience-library.json",
+      "original_path": "examples/phase4/api-2-on/experience-library.json",
+      "sha256": "7ac12c9a241891de8e25cf4210c41b9e87a656a87e7123a066f286ae3d04bd3b"
+    },
+    {
+      "path": "examples/experience-reuse/run/plan.json",
+      "original_path": "examples/phase4/api-2-on/plan.json",
+      "sha256": "f2bacb67b554f4f83581ae8e6196979a85e84ef3a36053e96232f59e9c9a367e"
+    },
+    {
+      "path": "examples/experience-reuse/run/protocol.json",
+      "original_path": "examples/phase4/api-2-on/protocol.json",
+      "sha256": "6e305c1f489dbedd152d47a5a751effef7764890b575e7e8c0725661ced70411"
+    },
+    {
+      "path": "examples/experience-reuse/run/provider-audit.json",
+      "original_path": "examples/phase4/api-2-on/provider-audit.json",
+      "sha256": "2ec1359998563ce89043113495688e42b6c78a610cb03878a0c6e67ac22c75a3"
+    },
+    {
+      "path": "examples/experience-reuse/run/provider-usage.json",
+      "original_path": "examples/phase4/api-2-on/provider-usage.json",
+      "sha256": "9a1b3770eac078f1abf4ba936ba91a54ca098ad8b6e86b920f923ca0cba8a83c"
+    },
+    {
+      "path": "examples/experience-reuse/run/ranking.json",
+      "original_path": "examples/phase4/api-2-on/ranking.json",
+      "sha256": "2eaa7db1082af6c863a159aec561d9af38db3b2f9d164b914e8fe72894aeee57"
+    },
+    {
+      "path": "examples/experience-reuse/run/report.json",
+      "original_path": "examples/phase4/api-2-on/report.json",
+      "sha256": "38c839254cd3337de94b70569e48b9a196baaae0f632340a8fbe8c604ce08d3e"
+    },
+    {
+      "path": "examples/experience-reuse/run/report.md",
+      "original_path": "examples/phase4/api-2-on/report.md",
+      "sha256": "4df6223b45face628bcd9afb62e75ba5ce5488c975fafcb52e00d4fce14c5a2e"
+    },
+    {
+      "path": "examples/experience-reuse/run/search-config.json",
+      "original_path": "examples/phase4/api-2-on/search-config.json",
+      "sha256": "41d0182fe45814d64796fdbc47f4016f5f860d2199b4ffb76ed4aae52715f4ad"
+    },
+    {
+      "path": "examples/experience-reuse/run/task.json",
+      "original_path": "examples/phase4/api-2-on/task.json",
+      "sha256": "340220c54b9975c080df5cfbf7716a5343161395e1ea064866335361180c300c"
+    },
+    {
+      "path": "examples/experience-reuse/run/trace.json",
+      "original_path": "examples/phase4/api-2-on/trace.json",
+      "sha256": "00e60c8503f2b67454f74ef64f2240d2447b222db2e97dbbb704c5d5ceb216b1"
+    },
+    {
+      "path": "examples/experience-reuse/run/trial-audit.json",
+      "original_path": "examples/phase4/api-2-on/trial-audit.json",
+      "sha256": "0b42f83ebeae35314493bd6462a223cd3250254a9c333ac148a57f647411023d"
+    },
+    {
+      "path": "examples/experience-reuse/run/validation-class-details.json",
+      "original_path": "examples/phase4/api-2-on/validation-class-details.json",
+      "sha256": "7867b5c516dc2a30c0da8f4193288e8303847d00933f1519f76401e21fe5296f"
+    },
+    {
+      "path": "examples/experience-reuse/library.sqlite",
+      "original_path": "examples/phase4/library.sqlite",
+      "sha256": "07f1220b2d5900e2db837d65e795e8908be4b44be982494dd0ffefc4fda67162"
+    },
+    {
+      "path": "examples/experience-reuse/learned-experience.json",
+      "original_path": "examples/phase4/learned-experience.json",
+      "sha256": "59202931168000231b2e9ede528b6cf46eab6df2e3bf00d07247b6118fa8dcd4"
+    },
+    {
+      "path": "examples/experience-reuse/historical-summary.json",
+      "original_path": "examples/phase4/verification.json",
+      "sha256": "d35eabd77ed73b307e142deadfd6614ebac9c71b01ef7f9c9d0850b291a6a2c9"
+    },
+    {
+      "path": "examples/knowledge/knowledge.json",
+      "original_path": "examples/phase1/knowledge.json",
+      "sha256": "1ac8c468e74226cd697419d3834301d9d5108afe6abc099acbc3f4e1d60c9256"
+    },
+    {
+      "path": "examples/knowledge/knowledge.graphml",
+      "original_path": "examples/phase1/knowledge.graphml",
+      "sha256": "fc405a6ac46b1861d5ff253b5778c29ad6c8b0ba37593d129cf553f7c112ed99"
+    },
+    {
+      "path": "data/banking77/raw/LICENSE",
+      "original_path": "examples/phase25/banking77-data/raw/LICENSE",
+      "sha256": "7e7170e3cebf88a9f60c7b8421418323c09304da1af4d5e90f4da1dc1c8a2661"
+    },
+    {
+      "path": "data/banking77/raw/test.csv",
+      "original_path": "examples/phase25/banking77-data/raw/test.csv",
+      "sha256": "d12d6e3bc4c3103966ae786dc435913c0c563dfa328f5a3646d0e62cfeeb474d"
+    },
+    {
+      "path": "data/banking77/raw/train.csv",
+      "original_path": "examples/phase25/banking77-data/raw/train.csv",
+      "sha256": "b06e26ac675513959a63135f11b94ea7786ed02da65db93a5650d8838cbc664b"
+    },
+    {
+      "path": "tests/fixtures/plan-diagnosis/diagnosis.json",
+      "original_path": "examples/api-plan-fix/diagnosis/diagnosis.json",
+      "sha256": "ea890a3839e08f9b2213f4389dac1fbea3324e9edc8e231ec94730e1efec11dd"
+    },
+    {
+      "path": "tests/fixtures/plan-diagnosis/plan-proposal.json",
+      "original_path": "examples/api-plan-fix/diagnosis/plan-proposal.json",
+      "sha256": "a6e9c85242031663174e8779022c725c0deaab08e6fc2a3808059eb246eb800f"
+    },
+    {
+      "path": "tests/fixtures/plan-diagnosis/provider-audit.json",
+      "original_path": "examples/api-plan-fix/diagnosis/provider-audit.json",
+      "sha256": "778e525fcf234035be0930767e2a85563f36dd366bf53710b504c3bfe040a9d8"
+    },
+    {
+      "path": "tests/fixtures/plan-diagnosis/request.json",
+      "original_path": "examples/api-plan-fix/diagnosis/request.json",
+      "sha256": "391d1f724a7d95815d19084b3beadedb5978c92344ca01dfa8fd965ba5cf4d37"
+    },
+    {
+      "path": "tests/fixtures/knowledge-diagnosis/diagnosis.json",
+      "original_path": "examples/api-knowledge-fix/diagnosis/diagnosis.json",
+      "sha256": "36b13c6d7850ee91bdc9e21e9441074f5e1c5b913cf532ddd8e5b30eca2146fb"
+    },
+    {
+      "path": "tests/fixtures/knowledge-diagnosis/extraction.json",
+      "original_path": "examples/api-knowledge-fix/diagnosis/extraction.json",
+      "sha256": "4cf3b994e1e2ea30afb151700b736fc5214e0fd362245db5236f9c634dd3338b"
+    },
+    {
+      "path": "tests/fixtures/knowledge-diagnosis/provider-audit.json",
+      "original_path": "examples/api-knowledge-fix/diagnosis/provider-audit.json",
+      "sha256": "6da4dea345fc685dcf88d191fe1569bbadf37ef92dea10f717cd355117013aba"
+    },
+    {
+      "path": "tests/fixtures/knowledge-diagnosis/source.json",
+      "original_path": "examples/api-knowledge-fix/diagnosis/source.json",
+      "sha256": "77cd67155837ad2d81b3e61c39387b1e5c4389e946483b709efd4ede0009ab37"
+    },
+    {
+      "path": "tests/fixtures/churn-baseline/report.json",
+      "original_path": "examples/phase2/normal/report.json",
+      "sha256": "8d01e8054b83eb4ec864eed268623f13b410c6f8638fcf3e0f1c740b1c622cba"
+    }
+  ]
+}

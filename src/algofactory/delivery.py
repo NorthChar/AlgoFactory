@@ -65,6 +65,12 @@ def scan_history(root, secrets=()):
 
 def archive_integrity(root):
     results = []
+    provenance = json.loads((root / "examples/provenance.json").read_text())
+    for record in provenance["files"]:
+        artifact = safe_file(root, record["path"])
+        if not artifact.is_file() or hashlib.sha256(artifact.read_bytes()).hexdigest() != record["sha256"]:
+            raise ValueError("migrated_artifact_mismatch:" + record["path"])
+    results.append({"manifest": "examples/provenance.json", "artifacts_checked": len(provenance["files"])})
     for path in sorted((root / "examples").glob("*/verification.json")):
         record = json.loads(path.read_text())
         verified = 0
@@ -106,7 +112,10 @@ def audit_release(root, *, secrets=(), history=False):
         ):
             findings.append({"path": name, "rule": "potential_secret"})
         inventory[name] = hashlib.sha256(data).hexdigest()
-        if path.suffix == ".md" and (name == "README.md" or name.startswith("docs/")):
+        if path.suffix == ".md" and (
+            name in {"README.md", "CHANGELOG.md", "examples/README.md", "data/README.md"}
+            or name.startswith("docs/")
+        ):
             for link in re.findall(r"\]\(([^)]+)\)", data.decode()):
                 if "://" in link or link.startswith(("#", "mailto:")):
                     continue

@@ -54,6 +54,13 @@ class MockWorkflowProvider(Provider):
                     files("algofactory.llm").joinpath("fixtures/regression.json").read_text()
                 )
             )
+            fixtures.update(
+                json.loads(
+                    files("algofactory.llm")
+                    .joinpath("fixtures/banking-intent-tasks.json")
+                    .read_text()
+                )
+            )
             if data["sha256"] not in fixtures:
                 raise ProviderError("mock_fixture_missing")
             response = fixtures[data["sha256"]]["response"]
@@ -62,8 +69,22 @@ class MockWorkflowProvider(Provider):
             if data["request"] == BANKING77_REUSE_REQUEST:
                 profile = PROFILES["banking77"]
             if profile is None:
+                from algofactory.requirements import interpret_requirement
+
+                if not interpret_requirement(data["request"]).issues:
+                    profile = PROFILES["banking77"]
+            if profile is None:
                 raise ProviderError("mock_request_unsupported")
             response = profile.intent()
+            if profile.name == "banking77":
+                from algofactory.requirements import interpret_requirement
+
+                parsed = interpret_requirement(data["request"])
+                if parsed.experiment and (
+                    parsed.experiment.goal == "one_vs_rest"
+                    or (parsed.experiment.goal == "subset" and len(parsed.experiment.intents) == 2)
+                ):
+                    response["task_type"] = "binary_classification"
         elif request.operation == "plan_algorithm":
             algorithm = next(
                 (
@@ -131,6 +152,13 @@ class MockWorkflowProvider(Provider):
                         "alpha=" + str(required["classifier_parameters"]["alpha"]),
                         code,
                     )
+            parameters = (data.get("required_configuration") or {}).get("classifier_parameters", {})
+            if parameters.get("class_weight") == "balanced":
+                code = code.replace(
+                    "LogisticRegression(", 'LogisticRegression(class_weight="balanced", '
+                )
+            if parameters.get("fit_prior") is False:
+                code = code.replace("MultinomialNB(", "MultinomialNB(fit_prior=False, ")
             broken = self.fault in {
                 "missing_predict_proba",
                 "persistent_interface",

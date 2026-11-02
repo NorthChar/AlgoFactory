@@ -113,6 +113,14 @@ def run_workflow(
     try:
         manifest = verify_dataset(dataset_dir)
         profile = profile_for(manifest)
+        if experiment:
+            experiment.validate_manifest(manifest)
+        elif manifest.get("selection"):
+            raise WorkflowFailure("derived_task_requires_experiment")
+        if manifest.get("selection"):
+            if use_experiences:
+                raise WorkflowFailure("derived_task_experience_reuse_not_validated")
+            report["selection"] = manifest["selection"]
         algorithm_name = profile.algorithm
         if experiment is not None:
             if profile.name != "banking77":
@@ -304,6 +312,9 @@ def run_workflow(
                 ),
                 "task_profile": profile.name,
                 "algorithm_key": algorithm,
+                "selection": manifest.get("selection"),
+                "class_names": report["class_names"],
+                "class_labels": task.class_labels,
                 "required_configuration": required if (algorithm or experiment) else None,
                 "experiment_hash": report.get("experiment_hash"),
                 "repair": repair.model_dump(mode="json") if repair else None,

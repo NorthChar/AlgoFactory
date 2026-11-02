@@ -10,7 +10,7 @@ from algofactory.generation.plan import SandboxAlgorithmPlan, validate_plan
 from algofactory.schemas.contracts import AlgorithmPlan
 from algofactory.workflow_models import WorkflowFailure
 
-ROOT = Path(__file__).resolve().parents[1] / "examples/api-plan-fix/diagnosis"
+ROOT = Path(__file__).resolve().parents[1] / "tests/fixtures/plan-diagnosis"
 
 
 def recorded():

@@ -12,7 +12,7 @@ from algofactory.datasets import write_json
 from algofactory.web.evidence import FILES, stage_rows, workflow_evidence
 
 ROOT = Path(__file__).resolve().parents[1]
-ARCHIVE = "examples/api-phase3/comparison"
+ARCHIVE = "examples/banking-classification/comparison"
 
 
 def copy_archive(root):
@@ -81,6 +81,7 @@ def test_seven_step_history_browsing_has_real_evidence_and_no_calls(tmp_path, mo
     popen = Mock()
     monkeypatch.setattr("algofactory.web.service.subprocess.Popen", popen)
     app = AppTest.from_file(str(ROOT / "src/algofactory/web/app.py"), default_timeout=30).run()
+    next(r for r in app.radio if r.label == "需求理解方式").set_value("rules").run()
     next(
         b for b in app.button if b.label == "先看真实 API 完整历史案例（不产生费用）"
     ).click().run()
@@ -107,12 +108,17 @@ def test_introduction_explains_deliverables_and_navigates_without_submission(tmp
     popen = Mock()
     monkeypatch.setattr("algofactory.web.service.subprocess.Popen", popen)
     app = AppTest.from_file(str(ROOT / "src/algofactory/web/app.py"), default_timeout=30).run()
+    next(r for r in app.radio if r.label == "需求理解方式").set_value("rules").run()
     assert app.session_state["workspace_tab"] == "从这里开始"
     assert any("① 算法代码" in m.value for m in app.markdown)
     assert any("② 验证报告" in m.value for m in app.markdown)
     next(b for b in app.button if b.label == "查看已完成的银行分类开发任务").click().run()
     assert not app.exception
     assert app.session_state["workspace_tab"] == "我的开发任务"
+    assert next(s for s in app.selectbox if s.label == "选择开发任务").value == ARCHIVE
+    next(b for b in app.button if b.label == "输入咨询，试用本次成果").click().run()
+    assert not app.exception
+    assert app.session_state["task_section_" + ARCHIVE] == "试用本次算法"
     assert next(s for s in app.selectbox if s.label == "选择开发任务").value == ARCHIVE
     next(b for b in app.button if b.label == "开始开发银行分类算法").click().run()
     assert not app.exception
@@ -136,6 +142,7 @@ def test_single_validation_only_has_no_repair_or_final_test(tmp_path, monkeypatc
     write_json(tmp_path / relative / "../state.json", {"status": "validated"})
     monkeypatch.setenv("ALGOFACTORY_PROJECT_ROOT", str(tmp_path))
     app = AppTest.from_file(str(ROOT / "src/algofactory/web/app.py"), default_timeout=30).run()
+    next(r for r in app.radio if r.label == "需求理解方式").set_value("rules").run()
     for step in (4, 5):
         next(r for r in app.radio if r.label == "查看流程步骤").set_value(step).run()
         assert not app.exception
@@ -151,6 +158,9 @@ def test_submission_opens_same_task_before_report_and_refresh_does_not_replay(
     popen = Mock()
     monkeypatch.setattr("algofactory.web.service.subprocess.Popen", popen)
     app = AppTest.from_file(ROOT / "src/algofactory/web/app.py", default_timeout=30).run()
+    next(r for r in app.radio if r.label == "需求理解方式").set_value("rules").run()
+    next(b for b in app.button if b.label == "解析并检查需求").click().run()
+    next(c for c in app.checkbox if c.label.startswith("我已核对")).check().run()
     next(b for b in app.button if b.label == "开始生成并验证").click().run()
     assert not app.exception and popen.call_count == 1
     identifier = app.session_state["current_job"]

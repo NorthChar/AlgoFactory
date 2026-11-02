@@ -125,7 +125,7 @@ def evaluate(factory, train, evaluation, config):
                 unseen_handled = True
             except Exception:
                 pass
-    if not multiclass and not regression:
+    if not multiclass and not regression and not text_features:
         probabilities, repeat_probabilities = probabilities[:, 1], repeat_probabilities[:, 1]
     result = {
         "status": "ok",
